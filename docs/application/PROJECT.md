@@ -38,7 +38,7 @@ Kết quả lấy từ tài liệu bên ngoài **không phải** kết quả c�
 
 **Repo GitHub:** <https://github.com/AIVIETNAM-AIO-Heart208/UniSearch-SimCSE>. Minh tạo ngày 23/11.
 
-**Bản clone trên laptop Huy:** `D:\TAI_LIEU_HCMUS_K24\Năm 3 - Kì 1\Nhập môn học máy\Project-ML_Lab\Lab03\UniSearch-SimCSE`. Phần tái hiện đã được chuyển vào `experiments/reproduction/` nhưng **chưa commit/push**.
+**Bản clone trên laptop Huy:** `D:\TAI_LIEU_HCMUS_K24\Năm 3 - Kì 1\Nhập môn học máy\Project-ML_Lab\Lab03\UniSearch-SimCSE`. Script, log và kết quả R1–R3 đã có trên nhánh `main` của nhóm trong `experiments/reproduction/`. [Commit `622dc22`](https://github.com/AIVIETNAM-AIO-Heart208/UniSearch-SimCSE/commit/622dc223cd3ef43aeffab5d0ff1da230d8a3b641).
 
 Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của lần chạy R1–R3; xóa được khi không cần nữa.
 
@@ -71,7 +71,7 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
 
 **3 việc ưu tiên tiếp theo**
 
-1. **Huy:** commit và push phần tái hiện cùng tài liệu đã cập nhật; viết R4 (InfoNCE + test khớp với `cl_forward`); viết phần Phase 1 được giao.
+1. **Huy** viết phần bài toán và phương pháp cho Phase 1 (hạn 27/11), tự cài InfoNCE và kiểm thử đối chiếu với `cl_forward` cho R4 (hạn 30/11). Tiêu chí kiểm thử ở [§4.5](#45-kế-hoạch-tái-hiện-kết-quả-paper).
 2. **Minh:** chuẩn bị D1 (`data/prepare_virhe4qa.py`, group split) và chạy SimCSE-VN dense trên D1. Chọn văn bản quy chế của trường trước 27/11 để hai người bắt đầu viết D2.
 3. **Cả hai:** chốt schema dữ liệu ở [§5.4](#54-interface--định-dạng-dữ-liệu) trước 25/11.
 
@@ -157,7 +157,7 @@ Mục Bonus Model Improvement (+10) **không áp dụng** cho nhóm: giảng vi�
 
 | Mục đề | Yêu cầu | Loại | Công việc trong dự án | Bằng chứng nộp | Owner / Phase (PLAN.md) |
 |---|---|---|---|---|---|
-| 3.1 | Paper peer-reviewed, nêu title/authors/năm/venue/DOI, lý do chọn | B | Đã chọn SimCSE. Ghi hạng CORE của EMNLP [Unverified, tra portal CORE] | Báo cáo §Introduction | Huy / 1 |
+| 3.1 | Paper peer-reviewed, nêu title/authors/năm/venue/DOI, lý do chọn | B | SimCSE đăng tại EMNLP 2021. Hội nghị hạng A theo CORE2021, A\* theo CORE2023 và ICORE2026. [Bài báo](https://aclanthology.org/2021.emnlp-main.552/) · [Lịch sử xếp hạng](https://portal.core.edu.au/conf-ranks/448/) | Báo cáo §Introduction | Huy / 1 |
 | 3.2.1–6 | Phân tích: problem & method, related work, model & theory, metrics, datasets & experiments, results & limitations | B | Đọc paper theo [§4](#4-simcse-research-foundation) | Báo cáo §Related Work, §Method; vấn đáp | Huy + Minh (mỗi người một phần) / 1 |
 | 3.3.1 | Implement/reproduce thuật toán chính (được dùng code/weights công khai, có trích dẫn) | B | Chạy code chính thức tại commit; tự cài lại InfoNCE; tự xây pipeline truy hồi | `experiments/reproduction/`, `src/` | Huy (tái hiện, InfoNCE), Minh (pipeline tiếng Việt) / 2–3 |
 | 3.3.2 | Giải thích code: execution flow, data loading, kiến trúc, training/inference, output | B | Bản đồ code [§4.4](#44-bản-đồ-mã-nguồn-tại-commit-235f89e) | Báo cáo, video | Huy / 2 |
