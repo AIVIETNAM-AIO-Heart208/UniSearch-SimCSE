@@ -50,11 +50,12 @@ documents:
     source: >-
       Bản scan PDF 21 trang có chữ ký, do Huy cung cấp. Chưa thấy đăng công khai trên hcmus.edu.vn (kiểm tra 23/11/2026).
     file: data/raw/d2/Quy_che_dao_tao_2026_QD3087_clean.md
-    sha256: 4637fd4abf45c2ed92b519b0c095643f8521191072b2446e92aeff005505735c
+    sha256: e8415f9d8c4bbf2c2dcc33aae0380f404cd3a180f3a4124a67a92b2dc852d478
     text_method: >-
       ChatGPT chép từ bản scan (data/raw/d2/Quy_che_dao_tao_2026_QD3087.md,
-      sha256 e1d6e24417ff3a3a5b4a2adbe6f77272cfc67190eebb4fddf54b180c22c16eee), sau đó làm sạch 158 lỗi OCR bằng
+      sha256 e1d6e24417ff3a3a5b4a2adbe6f77272cfc67190eebb4fddf54b180c22c16eee), sau đó làm sạch 165 lỗi OCR bằng
       các quy tắc có kiểm số lần khớp (nhật ký: data/raw/d2/Quy_che_dao_tao_2026_QD3087_corrections.md).
+      Lượt 1 (23/11/2026): 158 chỗ. Lượt 2 (24/11/2026): 7 lỗi dấu còn sót, tìm bằng so cặp âm tiết với văn bản tham chiếu.
     nguyen_van: false  # bản chép đã làm sạch, không phải văn bản gốc; trích dẫn quan trọng phải đối chiếu bản scan
     kiem_tra: >-
       So với lớp OCR của bản scan: độ giống theo từng Điều trung bình 0,74 (mức nền giữa hai Điều khác nhau: 0,15);
@@ -62,5 +63,5 @@ documents:
       Điều 26 (0,35). Ngày 24/11/2026 đã đọc tay đối chiếu với OCR: đủ mọi Khoản (Điều 6: 3, Điều 7: 8, Điều 26: 3),
       nội dung khớp (OCR cắt mất cuối Khoản 2 Điều 26); điểm thấp do OCR mất dấu nặng và đọc tiêu đề "Điều 7" thành "Di6u l". Số Thông báo 1396/TB-KHTN và dòng căn cứ
       2933/QĐ-TTg do Huy đối chiếu với bản scan ngày 23/11/2026. Đầu vào, script và kết quả chạy lại:
-      data/raw/d2/verification/ (README.md, outputs_2026-11-23.txt).
+      data/raw/d2/verification/ (README.md, outputs_2026-11-23.txt, outputs_2026-11-24.txt).
     cong_khai: unknown  # Q7 chưa có câu trả lời; theo D-18 không đăng công khai, chỉ nộp trong zip bài nộp

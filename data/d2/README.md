@@ -42,7 +42,7 @@ Thông tin từng văn bản (số hiệu, ngày ban hành, hiệu lực, nguồ
 | `data/raw/d2/Quy_che_dao_tao_2021_QD1175.pdf` | Bản PDF công khai (tải lại từ `source_url`) | Không (`data/raw/` bị bỏ qua) |
 | `data/raw/d2/Quy_che_dao_tao_2026_QD3087.md` | Bản ChatGPT chép từ scan (bản gốc, giữ nguyên) | Không |
 | `data/raw/d2/Quy_che_dao_tao_2026_QD3087_clean.md` | Bản đã làm sạch, dùng làm corpus | Không |
-| `data/raw/d2/Quy_che_dao_tao_2026_QD3087_corrections.md` | Nhật ký 158 chỗ sửa | Không |
+| `data/raw/d2/Quy_che_dao_tao_2026_QD3087_corrections.md` | Nhật ký 165 chỗ sửa (hai lượt) | Không |
 | `data/raw/d2/verification/` | Đầu vào, script và kết quả kiểm chứng bản chép 2026 và bảng đối ứng | Không |
 | `data/d2/queries_d2.jsonl` | Câu hỏi và nhãn do nhóm viết (chưa có, Phase 3) | Có |
 

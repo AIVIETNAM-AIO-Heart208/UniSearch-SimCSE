@@ -70,7 +70,7 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
     - ví dụ lexical gap thật trong Introduction: câu D1 index 9542 ("bị dừng giữa chừng" và "đình chỉ" trong Điều 6). Nhóm đoạn của câu này phải vào D1-dev ([§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)).
 - [x] **Corpus D2 (23/11, D-17):** quy chế đào tạo của Trường ĐH KHTN, gồm hai văn bản.
   - QĐ 1175/QĐ-KHTN (2021): 24 Điều, PDF có lớp chữ, công khai.
-  - QĐ 3087/QĐ-KHTN ngày 29/9/2026: 27 Điều. ChatGPT chép từ bản scan; nhóm làm sạch 158 lỗi OCR có kiểm chứng.
+  - QĐ 3087/QĐ-KHTN ngày 29/9/2026: 27 Điều. ChatGPT chép từ bản scan; nhóm làm sạch 165 lỗi OCR có kiểm chứng (158 ở lượt 1, 7 ở lượt 2 ngày 24/11).
   - Mô tả và metadata ở [`data/d2/`](../../data/d2/README.md). Chữ QĐ 1175 (văn bản công khai) có trong Git ở `data/d2/`; bản chép QĐ 3087 chỉ ở `data/raw/d2/`, không đăng công khai (D-18).
   - Bảng đối ứng Điều 2021 ↔ 2026 (`data/d2/article_map.tsv`, 26 chủ đề): đã duyệt ngày 24/11 sau khi đối chiếu nội dung (D-18).
   - Rà soát lại ngày 24/11: sha256 khớp, URL công khai của QĐ 1175 vẫn tải được, hai đoạn có độ giống thấp của bản chép 2026 đã đọc tay đối chiếu.
@@ -85,7 +85,7 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
 
 **Việc ưu tiên tiếp theo**
 
-1. **Huy:** báo Minh về D-17 và D-18 (đã lên `main` ngày 24/11): bảng đối ứng đã duyệt, quy tắc viết câu D2 mới ([§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)), bản 2026 hiển thị trước. Rà lỗi OCR còn sót trong bản chép QĐ 3087 trước khi Minh dựng index.
+1. **Huy:** báo Minh về D-17 và D-18 (đã lên `main` ngày 24/11): bảng đối ứng đã duyệt, quy tắc viết câu D2 mới ([§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)), bản 2026 hiển thị trước.
 2. **Cả hai:** chốt schema dữ liệu ở [§5.4](#54-interface--định-dạng-dữ-liệu) trước 25/11.
 3. **Minh** đọc chéo phần bài toán và phương pháp của Huy (Phase 1, hạn 27/11): Introduction và Proposed Method trong `docs/report/sections/`. **Huy** đọc chéo phần của Minh khi Minh xong.
 4. **Minh:** chuẩn bị D1 (`data/prepare_virhe4qa.py`, group split) và chạy SimCSE-VN dense trên D1. Khi chia, nhóm đoạn của câu index 9542 phải vào D1-dev ([§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)).
@@ -156,7 +156,7 @@ Truy hồi lai **BM25 + SimCSE-VN** trên corpus quy chế đào tạo của Tr�
 | Checkpoint `VoVanPhuc/sup-SimCSE-VietNamese-phobert-base`, PhoBERT | Truy hồi lai, gộp điểm theo Điều, chọn λ trên dev |
 | pyvi, rank_bm25, faiss, Gradio | Cơ chế cảnh báo độ tin cậy cùng cách chọn và đánh giá ngưỡng |
 | Bộ ViRHE4QA (bản con trong ViRE) | Chia lại D1 theo nhóm đoạn nguồn, vì cột `split` gốc bị rò rỉ (cùng một đoạn có câu hỏi ở cả train và test) |
-| Quy chế đào tạo HCMUS (QĐ 1175/2021, QĐ 3087/2026); bản chép QĐ 3087 từ scan do ChatGPT tạo | Bộ test D2: câu hỏi kiểu sinh viên kèm câu ngoài phạm vi. Làm sạch bản chép QĐ 3087 (158 chỗ sửa) và kiểm chứng với OCR của bản scan. Bảng đối ứng Điều 2021 ↔ 2026 |
+| Quy chế đào tạo HCMUS (QĐ 1175/2021, QĐ 3087/2026); bản chép QĐ 3087 từ scan do ChatGPT tạo | Bộ test D2: câu hỏi kiểu sinh viên kèm câu ngoài phạm vi. Làm sạch bản chép QĐ 3087 (165 chỗ sửa, hai lượt) và kiểm chứng với OCR của bản scan. Bảng đối ứng Điều 2021 ↔ 2026 |
 | `evaluation.py` + SentEval của repo | Tự cài lại InfoNCE (unsup/sup + hard negative) và kiểm thử khớp với `cl_forward` |
 | — | Thiết kế đánh giá công bằng: group split, bootstrap CI, phân tích theo mức trùng từ vựng, phân tích lỗi |
 
@@ -603,7 +603,7 @@ Tính từ 23/11, còn 18 ngày đến 11/12/2026. Phase 3 xong trước **06/12
 | Không có GPU / hết quota | Thấp với MVP | MVP và R1 chạy CPU; GPU chỉ cần cho O1, O3 (Kaggle/Colab) |
 | SimCSE-VN truy hồi kém, hybrid không thắng BM25 | Cao | Kết quả âm vẫn hợp lệ: phân tích theo mức trùng từ vựng (E2) và lỗi (E5); đóng góp vẫn gồm trích dẫn, phiên bản, cảnh báo được đánh giá; cân nhắc O1 |
 | License D1 không rõ hoặc repo ViRE bị gỡ | Trung bình | Link nộp là permalink theo commit (không đổi được nội dung); lưu bản sao riêng để chạy lại; dự phòng EduCoQA; D2 vẫn là dataset mới của nhóm |
-| Bản chép QĐ 3087/2026 (ChatGPT chép từ scan) khác bản gốc | Trung bình | Đã làm sạch 158 lỗi OCR có kiểm chứng: mọi con số có trong OCR, độ giống từng Điều trung bình 0,74 so với mức nền 0,15. Hai đoạn điểm thấp (Điều 6–7: 0,40; Điều 26: 0,35) đã đọc tay ngày 24/11: đủ Khoản, nội dung khớp, điểm thấp do OCR mất dấu. Vẫn còn lỗi OCR sót ngoài 158 chỗ đã sửa (vd. "đơn vi", "cau thành" ở Điều 3, phát hiện 24/11), cần một lượt rà toàn văn. Script và kết quả chạy lại ở `data/raw/d2/verification/`. Trích dẫn quan trọng đối chiếu bản scan. Ứng dụng ghi "bản chép từ bản scan" |
+| Bản chép QĐ 3087/2026 (ChatGPT chép từ scan) khác bản gốc | Trung bình | Đã làm sạch 165 lỗi OCR có kiểm chứng (hai lượt): mọi con số có trong OCR, độ giống từng Điều trung bình 0,74 so với mức nền 0,15. Hai đoạn điểm thấp (Điều 6–7: 0,40; Điều 26: 0,35) đã đọc tay ngày 24/11: đủ Khoản, nội dung khớp, điểm thấp do OCR mất dấu. Lượt 2 (24/11) dò theo cặp âm tiết và sửa thêm 7 lỗi dấu còn sót (vd. "đơn vi" → "đơn vị"); các cụm còn bị đánh dấu đều đã đọc và là từ đúng. Script và kết quả chạy lại ở `data/raw/d2/verification/`. Trích dẫn quan trọng đối chiếu bản scan. Ứng dụng ghi "bản chép từ bản scan" |
 | Không được công bố lại bản chép quy chế 2026 (Q7) | Trung bình | Mặc định không đăng công khai (D-18): link D2 công khai gồm câu hỏi, nhãn, metadata và chữ QĐ 1175; bản chép QĐ 3087 chỉ nộp trong `[Group14].zip` để giảng viên chạy lại được. Khi trường đăng bản chính thức thì trỏ về đó |
 | Corpus D2 nhỏ (51 Điều, 26 chủ đề) làm Hit@3 cao với mọi phương pháp | Trung bình | Báo cả mức theo Điều (chặt) và theo chủ đề, kèm Clause@1 và mức ngẫu nhiên (§6.3); trong báo cáo nêu rõ quy mô corpus và việc mức chủ đề dễ hơn mức Điều |
 | Câu D2 do nhóm viết thiên lệch: người viết đã đọc văn bản nên câu có thể ít trùng từ hơn câu hỏi thật, bất lợi cho BM25 | Trung bình | Viết kiểu gập sách (D-18); nêu rõ trong báo cáo; báo E2 theo mức trùng từ cả trên D2; nếu có câu từ Google Form (`origin: form`) thì báo riêng nhóm này |

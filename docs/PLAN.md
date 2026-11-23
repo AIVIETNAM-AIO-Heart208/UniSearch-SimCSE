@@ -33,7 +33,7 @@
 *Mục 3.4 · Option 1. Minh xây ứng dụng trong lúc Huy chuẩn bị phép so sánh trên đầu ra Phase 2.*
 
 - [x] **Huy** — Duyệt bảng đối ứng Điều 2021 ↔ 2026 ([`data/d2/article_map.tsv`](../data/d2/article_map.tsv), gồm ba chủ đề gộp hai Điều cùng phiên bản T02/T09/T16) và quy tắc viết câu D2. *Xong 24/11 (D-18): đã đối chiếu nội dung, giữ T02/T09/T16; câu D2 viết kiểu gập sách; bản 2026 hiển thị trước.*
-- [ ] **Huy** — Rà toàn văn bản chép QĐ 3087 tìm lỗi OCR còn sót (vd. "đơn vi", "cau thành" ở Điều 3), sửa có ghi nhật ký và cập nhật sha256 trong `documents.yaml`. *Làm trước khi Minh dựng index.*
+- [x] **Huy** — Rà toàn văn bản chép QĐ 3087 tìm lỗi OCR còn sót, sửa có ghi nhật ký và cập nhật sha256 trong `documents.yaml`. *Xong 24/11: lượt 2 sửa thêm 7 lỗi dấu (vd. "đơn vi" → "đơn vị"); kết quả kiểm ở `data/raw/d2/verification/outputs_2026-11-24.txt`.*
 - [ ] **Minh** — Dựng corpus của ứng dụng từ hai quy chế đào tạo HCMUS trong [`data/d2/`](../data/d2/README.md): QĐ 1175/2021 (24 Điều) và QĐ 3087/2026 (27 Điều). Chữ QĐ 1175 có trong `data/d2/`; bản chép QĐ 3087 không có trong Git, nhờ Huy gửi riêng.
   - Tách Điều/Khoản, kiểm tra số Điều (24 và 27) và kiểm tra mỗi chunk khớp đúng văn bản trong `data/raw/d2/`.
   - Gắn metadata từ `documents.yaml`: văn bản, số hiệu, ngày ban hành, phạm vi áp dụng.
