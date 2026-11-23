@@ -29,7 +29,7 @@ Mỗi mục là một file trong `sections/`, nên hai người sửa song song 
 |---|---|---|
 | `abstract.tex`, `introduction.tex`, `method.tex`, `conclusion.tex` | Abstract, I, III, VII | Huy |
 | `related-work.tex` | II | Huy và Minh |
-| `experimental-setup.tex`, `results.tex` | IV, V | Huy. Minh viết phần dữ liệu, baseline, chỉ số, kết quả chính của paper và hạn chế STS → tiếng Việt (3.2.4–3.2.6), cùng chi tiết D1/D2 |
+| `experimental-setup.tex`, `results.tex` | IV, V | Huy. Minh viết phần dữ liệu, baseline, chỉ số, kết quả chính của paper và hạn chế STS → tiếng Việt (3.2.4–3.2.6), cùng chi tiết D1 |
 | `application.tex`, `contributions.tex` | VI, Team Contributions | Minh |
 
 `main.tex` chứa tiêu đề, tác giả, từ khóa và thứ tự các mục. Huy giữ file này.

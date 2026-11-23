@@ -66,7 +66,8 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
 - [x] Bản nháp phần Introduction và Proposed Method của báo cáo IEEE (commit `652fa4e`), gồm cả phần giải thích luồng code gốc. Chưa đọc chéo.
   - Bổ sung ngày 23/11 cho phần Phase 1 của Huy:
     - đoạn so sánh SimCSE với các cách làm trước (post-processing, các phương pháp contrastive khác, SBERT);
-    - §Worked Example: ví dụ tính loss cho cả hai cách huấn luyện, dùng câu của Figure 1 và cosine minh hoạ, kiểm bằng `tests/test_worked_example.py`.
+    - §Worked Example: ví dụ tính loss cho cả hai cách huấn luyện, dùng câu của Figure 1 và cosine minh hoạ, kiểm bằng `tests/test_worked_example.py`;
+    - ví dụ lexical gap thật trong Introduction: câu D1 index 9542 ("bị dừng giữa chừng" và "đình chỉ" trong Điều 6). Nhóm đoạn của câu này phải vào D1-dev ([§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)).
 
 **Đang thực hiện:** không có.
 
@@ -74,13 +75,12 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
 
 **Blocker / chờ quyết định**
 
-- Chưa chốt văn bản quy chế cụ thể của trường để làm corpus cho ứng dụng và D2 (Q2 ở [§8.3](#83-decision-log)).
 - Chưa chia phần viết Related Work (mục 3.2.2, giao cho cả Huy và Minh) trong `docs/report/sections/related-work.tex`.
 
 **3 việc ưu tiên tiếp theo**
 
 1. **Minh** đọc chéo phần bài toán và phương pháp của Huy (Phase 1, hạn 27/11): Introduction và Proposed Method trong `docs/report/sections/`. **Huy** đọc chéo phần của Minh khi Minh xong.
-2. **Minh:** chuẩn bị D1 (`data/prepare_virhe4qa.py`, group split) và chạy SimCSE-VN dense trên D1. Chọn văn bản quy chế của trường trước 27/11 để hai người bắt đầu viết D2.
+2. **Minh:** chuẩn bị D1 (`data/prepare_virhe4qa.py`, group split) và chạy SimCSE-VN dense trên D1. Khi chia, nhóm đoạn của câu index 9542 phải vào D1-dev ([§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)).
 3. **Cả hai:** chốt schema dữ liệu ở [§5.4](#54-interface--định-dạng-dữ-liệu) trước 25/11.
 
 ---
@@ -98,7 +98,7 @@ Quy chế học vụ (đào tạo, cảnh báo học tập, xét tốt nghiệp�
 | Người dùng | Use case chính |
 |---|---|
 | Sinh viên | Hỏi tự nhiên và nhận Điều/Khoản liên quan kèm trích đoạn để tự đọc căn cứ |
-| Cố vấn học tập | Tra nhanh căn cứ khi tư vấn; dẫn chiếu chính xác số Điều, văn bản và phiên bản |
+| Cố vấn học tập | Tra nhanh căn cứ khi tư vấn; dẫn chiếu chính xác số và tên Điều |
 
 ### 2.3 Giải pháp hiện có và hạn chế
 
@@ -114,34 +114,34 @@ Các nhận định trong bảng là đánh giá định tính [Proposed]; cần
 
 ### 2.4 Phương án được chọn
 
-Truy hồi lai **BM25 + SimCSE-VN** trên corpus chia theo Điều/Khoản. Kết quả hiển thị là nguyên văn kèm nguồn và phiên bản, có cảnh báo khi độ tin cậy thấp. Ứng dụng **không** sinh câu trả lời bằng LLM.
+Truy hồi lai **BM25 + SimCSE-VN** trên corpus quy chế ĐH CNTT lấy từ D1 (ViRHE4QA), chia theo Điều/Khoản. Kết quả hiển thị là nguyên văn kèm số và tên Điều, có cảnh báo khi độ tin cậy thấp. Ứng dụng **không** sinh câu trả lời bằng LLM.
 
 ### 2.5 Phạm vi
 
 **MVP (bắt buộc)**
 
-1. Nạp 1–3 văn bản quy chế dạng text-based PDF/DOCX/TXT. Tách Điều/Khoản và lưu metadata (văn bản, số hiệu, ngày ban hành, hiệu lực).
+1. Corpus là 297 đoạn quy chế ĐH CNTT trong D1 (ViRHE4QA); phần lớn mỗi đoạn là một Điều. Tách Khoản trong từng Điều, giữ mã đoạn, số và tên Điều. D1 không ghi Điều thuộc văn bản nào hay phiên bản nào, nên ứng dụng không hiển thị các thông tin này.
 2. Ba phương pháp truy hồi chạy trên cùng pipeline: BM25, SimCSE-VN (dense) và Hybrid.
 3. Giao diện Gradio gồm:
    - ô nhập câu hỏi;
-   - top-3 Điều/Khoản, trích đoạn và nguồn/phiên bản;
+   - top-3 Điều/Khoản, trích đoạn, số và tên Điều;
    - nhãn "Độ tin cậy thấp" khi cần;
    - chế độ so sánh song song với BM25.
-4. Đánh giá định lượng trên D1 và D2 ([§6](#6-datasets--experimental-evaluation)) và đo latency trên CPU.
+4. Đánh giá định lượng trên D1 ([§6](#6-datasets--experimental-evaluation)) và đo latency trên CPU.
 5. Tái hiện R1 ([§4.5](#45-kế-hoạch-tái-hiện-kết-quả-paper)) và tự cài lại InfoNCE kèm kiểm thử.
 
 **Nâng cao (tùy chọn, chỉ làm sau khi MVP xong):** O1 domain-adaptive fine-tuning, O2 user study nhỏ, O3–O5 ablation ([§6.6](#66-thí-nghiệm-tùy-chọn)).
 
-**Ngoài phạm vi:** sinh câu trả lời bằng LLM, hội thoại nhiều lượt, OCR cho PDF scan, so sánh khác biệt giữa các phiên bản văn bản, đăng nhập, database server, triển khai cloud, Option 2.
+**Ngoài phạm vi:** quy chế của trường khác ngoài ĐH CNTT, bộ câu hỏi tự viết (D2, đã bỏ ngày 23/11, xem D-16), đo cảnh báo trên câu hỏi ngoài phạm vi, sinh câu trả lời bằng LLM, hội thoại nhiều lượt, OCR cho PDF scan, so sánh khác biệt giữa các phiên bản văn bản, đăng nhập, database server, triển khai cloud, Option 2.
 
 ### 2.6 Đóng góp riêng của nhóm
 
 | Tái sử dụng (có trích dẫn) | Nhóm tự phát triển |
 |---|---|
-| Mã nguồn và checkpoint SimCSE chính thức (tái hiện) | Pipeline tách Điều/Khoản, giữ metadata và phiên bản |
-| Checkpoint `VoVanPhuc/sup-SimCSE-VietNamese-phobert-base`, PhoBERT | Truy hồi lai, gộp điểm theo Điều, chọn α trên dev |
+| Mã nguồn và checkpoint SimCSE chính thức (tái hiện) | Pipeline tách Khoản trong từng Điều, giữ số/tên Điều và vị trí ký tự để trích nguyên văn |
+| Checkpoint `VoVanPhuc/sup-SimCSE-VietNamese-phobert-base`, PhoBERT | Truy hồi lai, gộp điểm theo Điều, chọn λ trên dev |
 | pyvi, rank_bm25, faiss, Gradio | Cơ chế cảnh báo độ tin cậy cùng cách chọn và đánh giá ngưỡng |
-| Bộ ViRHE4QA (bản con trong ViRE) | Bộ test D2 (quy chế trường, câu hỏi kiểu sinh viên, kèm câu ngoài phạm vi) |
+| Bộ ViRHE4QA (bản con trong ViRE) | Chia lại D1 theo nhóm đoạn nguồn, vì cột `split` gốc bị rò rỉ (cùng một đoạn có câu hỏi ở cả train và test) |
 | `evaluation.py` + SentEval của repo | Tự cài lại InfoNCE (unsup/sup + hard negative) và kiểm thử khớp với `cl_forward` |
 | — | Thiết kế đánh giá công bằng: group split, bootstrap CI, phân tích theo mức trùng từ vựng, phân tích lỗi |
 
@@ -149,7 +149,7 @@ Truy hồi lai **BM25 + SimCSE-VN** trên corpus chia theo Điều/Khoản. Kế
 
 - Ứng dụng chạy từ một bản clone sạch theo README, trên CPU.
 - R1 khớp số trong README của repo: chênh lệch trung bình STS ≤ 0,5 điểm. Nếu lệch hơn, phải giải thích được nguyên nhân.
-- Có bảng kết quả đầy đủ cho BM25 / SimCSE-VN / Hybrid trên D1-test và D2, kèm 95% CI cho các so sánh chính.
+- Có bảng kết quả đầy đủ cho BM25 / SimCSE-VN / Hybrid trên D1-test, kèm 95% CI cho các so sánh chính.
 - Có bằng chứng cải thiện so với tìm kiếm từ khóa ở ít nhất một chiều: chất lượng truy hồi trên câu hỏi diễn đạt khác văn bản, hoặc chức năng trích dẫn và cảnh báo. Thành công **không** đòi hỏi thắng BM25 ở mọi metric; kết quả âm vẫn hợp lệ nếu được phân tích rõ.
 - Đo được latency p50/p95 trên CPU.
 
@@ -170,7 +170,7 @@ Mục Bonus Model Improvement (+10) **không áp dụng** cho nhóm: giảng vi�
 | 3.3.1 | Implement/reproduce thuật toán chính (được dùng code/weights công khai, có trích dẫn) | B | Chạy code chính thức tại commit; tự cài lại InfoNCE; tự xây pipeline truy hồi | `experiments/reproduction/`, `src/` | Huy (tái hiện, InfoNCE), Minh (pipeline tiếng Việt) / 2–3 |
 | 3.3.2 | Giải thích code: execution flow, data loading, kiến trúc, training/inference, output | B | Bản đồ code [§4.4](#44-bản-đồ-mã-nguồn-tại-commit-235f89e) | Báo cáo, video | Huy / 2 |
 | 3.3.3 | Đánh giá: train/val/test, chống leakage, metrics, kết quả định lượng, ví dụ, phân tích lỗi | B | [§6.2–6.5](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu) | `results/`, báo cáo §Experiments | Minh (D1, metrics), Huy (so sánh, CI) / 2–3 |
-| 3.3.4 | Tái hiện ≥1 kết quả (hoặc đánh giá tương đương); **đánh giá trên dataset mới** và nêu rõ khi không so sánh trực tiếp được | B | R1 ([§4.5](#45-kế-hoạch-tái-hiện-kết-quả-paper)); D1 + D2 ([§6.1](#61-datasets)) | Bảng R1; bảng E1/E2 | Huy (R1 ✓), Minh (D1) / 2 |
+| 3.3.4 | Tái hiện ≥1 kết quả (hoặc đánh giá tương đương); **đánh giá trên dataset mới** và nêu rõ khi không so sánh trực tiếp được | B | R1 ([§4.5](#45-kế-hoạch-tái-hiện-kết-quả-paper)); D1 ([§6.1](#61-datasets)) | Bảng R1; bảng E1/E2 | Huy (R1 ✓), Minh (D1) / 2 |
 | 3.3.5 | Tái lập: dependencies, hyperparameters, seed, môi trường, hướng dẫn chạy | B | `pyproject.toml`, `configs/`, `experiments/*/results/*/env.txt`, README | Repo | Minh (README), Huy (chạy lại từ clone sạch) / 4 |
 | 3.4.1 | Bài toán thực tế, người dùng, giá trị | B | [§2.1–2.2](#21-problem-statement) | Báo cáo §Application | Minh / 3 |
 | 3.4.2 | Khảo sát giải pháp hiện có và hạn chế | B | [§2.3](#23-giải-pháp-hiện-có-và-hạn-chế) | Báo cáo | Minh / 3 |
@@ -304,20 +304,22 @@ Kết quả của SimCSE-VN **không** phải kết quả của paper. Trong bá
 
 ### 5.1 Luồng xử lý
 
+**Ký hiệu** (giống báo cáo): λ là trọng số fusion của Hybrid, θ là ngưỡng cảnh báo độ tin cậy. τ và α chỉ dùng cho SimCSE (temperature và trọng số hard negative, [§4](#4-simcse-research-foundation)).
+
 ```
 [Offline – build index]
-Văn bản quy chế (PDF/DOCX/TXT) + documents.yaml (metadata)
-  → ingest: trích text → tách Điều / Khoản → chunk ≤ 256 token → corpus.jsonl
+297 đoạn quy chế ĐH CNTT trong D1 (ViRHE4QA_v2.csv)
+  → ingest: mỗi đoạn một article_id → tách Khoản → chunk ≤ 256 token → corpus.jsonl
   → preprocess: Unicode NFC → chuẩn hóa dấu thanh (khoá→khóa) → tách từ pyvi
   → BM25 index (token thường hóa)  +  SimCSE-VN embeddings (chuẩn hóa L2) → FAISS IndexFlatIP
 
 [Online – mỗi câu hỏi]
 Câu hỏi → preprocess (cùng hàm) → điểm BM25 và cosine cho mọi chunk
   → gộp chunk về Điều (MaxP: lấy max) → min-max normalize theo từng phương pháp
-  → Hybrid: s = α·BM25_norm + (1−α)·Dense_norm   (α chọn trên D1-dev)
+  → Hybrid: s = λ·BM25_norm + (1−λ)·Dense_norm   (λ chọn trên D1-dev)
   → top-3 Điều (kèm Khoản / chunk tốt nhất)
-  → Confidence: cosine SimCSE của chunk tốt nhất trong top-1 < τ  ⇒  cảnh báo "Độ tin cậy thấp"
-  → UI: Điều/Khoản · trích đoạn · văn bản · số hiệu · ngày ban hành · điểm · [so sánh BM25]
+  → Confidence: cosine SimCSE của chunk tốt nhất trong top-1 < θ  ⇒  cảnh báo "Độ tin cậy thấp"
+  → UI: số và tên Điều · Khoản · trích đoạn · điểm · [so sánh BM25]
 ```
 
 ### 5.2 Vai trò từng thành phần [Proposed]
@@ -326,26 +328,26 @@ Câu hỏi → preprocess (cùng hàm) → điểm BM25 và cosine cho mọi chu
 |---|---|---|
 | SimCSE-VN | Khớp ngữ nghĩa, xử lý câu hỏi diễn đạt khác văn bản | Thành phần ML chính, gắn trực tiếp với paper |
 | BM25 (`rank_bm25`) | Khớp từ khóa, số liệu, thuật ngữ, viết tắt | Đại diện giải pháp hiện có; rất mạnh trên D1 theo tham chiếu ngoài ([§6.1](#61-datasets)) |
-| Hybrid α-fusion | Kết hợp hai loại tín hiệu; chỉ 1 tham số | Đơn giản, chọn trên dev, dễ giải thích |
+| Hybrid λ-fusion | Kết hợp hai loại tín hiệu; chỉ 1 tham số | Đơn giản, chọn trên dev, dễ giải thích |
 | FAISS `IndexFlatIP` | Tìm kiếm chính xác (exact) theo inner product trên vector đã chuẩn hóa; cùng cách với `simcse/tool.py` | Nếu cài lỗi, dùng numpy dot product (kết quả giống hệt vì đều exact) |
 | Gộp MaxP theo Điều | Điều dài phải chia chunk vì giới hạn 256 token; hiển thị và đánh giá ở mức Điều | Nhãn gold của D1 ở mức Điều |
 
 **Lưu ý:** min-max normalize theo từng câu hỏi làm top-1 luôn gần 1, nên **không** dùng điểm fused làm độ tin cậy. Confidence dùng cosine tuyệt đối của SimCSE-VN.
 
-### 5.3 Metadata, trích dẫn, phiên bản và trường hợp không chắc chắn
+### 5.3 Trích dẫn và trường hợp không chắc chắn
 
-- **`documents.yaml`**, mỗi văn bản một mục: `doc_id`, `title`, `so_hieu` (số quyết định), `ngay_ban_hanh`, `hieu_luc_tu`, `trang_thai` (hiện hành / hết hiệu lực), `source_url`, `file`, `sha256`.
-- **Index:** mặc định chỉ index văn bản *hiện hành*. Mỗi chunk giữ `doc_id`, `article`, `clause`, offset ký tự để trích đúng nguyên văn.
-- **Hiển thị:** "Điều 12, Khoản 2 – \<tên văn bản\> (QĐ số …, ngày …)", kèm dòng nhắc "Kết quả để tham khảo, hãy đối chiếu văn bản gốc".
-- **Độ tin cậy thấp:** vẫn hiển thị top-3, gắn nhãn cảnh báo và gợi ý liên hệ phòng đào tạo. MVP **không từ chối cứng**. Ngưỡng τ được chọn và đánh giá theo E3 ([§6.4](#64-thí-nghiệm-thiết-yếu)).
+- **Nguồn dữ liệu:** D1 chỉ có nội dung từng đoạn. Bộ dữ liệu không ghi Điều thuộc văn bản nào, số hiệu, ngày ban hành hay phiên bản. Repo ViRE @ `60ea715` cũng không có file nào ánh xạ đoạn về văn bản gốc (đã kiểm tra 23/11). Vì vậy ứng dụng **không** hiển thị các thông tin này và không suy đoán chúng.
+- **Index:** mỗi chunk giữ `article_id` (mã đoạn trong D1), `article` (số Điều), `article_title`, `clause`, offset ký tự để trích đúng nguyên văn.
+- **Hiển thị:** "Điều 6, Khoản … – \<tên Điều\> (nguồn: bộ dữ liệu ViRHE4QA)", kèm dòng nhắc "Kết quả để tham khảo, hãy đối chiếu văn bản gốc của trường".
+- **Độ tin cậy thấp:** vẫn hiển thị top-3, gắn nhãn cảnh báo và gợi ý liên hệ phòng đào tạo. MVP **không từ chối cứng**. Ngưỡng θ được chọn và đánh giá theo E3 ([§6.4](#64-thí-nghiệm-thiết-yếu)).
 
 ### 5.4 Interface & định dạng dữ liệu
 
 Hai người chốt phần này trước 25/11 để làm song song. Owner theo [docs/PLAN.md](../PLAN.md).
 
 ```text
-corpus.jsonl   {chunk_id, doc_id, article_id, article, article_title, clause|null, text, char_start, char_end}
-queries.jsonl  {qid, question, gold_article_ids: [..], gold_clause|null, split: dev|test, source: virhe4qa|d2, in_scope: bool}
+corpus.jsonl   {chunk_id, article_id, article, article_title, clause|null, text, char_start, char_end}
+queries.jsonl  {qid, question, gold_article_ids: [..], gold_clause|null, split: dev|test}
 runs/<method>.jsonl  {qid, ranked: [[article_id, score], ...]}   # top-20
 API: search(query: str, k: int = 3, method: "bm25"|"dense"|"hybrid") -> list[Hit]
      Hit = {article_id, score, best_chunk_id, bm25_score, dense_cos, low_confidence: bool}
@@ -354,14 +356,14 @@ API: search(query: str, k: int = 3, method: "bm25"|"dense"|"hybrid") -> list[Hit
 | Module (vị trí trong repo) | Input → Output | Owner | Tái sử dụng / Mới |
 |---|---|---|---|
 | `data/prepare_virhe4qa.py` | CSV ViRE → corpus/queries D1 + group split | Minh | Mới |
-| `src/simcse_lab/retrieval/ingest.py` | PDF/DOCX/TXT + `documents.yaml` → `corpus.jsonl` | Minh | Mới (dùng pdfplumber, python-docx) |
+| `src/simcse_lab/retrieval/ingest.py` | context của D1 → tách Khoản, chunk → `corpus.jsonl` | Minh | Mới |
 | `src/simcse_lab/retrieval/preprocess.py` | text → text chuẩn hóa / tách từ / token BM25 | Minh | Mới (dùng pyvi) |
 | `src/simcse_lab/model/encoders.py` | list[str] → ndarray (L2-norm) | Minh | Model tái sử dụng; code mới (tham khảo `simcse/tool.py`) |
 | `src/simcse_lab/retrieval/search.py` | query → list[Hit] (BM25 / dense / hybrid, MaxP, confidence) | Minh | Mới (dùng rank_bm25, faiss) |
 | `src/simcse_lab/evaluation/metrics.py` | runs + qrels → Hit@k, MRR@10 | Minh | Mới |
-| `src/simcse_lab/evaluation/stats.py` | hai runs → paired bootstrap CI; đo cảnh báo (coverage, false-confidence) | Huy | Mới |
-| `experiments/external_dataset/` | Chạy 3 phương pháp trên D1 (Minh); chọn α, τ trên D1-dev (Huy) → `results/` | Minh, Huy | Mới |
-| `experiments/application/` | So sánh trên D1-test và D2, phân tích lỗi (Huy); đo latency (Minh) → `results/` | Huy, Minh | Mới |
+| `src/simcse_lab/evaluation/stats.py` | hai runs → paired bootstrap CI; đo cảnh báo (coverage, Hit@1 theo nhóm tin cậy / không tin cậy) | Huy | Mới |
+| `experiments/external_dataset/` | Chạy 3 phương pháp trên D1 (Minh); chọn λ, θ trên D1-dev (Huy) → `results/` | Minh, Huy | Mới |
+| `experiments/application/` | So sánh trên D1-test, phân tích lỗi (Huy); đo latency (Minh) → `results/` | Huy, Minh | Mới |
 | `experiments/reproduction/` | `run_r1.py` gọi `evaluation.py` tại commit → `results/R1–R3` ✓; `run_r4.py` → `results/R4` ✓ | Huy | Code gốc + mới |
 | `src/simcse_lab/model/infonce.py` + `tests/test_infonce.py` | R4: InfoNCE tự cài + test khớp `cl_forward` | Huy | Mới |
 | `apps/app.py` | Gradio UI gọi `search` | Minh | Mới (dùng Gradio) |
@@ -372,9 +374,8 @@ Theo repo GitHub. Mục có dấu ✓ là đã có nội dung.
 
 ```
 ├── README.md · pyproject.toml · .gitignore
-├── configs/default.yaml              # model, max_len, chunk, α, τ, seed (dự kiến)
+├── configs/default.yaml              # model, max_len, chunk, λ, θ, seed (dự kiến)
 ├── data/                             # README + prepare_virhe4qa.py; raw/ processed/ bị gitignore
-│   └── d2/                           # documents.yaml, queries_d2.jsonl (nhóm tự tạo)
 ├── src/simcse_lab/
 │   ├── model/                        # encoders.py, infonce.py ✓
 │   ├── retrieval/                    # ingest.py, preprocess.py, search.py
@@ -382,8 +383,8 @@ Theo repo GitHub. Mục có dấu ✓ là đã có nội dung.
 ├── experiments/
 │   ├── reproduction/                 # ✓ run_r1.py, run_r1.bat, requirements-r1.txt, results/R1–R3; run_r4.py, results/R4
 │   │   └── SimCSE/                   # code gốc @ 235f89e (gitignore; script tự tải nếu thiếu)
-│   ├── external_dataset/             # đánh giá D1 (E0, E1, E3-D1) → results/
-│   └── application/                  # D2, so sánh, latency, lỗi (E2–E5) → results/
+│   ├── external_dataset/             # đánh giá D1 (E0, E1) → results/
+│   └── application/                  # so sánh theo mức trùng từ, cảnh báo, latency, lỗi (E2–E5) → results/
 ├── apps/app.py                       # Gradio
 ├── tests/                            # chunker, chuẩn hóa, metrics, infonce (✓ test_infonce.py, infonce_reference.py, conftest.py)
 ├── docs/                             # PLAN.md, application/{README,PROJECT}.md, report/, demo/
@@ -392,7 +393,7 @@ Theo repo GitHub. Mục có dấu ✓ là đã có nội dung.
 
 Môi trường cho ứng dụng dùng venv riêng (`.venv`, cài bằng `pip install -e .`), không dùng chung `.venv-repro`.
 
-**Stack:** Python 3.10 hoặc 3.11 [Proposed; kiểm tra pyvi cài được trước 25/11], torch, transformers, pyvi, rank_bm25, faiss-cpu, gradio, pdfplumber, python-docx, pyyaml, numpy, pandas, pytest. Không dùng server, database, Docker hay CI.
+**Stack:** Python 3.10 hoặc 3.11 [Proposed; kiểm tra pyvi cài được trước 25/11], torch, transformers, pyvi, rank_bm25, faiss-cpu, gradio, pyyaml, numpy, pandas, pytest. Không dùng server, database, Docker hay CI.
 
 ---
 
@@ -402,8 +403,7 @@ Môi trường cho ứng dụng dùng venv riêng (`.venv`, cài bằng `pip ins
 
 | ID | Dataset | Vai trò | Thông tin | Truy cập / License |
 |---|---|---|---|---|
-| **D1** | ViRHE4QA, bản con trong ViRE: `data/ViRHE4QA_v2.csv` @ ViRE commit `60ea7155134eaa426ab1d0a82d2bbbf327d1b470` | **Dataset mới chính** (bắt buộc) | [Confirmed, đã đọc file] 1.000 câu hỏi, 297 context khác nhau (287 bắt đầu bằng "Điều"). Mỗi câu hỏi có đúng 1 context gold. Cột: `split, index, context, question, extractive answer, abstractive answer, label`. Theo nội dung mẫu, đây là quy định của Trường ĐH CNTT – ĐHQG-HCM. Context dài: trung vị 173 từ, p90 495, tối đa 1.249 → cần chunk. Ý nghĩa cột `label` (0/1, 500/500) chưa rõ [Unverified] và không dùng | Tải trực tiếp từ GitHub. ViRE: code MIT, dataset bên thứ ba giữ license gốc. Bài gốc R2GQA ghi dữ liệu cung cấp "on reasonable request" → license [Unverified]. Chỉ dùng đánh giá học thuật, trích dẫn cả hai. **Nộp bằng link permalink** tới file ở commit trên (giảng viên cho phép nộp dataset bằng link) |
-| **D2** | Quy chế của trường + câu hỏi nhóm tự viết | Test trong bối cảnh thực tế (**chỉ test**) | [Proposed] 80–100 câu trong phạm vi + 20 câu ngoài phạm vi | Văn bản công khai của trường; câu hỏi do nhóm tạo, không chứa dữ liệu cá nhân. Upload Google Drive (public) và nộp link |
+| **D1** | ViRHE4QA, bản con trong ViRE: `data/ViRHE4QA_v2.csv` @ ViRE commit `60ea7155134eaa426ab1d0a82d2bbbf327d1b470` (sha256 `23fb9699…aa5682`) | **Dataset đánh giá duy nhất** của ứng dụng (bắt buộc), đồng thời là corpus tra cứu | [Confirmed, đã đọc file] 1.000 câu hỏi, 297 context khác nhau (287 bắt đầu bằng "Điều"). Mỗi câu hỏi có đúng 1 context gold. Cột: `split, index, context, question, extractive answer, abstractive answer, label`. Theo nội dung, đây là quy định của Trường ĐH CNTT – ĐHQG-HCM: 77/297 context nêu tên trường, không context nào nêu trường khác. Tóm tắt bài R2GQA không nêu tên trường, nên đây là suy ra từ nội dung (kiểm tra 23/11). Không có thông tin văn bản gốc, số hiệu hay phiên bản của từng Điều. Context dài: trung vị 173 từ, p90 495, tối đa 1.249 → cần chunk. Ý nghĩa cột `label` (0/1, 500/500) chưa rõ [Unverified] và không dùng | Tải trực tiếp từ GitHub. ViRE: code MIT, dataset bên thứ ba giữ license gốc. Bài gốc R2GQA ghi dữ liệu cung cấp "on reasonable request" → license [Unverified]. Chỉ dùng đánh giá học thuật, trích dẫn cả hai. **Nộp bằng link permalink** tới file ở commit trên (giảng viên cho phép nộp dataset bằng link) |
 | R-STS | STS12–16, STS-B, SICK-R | Tái hiện R1–R3 | Theo script repo | `senteval.tar` (HF `princeton-nlp/datasets-for-simcse`) |
 | D1-full | ViRHE4QA đầy đủ (9.758 cặp QA, 294 điều) | Tùy chọn | [Confirmed theo arXiv:2409.02840] | Xin tác giả; dự án **không phụ thuộc** vào bộ này |
 | Dự phòng | EduCoQA (`data/EduCoQA.csv` trong ViRE; 511 câu hỏi / 262 đoạn, tư vấn tuyển sinh HCMUT) | Chỉ dùng nếu D1 không dùng được | [Confirmed] | CC BY-NC 4.0; bản trên HF cần đăng nhập |
@@ -413,7 +413,7 @@ Môi trường cho ứng dụng dùng venv riêng (`.venv`, cài bằng `pip ins
 - **ViRE** (toàn bộ 1.000 câu): BM25 đạt P@1 65,8%, R@10 93,5%, MRR@10 76,05. Hybrid tốt nhất đạt MRR@10 81,42, với backbone khác SimCSE-VN.
 - **R2GQA** trên ViRHE4QA đầy đủ (theo split của họ): BM25 đạt P@1 68,75; embedding LM pretrained đạt P@1 44,06.
 
-**Hệ quả:** câu hỏi D1 được viết từ chính văn bản nên trùng từ vựng cao, và BM25 rất mạnh. Nhóm **không cam kết** dense hay hybrid sẽ thắng BM25 trên D1. D2 (câu hỏi kiểu sinh viên) là nơi kiểm tra lợi ích ngữ nghĩa.
+**Hệ quả:** câu hỏi D1 được viết từ chính văn bản nên trùng từ vựng cao, và BM25 rất mạnh. Nhóm **không cam kết** dense hay hybrid sẽ thắng BM25 trên D1. Lợi ích ngữ nghĩa được kiểm tra trên nhóm câu ít trùng từ với Điều đúng trong D1-test (E2). Nhóm này có thể nhỏ, nên phải báo kèm số câu và CI.
 
 ### 6.2 Tiền xử lý, gán nhãn và chia dữ liệu
 
@@ -421,19 +421,13 @@ Môi trường cho ứng dụng dùng venv riêng (`.venv`, cài bằng `pip ins
 
 - Corpus là 297 context, mỗi context một `article_id`. Queries là cả 1.000 câu hỏi.
 - **Group split theo context** (seed 42): dev khoảng 20% context, test khoảng 80%. Câu hỏi về cùng một Điều không nằm ở cả dev và test.
+- **Bắt buộc:** nhóm context "Điều 6. Báo cáo tiến độ thực hiện KLTN" (4 câu hỏi, gồm câu index 9542) phải vào **dev**, vì câu 9542 đã dùng làm ví dụ lexical gap trong Introduction của báo cáo. Gán nhóm này trước, rồi chia ngẫu nhiên phần còn lại.
 - Corpus vẫn chứa **toàn bộ** 297 context, vì đây là kho tri thức chứ không phải nhãn.
-- Bỏ qua cột `split` gốc: test gốc chỉ có 77 câu, và chia theo cặp QA nên context có thể trùng giữa các split.
+- Bỏ qua cột `split` gốc: test gốc chỉ có 77 câu, và cách chia này bị rò rỉ. Ví dụ đã kiểm tra 23/11: context của Điều 6 nói trên có 2 câu ở train và 2 câu ở test.
 - Loại câu hỏi trùng lặp nguyên văn nếu có, và ghi lại số lượng đã loại.
 
-**D2**
-
-- Huy và Minh mỗi người viết 40–50 câu hỏi, có thể thu thêm câu hỏi thật của bạn học qua Google Form ẩn danh (chỉ lấy nội dung câu hỏi).
-- Quy tắc: diễn đạt như sinh viên, không chép cụm quá 3 từ liên tiếp từ văn bản. Thêm khoảng 20 câu ngoài phạm vi văn bản.
-- **Gán nhãn:** người viết ghi `gold_article_ids` (và Khoản nếu rõ); người kia kiểm tra độc lập. Ghi tỉ lệ đồng ý trước khi thảo luận và lưu log bất đồng.
-- D2 **chỉ dùng để test**. Không dùng để chọn α, τ hay huấn luyện.
-
 **Chống leakage:**
-- α và τ chỉ chọn trên D1-dev.
+- λ và θ chỉ chọn trên D1-dev.
 - Không xem kết quả test trước khi chốt cấu hình.
 - Phiên bản ứng dụng dùng cho demo phải là cấu hình đã chốt.
 
@@ -461,11 +455,11 @@ Môi trường cho ứng dụng dùng venv riêng (`.venv`, cài bằng `pip ins
 | ID | Mục đích | Thiết lập | Đầu ra |
 |---|---|---|---|
 | E0 | Kiểm tra cài đặt | BM25 trên toàn bộ 1.000 câu D1, so sơ bộ với MRR@10 = 76,05 của ViRE. Lệch lớn → kiểm tra tách từ/chuẩn hóa | Ghi chú sanity check |
-| E1 | Chất lượng truy hồi trên dataset mới | `bm25`, `dense`, `hybrid` (+ `phobert-raw`) trên D1-test. α chọn trên D1-dev (lưới 0..1, bước 0,1, tối ưu MRR@10) | Bảng + CI cho `hybrid`−`bm25`, `dense`−`phobert-raw` |
-| E2 | Bối cảnh thực tế và câu hỏi diễn đạt khác văn bản | Như E1 trên D2-in-scope, cấu hình giữ nguyên. Chia câu hỏi theo mức trùng từ vựng với Điều gold (Jaccard token, ba nhóm thấp/vừa/cao) và báo metric từng nhóm | Bảng + phân tích theo nhóm |
-| E3 | Đánh giá cảnh báo độ tin cậy | τ chọn trên D1-dev: τ lớn nhất sao cho coverage ≥ 80% [Proposed, chốt khi có dữ liệu dev]. Trên D1-test và D2: coverage, Hit@1 trong nhóm "tin cậy" và nhóm "không tin cậy", tỉ lệ câu ngoài phạm vi bị đánh dấu tin cậy (false-confidence) | Bảng + biểu đồ risk–coverage |
+| E1 | Chất lượng truy hồi trên dataset mới | `bm25`, `dense`, `hybrid` (+ `phobert-raw`) trên D1-test. λ chọn trên D1-dev (lưới 0..1, bước 0,1, tối ưu MRR@10) | Bảng + CI cho `hybrid`−`bm25`, `dense`−`phobert-raw` |
+| E2 | Câu hỏi diễn đạt khác văn bản | Dùng lại kết quả E1 trên D1-test, cấu hình giữ nguyên. Chia câu hỏi theo mức trùng từ vựng với Điều gold (Jaccard token, ba nhóm thấp/vừa/cao) và báo metric từng nhóm kèm số câu mỗi nhóm | Bảng + phân tích theo nhóm |
+| E3 | Đánh giá cảnh báo độ tin cậy | θ chọn trên D1-dev: θ lớn nhất sao cho coverage ≥ 80% [Proposed, chốt khi có dữ liệu dev]. Trên D1-test: coverage, Hit@1 trong nhóm "tin cậy" và nhóm "không tin cậy". Không đo câu ngoài phạm vi vì không có dữ liệu (D2 đã bỏ, D-16) | Bảng + biểu đồ risk–coverage |
 | E4 | Chi phí sử dụng | Latency p50/p95 trên CPU cho `bm25`/`dense`/`hybrid`; ghi cấu hình máy | Bảng |
-| E5 | Phân tích lỗi | 20–30 câu sai của `hybrid` (cả D1 và D2), phân loại: tách từ, Điều dài bị cắt, số/ngày tháng, viết tắt (vd. ĐTTX, KLTN), câu hỏi cần nhiều Điều, khác biệt diễn đạt | Bảng phân loại + ví dụ |
+| E5 | Phân tích lỗi | 20–30 câu sai của `hybrid` trên D1-test, phân loại: tách từ, Điều dài bị cắt, số/ngày tháng, viết tắt (vd. ĐTTX, KLTN), câu hỏi cần nhiều Điều, khác biệt diễn đạt | Bảng phân loại + ví dụ |
 
 Thêm R1 và R4 ([§4.5](#45-kế-hoạch-tái-hiện-kết-quả-paper)). Kết quả của nhóm chỉ ghi vào bảng ở §6.7 sau khi đã chạy.
 
@@ -485,7 +479,7 @@ Chỉ làm khi MVP xong và còn thời gian.
 | O1 | Domain-adaptive SimCSE: (a) unsup SimCSE tiếp tục trên câu của corpus quy chế; hoặc (b) supervised với cặp (câu hỏi, Điều đúng) + hard negative do BM25 khai thác, cần thêm D1-train theo group split. So với `dense` trên cùng test, 3 seed | Chỉ khi E1–E5 xong trước 06/12; dừng mọi việc tùy chọn sau 08/12 |
 | O2 | User study nhỏ: 5–8 sinh viên, 4–6 nhiệm vụ tra cứu, within-subject (Ctrl+F trên PDF và ứng dụng, đảo thứ tự). Đo task success, thời gian, 3–5 câu Likert | Khi có thời gian; báo cáo là nghiên cứu nhỏ, không khái quát hóa |
 | O3 | R5 mini dropout ablation | Có GPU rảnh |
-| O4 | pyvi vs VnCoreNLP (RDRSegmenter); RRF vs α-fusion; có/không tiền tố tiêu đề Điều trong chunk | Rẻ, nếu E5 chỉ ra vấn đề liên quan |
+| O4 | pyvi vs VnCoreNLP (RDRSegmenter); RRF vs λ-fusion; có/không tiền tố tiêu đề Điều trong chunk | Rẻ, nếu E5 chỉ ra vấn đề liên quan |
 | O5 | Encoder đa ngôn ngữ làm trần tham chiếu (vd. `intfloat/multilingual-e5-base`) | Chỉ để thảo luận; không bắt buộc thắng |
 
 ### 6.7 Bảng theo dõi kết quả
@@ -526,13 +520,12 @@ Còn 18 ngày (23/11 → 11/12/2026). Phase 3 xong trước **06/12**. Từ 07/1
 |---|---|---|---|
 | 1 – Nghiên cứu paper | 27/11 | Hai phần viết đã đọc chéo. Huy: bài toán và phương pháp; Minh: dữ liệu, baseline, metric, kết quả, hạn chế | — |
 | 2 – Triển khai và tái hiện | 30/11 | **Huy:** R1 ✓ (thêm R2, R3 ✓), R4 InfoNCE + test ✓, giải thích luồng code. **Minh:** D1 + group split; SimCSE-VN dense trên D1 (Hit@1/3, MRR@10, top-20, bảng D1-test) | D1 có sẵn |
-| 3 – Xây dựng ứng dụng | 06/12 | **Minh:** chọn văn bản (trước 27/11), tách Điều/Khoản, BM25 + Hybrid, Gradio, latency. **Huy:** bảng so sánh + CI, chọn α/τ trên D1-dev, so sánh D1-test và D2, phân tích lỗi. **Cả hai:** D2 chốt nhãn trước 02/12 | Phase 2 |
+| 3 – Xây dựng ứng dụng | 06/12 | **Minh:** corpus từ D1, tách Khoản, BM25 + Hybrid, Gradio, latency. **Huy:** bảng so sánh + CI, chọn λ/θ trên D1-dev, so sánh trên D1-test (chung và theo mức trùng từ), phân tích lỗi | Phase 2 |
 | 4 – Hoàn thiện và nộp | 10/12; nộp 11/12 | **Huy:** PDF IEEE, chạy lại từ clone sạch. **Minh:** README, video, `[Group14].zip`, kiểm tra link | Phase 3 |
 | Tùy chọn O1–O5 | dừng 08/12 | Chỉ làm nếu Phase 3 xong trước 06/12 | Phase 3 |
 
 **Ràng buộc thứ tự**
-- Nhãn D2 phải chốt **trước** khi xem dự đoán trên D2.
-- α và τ phải cố định trên D1-dev **trước** khi chạy D1-test và D2.
+- λ và θ phải cố định trên D1-dev **trước** khi chạy D1-test.
 - Demo và video chỉ dùng cấu hình đã đánh giá.
 
 ---
@@ -547,18 +540,17 @@ Còn 18 ngày (23/11 → 11/12/2026). Phase 3 xong trước **06/12**. Từ 07/1
 | Thời gian còn 18 ngày cho 2 người | Cao | MVP trước; hạn từng milestone ở §7.2; dừng việc tùy chọn sau 08/12; nộp trước 20:00 ngày 11/12 |
 | pyvi không cài được [Unverified] | Trung bình | Thử Python 3.10; dự phòng VnCoreNLP (cần Java) hoặc underthesea và ghi rõ khác với model card |
 | Không có GPU / hết quota | Thấp với MVP | MVP và R1 chạy CPU; GPU chỉ cần cho O1, O3 (Kaggle/Colab) |
-| SimCSE-VN truy hồi kém, hybrid không thắng BM25 | Cao | Kết quả âm vẫn hợp lệ: phân tích theo mức trùng từ vựng (E2) và lỗi (E5); đóng góp vẫn gồm trích dẫn, phiên bản, cảnh báo được đánh giá; cân nhắc O1 |
-| License D1 không rõ hoặc repo ViRE bị gỡ | Trung bình | Link nộp là permalink theo commit (không đổi được nội dung); lưu bản sao riêng để chạy lại; dự phòng EduCoQA; D2 vẫn là dataset mới của nhóm |
-| PDF quy chế là bản scan | Trung bình | Chọn bản text-based hoặc DOCX từ website; nếu không có thì chuyển text thủ công cho 1–2 văn bản (OCR ngoài phạm vi) |
-| Regex tách Điều/Khoản sai do định dạng khác nhau | Trung bình | Test trên ≥ 2 văn bản; kiểm tra thủ công số Điều so với mục lục |
-| Nhãn D2 không nhất quán | Trung bình | Kiểm tra chéo, ghi tỉ lệ đồng ý, có log bất đồng |
+| SimCSE-VN truy hồi kém, hybrid không thắng BM25 | Cao | Kết quả âm vẫn hợp lệ: phân tích theo mức trùng từ vựng (E2) và lỗi (E5); đóng góp vẫn gồm trích nguyên văn theo Điều, cảnh báo được đánh giá; cân nhắc O1 |
+| License D1 không rõ hoặc repo ViRE bị gỡ | Trung bình | Link nộp là permalink theo commit (không đổi được nội dung); lưu bản sao riêng để chạy lại; dự phòng EduCoQA. D1 vừa là corpus vừa là dữ liệu đánh giá duy nhất, nên rủi ro này ảnh hưởng toàn bộ phần ứng dụng |
+| Chỉ đánh giá trên D1: câu hỏi trùng từ nhiều với văn bản, không có câu ngoài phạm vi | Trung bình | Báo riêng nhóm câu ít trùng từ (E2); nêu rõ trong báo cáo rằng chưa đo được cảnh báo với câu ngoài phạm vi (D-16) |
+| Regex tách Khoản sai do định dạng khác nhau giữa các Điều | Trung bình | Test trên các dạng đánh số Khoản có trong D1; kiểm tra thủ công một mẫu Điều |
 | Tách từ không nhất quán giữa index và query | Trung bình | Một hàm `preprocess` dùng chung + unit test |
 | Link nộp bài không truy cập được (−50%) | Cao | Kiểm tra mọi link ở chế độ ẩn danh trước khi nộp (Phase 4, Minh) |
 
 ### 8.2 Các nội dung đã điều chỉnh so với Research
 
 - **D1 truy cập được ngay:** bản con ViRHE4QA có sẵn trong repo ViRE, không cần chờ xin bộ đầy đủ.
-- **Thu gọn khối lượng:** D2 giảm từ 150–300 câu xuống 80–100 câu + 20 câu ngoài phạm vi. Cohen's κ, user study và fine-tuning chuyển sang tùy chọn. Baseline bắt buộc chỉ còn BM25 / SimCSE-VN / Hybrid.
+- **Thu gọn khối lượng:** D2 giảm từ 150–300 câu xuống 80–100 câu + 20 câu ngoài phạm vi, rồi bỏ hẳn ngày 23/11 (D-16). Cohen's κ, user study và fine-tuning chuyển sang tùy chọn. Baseline bắt buộc chỉ còn BM25 / SimCSE-VN / Hybrid.
 - **Sửa thông tin code:** tại commit cố định không có `--mlp_only_train` (Research mô tả theo bản fork hoặc `main`). Thêm các khác biệt eval_steps 125/250 và 81,58/81,57.
 - **Số liệu R2GQA:** chỉ giữ những số đã đối chiếu được. Một số con số Research nêu (vd. ViSimCSE P@1 43,24, ensemble 72,13) chưa xác minh nên **không dùng**.
 - **Confidence:** dùng cosine tuyệt đối, không dùng điểm fused đã min-max. Dạng cảnh báo thay vì từ chối cứng.
@@ -570,29 +562,29 @@ Còn 18 ngày (23/11 → 11/12/2026). Phase 3 xong trước **06/12**. Từ 07/1
 |---|---|---|
 | D-01 | Option 1; ứng dụng tra cứu quy chế học vụ; không chuyển sang Option 2 | Chốt |
 | D-02 | Encoder: `VoVanPhuc/sup-SimCSE-VietNamese-phobert-base` + pyvi + `pooler_output`, max_len 256 | Chốt cho MVP |
-| D-03 | Hybrid α-fusion trên điểm min-max theo Điều; α chọn trên D1-dev | Chốt |
+| D-03 | Hybrid λ-fusion trên điểm min-max theo Điều; λ chọn trên D1-dev | Chốt |
 | D-04 | Chunk theo Khoản (≤ 256 token, chia cửa sổ nếu dài); xếp hạng và đánh giá theo Điều (MaxP) | Chốt |
 | D-05 | Không dùng LLM sinh câu trả lời; hiển thị nguyên văn + nguồn | Chốt |
-| D-06 | Confidence = cosine SimCSE của chunk tốt nhất trong top-1; τ từ D1-dev; chỉ cảnh báo | Chốt; quy tắc chọn τ chốt khi có dev |
-| D-07 | D1 = ViRHE4QA (ViRE @ `60ea715`) là dataset mới chính; D2 chỉ test | Chốt |
+| D-06 | Confidence = cosine SimCSE của chunk tốt nhất trong top-1; θ từ D1-dev; chỉ cảnh báo | Chốt; quy tắc chọn θ chốt khi có dev |
+| D-07 | D1 = ViRHE4QA (ViRE @ `60ea715`) là dataset mới chính; D2 chỉ test | Phần D2 bị thay bởi D-16 |
 | D-08 | Tái hiện = R1 (bắt buộc) + R4; R2, R3 khuyến nghị; train SimCSE là tùy chọn | Chốt |
 | D-09 | Gradio, chạy local; không server, database hay auth | Chốt |
 | D-10 | FAISS `IndexFlatIP`, fallback numpy | Chốt |
 | D-11 | Fine-tuning (O1) chỉ sau MVP; không nhắm bonus | Chốt |
 | D-12 | Môi trường tái hiện: venv Python 3.11 + `experiments/reproduction/requirements-r1.txt` (numpy 1.23.5, scipy 1.10.1, scikit-learn 1.2.2, torch 2.5.1 CPU, transformers 4.46.3); chạy qua `repro/run_r1.py` | Chốt |
-| D-13 | Dataset nộp bằng link: D1 = permalink ViRE @ `60ea715`; D2 = Google Drive public | Chốt (giảng viên cho phép) |
+| D-13 | Dataset nộp bằng link: D1 = permalink ViRE @ `60ea715`; D2 = Google Drive public | Chốt (giảng viên cho phép); phần D2 bị thay bởi D-16 |
 | D-14 | Phân công theo `docs/PLAN.md`; PROJECT.md chỉ giữ lịch và phụ thuộc | Chốt (23/11) |
 | D-15 | Cấu trúc code theo repo `UniSearch-SimCSE` (package `simcse_lab`, thư mục `experiments/`) | Chốt (23/11) |
+| D-16 | Bỏ D2. Chỉ đánh giá trên D1; corpus của ứng dụng là 297 đoạn quy chế ĐH CNTT trong D1, không dùng quy chế trường khác. Ứng dụng hiển thị số và tên Điều, không hiển thị văn bản gốc hay phiên bản vì D1 không có thông tin này. Không đo cảnh báo với câu ngoài phạm vi | Chốt (23/11, Huy; Huy báo Minh) |
 
 **Vấn đề còn mở**
 
 | ID | Câu hỏi | Ai giải quyết |
 |---|---|---|
-| Q2 | Dùng văn bản quy chế nào của trường (tên, số hiệu, bản text-based)? | Minh |
 | Q5 | pyvi và faiss-cpu có cài được trên môi trường của nhóm không? | Minh (trước 25/11) |
 | Q6 | Ý nghĩa cột `label` trong D1 | Minh (không chặn tiến độ) |
 
-Đã giải quyết (23/11): không xét bonus; Group ID = 14; deadline 23:59 ngày 11/12/2026; dataset được nộp bằng link; không cần xin phép giảng viên để dùng dataset.
+Đã giải quyết (23/11): không xét bonus; Group ID = 14; deadline 23:59 ngày 11/12/2026; dataset được nộp bằng link; không cần xin phép giảng viên để dùng dataset; Q2 (chọn văn bản quy chế của trường) đóng vì corpus lấy từ D1 (D-16).
 
 ### 8.4 Definition of Done
 
@@ -603,7 +595,7 @@ Còn 18 ngày (23/11 → 11/12/2026). Phase 3 xong trước **06/12**. Từ 07/1
 - Seed được ghi lại.
 
 **Ứng dụng**
-- Nhận câu hỏi tiếng Việt tự do; trả về top-3 Điều/Khoản với trích đoạn, tên văn bản, số hiệu, ngày ban hành.
+- Nhận câu hỏi tiếng Việt tự do; trả về top-3 Điều/Khoản với trích đoạn, số và tên Điều.
 - Có nhãn cảnh báo, chế độ so sánh BM25 và dòng nhắc tham khảo.
 - Chạy trên CPU; latency đã đo.
 
@@ -626,8 +618,7 @@ Còn 18 ngày (23/11 → 11/12/2026). Phase 3 xong trước **06/12**. Từ 07/1
 
 **Nộp bài** (trước 23:59 ngày 11/12/2026, mục tiêu trước 20:00)
 - `[Group14].zip` gồm code hoặc link GitHub, video, PDF.
-- Link dataset (D1 permalink ViRE, D2 Google Drive) và link code đã kiểm tra ở chế độ ẩn danh.
-- D2 public trên Google Drive (giữ ≥ 2 năm).
+- Link dataset (D1 permalink ViRE) và link code đã kiểm tra ở chế độ ẩn danh.
 
 ### 8.5 References
 

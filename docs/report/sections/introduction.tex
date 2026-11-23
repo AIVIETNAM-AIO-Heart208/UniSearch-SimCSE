@@ -12,9 +12,24 @@ of a faculty website, matches exact strings only and does not rank its hits.
 It therefore misses relevant articles whenever the student does not guess the
 official term, and reading the whole document instead takes a long time.
 General-purpose chatbots answer fluently, but they may produce statements that
-are not in the regulations, and they cannot guarantee that they cite the
-version in force at the student's own university.
-\TODO{Add one real question--article pair from D1 or D2 that shows the lexical gap.}
+are not in the regulations, and they do not point to the article that supports
+their answer.
+
+% Example: data/ViRHE4QA_v2.csv of https://github.com/longstnguyen/ViRE at commit
+% 60ea7155134eaa426ab1d0a82d2bbbf327d1b470 (file sha256 23fb969985150599d3ad0b5229d039b8541ed335fbc29dcfa0b0d733ccaa5682),
+% row index=9542 (original split: train). Quotes keep the dataset wording;
+% only whitespace is normalised. Its context group must go to D1-dev in our
+% split, because it is used here (docs/application/PROJECT.md, Section 6.2).
+For example, one question in the public ViRHE4QA
+subset~\cite{do2024r2gqaretrieverreadergeneratorquestionanswering,nguyen-quan-2026-works}
+asks ``Việc làm KLTN có thể bị dừng giữa chừng không?'', that is, whether work
+on a graduation thesis can be stopped midway (KLTN abbreviates \emph{khóa luận
+tốt nghiệp}, graduation thesis). The answer is in an article titled ``Báo cáo
+tiến độ thực hiện KLTN'' (progress reports on the thesis), which lists ``Đình
+chỉ việc thực hiện KLTN'' (suspending the thesis) among the possible measures. The
+student's phrase \emph{dừng giữa chừng} (stop midway) does not occur in the
+article, which uses the legal term \emph{đình chỉ} (suspend) instead, and the
+title of the article does not mention stopping at all.
 
 We cast the task as \emph{semantic retrieval}. Given a Vietnamese question $q$
 and a collection of regulation passages, the system ranks the articles by
@@ -76,17 +91,22 @@ computation in the official code (Section~\ref{sec:method-infonce}).
 % Number below: experiments/reproduction/results/R4/metrics.json.
 In float64 the two agree within $1.4\times10^{-9}$ over all tested batch
 sizes, temperatures and hard-negative weights;
-\item builds a retrieval assistant for Vietnamese academic regulations. It
-combines BM25 with a SimCSE-style Vietnamese encoder, ranks whole articles,
-shows the verbatim text with its source and version, and flags low-confidence
-results instead of generating an answer (Sections~\ref{sec:method-pipeline}
-and~\ref{sec:app});
-\item evaluates the encoder and the assistant on two datasets that the paper
-does not use. The first is the public ViRHE4QA
+% Checked 23/11 on ViRHE4QA_v2.csv @ ViRE 60ea715: 77 of the 297 distinct
+% contexts name the university (ĐHCNTT / Trường ĐH CNTT); no other university
+% is named. The R2GQA abstract does not name the source university, so the
+% attribution below rests on the article text.
+\item builds a retrieval assistant over the regulation articles collected in
+ViRHE4QA. Judging by their wording, these are regulations of the University of
+Information Technology (UIT), VNU-HCM, the only university that the articles
+name. The assistant combines BM25 with a
+SimCSE-style Vietnamese encoder, ranks whole articles, shows the verbatim text
+with its article number and title, and flags low-confidence results instead of
+generating an answer (Sections~\ref{sec:method-pipeline} and~\ref{sec:app});
+\item evaluates the encoder and the assistant on the public ViRHE4QA
 subset~\cite{do2024r2gqaretrieverreadergeneratorquestionanswering,nguyen-quan-2026-works},
-evaluated with a development/test split grouped by source article. The second
-is a test set of student-style questions that we wrote. Comparisons are
-reported with bootstrap confidence intervals
+which the paper does not use, with a development/test split grouped by source
+article. Comparisons are reported with bootstrap confidence intervals, overall
+and for questions that share few words with their gold article
 \TODO{one-sentence main finding once E1--E3 are done; do not claim that the
 hybrid beats BM25 unless the results show it}.
 \end{itemize}

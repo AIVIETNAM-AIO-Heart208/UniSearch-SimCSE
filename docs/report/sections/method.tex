@@ -350,11 +350,14 @@ Its model card does not state the training data, so its scores are not results
 of the SimCSE paper. The pipeline has an offline indexing stage and an online
 query stage.
 
-\textbf{Indexing.} Each regulation document is split into articles
-(\emph{Điều}) and clauses (\emph{Khoản}). Each clause becomes a chunk of at most
-256 subword tokens, the input limit of PhoBERT. A longer clause is split into
-windows. Every chunk keeps its document, article, clause and character offsets,
-so the interface can quote the original text verbatim. Text is normalised to
+\textbf{Indexing.} The corpus consists of the distinct regulation passages of
+ViRHE4QA, most of which are single articles (\emph{Điều}). Each passage is split
+into its clauses (\emph{Khoản}), and each clause becomes a chunk of at most 256
+subword tokens, the input limit of PhoBERT. A longer clause is split into
+windows. Every chunk keeps its passage identifier, article number and title,
+clause and character offsets, so the interface can quote the original text
+verbatim. The dataset does not record which document or version each article
+comes from, so the assistant cannot show this information. Text is normalised to
 Unicode NFC, tone-mark placement is unified (e.g.\ \emph{khoá} and \emph{khóa}),
 and words are segmented with pyvi, which the PhoBERT vocabulary requires. The
 same function is applied to queries, so that index and queries are always
@@ -378,9 +381,9 @@ s_{\mathrm{hyb}}(q,a) = \lambda\,\hat{s}_{\mathrm{bm25}}(q,a)
 \end{equation}
 BM25 captures exact terms, numbers and abbreviations, and the encoder captures
 paraphrases. The weight $\lambda\in[0,1]$ is the only fitted parameter of the
-ranking. It is chosen on the development split of D1 only
+ranking. It is chosen on the development split of ViRHE4QA only
 (Section~\ref{sec:setup}). The system returns the top three articles, each with
-its best clause, its verbatim text and its source document.
+its best clause, its verbatim text and its article number and title.
 
 \textbf{Low-confidence warning.} Let $c^\star$ be the best chunk of the
 top-ranked article. If $\mathrm{sim}(q,c^\star)<\theta$, the results are still

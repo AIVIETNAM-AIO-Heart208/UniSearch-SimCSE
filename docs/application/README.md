@@ -1,7 +1,7 @@
 # Trợ lý tra cứu quy chế học vụ tiếng Việt (SimCSE)
 
 Đồ án Lab 03 – Machine Learning, **Nhóm 14**, **Option 1: Practical Application**.
-Ứng dụng tìm đúng **Điều/Khoản** trong văn bản quy chế học vụ cho câu hỏi tự nhiên của sinh viên, hiển thị nguyên văn kèm nguồn và phiên bản văn bản.
+Ứng dụng tìm đúng **Điều/Khoản** trong quy chế học vụ lấy từ bộ dữ liệu ViRHE4QA cho câu hỏi tự nhiên của sinh viên, hiển thị nguyên văn kèm số và tên Điều. Theo nội dung, đây là quy chế của Trường ĐH CNTT – ĐHQG-HCM, trường duy nhất được nêu tên trong các Điều.
 
 > **Trạng thái:** đã tái hiện R1–R3, khớp paper (TB STS 81,58 / 76,25 / 56,70), và R4 (InfoNCE tự cài khớp `cl_forward`, lệch ≤ 1,4e-9 ở float64); **chưa có code ứng dụng và chưa có kết quả đánh giá ứng dụng**.
 > Trạng thái chi tiết và việc tiếp theo: xem [PROJECT.md – Current Status](PROJECT.md#1-current-status).
@@ -17,15 +17,15 @@ Phân công chi tiết: [docs/PLAN.md](../PLAN.md).
 
 ## Bài toán
 
-Sinh viên thường hỏi những câu như *"rớt bao nhiêu tín chỉ thì bị cảnh báo học vụ?"*. Câu trả lời nằm trong các file PDF quy chế dài, nhưng cách hỏi lại khác cách văn bản viết. Ctrl+F hoặc tìm kiếm từ khóa chỉ khớp đúng từ, nên dễ bỏ sót. Chatbot sinh câu trả lời thì có thể "bịa" và không chỉ ra căn cứ.
+Sinh viên hỏi bằng lời thường, còn quy chế viết bằng thuật ngữ. Ví dụ thật trong ViRHE4QA (câu index 9542): *"Việc làm KLTN có thể bị dừng giữa chừng không?"*. Câu trả lời nằm ở Điều 6 "Báo cáo tiến độ thực hiện KLTN", và Điều này dùng chữ "đình chỉ", không có cụm "dừng giữa chừng". Ctrl+F hoặc tìm kiếm từ khóa chỉ khớp đúng từ, nên dễ bỏ sót. Chatbot sinh câu trả lời thì có thể "bịa" và không chỉ ra căn cứ.
 
-**Mục tiêu:** trả về 3 Điều/Khoản liên quan nhất, kèm trích đoạn gốc, tên văn bản, số hiệu và ngày ban hành. Khi độ tin cậy thấp, ứng dụng cảnh báo để người dùng tự đối chiếu. Hiệu quả được chứng minh bằng số liệu so với tìm kiếm từ khóa.
+**Mục tiêu:** trả về 3 Điều/Khoản liên quan nhất, kèm trích đoạn gốc, số và tên Điều. Bộ dữ liệu không ghi Điều thuộc văn bản nào và phiên bản nào, nên ứng dụng không hiển thị các thông tin này. Khi độ tin cậy thấp, ứng dụng cảnh báo để người dùng tự đối chiếu. Hiệu quả được chứng minh bằng số liệu so với tìm kiếm từ khóa.
 
 ## Giải pháp
 
 - **Encoder câu tiếng Việt huấn luyện theo SimCSE:** checkpoint cộng đồng `VoVanPhuc/sup-SimCSE-VietNamese-phobert-base`, dựa trên PhoBERT, cần tách từ bằng `pyvi`.
 - **Truy hồi lai (hybrid):** BM25 cho khớp từ khóa, kết hợp SimCSE cho khớp ngữ nghĩa và câu hỏi diễn đạt khác văn bản.
-- **Chunking theo cấu trúc văn bản:** chia theo Điều/Khoản, giữ metadata để trích dẫn chính xác.
+- **Chunking theo cấu trúc văn bản:** chia theo Điều/Khoản, giữ mã đoạn, số và tên Điều để trích dẫn chính xác.
 - **Cảnh báo độ tin cậy thấp:** ngưỡng được chọn và đánh giá trên tập dev. Ngưỡng này không phải xác suất đúng.
 - **Không dùng LLM sinh câu trả lời:** ứng dụng chỉ hiển thị nguyên văn kèm nguồn.
 
@@ -34,12 +34,12 @@ Phần tái hiện bài báo dùng mã nguồn chính thức [princeton-nlp/SimC
 ## Kiến trúc tổng quan
 
 ```
-Văn bản quy chế (PDF/DOCX/TXT)
-   └─► Tách Điều/Khoản + metadata ─► Chuẩn hóa + tách từ (pyvi)
-                                        ├─► BM25 index
-                                        └─► SimCSE-VN embeddings (FAISS)
+Các Điều quy chế trong ViRHE4QA (D1)
+   └─► Tách Khoản + số/tên Điều ─► Chuẩn hóa + tách từ (pyvi)
+                                    ├─► BM25 index
+                                    └─► SimCSE-VN embeddings (FAISS)
 Câu hỏi ─► Chuẩn hóa + tách từ ─► BM25 + SimCSE ─► Kết hợp điểm ─► Xếp hạng theo Điều
-   └─► Giao diện Gradio: top-3 Điều/Khoản · trích đoạn · nguồn/phiên bản · cảnh báo tin cậy
+   └─► Giao diện Gradio: top-3 Điều/Khoản · trích đoạn · số và tên Điều · cảnh báo tin cậy
 ```
 
 Chi tiết xem [PROJECT.md §5](PROJECT.md#5-application-architecture--implementation).
@@ -79,8 +79,7 @@ python -m venv .venv
 
 | Bộ dữ liệu | Vai trò | Nguồn |
 |---|---|---|
-| ViRHE4QA (bản con 1.000 câu hỏi trong benchmark ViRE) | Đánh giá chính trên dataset mới | [ViRHE4QA_v2.csv @ ViRE `60ea715`](https://github.com/longstnguyen/ViRE/blob/60ea7155134eaa426ab1d0a82d2bbbf327d1b470/data/ViRHE4QA_v2.csv), bài báo gốc R2GQA ([arXiv:2409.02840](https://arxiv.org/abs/2409.02840)) |
-| Quy chế của trường + bộ câu hỏi nhóm tự gán nhãn | Đánh giá trong bối cảnh thực tế (chỉ dùng để test) | Nhóm tự xây dựng |
+| ViRHE4QA (bản con 1.000 câu hỏi trong benchmark ViRE) | Dataset đánh giá duy nhất của ứng dụng (D1), đồng thời là corpus quy chế để tra cứu | [ViRHE4QA_v2.csv @ ViRE `60ea715`](https://github.com/longstnguyen/ViRE/blob/60ea7155134eaa426ab1d0a82d2bbbf327d1b470/data/ViRHE4QA_v2.csv), bài báo gốc R2GQA ([arXiv:2409.02840](https://arxiv.org/abs/2409.02840)) |
 | STS 2012–2016, STS-B, SICK-R | Tái hiện kết quả bài báo | Script của repo SimCSE |
 
 Điều kiện sử dụng từng bộ dữ liệu xem [PROJECT.md §6](PROJECT.md#6-datasets--experimental-evaluation).
