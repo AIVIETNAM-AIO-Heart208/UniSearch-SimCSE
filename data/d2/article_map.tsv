@@ -1,0 +1,52 @@
+topic_id	doc_id	dieu	title	note
+T01	hcmus-qcdt-2021	1	Phạm vi điều chỉnh và đối tượng áp dụng	
+T01	hcmus-qcdt-2026	1	Phạm vi điều chỉnh và đối tượng áp dụng	
+T02	hcmus-qcdt-2021	2	Chương trình đào tạo và thời gian học tập	Điều 3 (2026) gộp chương trình đào tạo, học phần và tín chỉ
+T02	hcmus-qcdt-2021	3	Học phần, đề cương chi tiết học phần và tín chỉ	Điều 3 (2026) gộp chương trình đào tạo, học phần và tín chỉ
+T02	hcmus-qcdt-2026	3	Chương trình đào tạo và thời gian đào tạo (thời gian học tập)	Điều 3 (2026) gộp chương trình đào tạo, học phần và tín chỉ
+T03	hcmus-qcdt-2021	4	Phương thức tổ chức đào tạo	
+T03	hcmus-qcdt-2026	4	Tổ chức đào tạo theo tín chỉ	
+T04	hcmus-qcdt-2021	5	Hình thức đào tạo	
+T04	hcmus-qcdt-2026	5	Hình thức và phương thức tổ chức đào tạo	
+T05	hcmus-qcdt-2021	6	Kế hoạch giảng dạy và học tập	
+T05	hcmus-qcdt-2026	6	Kế hoạch giảng dạy và học tập	
+T06	hcmus-qcdt-2021	7	Tổ chức đăng ký học tập	
+T06	hcmus-qcdt-2026	7	Tổ chức đăng ký học tập	
+T07	hcmus-qcdt-2021	8	Tổ chức giảng dạy và học tập	
+T07	hcmus-qcdt-2026	8	Tổ chức giảng dạy và học tập	
+T08	hcmus-qcdt-2021	9	Đánh giá học phần	
+T08	hcmus-qcdt-2026	10	Đánh giá học phần	
+T09	hcmus-qcdt-2021	10	Đánh giá đồ án tốt nghiệp, khóa luận tốt nghiệp/thực tập tốt nghiệp	2026 tách thành xét giao và đánh giá
+T09	hcmus-qcdt-2026	12	Tổ chức xét cho sinh viên làm khóa luận tốt nghiệp, thực tập tốt nghiệp, dự án tốt nghiệp, đồ án tốt nghiệp	2026 tách thành xét giao và đánh giá
+T09	hcmus-qcdt-2026	13	Đánh giá khóa luận tốt nghiệp, thực tập tốt nghiệp, dự án tốt nghiệp, đồ án tốt nghiệp	2026 tách thành xét giao và đánh giá
+T10	hcmus-qcdt-2021	11	Tính điểm học phần	
+T10	hcmus-qcdt-2026	11	Tính điểm học phần	
+T11	hcmus-qcdt-2021	12	Hoãn thi	
+T11	hcmus-qcdt-2026	14	Hoãn thi	
+T12	hcmus-qcdt-2021	13	Công nhận kết quả học tập và chuyển đổi tín chỉ (miễn học)	2026 thêm chứng chỉ giáo dục đại học
+T12	hcmus-qcdt-2026	18	Chứng chỉ giáo dục đại học, công nhận kết quả học tập và chuyển đổi tín chỉ	2026 thêm chứng chỉ giáo dục đại học
+T13	hcmus-qcdt-2021	14	Học lại và học cải thiện điểm	
+T13	hcmus-qcdt-2026	15	Học lại và học cải thiện điểm	
+T14	hcmus-qcdt-2021	15	Đánh giá kết quả học tập theo học kỳ, năm học, khóa học	
+T14	hcmus-qcdt-2026	16	Đánh giá kết quả học tập theo học kỳ, năm học, khóa học	
+T15	hcmus-qcdt-2021	16	Xử lý kết quả học tập theo tín chỉ	
+T15	hcmus-qcdt-2026	17	Xử lý kết quả học tập theo tín chỉ	
+T16	hcmus-qcdt-2021	17	Xét tốt nghiệp và công nhận tốt nghiệp	2026 gộp công nhận tốt nghiệp và cấp bằng
+T16	hcmus-qcdt-2021	18	Cấp bằng tốt nghiệp	2026 gộp công nhận tốt nghiệp và cấp bằng
+T16	hcmus-qcdt-2026	19	Công nhận tốt nghiệp và cấp bằng tốt nghiệp	2026 gộp công nhận tốt nghiệp và cấp bằng
+T17	hcmus-qcdt-2021	19	Nghỉ học tạm thời, thôi học	
+T17	hcmus-qcdt-2026	20	Nghỉ học tạm thời, thôi học	
+T18	hcmus-qcdt-2021	20	Chuyển chương trình, chuyển trường	2026 thêm chuyển ngành, chuyển hình thức đào tạo
+T18	hcmus-qcdt-2026	21	Chuyển ngành, chuyển chương trình, chuyển trường, chuyển hình thức đào tạo	2026 thêm chuyển ngành, chuyển hình thức đào tạo
+T19	hcmus-qcdt-2021	21	Trao đổi sinh viên và hợp tác trong đào tạo	
+T19	hcmus-qcdt-2026	22	Trao đổi sinh viên và hợp tác đào tạo	
+T20	hcmus-qcdt-2021	22	Học cùng lúc hai chương trình	
+T20	hcmus-qcdt-2026	23	Học cùng lúc hai chương trình	
+T21	hcmus-qcdt-2021	23	Xử lý vi phạm đối với sinh viên	
+T21	hcmus-qcdt-2026	25	Xử lý vi phạm đối với sinh viên	
+T22	hcmus-qcdt-2021	24	Điều khoản thi hành	cùng cấu trúc: phạm vi khóa áp dụng, hiệu lực, sửa đổi
+T22	hcmus-qcdt-2026	27	Điều khoản chuyển tiếp	cùng cấu trúc: phạm vi khóa áp dụng, hiệu lực, sửa đổi
+T23	hcmus-qcdt-2026	2	Nguyên tắc tổ chức và quản lý đào tạo trình độ đại học	mới trong 2026
+T24	hcmus-qcdt-2026	9	Quản lý chất lượng đào tạo và dữ liệu đào tạo	mới trong 2026
+T25	hcmus-qcdt-2026	24	Học chương trình tích hợp trình độ đại học và trình độ thạc sĩ	mới trong 2026
+T26	hcmus-qcdt-2026	26	Tổ chức thực hiện	mới trong 2026

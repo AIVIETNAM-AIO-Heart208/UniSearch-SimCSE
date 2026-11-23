@@ -15,8 +15,8 @@ academic regulations (Section~\ref{sec:method-pipeline}).
 \subsection{Problem and Key Idea}
 \label{sec:method-problem}
 
-A sentence encoder $f_\theta$ maps a sentence $x$ to a vector
-$\mathbf{h}=f_\theta(x)\in\mathbb{R}^d$. The goal is that the cosine similarity
+A sentence encoder $f$ maps a sentence $x$ to a vector
+$\mathbf{h}=f(x)\in\mathbb{R}^d$. The goal is that the cosine similarity
 \begin{equation}
 \mathrm{sim}(\mathbf{h}_1,\mathbf{h}_2)
   = \frac{\mathbf{h}_1^\top\mathbf{h}_2}{\lVert\mathbf{h}_1\rVert\,\lVert\mathbf{h}_2\rVert}
@@ -350,14 +350,27 @@ Its model card does not state the training data, so its scores are not results
 of the SimCSE paper. The pipeline has an offline indexing stage and an online
 query stage.
 
-\textbf{Indexing.} The corpus consists of the distinct regulation passages of
-ViRHE4QA, most of which are single articles (\emph{Điều}). Each passage is split
-into its clauses (\emph{Khoản}), and each clause becomes a chunk of at most 256
-subword tokens, the input limit of PhoBERT. A longer clause is split into
-windows. Every chunk keeps its passage identifier, article number and title,
-clause and character offsets, so the interface can quote the original text
-verbatim. The dataset does not record which document or version each article
-comes from, so the assistant cannot show this information. Text is normalised to
+% Corpus details: data/d2/README.md and data/d2/documents.yaml (decision D-17).
+\textbf{Indexing.} The assistant indexes the undergraduate training
+regulations of our university: the 2021 regulation (Decision 1175/QĐ-KHTN, 24
+articles) and the 2026 regulation that replaces it (Decision 3087/QĐ-KHTN, 27
+articles). Both versions are kept because the 2026 text applies to cohorts
+admitted from the 2026--2027 academic year, while for earlier cohorts it lets
+the university apply the new rules that are more favourable to students. For the evaluation on
+ViRHE4QA, a separate index holds the distinct passages of that dataset, most of
+which are single articles (\emph{Điều}). Each article is split into its
+clauses (\emph{Khoản}), and each clause becomes a chunk of at most 256 subword
+tokens, the input limit of PhoBERT. A longer clause is split into windows.
+Every chunk keeps its document, article number and title, clause and character
+offsets, so the interface can quote the indexed text exactly. For our
+university's regulations, each document also records its decision number,
+issue date and scope of application, which the interface displays. ViRHE4QA
+records no such metadata. The 2026 regulation was available to us only as a
+scanned PDF. Its indexed text is a transcription of the scan made with ChatGPT,
+which we cleaned of OCR-style errors (158 corrections, each rule checked
+against its expected number of matches) and compared with the scan's own OCR
+layer. It is therefore not the official text, and the interface labels it as
+such. Text is normalised to
 Unicode NFC, tone-mark placement is unified (e.g.\ \emph{khoá} and \emph{khóa}),
 and words are segmented with pyvi, which the PhoBERT vocabulary requires. The
 same function is applied to queries, so that index and queries are always
@@ -382,8 +395,10 @@ s_{\mathrm{hyb}}(q,a) = \lambda\,\hat{s}_{\mathrm{bm25}}(q,a)
 BM25 captures exact terms, numbers and abbreviations, and the encoder captures
 paraphrases. The weight $\lambda\in[0,1]$ is the only fitted parameter of the
 ranking. It is chosen on the development split of ViRHE4QA only
-(Section~\ref{sec:setup}). The system returns the top three articles, each with
-its best clause, its verbatim text and its article number and title.
+(Section~\ref{sec:setup}). The system returns the top three results, each an
+article with its best clause, its text and its source document. For our
+university's regulations, articles that state the same rule in the two versions
+are grouped into one result, so the three results cover three different rules.
 
 \textbf{Low-confidence warning.} Let $c^\star$ be the best chunk of the
 top-ranked article. If $\mathrm{sim}(q,c^\star)<\theta$, the results are still
@@ -392,9 +407,12 @@ the academic affairs office. We use the absolute cosine rather than the fused
 score because per-query min--max normalisation places the top article's fused
 score near 1 for every query, so the fused score carries no information about
 absolute relevance. The cosine is not a calibrated probability either, so
-$\theta$ is chosen and evaluated empirically on held-out data. No language
-model generates text at any step, so every displayed sentence comes from the
-regulations themselves.
+$\theta$ is chosen empirically on the development split of ViRHE4QA. It is then
+evaluated on that dataset's test split and on our own test set, which includes
+questions that the regulations do not answer. Because $\theta$ is not tuned on
+our university's regulations, this second evaluation also shows how well the
+threshold transfers. No language model generates text at query time, so every
+displayed sentence comes from the indexed regulation texts.
 \TODO{After Phase~3: state the chosen $\lambda$ and $\theta$, the window
 length and overlap for long clauses, and cite MaxP aggregation (Dai and Callan,
 SIGIR 2019) after exporting its BibTeX entry.}
