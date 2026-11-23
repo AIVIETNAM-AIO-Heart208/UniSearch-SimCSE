@@ -45,7 +45,7 @@ Trên Linux hoặc macOS, dùng `.venv/bin/python` thay cho `.\.venv\Scripts\pyt
 
 ```powershell
 experiments\reproduction\run_r1.bat        # R1; thêm R2 hoặc R3 để chạy thí nghiệm khác. Cần Python 3.9–3.11
-python -m pytest tests -q                  # R4: 689 test, khoảng 1 phút CPU. Cần torch và pytest
+python -m pytest tests -q                  # 699 test (689 của R4, 10 kiểm số liệu ví dụ trong báo cáo), khoảng 1 phút CPU. Cần torch và pytest
 python experiments\reproduction\run_r4.py  # R4: đo lại và ghi results/R4/
 ```
 

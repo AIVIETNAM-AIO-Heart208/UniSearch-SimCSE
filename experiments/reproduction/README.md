@@ -77,7 +77,7 @@ Hàm `infonce_loss` ở [src/simcse_lab/model/infonce.py](../../src/simcse_lab/m
 - đoạn tính loss của `cl_forward`, chép nguyên văn từng byte từ `simcse/models.py` @ `235f89e` (dòng 35–46 và 193–211). Bản chép nhận đầu vào qua một đối tượng `cls` giả. Test `test_reference_is_verbatim_copy_of_cl_forward` kiểm tra lại việc chép nguyên văn khi máy có thư mục `SimCSE/`; máy không có thì test này tự bỏ qua.
 
 ```bash
-python -m pytest tests -q                    # 689 test, khoảng 50 giây trên CPU
+python -m pytest tests/test_infonce.py -q    # 689 test của R4, khoảng 50 giây trên CPU
 python experiments/reproduction/run_r4.py    # chạy test và ghi results/R4/
 ```
 

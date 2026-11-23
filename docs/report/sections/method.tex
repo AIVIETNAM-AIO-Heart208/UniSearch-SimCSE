@@ -36,6 +36,30 @@ differ only in how positives (and, optionally, hard negatives) are obtained.
 noise. \emph{Supervised} SimCSE uses sentence pairs from natural language
 inference (NLI) data.
 
+% Sources: Sections 4, 5, 6.2, 7 and 8 of the SimCSE paper (Gao et al., 2021).
+SimCSE differs from earlier sentence-embedding methods in three ways.
+\begin{itemize}
+\item Post-processing methods such as BERT-flow~\cite{li-etal-2020-sentence}
+and whitening~\cite{su2021whiteningsentencerepresentationsbetter} transform
+fixed BERT embeddings to make them more isotropic. SimCSE fine-tunes the
+encoder, and its objective also pulls positive pairs together, which these
+methods do not optimise (Section~5 of~\cite{gao-etal-2021-simcse}). Gao et
+al.\ find that they improve uniformity but degrade alignment (Section~7
+of~\cite{gao-etal-2021-simcse}; see Section~\ref{sec:method-theory}).
+\item Other contrastive methods take two views of the same sentence or
+document, either from data augmentation or from different copies of the
+model. SimCSE takes two outputs of one encoder for the same sentence, which
+differ only in their standard dropout masks. It is the simplest of these
+methods and gives the best STS results (Section~8
+of~\cite{gao-etal-2021-simcse}). With BERT-base, the previous best
+unsupervised average in Table~5 of~\cite{gao-etal-2021-simcse} is 72.05,
+against 76.25 for SimCSE.
+\item Earlier supervised methods fine-tune a Siamese model on NLI
+data~\cite{reimers-gurevych-2019-sentence}. Supervised SimCSE uses the same
+data in a contrastive objective: entailment pairs are positives and
+contradictions are hard negatives (Section~\ref{sec:method-sup}).
+\end{itemize}
+
 \subsection{Contrastive Objective}
 \label{sec:method-objective}
 
@@ -89,12 +113,12 @@ negatives away, which degrades the representation.
 The supervised setting uses SNLI~\cite{bowman-etal-2015-large} and
 MNLI~\cite{williams-etal-2018-broad}. For a premise $x_i$, its entailment
 hypothesis is the positive $x_i^+$ and its contradiction hypothesis is a
-\emph{hard negative} $x_i^-$: a sentence that is topically close but has a
-different meaning. All $2N$ hypotheses in the batch serve as candidates. The
-training objective (Eq.~5 of~\cite{gao-etal-2021-simcse}), with the weight
-$\alpha$ that the paper's hard-negative ablation adds (Eq.~8 in Section~6.3),
-is
-
+\emph{hard negative} $x_i^-$: a sentence that is topically close but
+contradicts the premise. All $2N$ hypotheses in the batch serve as candidates.
+The training objective is Eq.~5 of~\cite{gao-etal-2021-simcse}. Its ablation
+in Section~6.3 of~\cite{gao-etal-2021-simcse} adds a weight $\alpha$ on each
+anchor's own hard negative (Eq.~8 there), and we write the loss in this
+weighted form:
 \begin{equation}
 \ell_i = -\log
   \frac{e^{\mathrm{sim}(\mathbf{h}_i,\mathbf{h}_i^+)/\tau}}
@@ -106,12 +130,67 @@ Here $\delta_{ij}$ is 1 if $i=j$ and 0 otherwise, so the weight $\alpha$
 applies only to the sentence's own hard negative, and
 $\alpha=1$ gives Eq.~5 itself. Adding hard negatives raises the STS-B
 development score from 84.9 to 86.2 (Table~4 of~\cite{gao-etal-2021-simcse}),
-and $\alpha=1$ works best (Table~7). In the code, the weight is passed as
+and $\alpha=1$ works best (Table~7 of~\cite{gao-etal-2021-simcse}). In the code, the weight is passed as
 $w=\log\alpha$ (argument \texttt{hard\_negative\_weight}, default $0$) and
 added to the corresponding logit, because
 $e^{s/\tau+w}=\alpha\,e^{s/\tau}$. Adding to a logit fits directly into the
 cross-entropy implementation. An optional auxiliary masked-language-modelling
 loss also exists in the code but is off by default.
+
+\subsection{Worked Example}
+\label{sec:method-example}
+
+% The cosines are illustrative values chosen by us, not model outputs.
+% tests/test_worked_example.py recomputes every loss and probability below and
+% checks that each printed value appears in this file.
+We illustrate both settings with the sentences of Fig.~1
+of~\cite{gao-etal-2021-simcse}. The cosine values are illustrative values
+chosen by us, not outputs of a trained model. The losses come from our own
+implementation (Section~\ref{sec:method-infonce}), and
+\path{tests/test_worked_example.py} recomputes every number below.
+
+\emph{Unsupervised.} A batch holds three sentences: $x_1$~=~``Two dogs are
+running'', $x_2$~=~``A man surfing on the sea'' and $x_3$~=~``A kid is on a
+skateboard''. Each sentence is encoded twice with independent dropout masks
+(in the code, both copies sit in one batch; Section~\ref{sec:method-code}).
+Dropout switches off different hidden units in the two copies, so $x_1$ gets
+two slightly different embeddings, $\mathbf{h}_1^{z_1}$ and
+$\mathbf{h}_1^{z_1'}$. They form the positive pair. The second copies of the
+other sentences, $\mathbf{h}_2^{z_2'}$ and $\mathbf{h}_3^{z_3'}$, are the
+negatives of $x_1$. Suppose the cosines from $\mathbf{h}_1^{z_1}$ to
+$\mathbf{h}_1^{z_1'}$, $\mathbf{h}_2^{z_2'}$ and $\mathbf{h}_3^{z_3'}$ are
+$0.80$, $0.70$ and $0.60$. We set the negatives high on purpose, as for a
+pretrained encoder whose embeddings are anisotropic, so that even unrelated
+sentences are close (Section~\ref{sec:method-theory}). With $\tau=0.05$ the
+logits are $16$, $14$ and $12$. The softmax gives the positive a probability
+of $0.87$, and Eq.~\eqref{eq:unsup} gives $\ell_1=0.143$. With $\tau=1$ the
+same cosines give the positive a probability of only $0.37$, close to the
+uniform $1/3$, and $\ell_1=1.002$. A small $\tau$ therefore sharpens the
+softmax, so that small cosine gaps decide which candidate wins. Minimising
+$\ell_1$ pulls the two copies of $x_1$ together and pushes the other sentences
+away.
+
+\emph{Supervised.} Each premise now comes with its entailment and
+contradiction hypotheses from the same figure. For $x_1$, the positive is
+``There are animals outdoors'' and the hard negative is ``The pets are sitting
+on a couch''. The other hypotheses in the batch are further negatives: ``There
+is a man'', ``A kid is skateboarding'', ``The man wears a business suit'' and
+``A kid is inside the house''.\footnote{Fig.~1 of~\cite{gao-etal-2021-simcse}
+prints ``kit'' instead of ``kid'' in this sentence; we correct the typo.}
+Row~1 of the logit matrix therefore has $2N=6$ entries. We now assume a later
+stage of training, when unrelated sentences are already well separated. Let
+the cosines be $0.80$ for the positive, $0.40$ and $0.45$ for the other
+entailments, $0.75$ for the anchor's own hard negative, and $0.30$ and $0.35$
+for the other contradictions. With $\tau=0.05$ and $\alpha=1$,
+Eq.~\eqref{eq:sup} gives $\ell_1=0.314$. The positive gets probability $0.73$
+and the hard negative $0.27$, while the four other negatives together get less
+than $0.01$. Without the contradictions, the same row would give
+$\ell_1=0.0012$. Almost all of the loss for $x_1$ thus comes from its hard
+negative, which is topically close but contradicts the premise. With $\alpha=2$
+($w=\log 2$) the loss rises to $0.552$. The gradient of $\ell_1$ with respect
+to a negative's logit equals that negative's softmax probability, and for the
+hard negative this probability rises from $0.27$ to $0.42$. A larger $\alpha$
+therefore pushes the hard negative away more strongly.
 
 \subsection{Pooling, Training and Inference}
 \label{sec:method-pooling}

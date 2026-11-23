@@ -8,7 +8,10 @@
 
 *Mục 3.1–3.2 · Hai người đọc cùng paper, mỗi người viết một phần.*
 
-- [ ] **Huy** — Viết phần bài toán, lý do chọn SimCSE, thông tin xuất bản và hạng CORE. Giải thích hai cách huấn luyện bằng ví dụ về dropout, cặp dương, mẫu âm và contrastive loss.
+- [ ] **Huy** — Viết phần bài toán, lý do chọn SimCSE, thông tin xuất bản và hạng CORE. Giải thích hai cách huấn luyện bằng ví dụ về dropout, cặp dương, mẫu âm và contrastive loss. *Bản nháp 23/11 (`introduction.tex`, `method.tex`):*
+  - *Đã có:* bài toán, lý do chọn, thông tin xuất bản và hạng CORE, SimCSE khác cách làm trước thế nào.
+  - *Đã có ví dụ tính tay cho cả hai cách huấn luyện* (§Worked Example). Câu lấy từ Figure 1 của paper; cosine là giá trị minh hoạ; số liệu kiểm bằng `tests/test_worked_example.py`.
+  - *Còn thiếu:* ví dụ lexical gap lấy từ D1/D2, chờ dữ liệu của Minh.
 - [ ] **Minh** — Lập bảng tóm tắt dữ liệu, cách chia tập, baseline, chỉ số Spearman và kết quả chính. Giải thích một hạn chế khi dùng kết quả STS tiếng Anh để dự đoán chất lượng tra cứu quy chế tiếng Việt.
 - [ ] **Cả hai** — Đọc chéo hai phần. Huy giải thích cách tính một kết quả trong bảng, Minh diễn giải được cách tạo cặp huấn luyện.
 

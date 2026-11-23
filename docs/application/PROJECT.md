@@ -64,6 +64,9 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
   - Kiểm thử: 689/689 test pass. Ở float64, lệch ≤ 1,4e-9 so với `cl_forward` và ≤ 8,4e-15 so với vòng lặp tính theo Eq. 4/8.
   - File: `experiments/reproduction/results/R4/` ([§6.7](#67-bảng-theo-dõi-kết-quả)).
 - [x] Bản nháp phần Introduction và Proposed Method của báo cáo IEEE (commit `652fa4e`), gồm cả phần giải thích luồng code gốc. Chưa đọc chéo.
+  - Bổ sung ngày 23/11 cho phần Phase 1 của Huy:
+    - đoạn so sánh SimCSE với các cách làm trước (post-processing, các phương pháp contrastive khác, SBERT);
+    - §Worked Example: ví dụ tính loss cho cả hai cách huấn luyện, dùng câu của Figure 1 và cosine minh hoạ, kiểm bằng `tests/test_worked_example.py`.
 
 **Đang thực hiện:** không có.
 
@@ -72,6 +75,7 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
 **Blocker / chờ quyết định**
 
 - Chưa chốt văn bản quy chế cụ thể của trường để làm corpus cho ứng dụng và D2 (Q2 ở [§8.3](#83-decision-log)).
+- Chưa chia phần viết Related Work (mục 3.2.2, giao cho cả Huy và Minh) trong `docs/report/sections/related-work.tex`.
 
 **3 việc ưu tiên tiếp theo**
 
