@@ -31,3 +31,9 @@ docs/report/*.out
 docs/report/*.fls
 docs/report/*.fdb_latexmk
 docs/report/*.synctex.gz
+
+# Personal AI-agent files (Claude Code, Codex): each member keeps their own state locally
+/STATUS.md
+/AGENTS.md
+/CLAUDE.local.md
+.claude/
