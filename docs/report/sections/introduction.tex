@@ -1,4 +1,96 @@
 % Owner: Huy (Phase 1). Lab item 3.1; docs/application/PROJECT.md §2.1 and §4.
 \section{Introduction}
 \label{sec:intro}
-\TODO{Bài toán và động lực; lý do chọn SimCSE~\cite{gao-etal-2021-simcse}; thông tin xuất bản (tác giả, năm, venue, DOI) và hạng CORE; đóng góp của báo cáo.}
+
+Academic regulations at Vietnamese universities cover training, academic
+warnings, graduation and similar matters. They are issued as long documents
+divided into articles (\emph{Điều}) and clauses (\emph{Khoản}). Students ask
+about these rules in everyday language, so a question is often worded quite
+differently from the article that answers it. This mismatch is known as the
+\emph{lexical gap}. Keyword search, such as Ctrl+F in a PDF or the search box
+of a faculty website, matches exact strings only and does not rank its hits.
+It therefore misses relevant articles whenever the student does not guess the
+official term, and reading the whole document instead takes a long time.
+General-purpose chatbots answer fluently, but they may produce statements that
+are not in the regulations, and they cannot guarantee that they cite the
+version in force at the student's own university.
+\TODO{Add one real question--article pair from D1 or D2 that shows the lexical gap.}
+
+We cast the task as \emph{semantic retrieval}. Given a Vietnamese question $q$
+and a collection of regulation passages, the system ranks the articles by
+relevance and returns the top few, each with its verbatim text and its source.
+Machine learning suits this problem because the set of possible paraphrases of
+a rule is open-ended. Hand-written synonym lists cannot cover it, whereas a
+learned sentence encoder maps texts with similar meaning to nearby vectors.
+The learning setting has two levels. The encoder is trained by
+\emph{contrastive representation learning}: self-supervised on raw sentences in
+unsupervised SimCSE, and supervised by labelled sentence pairs in supervised
+SimCSE (Section~\ref{sec:method}). Our application does not train the encoder
+further. It uses a pretrained encoder zero-shot to score question--passage
+pairs and combines these scores with BM25 lexical matching~\cite{Robertson_2009}.
+The only quantities we fit are a score-fusion weight and a confidence
+threshold. Both are selected on a development split of a labelled retrieval
+dataset, and the test data are used only for the final report
+(Section~\ref{sec:setup}).
+
+\textbf{Selected paper.} We study \emph{SimCSE: Simple Contrastive Learning of
+Sentence Embeddings} by Tianyu Gao, Xingcheng Yao and Danqi Chen, published in
+the Proceedings of the 2021 Conference on Empirical Methods in Natural Language
+Processing (EMNLP 2021), pages 6894--6910,
+DOI~\url{10.18653/v1/2021.emnlp-main.552}~\cite{gao-etal-2021-simcse}.
+The CORE portal ranks EMNLP as A in CORE2021 and as A* in CORE2023 and
+ICORE2026.\footnote{\url{https://portal.core.edu.au/conf-ranks/448/}}
+We chose this paper for four reasons.
+\begin{enumerate}
+\item It learns exactly the representation that our retrieval needs: sentence
+embeddings whose cosine similarity reflects meaning.
+\item The method is simple. It uses one loss, one encoder and standard dropout
+as the only augmentation, so it can be analysed in full and re-implemented
+within a course project.
+\item It reports large gains. With BERT-base, the average Spearman correlation
+over seven semantic textual similarity (STS) tasks is 76.25 for unsupervised
+and 81.57 for supervised SimCSE, against 56.70 for averaged BERT embeddings and
+74.89 for SBERT~\cite{reimers-gurevych-2019-sentence}, as reported in Table~5
+of~\cite{gao-etal-2021-simcse}.
+\item Its code and checkpoints are public, so the main results can be
+re-evaluated on a laptop CPU. A community Vietnamese checkpoint, trained
+following the SimCSE recipe on PhoBERT~\cite{nguyen-tuan-nguyen-2020-phobert},
+is also available for the application.
+\end{enumerate}
+
+\textbf{Contributions.} The parts reused from earlier work and the parts we
+built are listed separately in Section~\ref{sec:app}. This report
+\begin{itemize}
+\item analyses SimCSE: its training objective, the role of dropout noise and
+hard negatives, its link to alignment, uniformity and anisotropy, and the
+execution flow of the official code at commit \texttt{235f89e}
+(Section~\ref{sec:method});
+% Numbers below: experiments/reproduction/results/R{1,2,3}/metrics.json ("Avg.").
+\item reproduces the main STS results with the official evaluation script and
+released checkpoints. The averages we obtain are 81.58 for supervised SimCSE,
+76.25 for unsupervised SimCSE and 56.70 for BERT-base with first--last
+averaging, all within 0.01 points of Table~5 in~\cite{gao-etal-2021-simcse}
+(Section~\ref{sec:results});
+\item re-implements the SimCSE loss independently and tests it against the loss
+computation in the official code (Section~\ref{sec:method-infonce})
+\TODO{state the test outcome once R4 is done (due 30/11)};
+\item builds a retrieval assistant for Vietnamese academic regulations. It
+combines BM25 with a SimCSE-style Vietnamese encoder, ranks whole articles,
+shows the verbatim text with its source and version, and flags low-confidence
+results instead of generating an answer (Sections~\ref{sec:method-pipeline}
+and~\ref{sec:app});
+\item evaluates the encoder and the assistant on two datasets that the paper
+does not use. The first is the public ViRHE4QA
+subset~\cite{do2024r2gqaretrieverreadergeneratorquestionanswering,nguyen-quan-2026-works},
+evaluated with a development/test split grouped by source article. The second
+is a test set of student-style questions that we wrote. Comparisons are
+reported with bootstrap confidence intervals
+\TODO{one-sentence main finding once E1--E3 are done; do not claim that the
+hybrid beats BM25 unless the results show it}.
+\end{itemize}
+
+Section~\ref{sec:related} reviews related work. Section~\ref{sec:method}
+describes SimCSE and our retrieval pipeline, and Section~\ref{sec:setup} gives
+the datasets, metrics and protocols. Section~\ref{sec:results} reports the
+reproduction and retrieval results, Section~\ref{sec:app} presents the
+application, and Section~\ref{sec:conclusion} concludes.
