@@ -90,8 +90,11 @@ The supervised setting uses SNLI~\cite{bowman-etal-2015-large} and
 MNLI~\cite{williams-etal-2018-broad}. For a premise $x_i$, its entailment
 hypothesis is the positive $x_i^+$ and its contradiction hypothesis is a
 \emph{hard negative} $x_i^-$: a sentence that is topically close but has a
-different meaning. All $2N$ hypotheses in the batch serve as candidates
-(Eq.~5 of~\cite{gao-etal-2021-simcse}):
+different meaning. All $2N$ hypotheses in the batch serve as candidates. The
+training objective (Eq.~5 of~\cite{gao-etal-2021-simcse}), with the weight
+$\alpha$ that the paper's hard-negative ablation adds (Eq.~8 in Section~6.3),
+is
+
 \begin{equation}
 \ell_i = -\log
   \frac{e^{\mathrm{sim}(\mathbf{h}_i,\mathbf{h}_i^+)/\tau}}
@@ -101,7 +104,7 @@ different meaning. All $2N$ hypotheses in the batch serve as candidates
 \end{equation}
 Here $\delta_{ij}$ is 1 if $i=j$ and 0 otherwise, so the weight $\alpha$
 applies only to the sentence's own hard negative, and
-$\alpha=1$ gives the unweighted loss. Adding hard negatives raises the STS-B
+$\alpha=1$ gives Eq.~5 itself. Adding hard negatives raises the STS-B
 development score from 84.9 to 86.2 (Table~4 of~\cite{gao-etal-2021-simcse}),
 and $\alpha=1$ works best (Table~7). In the code, the weight is passed as
 $w=\log\alpha$ (argument \texttt{hard\_negative\_weight}, default $0$) and
@@ -228,14 +231,35 @@ steps, whereas Appendix~A of the paper states 250.
 To check our understanding of Eqs.~\eqref{eq:infonce}--\eqref{eq:sup}, we
 implement the loss ourselves in \path{src/simcse_lab/model/infonce.py}. It
 covers the unsupervised case and the supervised case with a log-weighted hard
-negative. The implementation is tested on random embeddings against two
-references: a naive loop that evaluates Eqs.~\eqref{eq:unsup}
-and~\eqref{eq:sup} term by term, and the loss computation extracted from
-\texttt{cl\_forward}. The acceptance criterion is an absolute difference below
-$10^{-6}$.
-\TODO{R4 (due 30/11): report the test outcome, the tolerance actually reached,
-the tested batch sizes and temperatures, and the seed. Remove this subsection's
-claims if the test is not done.}
+negative. Unlike \texttt{cl\_forward}, it normalises the embeddings, takes
+their dot products divided by $\tau$ as logits, adds $w$ to the diagonal of
+the hard-negative block and computes each $\ell_i$ as a log-sum-exp minus the
+positive logit, without a cross-entropy module or an explicit weight matrix.
+It takes the already gathered batch, so multi-GPU gathering is out of scope.
+
+The implementation is tested on random embeddings against two references: a
+naive loop that evaluates Eqs.~\eqref{eq:unsup} and~\eqref{eq:sup} term by term
+with $\alpha=e^{w}$, and the loss computation copied verbatim from
+\texttt{cl\_forward} (\path{tests/infonce_reference.py}). The acceptance
+criterion is an absolute difference below $10^{-6}$ in float64.
+% Numbers below: experiments/reproduction/results/R4/metrics.json (seed 0,
+% torch 2.9.1 on CPU).
+The test grid (seed 0) covers batch sizes $N\in\{1,2,8,32\}$, plus
+$N\in\{128,512\}$ against \texttt{cl\_forward} only, embedding sizes 16 and
+768, $\tau\in\{0.01,0.05,0.1,1\}$ and
+$w\in\{0,1,-0.5,\log 0.5,\log 2\}$. Positives and hard negatives are noisy
+copies of the anchor, so that the hard negatives compete with the positive.
+All 689 test cases pass. In float64, the largest difference is
+$8.4\times10^{-15}$ from the naive loop. Against \texttt{cl\_forward} it is
+$6.0\times10^{-15}$ when $w$ is exactly representable in float32, and
+$1.4\times10^{-9}$ for $w=\log 0.5$ and $w=\log 2$. The larger gap comes from
+\texttt{cl\_forward} building its weight matrix in float32: with that matrix
+built in float64 instead, the gap falls to $7.1\times10^{-15}$. On one batch
+($N=8$, $d=32$, $\tau=0.05$, $w\in\{0,\log 2\}$), the gradients with respect
+to all three inputs also agree within $10^{-6}$. In float32 the two
+implementations round differently, both in the cosine logits and in the
+cross-entropy step, and the loss gap reaches $3.7\times10^{-6}$. The float32
+check therefore uses a tolerance of $5\times10^{-5}$.
 
 \subsection{Retrieval Pipeline for Vietnamese Regulations}
 \label{sec:method-pipeline}

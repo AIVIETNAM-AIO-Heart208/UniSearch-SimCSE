@@ -35,14 +35,18 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -c "import simcse_lab; print(simcse_lab.__file__)"
 ```
 
-Trên Linux hoặc macOS, dùng `.venv/bin/python` thay cho `.\.venv\Scripts\python.exe`. Package hiện chỉ chứa khung mã nguồn. Khai báo thư viện thực sự sử dụng trong `pyproject.toml` khi triển khai.
+Trên Linux hoặc macOS, dùng `.venv/bin/python` thay cho `.\.venv\Scripts\python.exe`. Package hiện mới có `simcse_lab.model.infonce`, và module này cần `torch`. `pyproject.toml` chưa khai báo `torch` và `pytest`, nên cần cài tay. Các thư viện khác sẽ khai báo trong `pyproject.toml` khi triển khai.
 
 ## Tái hiện kết quả SimCSE
 
 Đã đánh giá lại ba checkpoint công khai bằng `evaluation.py` gốc @ `235f89e`. Trung bình Spearman trên 7 tác vụ STS: **81,58** (sup SimCSE), **76,25** (unsup SimCSE), **56,70** (BERT chưa fine-tune), khớp Table 5 của paper. Bảng chi tiết, môi trường và sai lệch phiên bản: [experiments/reproduction/](experiments/reproduction/README.md).
 
+Đã tự cài lại InfoNCE (R4) và kiểm thử đối chiếu với `cl_forward` của code gốc. Ở float64, mức lệch ≤ 1,4e-9.
+
 ```powershell
 experiments\reproduction\run_r1.bat        # R1; thêm R2 hoặc R3 để chạy thí nghiệm khác. Cần Python 3.9–3.11
+python -m pytest tests -q                  # R4: 689 test, khoảng 1 phút CPU. Cần torch và pytest
+python experiments\reproduction\run_r4.py  # R4: đo lại và ghi results/R4/
 ```
 
 ## Tài liệu gốc

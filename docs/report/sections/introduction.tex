@@ -72,8 +72,10 @@ released checkpoints. The averages we obtain are 81.58 for supervised SimCSE,
 averaging, all within 0.01 points of Table~5 in~\cite{gao-etal-2021-simcse}
 (Section~\ref{sec:results});
 \item re-implements the SimCSE loss independently and tests it against the loss
-computation in the official code (Section~\ref{sec:method-infonce})
-\TODO{state the test outcome once R4 is done (due 30/11)};
+computation in the official code (Section~\ref{sec:method-infonce}).
+% Number below: experiments/reproduction/results/R4/metrics.json.
+In float64 the two agree within $1.4\times10^{-9}$ over all tested batch
+sizes, temperatures and hard-negative weights;
 \item builds a retrieval assistant for Vietnamese academic regulations. It
 combines BM25 with a SimCSE-style Vietnamese encoder, ranks whole articles,
 shows the verbatim text with its source and version, and flags low-confidence

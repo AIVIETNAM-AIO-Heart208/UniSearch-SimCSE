@@ -38,11 +38,11 @@ Kết quả lấy từ tài liệu bên ngoài **không phải** kết quả c�
 
 **Repo GitHub:** <https://github.com/AIVIETNAM-AIO-Heart208/UniSearch-SimCSE>. Minh tạo ngày 23/11.
 
-**Bản clone trên laptop Huy:** `D:\TAI_LIEU_HCMUS_K24\Năm 3 - Kì 1\Nhập môn học máy\Project-ML_Lab\Lab03\UniSearch-SimCSE`. Script, log và kết quả R1–R3 đã có trên nhánh `main` của nhóm trong `experiments/reproduction/`. [Commit `622dc22`](https://github.com/AIVIETNAM-AIO-Heart208/UniSearch-SimCSE/commit/622dc223cd3ef43aeffab5d0ff1da230d8a3b641).
+**Bản clone trên laptop Huy:** `D:\TAI_LIEU_HCMUS_K24\Năm 3 - Kì 1\Nhập môn học máy\Project-ML_Lab\Lab03\UniSearch-SimCSE`. Script, log và kết quả R1–R4 đã có trên nhánh `main` của nhóm trong `experiments/reproduction/`. R4 có thêm `src/simcse_lab/model/infonce.py` và `tests/`. R1–R3: [commit `622dc22`](https://github.com/AIVIETNAM-AIO-Heart208/UniSearch-SimCSE/commit/622dc223cd3ef43aeffab5d0ff1da230d8a3b641).
 
 Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của lần chạy R1–R3; xóa được khi không cần nữa.
 
-**Giai đoạn hiện tại:** Phase 1 (đọc paper) và Phase 2 (tái hiện: R1–R3 đã xong, còn R4) theo [docs/PLAN.md](../PLAN.md). Chưa có code ứng dụng.
+**Giai đoạn hiện tại:** Phase 1 (đọc paper) và Phase 2 (tái hiện: R1–R4 đã xong) theo [docs/PLAN.md](../PLAN.md). Chưa có code ứng dụng.
 
 **Đã hoàn thành**
 
@@ -60,6 +60,10 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
 - [x] **R2:** unsup SimCSE ra trung bình **76,25**, khớp paper ở cả 7 task.
 - [x] **R3:** BERT-base chưa fine-tune ra trung bình **56,70**, khớp paper; hai task lệch ±0,01.
   - Kết luận: tái hiện được đúng khoảng cách của paper, từ 56,70 (BERT thô) lên 76,25 (unsup SimCSE) rồi 81,58 (sup SimCSE).
+- [x] **R4 (23/11):** tự cài InfoNCE ở `src/simcse_lab/model/infonce.py`, cho cả unsup và sup có hard negative với log-weight.
+  - Kiểm thử: 689/689 test pass. Ở float64, lệch ≤ 1,4e-9 so với `cl_forward` và ≤ 8,4e-15 so với vòng lặp tính theo Eq. 4/8.
+  - File: `experiments/reproduction/results/R4/` ([§6.7](#67-bảng-theo-dõi-kết-quả)).
+- [x] Bản nháp phần Introduction và Proposed Method của báo cáo IEEE (commit `652fa4e`), gồm cả phần giải thích luồng code gốc. Chưa đọc chéo.
 
 **Đang thực hiện:** không có.
 
@@ -71,7 +75,7 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
 
 **3 việc ưu tiên tiếp theo**
 
-1. **Huy** viết phần bài toán và phương pháp cho Phase 1 (hạn 27/11), tự cài InfoNCE và kiểm thử đối chiếu với `cl_forward` cho R4 (hạn 30/11). Tiêu chí kiểm thử ở [§4.5](#45-kế-hoạch-tái-hiện-kết-quả-paper).
+1. **Minh** đọc chéo phần bài toán và phương pháp của Huy (Phase 1, hạn 27/11): Introduction và Proposed Method trong `docs/report/sections/`. **Huy** đọc chéo phần của Minh khi Minh xong.
 2. **Minh:** chuẩn bị D1 (`data/prepare_virhe4qa.py`, group split) và chạy SimCSE-VN dense trên D1. Chọn văn bản quy chế của trường trước 27/11 để hai người bắt đầu viết D2.
 3. **Cả hai:** chốt schema dữ liệu ở [§5.4](#54-interface--định-dạng-dữ-liệu) trước 25/11.
 
@@ -193,7 +197,7 @@ Nguồn: paper (PDF nhóm cung cấp) và code tại commit `235f89e` [Confirmed
 | InfoNCE (Eq. 1) | $\ell_i=-\log \frac{e^{\mathrm{sim}(h_i,h_i^+)/\tau}}{\sum_{j=1}^{N} e^{\mathrm{sim}(h_i,h_j^+)/\tau}}$, với sim là cosine và τ là temperature (mặc định 0,05 trong `train.py`) |
 | Unsupervised (Eq. 4) | $x_i^+=x_i$. Cùng một câu đi qua encoder 2 lần với **dropout mask khác nhau** (dropout chuẩn p = 0,1) → 2 embedding làm positive pair. Dropout đóng vai trò data augmentation tối thiểu |
 | Bằng chứng về dropout | Table 3 (STS-B dev): p = 0,1 → 82,5; p = 0 → 71,1; "fixed 0.1" (cùng mask) → 43,6. Table 1: dropout tốt hơn crop, word deletion, synonym replacement, MLM. Table 2: một encoder tốt hơn hai encoder |
-| Supervised (Eq. 5) | Dùng NLI (SNLI+MNLI): entailment làm positive, contradiction làm **hard negative**. Table 4: 84,9 → 86,2 khi thêm hard negative. Table 7: trọng số α = 1 tốt nhất |
+| Supervised (Eq. 5) | Dùng NLI (SNLI+MNLI): entailment làm positive, contradiction làm **hard negative**. Table 4: 84,9 → 86,2 khi thêm hard negative. Table 7: trọng số α (Eq. 8, §6.3) bằng 1 là tốt nhất |
 | Pooling (Table 6) | Unsup: [CLS] + MLP **chỉ khi train**, bỏ MLP khi test. Sup: [CLS] + MLP |
 | Alignment / uniformity (Eq. 2–3) | Alignment: positive pair gần nhau. Uniformity: embedding trải đều trên hypersphere. Unsup SimCSE cải thiện uniformity mà vẫn giữ alignment (Fig. 2–3) |
 | Anisotropy (§5) | Embedding của PLM bị dồn vào một "nón" hẹp. Contrastive objective làm phẳng phổ trị riêng → isotropic hơn |
@@ -216,7 +220,7 @@ Rà soát tĩnh ngày 2026-11-23 [Confirmed]. Nhóm vẫn phải tự đọc l�
 | `train.py` – đọc dữ liệu | `.txt` = 1 cột (câu được nhân đôi làm cặp); `.csv` 2 cột = cặp; 3 cột = cặp + hard negative. `prepare_features` tokenize rồi gom thành list `num_sent` câu cho mỗi ví dụ | Giải thích luồng dữ liệu |
 | `train.py` – data collator | Pad rồi reshape thành `(bs, num_sent, len)` | Giải thích |
 | `simcse/models.py` – `Pooler` | `cls`/`cls_before_pooler` đều lấy `last_hidden[:,0]`; MLP được áp riêng trong `cl_forward` khi `pooler_type == "cls"`. `avg_first_last` dùng `hidden_states[0]` (output lớp embedding) và lớp cuối (R3 xác nhận số 56,70 của paper dùng đúng cách này) | Giải thích; liên hệ Table 6 |
-| `MLPLayer`, `Similarity` | Linear + Tanh; cosine / temp | Tự viết lại trong `src/simcse_lab/model/infonce.py` |
+| `MLPLayer`, `Similarity` | Linear + Tanh; cosine / temp | `Similarity`: tự viết lại (cosine / τ) trong `src/simcse_lab/model/infonce.py` ✓. `MLPLayer`: chỉ giải thích, vì nhóm không huấn luyện lại |
 | `cl_forward` | Flatten `(bs·num_sent, len)` → encoder → pooler → MLP (nếu `cls`) → tách z1, z2, (z3) → all_gather khi chạy distributed → `cos_sim` (bs×bs) → nối cột z1·z3 (bs×2bs) → cộng `hard_negative_weight` vào logit của hard negative tương ứng → `CrossEntropyLoss` với `labels = arange(bs)` (+ MLM loss nếu bật) | **Tự cài lại loss** và test khớp ([§4.5](#45-kế-hoạch-tái-hiện-kết-quả-paper), R4) |
 | `sentemb_forward` | Inference: pooler (+ MLP nếu `cls`) | Giải thích |
 | `simcse/trainers.py` – `CLTrainer.evaluate` | SentEval (fast mode) trên STS-B dev và SICK-R dev trong lúc train; dùng `stsb_spearman` để chọn checkpoint tốt nhất | Giải thích |
@@ -241,7 +245,7 @@ Rà soát tĩnh ngày 2026-11-23 [Confirmed]. Nhóm vẫn phải tự đọc l�
 | R1 | `evaluation.py --model_name_or_path princeton-nlp/sup-simcse-bert-base-uncased --pooler cls --task_set sts --mode test` | README: 75,30 / 84,67 / 80,19 / 85,40 / 80,82 / 84,26 / 80,39; TB 81,58 | **Bắt buộc** | CPU laptop; thời gian thực ghi trong `results/R1/env.txt` |
 | R2 | Như R1 với `unsup-simcse-bert-base-uncased --pooler cls_before_pooler` | TB 76,25 | Khuyến nghị (rẻ) — **đã chạy** | như R1 |
 | R3 | `bert-base-uncased --pooler avg_first_last` (không fine-tune) | Paper: 56,70 (BERT first-last avg). [Confirmed bằng R3] Số của paper dùng đúng cách tính tại commit, tức `hidden_states[0]` (lớp embedding) và lớp cuối | Khuyến nghị (rẻ) — **đã chạy** | như R1 |
-| R4 | Tự cài InfoNCE (unsup + sup có hard negative, log-weight) trong `src/simcse_lab/model/infonce.py`. Test: so với bản cài vòng lặp ngây thơ theo Eq. 4/5 và với đoạn tính loss trích từ `cl_forward` (ghi trích dẫn) trên tensor ngẫu nhiên; sai số < 1e-6 | — | **Bắt buộc** | CPU, vài giây |
+| R4 | Tự cài InfoNCE (unsup + sup có hard negative, log-weight) trong `src/simcse_lab/model/infonce.py`. Test: so với bản cài vòng lặp ngây thơ theo Eq. 4/8 (Eq. 8 ở §6.3 là Eq. 5 có trọng số α) và với đoạn tính loss trích từ `cl_forward` (ghi trích dẫn) trên tensor ngẫu nhiên; sai số < 1e-6 (float64) | — | **Bắt buộc** | CPU, khoảng 1 phút |
 | R5 | (O3) Train unsup mini bằng code tự viết, tập con wiki1m, p ∈ {0; 0,1}, đo STS-B dev | Chỉ tái hiện **xu hướng** của Table 3 | Tùy chọn | GPU T4 |
 | R6 | Đo alignment/uniformity (Eq. 2–3) cho R2 và R3 | Xu hướng định tính của Fig. 2–3 | Tùy chọn | CPU/GPU, ngắn |
 
@@ -281,7 +285,7 @@ Kết quả của SimCSE-VN **không** phải kết quả của paper. Trong bá
 
 1. Vì sao dropout tạo được positive pair? Vì sao p = 0 và "fixed 0.1" thất bại?
 2. Vai trò của τ và in-batch negatives. Vì sao paper thấy SimCSE ít nhạy với batch size (App. A)?
-3. Eq. 5: hard negative là gì? Vì sao `hard_negative_weight` là log của trọng số?
+3. Eq. 5 và Eq. 8 (§6.3): hard negative là gì? Vì sao `hard_negative_weight` là log của trọng số α?
 4. Alignment, uniformity và anisotropy liên quan với nhau thế nào?
 5. Khác biệt giữa `cls`, `cls_before_pooler` và `pooler_output` trong code.
 6. Vì sao báo Spearman và setting "all"? Vì sao kết quả giữa các paper khó so sánh (App. B)?
@@ -354,7 +358,7 @@ API: search(query: str, k: int = 3, method: "bm25"|"dense"|"hybrid") -> list[Hit
 | `src/simcse_lab/evaluation/stats.py` | hai runs → paired bootstrap CI; đo cảnh báo (coverage, false-confidence) | Huy | Mới |
 | `experiments/external_dataset/` | Chạy 3 phương pháp trên D1 (Minh); chọn α, τ trên D1-dev (Huy) → `results/` | Minh, Huy | Mới |
 | `experiments/application/` | So sánh trên D1-test và D2, phân tích lỗi (Huy); đo latency (Minh) → `results/` | Huy, Minh | Mới |
-| `experiments/reproduction/` | `run_r1.py` gọi `evaluation.py` tại commit → `results/R1–R3` ✓ | Huy | Code gốc + mới |
+| `experiments/reproduction/` | `run_r1.py` gọi `evaluation.py` tại commit → `results/R1–R3` ✓; `run_r4.py` → `results/R4` ✓ | Huy | Code gốc + mới |
 | `src/simcse_lab/model/infonce.py` + `tests/test_infonce.py` | R4: InfoNCE tự cài + test khớp `cl_forward` | Huy | Mới |
 | `apps/app.py` | Gradio UI gọi `search` | Minh | Mới (dùng Gradio) |
 
@@ -368,16 +372,16 @@ Theo repo GitHub. Mục có dấu ✓ là đã có nội dung.
 ├── data/                             # README + prepare_virhe4qa.py; raw/ processed/ bị gitignore
 │   └── d2/                           # documents.yaml, queries_d2.jsonl (nhóm tự tạo)
 ├── src/simcse_lab/
-│   ├── model/                        # encoders.py, infonce.py
+│   ├── model/                        # encoders.py, infonce.py ✓
 │   ├── retrieval/                    # ingest.py, preprocess.py, search.py
 │   └── evaluation/                   # metrics.py, stats.py
 ├── experiments/
-│   ├── reproduction/                 # ✓ run_r1.py, run_r1.bat, requirements-r1.txt, results/R1–R3
+│   ├── reproduction/                 # ✓ run_r1.py, run_r1.bat, requirements-r1.txt, results/R1–R3; run_r4.py, results/R4
 │   │   └── SimCSE/                   # code gốc @ 235f89e (gitignore; script tự tải nếu thiếu)
 │   ├── external_dataset/             # đánh giá D1 (E0, E1, E3-D1) → results/
 │   └── application/                  # D2, so sánh, latency, lỗi (E2–E5) → results/
 ├── apps/app.py                       # Gradio
-├── tests/                            # chunker, chuẩn hóa, metrics, infonce
+├── tests/                            # chunker, chuẩn hóa, metrics, infonce (✓ test_infonce.py, infonce_reference.py, conftest.py)
 ├── docs/                             # PLAN.md, application/{README,PROJECT}.md, report/, demo/
 └── .venv-repro/ · .cache/            # venv tái hiện, cache HuggingFace (gitignore)
 ```
@@ -489,7 +493,7 @@ Chỉ điền khi đã có file kết quả.
 | R1 | [x] 23/11 | TB 81,58 (README 81,58; paper 81,57). Từng task: 75,30 / 84,67 / 80,19 / 85,40 / 80,82 / 84,26 / 80,39 → khớp README 7/7 | `experiments/reproduction/results/R1/` |
 | R2 | [x] 23/11 | TB 76,25 = paper. Từng task: 68,40 / 82,41 / 74,38 / 80,91 / 78,56 / 76,85 / 72,23 → khớp 7/7 | `experiments/reproduction/results/R2/` |
 | R3 | [x] 23/11 | TB 56,70 = paper. Từng task: 39,70 / 59,37 / 49,67 / 66,03 / 66,19 / 53,88 / 62,06 → lệch ≤ 0,01 | `experiments/reproduction/results/R3/` |
-| R4 | [ ] | — | `tests/test_infonce.py` |
+| R4 | [x] 23/11 | 689/689 test pass. float64: lệch tối đa 8,4e-15 so với vòng lặp Eq. 4/8; so với `cl_forward` 6,0e-15 (w biểu diễn đúng trong float32) và 1,4e-9 (w = log 0,5, log 2; nguyên nhân: `cl_forward` dựng ma trận trọng số bằng float32, dựng bằng float64 thì còn 7,1e-15). Gradient khớp < 1e-6 trên một batch (N=8, d=32, τ=0,05, w ∈ {0, log 2}). float32: 3,7e-6, ngưỡng riêng 5e-5 | `experiments/reproduction/results/R4/`, `tests/test_infonce.py` |
 | E0 | [ ] | — | `experiments/external_dataset/results/E0/` |
 | E1 | [ ] | — | `experiments/external_dataset/results/E1/` |
 | E2 | [ ] | — | `experiments/application/results/E2/` |
@@ -517,7 +521,7 @@ Còn 18 ngày (23/11 → 11/12/2026). Phase 3 xong trước **06/12**. Từ 07/1
 | Phase (PLAN.md) | Hạn | Đầu ra chính | Phụ thuộc |
 |---|---|---|---|
 | 1 – Nghiên cứu paper | 27/11 | Hai phần viết đã đọc chéo. Huy: bài toán và phương pháp; Minh: dữ liệu, baseline, metric, kết quả, hạn chế | — |
-| 2 – Triển khai và tái hiện | 30/11 | **Huy:** R1 ✓ (thêm R2, R3 ✓), R4 InfoNCE + test, giải thích luồng code. **Minh:** D1 + group split; SimCSE-VN dense trên D1 (Hit@1/3, MRR@10, top-20, bảng D1-test) | D1 có sẵn |
+| 2 – Triển khai và tái hiện | 30/11 | **Huy:** R1 ✓ (thêm R2, R3 ✓), R4 InfoNCE + test ✓, giải thích luồng code. **Minh:** D1 + group split; SimCSE-VN dense trên D1 (Hit@1/3, MRR@10, top-20, bảng D1-test) | D1 có sẵn |
 | 3 – Xây dựng ứng dụng | 06/12 | **Minh:** chọn văn bản (trước 27/11), tách Điều/Khoản, BM25 + Hybrid, Gradio, latency. **Huy:** bảng so sánh + CI, chọn α/τ trên D1-dev, so sánh D1-test và D2, phân tích lỗi. **Cả hai:** D2 chốt nhãn trước 02/12 | Phase 2 |
 | 4 – Hoàn thiện và nộp | 10/12; nộp 11/12 | **Huy:** PDF IEEE, chạy lại từ clone sạch. **Minh:** README, video, `[Group14].zip`, kiểm tra link | Phase 3 |
 | Tùy chọn O1–O5 | dừng 08/12 | Chỉ làm nếu Phase 3 xong trước 06/12 | Phase 3 |

@@ -3,7 +3,7 @@
 Đồ án Lab 03 – Machine Learning, **Nhóm 14**, **Option 1: Practical Application**.
 Ứng dụng tìm đúng **Điều/Khoản** trong văn bản quy chế học vụ cho câu hỏi tự nhiên của sinh viên, hiển thị nguyên văn kèm nguồn và phiên bản văn bản.
 
-> **Trạng thái:** đã tái hiện R1–R3, khớp paper (TB STS 81,58 / 76,25 / 56,70); **chưa có code ứng dụng và chưa có kết quả đánh giá ứng dụng**.
+> **Trạng thái:** đã tái hiện R1–R3, khớp paper (TB STS 81,58 / 76,25 / 56,70), và R4 (InfoNCE tự cài khớp `cl_forward`, lệch ≤ 1,4e-9 ở float64); **chưa có code ứng dụng và chưa có kết quả đánh giá ứng dụng**.
 > Trạng thái chi tiết và việc tiếp theo: xem [PROJECT.md – Current Status](PROJECT.md#1-current-status).
 
 ## Thành viên
