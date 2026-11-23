@@ -20,3 +20,14 @@ dist/
 .cache/
 experiments/reproduction/SimCSE/
 *.part
+
+# LaTeX report: docs/report/build.ps1 writes to docs/report/build/ (covered by build/ above);
+# these catch in-place builds from an editor.
+docs/report/*.aux
+docs/report/*.log
+docs/report/*.bbl
+docs/report/*.blg
+docs/report/*.out
+docs/report/*.fls
+docs/report/*.fdb_latexmk
+docs/report/*.synctex.gz

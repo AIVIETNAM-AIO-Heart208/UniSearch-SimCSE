@@ -37,6 +37,6 @@
 
 *Mục 4 · Huy tổng hợp báo cáo trong lúc Minh hoàn thiện bản chạy và video.*
 
-- [ ] **Huy** — Dùng bảng số liệu đã chốt để viết phương pháp, kết quả và thảo luận theo mẫu IEEE. Ghép phần ứng dụng của Minh rồi xuất PDF.
-- [ ] **Minh** — Bàn giao phần viết về ứng dụng, đối chứng và đóng góp của nhóm. Hoàn thiện README với các lệnh cài đặt, dựng chỉ mục và chạy demo. Quay video tối đa 30 phút trên cấu hình đã đánh giá.
+- [ ] **Huy** — Dùng bảng số liệu đã chốt để viết phương pháp, kết quả và thảo luận theo mẫu IEEE. Ghép phần ứng dụng của Minh rồi xuất PDF. *Khung LaTeX và lệnh build đã có ở [docs/report/](report/README.md) từ 23/11.*
+- [ ] **Minh** — Bàn giao phần viết về ứng dụng, đối chứng và đóng góp của nhóm (có thể viết thẳng vào `docs/report/sections/application.tex` và `contributions.tex`). Hoàn thiện README với các lệnh cài đặt, dựng chỉ mục và chạy demo. Quay video tối đa 30 phút trên cấu hình đã đánh giá.
 - [ ] **Huy kiểm tra, Minh đóng gói** — Huy chạy lại theo README từ bản clone sạch. Khi PDF, video và mã nguồn đã sẵn sàng, Minh kiểm tra link và tạo `[Group14].zip`; một đại diện nộp lên Moodle.

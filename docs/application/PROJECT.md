@@ -631,4 +631,4 @@ Còn 18 ngày (23/11 → 11/12/2026). Phase 3 xong trước **06/12**. Từ 07/1
 - R2GQA / ViRHE4QA — <https://arxiv.org/abs/2409.02840>
 - EduCoQA (HF) — <https://huggingface.co/datasets/longstnguyen/vire-educoqa>
 - Thư viện: rank_bm25 <https://github.com/dorianbrown/rank_bm25> · faiss <https://github.com/facebookresearch/faiss> · pyvi <https://github.com/trungtv/pyvi> · Gradio <https://www.gradio.app/>
-- Mẫu IEEE Conference: theo Moodle môn học.
+- Mẫu IEEE Conference (`conference_101719.tex`, IEEEtran V1.8b) — <https://www.overleaf.com/latex/templates/ieee-conference-template/grfzhhncsfqn>. Build trên máy, không qua Overleaf: [docs/report/](../report/README.md).

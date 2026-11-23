@@ -1,0 +1,69 @@
+% Lab 03 report, Group 14 (UniSearch-SimCSE).
+% Based on the IEEE Conference Template (conference_101719.tex, IEEEtran V1.8b):
+% https://www.overleaf.com/latex/templates/ieee-conference-template/grfzhhncsfqn
+% The template preamble is kept unchanged; project additions are marked below.
+% Template guidance text, the funding footnote and the sample figure were removed.
+% Build locally with pdfLaTeX (same engine as the Overleaf template): see README.md.
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% ---- Project additions (not part of the IEEE template) ----
+% Vietnamese diacritics in IEEEtran's Times; the T5 fonts come from the vntex package.
+\usepackage[T5]{fontenc}
+% Typesets the url fields of references.bib.
+\usepackage{url}
+\graphicspath{{figures/}}
+% Draft note, printed in red. Remove every \TODO before submission (see README.md).
+\newcommand{\TODO}[1]{\textcolor{red}{[TODO: #1]}}
+
+\begin{document}
+
+\title{\TODO{Tên đề tài}}
+
+\author{\IEEEauthorblockN{Thái Quang Huy}
+\IEEEauthorblockA{\textit{Faculty of Information Technology} \\
+\textit{University of Science, VNU-HCM}\\
+Ho Chi Minh City, Vietnam \\
+Student ID: 24127177 \\
+tqhuy2435@clc.fitus.edu.vn}
+\and
+\IEEEauthorblockN{Nguyễn Văn Minh}
+\IEEEauthorblockA{\textit{Faculty of Information Technology} \\
+\textit{University of Science, VNU-HCM}\\
+Ho Chi Minh City, Vietnam \\
+Student ID: 24127205 \\
+nvminh2428@clc.fitus.edu.vn}
+}
+
+\maketitle
+
+\begin{abstract}
+\input{sections/abstract}
+\end{abstract}
+
+\begin{IEEEkeywords}
+\TODO{4--6 từ khóa, ví dụ: SimCSE, sentence embeddings, contrastive learning, dense retrieval, Vietnamese}
+\end{IEEEkeywords}
+
+\input{sections/introduction}
+\input{sections/related-work}
+\input{sections/method}
+\input{sections/experimental-setup}
+\input{sections/results}
+\input{sections/application}
+\input{sections/conclusion}
+\input{sections/contributions}
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
