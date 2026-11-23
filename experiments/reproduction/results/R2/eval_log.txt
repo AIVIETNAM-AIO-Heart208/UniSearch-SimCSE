@@ -1,0 +1,151 @@
+D:\Lab03_Group14\.venv-repro\Lib\site-packages\transformers\utils\hub.py:128: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+2026-11-23 16:22:12,101 : Starting new HTTPS connection (1): huggingface.co:443
+2026-11-23 16:22:12,677 : https://huggingface.co:443 "HEAD /princeton-nlp/unsup-simcse-bert-base-uncased/resolve/main/config.json HTTP/1.1" 307 0
+2026-11-23 16:22:12,688 : https://huggingface.co:443 "HEAD /api/resolve-cache/models/princeton-nlp/unsup-simcse-bert-base-uncased/218baf6bc48c463a53f5b4e1c568299537fab124/config.json HTTP/1.1" 200 0
+2026-11-23 16:22:12,692 : Attempting to acquire lock 1590420389712 on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\3a38cdf81696890df0562e120dd369bd38d66ea4.lock
+2026-11-23 16:22:12,693 : Lock 1590420389712 acquired on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\3a38cdf81696890df0562e120dd369bd38d66ea4.lock
+2026-11-23 16:22:12,939 : https://huggingface.co:443 "GET /api/resolve-cache/models/princeton-nlp/unsup-simcse-bert-base-uncased/218baf6bc48c463a53f5b4e1c568299537fab124/config.json HTTP/1.1" 200 697
+2026-11-23 16:22:12,942 : Attempting to release lock 1590420389712 on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\3a38cdf81696890df0562e120dd369bd38d66ea4.lock
+2026-11-23 16:22:12,947 : Lock 1590420389712 released on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\3a38cdf81696890df0562e120dd369bd38d66ea4.lock
+2026-11-23 16:22:14,502 : https://huggingface.co:443 "HEAD /princeton-nlp/unsup-simcse-bert-base-uncased/resolve/main/model.safetensors HTTP/1.1" 404 0
+2026-11-23 16:22:14,776 : https://huggingface.co:443 "HEAD /princeton-nlp/unsup-simcse-bert-base-uncased/resolve/main/model.safetensors.index.json HTTP/1.1" 404 0
+2026-11-23 16:22:15,046 : https://huggingface.co:443 "HEAD /princeton-nlp/unsup-simcse-bert-base-uncased/resolve/main/pytorch_model.bin HTTP/1.1" 302 0
+2026-11-23 16:22:15,051 : Attempting to acquire lock 1590493171856 on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\d1c2ee39eee210f7a0760a71342a7fe304c61ae8ba7274e73aff437eb64c84ac.lock
+2026-11-23 16:22:15,051 : Lock 1590493171856 acquired on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\d1c2ee39eee210f7a0760a71342a7fe304c61ae8ba7274e73aff437eb64c84ac.lock
+Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-11-23 16:22:15,051 : Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-11-23 16:22:15,321 : https://huggingface.co:443 "GET /princeton-nlp/unsup-simcse-bert-base-uncased/resolve/main/pytorch_model.bin HTTP/1.1" 302 1159
+2026-11-23 16:22:15,321 : Starting new HTTPS connection (1): us.aws.cdn.hf.co:443
+2026-11-23 16:22:15,771 : https://us.aws.cdn.hf.co:443 "GET /xet-bridge-us/621ffdc136468d709f17f006/db54efcaaf59d56bbfcedd81f1c8d6bb95355090485bb674849aca089da2f66b?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27pytorch_model.bin%3B+filename%3D%22pytorch_model.bin%22%3B&response-content-type=application%2Foctet-stream&user_id=public&xip=okNuOSHyDQ4&X-Xet-Cas-Uid=public&Expires=1795429337&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly91cy5hd3MuY2RuLmhmLmNvL3hldC1icmlkZ2UtdXMvNjIxZmZkYzEzNjQ2OGQ3MDlmMTdmMDA2L2RiNTRlZmNhYWY1OWQ1NmJiZmNlZGQ4MWYxYzhkNmJiOTUzNTUwOTA0ODViYjY3NDg0OWFjYTA4OWRhMmY2NmJcXD9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPWlubGluZSUzQitmaWxlbmFtZSUyQSUzRFVURi04JTI3JTI3cHl0b3JjaF9tb2RlbC5iaW4lM0IrZmlsZW5hbWUlM0QlMjJweXRvcmNoX21vZGVsLmJpbiUyMiUzQiZyZXNwb25zZS1jb250ZW50LXR5cGU9YXBwbGljYXRpb24lMkZvY3RldC1zdHJlYW0mdXNlcl9pZD1wdWJsaWMmeGlwPW9rTnVPU0h5RFE0JlgtWGV0LUNhcy1VaWQ9cHVibGljIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJFcG9jaFRpbWUiOjE3OTU0MjkzMzd9fX1dfQ__&Signature=MEYCIQCagpXtQKUD7EpiXb0y51gYM7~HH1xVhvFTizDQ3VNC6QIhAKZspOkTI8E-jhsA6QRLTZCnpyoqQ4pcybjp6NN3k~Hf&Key-Pair-Id=01KXEF4KZ1B6FV465MAWR4M21F&Hash-Algorithm=SHA256 HTTP/1.1" 200 437998343
+2026-11-23 16:22:46,203 : Attempting to release lock 1590493171856 on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\d1c2ee39eee210f7a0760a71342a7fe304c61ae8ba7274e73aff437eb64c84ac.lock
+2026-11-23 16:22:46,204 : Lock 1590493171856 released on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\d1c2ee39eee210f7a0760a71342a7fe304c61ae8ba7274e73aff437eb64c84ac.lock
+2026-11-23 16:22:46,476 : https://huggingface.co:443 "HEAD /princeton-nlp/unsup-simcse-bert-base-uncased/resolve/main/model.safetensors HTTP/1.1" 404 0
+2026-11-23 16:22:46,483 : Starting new HTTPS connection (1): huggingface.co:443
+2026-11-23 16:22:46,807 : https://huggingface.co:443 "HEAD /princeton-nlp/unsup-simcse-bert-base-uncased/resolve/main/tokenizer_config.json HTTP/1.1" 307 0
+2026-11-23 16:22:46,842 : https://huggingface.co:443 "HEAD /api/resolve-cache/models/princeton-nlp/unsup-simcse-bert-base-uncased/218baf6bc48c463a53f5b4e1c568299537fab124/tokenizer_config.json HTTP/1.1" 200 0
+2026-11-23 16:22:46,846 : Attempting to acquire lock 1590932869776 on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\cd79adc84d3c96daa03456853766c63141aef734.lock
+2026-11-23 16:22:46,847 : Lock 1590932869776 acquired on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\cd79adc84d3c96daa03456853766c63141aef734.lock
+2026-11-23 16:22:46,998 : https://huggingface.co:443 "GET /api/models/princeton-nlp/unsup-simcse-bert-base-uncased HTTP/1.1" 200 None
+2026-11-23 16:22:47,106 : https://huggingface.co:443 "GET /api/resolve-cache/models/princeton-nlp/unsup-simcse-bert-base-uncased/218baf6bc48c463a53f5b4e1c568299537fab124/tokenizer_config.json HTTP/1.1" 200 252
+2026-11-23 16:22:47,106 : Attempting to release lock 1590932869776 on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\cd79adc84d3c96daa03456853766c63141aef734.lock
+2026-11-23 16:22:47,106 : Lock 1590932869776 released on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\cd79adc84d3c96daa03456853766c63141aef734.lock
+2026-11-23 16:22:47,322 : https://huggingface.co:443 "GET /api/models/princeton-nlp/unsup-simcse-bert-base-uncased/commits/main HTTP/1.1" 200 None
+2026-11-23 16:22:47,385 : https://huggingface.co:443 "HEAD /princeton-nlp/unsup-simcse-bert-base-uncased/resolve/main/vocab.txt HTTP/1.1" 307 0
+2026-11-23 16:22:47,597 : https://huggingface.co:443 "GET /api/models/princeton-nlp/unsup-simcse-bert-base-uncased/discussions?p=0 HTTP/1.1" 200 None
+2026-11-23 16:22:47,641 : https://huggingface.co:443 "HEAD /api/resolve-cache/models/princeton-nlp/unsup-simcse-bert-base-uncased/218baf6bc48c463a53f5b4e1c568299537fab124/vocab.txt HTTP/1.1" 200 0
+2026-11-23 16:22:47,646 : Attempting to acquire lock 1590490084304 on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\fb140275c155a9c7c5a3b3e0e77a9e839594a938.lock
+2026-11-23 16:22:47,646 : Lock 1590490084304 acquired on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\fb140275c155a9c7c5a3b3e0e77a9e839594a938.lock
+2026-11-23 16:22:47,893 : https://huggingface.co:443 "GET /api/models/princeton-nlp/unsup-simcse-bert-base-uncased/commits/refs%2Fpr%2F5 HTTP/1.1" 200 None
+2026-11-23 16:22:47,893 : Starting new HTTPS connection (1): safetensors-convert.hf.space:443
+2026-11-23 16:22:47,902 : https://huggingface.co:443 "GET /api/resolve-cache/models/princeton-nlp/unsup-simcse-bert-base-uncased/218baf6bc48c463a53f5b4e1c568299537fab124/vocab.txt HTTP/1.1" 200 None
+2026-11-23 16:22:47,919 : Attempting to release lock 1590490084304 on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\fb140275c155a9c7c5a3b3e0e77a9e839594a938.lock
+2026-11-23 16:22:47,919 : Lock 1590490084304 released on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\fb140275c155a9c7c5a3b3e0e77a9e839594a938.lock
+2026-11-23 16:22:48,186 : https://huggingface.co:443 "HEAD /princeton-nlp/unsup-simcse-bert-base-uncased/resolve/main/tokenizer.json HTTP/1.1" 404 0
+2026-11-23 16:22:48,455 : https://huggingface.co:443 "HEAD /princeton-nlp/unsup-simcse-bert-base-uncased/resolve/main/added_tokens.json HTTP/1.1" 404 0
+2026-11-23 16:22:48,724 : https://huggingface.co:443 "HEAD /princeton-nlp/unsup-simcse-bert-base-uncased/resolve/main/special_tokens_map.json HTTP/1.1" 307 0
+2026-11-23 16:22:48,839 : https://safetensors-convert.hf.space:443 "POST /call/run HTTP/1.1" 405 57
+2026-11-23 16:22:48,977 : https://huggingface.co:443 "HEAD /api/resolve-cache/models/princeton-nlp/unsup-simcse-bert-base-uncased/218baf6bc48c463a53f5b4e1c568299537fab124/special_tokens_map.json HTTP/1.1" 200 0
+2026-11-23 16:22:48,977 : Attempting to acquire lock 1590466443088 on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\e7b0375001f109a6b8873d756ad4f7bbb15fbaa5.lock
+2026-11-23 16:22:48,977 : Lock 1590466443088 acquired on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\e7b0375001f109a6b8873d756ad4f7bbb15fbaa5.lock
+2026-11-23 16:22:49,237 : https://huggingface.co:443 "GET /api/resolve-cache/models/princeton-nlp/unsup-simcse-bert-base-uncased/218baf6bc48c463a53f5b4e1c568299537fab124/special_tokens_map.json HTTP/1.1" 200 112
+2026-11-23 16:22:49,237 : Attempting to release lock 1590466443088 on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\e7b0375001f109a6b8873d756ad4f7bbb15fbaa5.lock
+2026-11-23 16:22:49,237 : Lock 1590466443088 released on D:\hf_cache\hub\.locks\models--princeton-nlp--unsup-simcse-bert-base-uncased\e7b0375001f109a6b8873d756ad4f7bbb15fbaa5.lock
+2026-11-23 16:22:49,292 : ***** Transfer task : STS12 *****
+
+
+D:\Lab03_Group14\repro\SimCSE\./SentEval\senteval\sts.py:42: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  sent1 = np.array([s.split() for s in sent1])[not_empty_idx]
+D:\Lab03_Group14\repro\SimCSE\./SentEval\senteval\sts.py:43: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  sent2 = np.array([s.split() for s in sent2])[not_empty_idx]
+2026-11-23 16:23:27,396 : MSRpar : pearson = 0.6408, spearman = 0.6531
+2026-11-23 16:23:47,300 : MSRvid : pearson = 0.8645, spearman = 0.8563
+2026-11-23 16:23:58,606 : SMTeuroparl : pearson = 0.5178, spearman = 0.6202
+2026-11-23 16:24:22,583 : surprise.OnWN : pearson = 0.7495, spearman = 0.7091
+2026-11-23 16:24:33,970 : surprise.SMTnews : pearson = 0.6695, spearman = 0.5805
+2026-11-23 16:24:33,974 : ALL : Pearson = 0.7569,             Spearman = 0.6840
+2026-11-23 16:24:33,974 : ALL (weighted average) : Pearson = 0.7065,             Spearman = 0.7015
+2026-11-23 16:24:33,974 : ALL (average) : Pearson = 0.6884,             Spearman = 0.6838
+
+2026-11-23 16:24:33,977 : ***** Transfer task : STS13 (-SMT) *****
+
+
+2026-11-23 16:24:46,656 : FNWN : pearson = 0.6380, spearman = 0.6449
+2026-11-23 16:25:03,474 : headlines : pearson = 0.7935, spearman = 0.7977
+2026-11-23 16:25:20,684 : OnWN : pearson = 0.8687, spearman = 0.8435
+2026-11-23 16:25:20,686 : ALL : Pearson = 0.8210,             Spearman = 0.8241
+2026-11-23 16:25:20,686 : ALL (weighted average) : Pearson = 0.8020,             Spearman = 0.7956
+2026-11-23 16:25:20,686 : ALL (average) : Pearson = 0.7667,             Spearman = 0.7620
+
+2026-11-23 16:25:20,688 : ***** Transfer task : STS14 *****
+
+
+2026-11-23 16:25:32,791 : deft-forum : pearson = 0.6084, spearman = 0.5940
+2026-11-23 16:25:46,247 : deft-news : pearson = 0.7977, spearman = 0.7593
+2026-11-23 16:26:01,321 : headlines : pearson = 0.7789, spearman = 0.7670
+2026-11-23 16:26:16,236 : images : pearson = 0.8164, spearman = 0.7782
+2026-11-23 16:26:33,513 : OnWN : pearson = 0.8830, spearman = 0.8547
+2026-11-23 16:27:00,610 : tweet-news : pearson = 0.8075, spearman = 0.7353
+2026-11-23 16:27:00,610 : ALL : Pearson = 0.7810,             Spearman = 0.7438
+2026-11-23 16:27:00,610 : ALL (weighted average) : Pearson = 0.7940,             Spearman = 0.7591
+2026-11-23 16:27:00,610 : ALL (average) : Pearson = 0.7820,             Spearman = 0.7481
+
+2026-11-23 16:27:00,622 : ***** Transfer task : STS15 *****
+
+
+2026-11-23 16:27:18,206 : answers-forums : pearson = 0.7818, spearman = 0.7865
+2026-11-23 16:27:35,310 : answers-students : pearson = 0.7502, spearman = 0.7566
+2026-11-23 16:27:52,922 : belief : pearson = 0.8234, spearman = 0.8410
+2026-11-23 16:28:09,683 : headlines : pearson = 0.8211, spearman = 0.8263
+2026-11-23 16:28:24,045 : images : pearson = 0.8496, spearman = 0.8616
+2026-11-23 16:28:24,047 : ALL : Pearson = 0.8022,             Spearman = 0.8091
+2026-11-23 16:28:24,047 : ALL (weighted average) : Pearson = 0.8059,             Spearman = 0.8146
+2026-11-23 16:28:24,047 : ALL (average) : Pearson = 0.8052,             Spearman = 0.8144
+
+2026-11-23 16:28:24,051 : ***** Transfer task : STS16 *****
+
+
+2026-11-23 16:28:29,954 : answer-answer : pearson = 0.6943, spearman = 0.6929
+2026-11-23 16:28:34,281 : headlines : pearson = 0.8067, spearman = 0.8222
+2026-11-23 16:28:40,641 : plagiarism : pearson = 0.8518, spearman = 0.8614
+2026-11-23 16:28:51,408 : postediting : pearson = 0.8590, spearman = 0.8713
+2026-11-23 16:28:55,506 : question-question : pearson = 0.6994, spearman = 0.7000
+2026-11-23 16:28:55,506 : ALL : Pearson = 0.7757,             Spearman = 0.7856
+2026-11-23 16:28:55,506 : ALL (weighted average) : Pearson = 0.7832,             Spearman = 0.7907
+2026-11-23 16:28:55,506 : ALL (average) : Pearson = 0.7822,             Spearman = 0.7896
+
+2026-11-23 16:28:55,506 : 
+
+***** Transfer task : STSBenchmark*****
+
+
+2026-11-23 16:31:40,101 : train : pearson = 0.7974, spearman = 0.7770
+2026-11-23 16:32:32,857 : dev : pearson = 0.8223, spearman = 0.8245
+2026-11-23 16:33:15,974 : test : pearson = 0.7788, spearman = 0.7685
+2026-11-23 16:33:15,978 : ALL : Pearson = 0.7996,             Spearman = 0.7875
+2026-11-23 16:33:15,978 : ALL (weighted average) : Pearson = 0.7988,             Spearman = 0.7839
+2026-11-23 16:33:15,978 : ALL (average) : Pearson = 0.7995,             Spearman = 0.7900
+
+2026-11-23 16:33:15,983 : 
+
+***** Transfer task : SICKRelatedness*****
+
+
+2026-11-23 16:35:03,691 : train : pearson = 0.8038, spearman = 0.7271
+2026-11-23 16:35:17,235 : dev : pearson = 0.7935, spearman = 0.7442
+2026-11-23 16:37:14,596 : test : pearson = 0.7986, spearman = 0.7223
+2026-11-23 16:37:14,601 : ALL : Pearson = 0.8008,             Spearman = 0.7255
+2026-11-23 16:37:14,601 : ALL (weighted average) : Pearson = 0.8007,             Spearman = 0.7256
+2026-11-23 16:37:14,601 : ALL (average) : Pearson = 0.7986,             Spearman = 0.7312
+
+------ test ------
++-------+-------+-------+-------+-------+--------------+-----------------+-------+
+| STS12 | STS13 | STS14 | STS15 | STS16 | STSBenchmark | SICKRelatedness |  Avg. |
++-------+-------+-------+-------+-------+--------------+-----------------+-------+
+| 68.40 | 82.41 | 74.38 | 80.91 | 78.56 |    76.85     |      72.23      | 76.25 |
++-------+-------+-------+-------+-------+--------------+-----------------+-------+
++------+------+------+------+------+------+------+------+
+|  MR  |  CR  | SUBJ | MPQA | SST2 | TREC | MRPC | Avg. |
++------+------+------+------+------+------+------+------+
+| 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
++------+------+------+------+------+------+------+------+

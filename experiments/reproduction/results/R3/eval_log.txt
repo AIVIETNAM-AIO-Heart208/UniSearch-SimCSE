@@ -1,0 +1,137 @@
+D:\Lab03_Group14\.venv-repro\Lib\site-packages\transformers\utils\hub.py:128: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+2026-11-23 16:41:17,487 : Starting new HTTPS connection (1): huggingface.co:443
+2026-11-23 16:41:18,055 : https://huggingface.co:443 "HEAD /bert-base-uncased/resolve/main/config.json HTTP/1.1" 200 0
+2026-11-23 16:41:18,060 : Attempting to acquire lock 2015977723728 on D:\hf_cache\hub\.locks\models--bert-base-uncased\45a2321a7ecfdaaf60a6c1fd7f5463994cc8907d.lock
+2026-11-23 16:41:18,060 : Lock 2015977723728 acquired on D:\hf_cache\hub\.locks\models--bert-base-uncased\45a2321a7ecfdaaf60a6c1fd7f5463994cc8907d.lock
+2026-11-23 16:41:18,410 : https://huggingface.co:443 "GET /bert-base-uncased/resolve/main/config.json HTTP/1.1" 200 570
+2026-11-23 16:41:18,425 : Attempting to release lock 2015977723728 on D:\hf_cache\hub\.locks\models--bert-base-uncased\45a2321a7ecfdaaf60a6c1fd7f5463994cc8907d.lock
+2026-11-23 16:41:18,425 : Lock 2015977723728 released on D:\hf_cache\hub\.locks\models--bert-base-uncased\45a2321a7ecfdaaf60a6c1fd7f5463994cc8907d.lock
+2026-11-23 16:41:19,993 : https://huggingface.co:443 "HEAD /bert-base-uncased/resolve/main/model.safetensors HTTP/1.1" 302 0
+2026-11-23 16:41:20,003 : Attempting to acquire lock 2016023276624 on D:\hf_cache\hub\.locks\models--bert-base-uncased\68d45e234eb4a928074dfd868cead0219ab85354cc53d20e772753c6bb9169d3.lock
+2026-11-23 16:41:20,003 : Lock 2016023276624 acquired on D:\hf_cache\hub\.locks\models--bert-base-uncased\68d45e234eb4a928074dfd868cead0219ab85354cc53d20e772753c6bb9169d3.lock
+Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-11-23 16:41:20,004 : Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-11-23 16:41:20,275 : https://huggingface.co:443 "GET /bert-base-uncased/resolve/main/model.safetensors HTTP/1.1" 302 1038
+2026-11-23 16:41:20,275 : Starting new HTTPS connection (1): us.aws.cdn.hf.co:443
+2026-11-23 16:41:20,640 : https://us.aws.cdn.hf.co:443 "GET /xet-bridge-us/621ffdc036468d709f174338/44172b48ce7a9d951000a9d76ae331b155df32c9fd4e93239a233d720f471725?xip=okNuOSHyDQ4&X-Xet-Cas-Uid=public&response-content-disposition=inline%3B+filename*%3DUTF-8%27%27model.safetensors%3B+filename%3D%22model.safetensors%22%3B&user_id=public&Expires=1795430482&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly91cy5hd3MuY2RuLmhmLmNvL3hldC1icmlkZ2UtdXMvNjIxZmZkYzAzNjQ2OGQ3MDlmMTc0MzM4LzQ0MTcyYjQ4Y2U3YTlkOTUxMDAwYTlkNzZhZTMzMWIxNTVkZjMyYzlmZDRlOTMyMzlhMjMzZDcyMGY0NzE3MjVcXD94aXA9b2tOdU9TSHlEUTQmWC1YZXQtQ2FzLVVpZD1wdWJsaWMmcmVzcG9uc2UtY29udGVudC1kaXNwb3NpdGlvbj1pbmxpbmUlM0IrZmlsZW5hbWUlMkElM0RVVEYtOCUyNyUyN21vZGVsLnNhZmV0ZW5zb3JzJTNCK2ZpbGVuYW1lJTNEJTIybW9kZWwuc2FmZXRlbnNvcnMlMjIlM0ImdXNlcl9pZD1wdWJsaWMiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkVwb2NoVGltZSI6MTc5NTQzMDQ4Mn19fV19&Signature=MEUCIQCS9aVadHoSgybtla4oJPMbbHev7h2eZ1jDLtzIosCtJAIgMChWhfkgX7LVCwq2Hm3GKrc1SHrxg0EqnxLddZ7MjuE_&Key-Pair-Id=01KXEF4KZ1B6FV465MAWR4M21F&Hash-Algorithm=SHA256 HTTP/1.1" 200 440449768
+2026-11-23 16:42:04,547 : Attempting to release lock 2016023276624 on D:\hf_cache\hub\.locks\models--bert-base-uncased\68d45e234eb4a928074dfd868cead0219ab85354cc53d20e772753c6bb9169d3.lock
+2026-11-23 16:42:04,547 : Lock 2016023276624 released on D:\hf_cache\hub\.locks\models--bert-base-uncased\68d45e234eb4a928074dfd868cead0219ab85354cc53d20e772753c6bb9169d3.lock
+2026-11-23 16:42:04,864 : https://huggingface.co:443 "HEAD /bert-base-uncased/resolve/main/tokenizer_config.json HTTP/1.1" 200 0
+2026-11-23 16:42:04,866 : Attempting to acquire lock 2015978099280 on D:\hf_cache\hub\.locks\models--bert-base-uncased\e5c73d8a50df1f56fb5b0b8002d7cf4010afdccb.lock
+2026-11-23 16:42:04,866 : Lock 2015978099280 acquired on D:\hf_cache\hub\.locks\models--bert-base-uncased\e5c73d8a50df1f56fb5b0b8002d7cf4010afdccb.lock
+2026-11-23 16:42:05,130 : https://huggingface.co:443 "GET /bert-base-uncased/resolve/main/tokenizer_config.json HTTP/1.1" 200 48
+2026-11-23 16:42:05,132 : Attempting to release lock 2015978099280 on D:\hf_cache\hub\.locks\models--bert-base-uncased\e5c73d8a50df1f56fb5b0b8002d7cf4010afdccb.lock
+2026-11-23 16:42:05,133 : Lock 2015978099280 released on D:\hf_cache\hub\.locks\models--bert-base-uncased\e5c73d8a50df1f56fb5b0b8002d7cf4010afdccb.lock
+2026-11-23 16:42:05,415 : https://huggingface.co:443 "HEAD /bert-base-uncased/resolve/main/vocab.txt HTTP/1.1" 200 0
+2026-11-23 16:42:05,415 : Attempting to acquire lock 2016051566800 on D:\hf_cache\hub\.locks\models--bert-base-uncased\fb140275c155a9c7c5a3b3e0e77a9e839594a938.lock
+2026-11-23 16:42:05,415 : Lock 2016051566800 acquired on D:\hf_cache\hub\.locks\models--bert-base-uncased\fb140275c155a9c7c5a3b3e0e77a9e839594a938.lock
+2026-11-23 16:42:05,691 : https://huggingface.co:443 "GET /bert-base-uncased/resolve/main/vocab.txt HTTP/1.1" 200 None
+2026-11-23 16:42:06,025 : Attempting to release lock 2016051566800 on D:\hf_cache\hub\.locks\models--bert-base-uncased\fb140275c155a9c7c5a3b3e0e77a9e839594a938.lock
+2026-11-23 16:42:06,025 : Lock 2016051566800 released on D:\hf_cache\hub\.locks\models--bert-base-uncased\fb140275c155a9c7c5a3b3e0e77a9e839594a938.lock
+2026-11-23 16:42:06,291 : https://huggingface.co:443 "HEAD /bert-base-uncased/resolve/main/tokenizer.json HTTP/1.1" 200 0
+2026-11-23 16:42:06,302 : Attempting to acquire lock 2016013694928 on D:\hf_cache\hub\.locks\models--bert-base-uncased\949a6f013d67eb8a5b4b5b46026217b888021b88.lock
+2026-11-23 16:42:06,302 : Lock 2016013694928 acquired on D:\hf_cache\hub\.locks\models--bert-base-uncased\949a6f013d67eb8a5b4b5b46026217b888021b88.lock
+2026-11-23 16:42:06,576 : https://huggingface.co:443 "GET /bert-base-uncased/resolve/main/tokenizer.json HTTP/1.1" 200 None
+2026-11-23 16:42:07,139 : Attempting to release lock 2016013694928 on D:\hf_cache\hub\.locks\models--bert-base-uncased\949a6f013d67eb8a5b4b5b46026217b888021b88.lock
+2026-11-23 16:42:07,139 : Lock 2016013694928 released on D:\hf_cache\hub\.locks\models--bert-base-uncased\949a6f013d67eb8a5b4b5b46026217b888021b88.lock
+2026-11-23 16:42:07,416 : https://huggingface.co:443 "HEAD /bert-base-uncased/resolve/main/added_tokens.json HTTP/1.1" 404 0
+2026-11-23 16:42:07,676 : https://huggingface.co:443 "HEAD /bert-base-uncased/resolve/main/special_tokens_map.json HTTP/1.1" 404 0
+2026-11-23 16:42:07,736 : ***** Transfer task : STS12 *****
+
+
+D:\Lab03_Group14\repro\SimCSE\./SentEval\senteval\sts.py:42: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  sent1 = np.array([s.split() for s in sent1])[not_empty_idx]
+D:\Lab03_Group14\repro\SimCSE\./SentEval\senteval\sts.py:43: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  sent2 = np.array([s.split() for s in sent2])[not_empty_idx]
+2026-11-23 16:42:44,198 : MSRpar : pearson = 0.3867, spearman = 0.4284
+2026-11-23 16:42:57,967 : MSRvid : pearson = 0.5048, spearman = 0.5190
+2026-11-23 16:43:09,481 : SMTeuroparl : pearson = 0.4942, spearman = 0.5843
+2026-11-23 16:43:32,055 : surprise.OnWN : pearson = 0.6565, spearman = 0.6646
+2026-11-23 16:43:42,776 : surprise.SMTnews : pearson = 0.5809, spearman = 0.5385
+2026-11-23 16:43:42,776 : ALL : Pearson = 0.3664,             Spearman = 0.3970
+2026-11-23 16:43:42,776 : ALL (weighted average) : Pearson = 0.5211,             Spearman = 0.5444
+2026-11-23 16:43:42,776 : ALL (average) : Pearson = 0.5246,             Spearman = 0.5469
+
+2026-11-23 16:43:42,776 : ***** Transfer task : STS13 (-SMT) *****
+
+
+2026-11-23 16:43:53,591 : FNWN : pearson = 0.4332, spearman = 0.4548
+2026-11-23 16:44:07,955 : headlines : pearson = 0.6694, spearman = 0.6473
+2026-11-23 16:44:18,910 : OnWN : pearson = 0.5102, spearman = 0.5330
+2026-11-23 16:44:18,910 : ALL : Pearson = 0.5857,             Spearman = 0.5937
+2026-11-23 16:44:18,910 : ALL (weighted average) : Pearson = 0.5801,             Spearman = 0.5803
+2026-11-23 16:44:18,910 : ALL (average) : Pearson = 0.5376,             Spearman = 0.5450
+
+2026-11-23 16:44:18,910 : ***** Transfer task : STS14 *****
+
+
+2026-11-23 16:44:28,260 : deft-forum : pearson = 0.3647, spearman = 0.3555
+2026-11-23 16:44:39,840 : deft-news : pearson = 0.7683, spearman = 0.7390
+2026-11-23 16:44:54,375 : headlines : pearson = 0.6349, spearman = 0.5860
+2026-11-23 16:45:08,240 : images : pearson = 0.5508, spearman = 0.5387
+2026-11-23 16:45:22,341 : OnWN : pearson = 0.6534, spearman = 0.6920
+2026-11-23 16:45:41,875 : tweet-news : pearson = 0.6644, spearman = 0.6176
+2026-11-23 16:45:41,875 : ALL : Pearson = 0.5122,             Spearman = 0.4967
+2026-11-23 16:45:41,875 : ALL (weighted average) : Pearson = 0.6059,             Spearman = 0.5886
+2026-11-23 16:45:41,875 : ALL (average) : Pearson = 0.6061,             Spearman = 0.5881
+
+2026-11-23 16:45:41,875 : ***** Transfer task : STS15 *****
+
+
+2026-11-23 16:45:55,642 : answers-forums : pearson = 0.6034, spearman = 0.5955
+2026-11-23 16:46:09,427 : answers-students : pearson = 0.6660, spearman = 0.6675
+2026-11-23 16:46:25,459 : belief : pearson = 0.7051, spearman = 0.7058
+2026-11-23 16:46:41,200 : headlines : pearson = 0.6910, spearman = 0.6798
+2026-11-23 16:46:54,911 : images : pearson = 0.7102, spearman = 0.7197
+2026-11-23 16:46:54,911 : ALL : Pearson = 0.6532,             Spearman = 0.6603
+2026-11-23 16:46:54,911 : ALL (weighted average) : Pearson = 0.6804,             Spearman = 0.6794
+2026-11-23 16:46:54,911 : ALL (average) : Pearson = 0.6751,             Spearman = 0.6736
+
+2026-11-23 16:46:54,911 : ***** Transfer task : STS16 *****
+
+
+2026-11-23 16:47:00,990 : answer-answer : pearson = 0.5622, spearman = 0.5645
+2026-11-23 16:47:05,438 : headlines : pearson = 0.6936, spearman = 0.6978
+2026-11-23 16:47:11,775 : plagiarism : pearson = 0.7834, spearman = 0.7864
+2026-11-23 16:47:22,491 : postediting : pearson = 0.8184, spearman = 0.8327
+2026-11-23 16:47:26,537 : question-question : pearson = 0.5330, spearman = 0.5274
+2026-11-23 16:47:26,539 : ALL : Pearson = 0.6444,             Spearman = 0.6619
+2026-11-23 16:47:26,539 : ALL (weighted average) : Pearson = 0.6802,             Spearman = 0.6842
+2026-11-23 16:47:26,539 : ALL (average) : Pearson = 0.6781,             Spearman = 0.6818
+
+2026-11-23 16:47:26,540 : 
+
+***** Transfer task : STSBenchmark*****
+
+
+2026-11-23 16:50:09,090 : train : pearson = 0.5619, spearman = 0.5384
+2026-11-23 16:50:58,213 : dev : pearson = 0.6321, spearman = 0.6371
+2026-11-23 16:51:43,011 : test : pearson = 0.5328, spearman = 0.5388
+2026-11-23 16:51:43,021 : ALL : Pearson = 0.5732,             Spearman = 0.5613
+2026-11-23 16:51:43,021 : ALL (weighted average) : Pearson = 0.5695,             Spearman = 0.5556
+2026-11-23 16:51:43,021 : ALL (average) : Pearson = 0.5756,             Spearman = 0.5714
+
+2026-11-23 16:51:43,030 : 
+
+***** Transfer task : SICKRelatedness*****
+
+
+2026-11-23 16:53:26,740 : train : pearson = 0.6672, spearman = 0.6283
+2026-11-23 16:53:40,990 : dev : pearson = 0.6684, spearman = 0.6464
+2026-11-23 16:56:16,182 : test : pearson = 0.6679, spearman = 0.6206
+2026-11-23 16:56:16,188 : ALL : Pearson = 0.6675,             Spearman = 0.6254
+2026-11-23 16:56:16,188 : ALL (weighted average) : Pearson = 0.6676,             Spearman = 0.6254
+2026-11-23 16:56:16,188 : ALL (average) : Pearson = 0.6678,             Spearman = 0.6318
+
+------ test ------
++-------+-------+-------+-------+-------+--------------+-----------------+-------+
+| STS12 | STS13 | STS14 | STS15 | STS16 | STSBenchmark | SICKRelatedness |  Avg. |
++-------+-------+-------+-------+-------+--------------+-----------------+-------+
+| 39.70 | 59.37 | 49.67 | 66.03 | 66.19 |    53.88     |      62.06      | 56.70 |
++-------+-------+-------+-------+-------+--------------+-----------------+-------+
++------+------+------+------+------+------+------+------+
+|  MR  |  CR  | SUBJ | MPQA | SST2 | TREC | MRPC | Avg. |
++------+------+------+------+------+------+------+------+
+| 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
++------+------+------+------+------+------+------+------+

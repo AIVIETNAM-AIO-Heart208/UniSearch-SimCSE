@@ -1,6 +1,10 @@
 # PROJECT – Trợ lý tra cứu quy chế học vụ tiếng Việt (SimCSE)
 
-> Tài liệu trung tâm (Single Source of Truth) của dự án. Chỉ duy trì 2 file: `README.md` (tổng quan) và `PROJECT.md` (file này).
+> Tài liệu trung tâm (Single Source of Truth) về đặc tả và trạng thái dự án. Tài liệu trong repo:
+> - `README.md` ở thư mục gốc: bản đồ repo.
+> - `docs/PLAN.md`: checklist và **phân công**. Đây là nguồn duy nhất về ai làm gì.
+> - `docs/application/README.md`: tổng quan ứng dụng.
+> - File này: đặc tả, quyết định, trạng thái.
 > Mỗi thông tin chi tiết chỉ đặt ở **một** mục; các mục khác dùng link tới đó.
 
 **Quy ước nhãn**
@@ -30,10 +34,15 @@ Kết quả lấy từ tài liệu bên ngoài **không phải** kết quả c�
 
 ## 1. Current Status
 
-*Cập nhật lần cuối: 2026-11-23. Người cập nhật: điền tên.*
-*Deadline nộp bài: ❓ chưa có trong đề; điền vào đây.*
+**Nhóm 14** · **Deadline: 23:59 ngày 11/12/2026** · Cập nhật lần cuối: 2026-11-23 (Huy)
 
-**Giai đoạn hiện tại:** M0 – Chốt thiết kế và khởi tạo. **Chưa có code, chưa chạy thí nghiệm nào.**
+**Repo GitHub:** <https://github.com/AIVIETNAM-AIO-Heart208/UniSearch-SimCSE>. Minh tạo ngày 23/11.
+
+**Bản clone trên laptop Huy:** `D:\TAI_LIEU_HCMUS_K24\Năm 3 - Kì 1\Nhập môn học máy\Project-ML_Lab\Lab03\UniSearch-SimCSE`. Phần tái hiện đã được chuyển vào `experiments/reproduction/` nhưng **chưa commit/push**.
+
+Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của lần chạy R1–R3; xóa được khi không cần nữa.
+
+**Giai đoạn hiện tại:** Phase 1 (đọc paper) và Phase 2 (tái hiện: R1–R3 đã xong, còn R4) theo [docs/PLAN.md](../PLAN.md). Chưa có code ứng dụng.
 
 **Đã hoàn thành**
 
@@ -42,21 +51,29 @@ Kết quả lấy từ tài liệu bên ngoài **không phải** kết quả c�
 - [x] Rà soát tĩnh mã nguồn tại commit (đọc file, chưa chạy). Kết quả ở [§4.4](#44-bản-đồ-mã-nguồn-tại-commit-235f89e).
 - [x] Xác nhận bộ đánh giá chính truy cập được công khai: bản con ViRHE4QA trong repo ViRE. Chi tiết ở [§6.1](#61-datasets).
 - [x] Tạo `README.md` và `PROJECT.md`.
+- [x] Tạo repo GitHub với khung thư mục (Minh).
+- [x] Viết script tái hiện `experiments/reproduction/run_r1.py`, `run_r1.bat` và `requirements-r1.txt` ([§4.5](#45-kế-hoạch-tái-hiện-kết-quả-paper)).
+  - Đã chạy thử toàn bộ pipeline trên dữ liệu STS giả với model tí hon để kiểm tra code. Lần chạy này **không phải** kết quả R1 và không được lưu.
+- [x] **R1 (23/11, laptop Huy):** trung bình 7 STS = **81,58**, khớp README (81,58) ở cả 7 task. So với paper (81,57) chỉ lệch +0,01, do STS-B ra 84,26 so với 84,25.
+  - Chạy CPU, AMD 16 luồng, Windows; phần đánh giá mất 868 giây.
+  - File: `experiments/reproduction/results/R1/` ([§6.7](#67-bảng-theo-dõi-kết-quả)).
+- [x] **R2:** unsup SimCSE ra trung bình **76,25**, khớp paper ở cả 7 task.
+- [x] **R3:** BERT-base chưa fine-tune ra trung bình **56,70**, khớp paper; hai task lệch ±0,01.
+  - Kết luận: tái hiện được đúng khoảng cách của paper, từ 56,70 (BERT thô) lên 76,25 (unsup SimCSE) rồi 81,58 (sup SimCSE).
 
 **Đang thực hiện:** không có.
 
-**Chưa thực hiện:** toàn bộ milestone M0–M7 ([§7.2](#72-milestones)).
+**Chưa thực hiện:** phần còn lại của Phase 2–4 ([§7.2](#72-lịch-theo-planmd)).
 
 **Blocker / chờ quyết định**
 
-- Chưa chốt văn bản quy chế cụ thể của trường để làm corpus cho ứng dụng và D2 (câu hỏi Q2 ở [§8.3](#83-decision-log)).
-- Chưa hỏi giảng viên về bonus và việc dùng ViRHE4QA (câu hỏi Q1, Q4).
+- Chưa chốt văn bản quy chế cụ thể của trường để làm corpus cho ứng dụng và D2 (Q2 ở [§8.3](#83-decision-log)).
 
 **3 việc ưu tiên tiếp theo**
 
-1. **Minh:** tạo repo GitHub theo [§5.5](#55-cấu-trúc-thư-mục-dự-kiến); tải và lưu văn bản quy chế hiện hành của trường kèm metadata.
-2. **Huy:** clone SimCSE tại commit `235f89e` và chạy R1 (`evaluation.py`, checkpoint supervised). Ghi lại môi trường và kết quả.
-3. **Huy:** gửi email giảng viên hỏi Q1 và Q4. Cả hai cùng chốt schema dữ liệu ở [§5.4](#54-interface--định-dạng-dữ-liệu).
+1. **Huy:** commit và push phần tái hiện cùng tài liệu đã cập nhật; viết R4 (InfoNCE + test khớp với `cl_forward`); viết phần Phase 1 được giao.
+2. **Minh:** chuẩn bị D1 (`data/prepare_virhe4qa.py`, group split) và chạy SimCSE-VN dense trên D1. Chọn văn bản quy chế của trường trước 27/11 để hai người bắt đầu viết D2.
+3. **Cả hai:** chốt schema dữ liệu ở [§5.4](#54-interface--định-dạng-dữ-liệu) trước 25/11.
 
 ---
 
@@ -132,28 +149,29 @@ Truy hồi lai **BM25 + SimCSE-VN** trên corpus chia theo Điều/Khoản. Kế
 
 ## 3. Lab 03 Requirements
 
-Nguồn: đề Lab 03 [Confirmed]. Rubric: Research Paper Understanding **40**, Implementation and Evaluation **20**, Experimental Analysis and Discussion **40**, Bonus Model Improvement **+10**.
+Nguồn: đề Lab 03 [Confirmed]. Rubric: Research Paper Understanding **40**, Implementation and Evaluation **20**, Experimental Analysis and Discussion **40**.
 
-**Loại yêu cầu:** **B** = bắt buộc, **T** = tùy chọn, **Bonus** = điểm cộng.
+Mục Bonus Model Improvement (+10) **không áp dụng** cho nhóm: giảng viên xác nhận không xét bonus. Nhóm không làm việc gì nhắm tới bonus.
 
-| Mục đề | Yêu cầu | Loại | Công việc trong dự án | Bằng chứng nộp | Owner / Milestone |
+**Loại yêu cầu:** **B** = bắt buộc, **T** = tùy chọn.
+
+| Mục đề | Yêu cầu | Loại | Công việc trong dự án | Bằng chứng nộp | Owner / Phase (PLAN.md) |
 |---|---|---|---|---|---|
-| 3.1 | Paper peer-reviewed, nêu title/authors/năm/venue/DOI, lý do chọn | B | Đã chọn SimCSE. Ghi hạng CORE của EMNLP [Unverified, tra portal CORE] | Báo cáo §Introduction | Huy / M7a |
-| 3.2.1–6 | Phân tích: problem & method, related work, model & theory, metrics, datasets & experiments, results & limitations | B | Đọc paper theo [§4](#4-simcse-research-foundation) | Báo cáo §Related Work, §Method; vấn đáp | Huy (phương pháp), Minh (thực nghiệm) / M1, M7a |
-| 3.3.1 | Implement/reproduce thuật toán chính (được dùng code/weights công khai, có trích dẫn) | B | Chạy code chính thức tại commit; tự cài lại InfoNCE; tự xây pipeline truy hồi | `repro/`, `src/` | Huy, Minh / M1, M3 |
-| 3.3.2 | Giải thích code: execution flow, data loading, kiến trúc, training/inference, output | B | Bản đồ code [§4.4](#44-bản-đồ-mã-nguồn-tại-commit-235f89e) | Báo cáo, video | Huy / M1, M7 |
-| 3.3.3 | Đánh giá: train/val/test, chống leakage, metrics, kết quả định lượng, ví dụ, phân tích lỗi | B | [§6.2–6.5](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu) | `results/`, báo cáo §Experiments | Huy / M4, M6b |
-| 3.3.4 | Tái hiện ≥1 kết quả (hoặc đánh giá tương đương); **đánh giá trên dataset mới** và nêu rõ khi không so sánh trực tiếp được | B | R1 ([§4.5](#45-kế-hoạch-tái-hiện-kết-quả-paper)); D1 + D2 ([§6.1](#61-datasets)) | Bảng R1; bảng E1/E2 | Huy (R1, so sánh), Minh (D1 dense) / M1, M2a, M4 |
-| 3.3.5 | Tái lập: dependencies, hyperparameters, seed, môi trường, hướng dẫn chạy | B | `requirements.txt`, `configs/`, `results/*/env.txt`, README | Repo | Minh (README), Huy (env/seed) / M7b |
-| 3.4.1 | Bài toán thực tế, người dùng, giá trị | B | [§2.1–2.2](#21-problem-statement) | Báo cáo §Application | Minh / M7a |
-| 3.4.2 | Khảo sát giải pháp hiện có và hạn chế | B | [§2.3](#23-giải-pháp-hiện-có-và-hạn-chế) | Báo cáo | Minh / M7a |
-| 3.4.3 | Ứng dụng chạy được: input thực, chạy model, hiển thị output thật | B | Gradio app ([§5](#5-application-architecture--implementation)) | Video demo | Minh / M5 |
-| 3.4.4 | Cải thiện ≥1 chiều so với giải pháp hiện có; tách bạch phần mới và phần tái sử dụng | B | [§2.6](#26-đóng-góp-riêng-của-nhóm), E1–E3 | Bảng so sánh với BM25; bảng đóng góp | Cả hai / M4–M6b |
-| 3.4.5 | Bằng chứng: metrics, response time, task success, phản hồi có cấu trúc | B | E1–E4 bắt buộc; O2 user study tùy chọn | `results/` | Huy, Minh / M4–M6b |
-| 3.4.6 | Thảo luận: tính hữu ích, hạn chế, khi nào thất bại, hướng phát triển | B | E5 phân tích lỗi; [§8.1](#81-rủi-ro-và-dự-phòng) | Báo cáo §Discussion | Huy / M7a |
-| 4 | Nộp `[Group-ID].zip`: code/GitHub + README; video ≤ 30 phút; báo cáo PDF mẫu IEEE | B | [§8.4](#84-definition-of-done) | Bản nộp | Huy (báo cáo), Minh (video) / M7 |
-| 4 | Link dataset/code phải truy cập được (nếu không, **trừ 50%**) | B | Kiểm tra link ở chế độ ẩn danh trước khi nộp | Checklist DoD | Minh / M7b |
-| Bonus | Cải tiến mô hình có ý nghĩa, đo được qua so sánh công bằng; chỉnh tham số đơn thuần không tính | **Bonus** | O1 (tùy chọn). **Không** phải yêu cầu của Option 1; hỏi giảng viên (Q1) | Bảng O1 nhiều seed | Huy / sau M6 |
+| 3.1 | Paper peer-reviewed, nêu title/authors/năm/venue/DOI, lý do chọn | B | Đã chọn SimCSE. Ghi hạng CORE của EMNLP [Unverified, tra portal CORE] | Báo cáo §Introduction | Huy / 1 |
+| 3.2.1–6 | Phân tích: problem & method, related work, model & theory, metrics, datasets & experiments, results & limitations | B | Đọc paper theo [§4](#4-simcse-research-foundation) | Báo cáo §Related Work, §Method; vấn đáp | Huy + Minh (mỗi người một phần) / 1 |
+| 3.3.1 | Implement/reproduce thuật toán chính (được dùng code/weights công khai, có trích dẫn) | B | Chạy code chính thức tại commit; tự cài lại InfoNCE; tự xây pipeline truy hồi | `experiments/reproduction/`, `src/` | Huy (tái hiện, InfoNCE), Minh (pipeline tiếng Việt) / 2–3 |
+| 3.3.2 | Giải thích code: execution flow, data loading, kiến trúc, training/inference, output | B | Bản đồ code [§4.4](#44-bản-đồ-mã-nguồn-tại-commit-235f89e) | Báo cáo, video | Huy / 2 |
+| 3.3.3 | Đánh giá: train/val/test, chống leakage, metrics, kết quả định lượng, ví dụ, phân tích lỗi | B | [§6.2–6.5](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu) | `results/`, báo cáo §Experiments | Minh (D1, metrics), Huy (so sánh, CI) / 2–3 |
+| 3.3.4 | Tái hiện ≥1 kết quả (hoặc đánh giá tương đương); **đánh giá trên dataset mới** và nêu rõ khi không so sánh trực tiếp được | B | R1 ([§4.5](#45-kế-hoạch-tái-hiện-kết-quả-paper)); D1 + D2 ([§6.1](#61-datasets)) | Bảng R1; bảng E1/E2 | Huy (R1 ✓), Minh (D1) / 2 |
+| 3.3.5 | Tái lập: dependencies, hyperparameters, seed, môi trường, hướng dẫn chạy | B | `pyproject.toml`, `configs/`, `experiments/*/results/*/env.txt`, README | Repo | Minh (README), Huy (chạy lại từ clone sạch) / 4 |
+| 3.4.1 | Bài toán thực tế, người dùng, giá trị | B | [§2.1–2.2](#21-problem-statement) | Báo cáo §Application | Minh / 3 |
+| 3.4.2 | Khảo sát giải pháp hiện có và hạn chế | B | [§2.3](#23-giải-pháp-hiện-có-và-hạn-chế) | Báo cáo | Minh / 3 |
+| 3.4.3 | Ứng dụng chạy được: input thực, chạy model, hiển thị output thật | B | Gradio app ([§5](#5-application-architecture--implementation)) | Video demo | Minh / 3 |
+| 3.4.4 | Cải thiện ≥1 chiều so với giải pháp hiện có; tách bạch phần mới và phần tái sử dụng | B | [§2.6](#26-đóng-góp-riêng-của-nhóm), E1–E3 | Bảng so sánh với BM25; bảng đóng góp | Cả hai / 3 |
+| 3.4.5 | Bằng chứng: metrics, response time, task success, phản hồi có cấu trúc | B | E1–E4 bắt buộc; O2 user study tùy chọn | `results/` | Huy (so sánh), Minh (latency) / 3 |
+| 3.4.6 | Thảo luận: tính hữu ích, hạn chế, khi nào thất bại, hướng phát triển | B | E5 phân tích lỗi; [§8.1](#81-rủi-ro-và-dự-phòng) | Báo cáo §Discussion | Huy / 3–4 |
+| 4 | Nộp `[Group14].zip` (theo mẫu `[Group01].zip` của đề): code/GitHub + README; video ≤ 30 phút; báo cáo PDF mẫu IEEE | B | [§8.4](#84-definition-of-done) | Bản nộp | Huy (báo cáo), Minh (video, zip) / 4 |
+| 4 | Link dataset/code phải truy cập được (nếu không, **trừ 50%**). Dataset được nộp bằng link (giảng viên cho phép) | B | Kiểm tra link ở chế độ ẩn danh trước khi nộp | Checklist DoD | Minh / 4 |
 
 **Ánh xạ rubric:** 40 điểm Paper Understanding ← [§4](#4-simcse-research-foundation) và vấn đáp. 20 điểm Implementation & Evaluation ← R1, InfoNCE, pipeline, metrics. 40 điểm Experimental Analysis & Discussion ← E1–E5, CI, phân tích lỗi, thảo luận.
 
@@ -197,8 +215,8 @@ Rà soát tĩnh ngày 2026-11-23 [Confirmed]. Nhóm vẫn phải tự đọc l�
 | `train.py` – `ModelArguments` | `temp` = 0.05; `pooler_type` = "cls" (cls, cls_before_pooler, avg, avg_top2, avg_first_last); `hard_negative_weight` = 0 (là **log** của trọng số); `do_mlm` = False; `mlm_weight` = 0.1 | Đọc, giải thích |
 | `train.py` – đọc dữ liệu | `.txt` = 1 cột (câu được nhân đôi làm cặp); `.csv` 2 cột = cặp; 3 cột = cặp + hard negative. `prepare_features` tokenize rồi gom thành list `num_sent` câu cho mỗi ví dụ | Giải thích luồng dữ liệu |
 | `train.py` – data collator | Pad rồi reshape thành `(bs, num_sent, len)` | Giải thích |
-| `simcse/models.py` – `Pooler` | `cls`/`cls_before_pooler` đều lấy `last_hidden[:,0]`; MLP được áp riêng trong `cl_forward` khi `pooler_type == "cls"`. `avg_first_last` dùng `hidden_states[0]` (output lớp embedding) và lớp cuối | Giải thích; liên hệ Table 6 |
-| `MLPLayer`, `Similarity` | Linear + Tanh; cosine / temp | Tự viết lại trong `repro/infonce.py` |
+| `simcse/models.py` – `Pooler` | `cls`/`cls_before_pooler` đều lấy `last_hidden[:,0]`; MLP được áp riêng trong `cl_forward` khi `pooler_type == "cls"`. `avg_first_last` dùng `hidden_states[0]` (output lớp embedding) và lớp cuối (R3 xác nhận số 56,70 của paper dùng đúng cách này) | Giải thích; liên hệ Table 6 |
+| `MLPLayer`, `Similarity` | Linear + Tanh; cosine / temp | Tự viết lại trong `src/simcse_lab/model/infonce.py` |
 | `cl_forward` | Flatten `(bs·num_sent, len)` → encoder → pooler → MLP (nếu `cls`) → tách z1, z2, (z3) → all_gather khi chạy distributed → `cos_sim` (bs×bs) → nối cột z1·z3 (bs×2bs) → cộng `hard_negative_weight` vào logit của hard negative tương ứng → `CrossEntropyLoss` với `labels = arange(bs)` (+ MLM loss nếu bật) | **Tự cài lại loss** và test khớp ([§4.5](#45-kế-hoạch-tái-hiện-kết-quả-paper), R4) |
 | `sentemb_forward` | Inference: pooler (+ MLP nếu `cls`) | Giải thích |
 | `simcse/trainers.py` – `CLTrainer.evaluate` | SentEval (fast mode) trên STS-B dev và SICK-R dev trong lúc train; dùng `stsb_spearman` để chọn checkpoint tốt nhất | Giải thích |
@@ -220,17 +238,30 @@ Rà soát tĩnh ngày 2026-11-23 [Confirmed]. Nhóm vẫn phải tự đọc l�
 
 | ID | Thí nghiệm | Mốc so sánh [Confirmed] | Loại | Tài nguyên [Unverified] |
 |---|---|---|---|---|
-| R1 | `evaluation.py --model_name_or_path princeton-nlp/sup-simcse-bert-base-uncased --pooler cls --task_set sts --mode test` | README: 75,30 / 84,67 / 80,19 / 85,40 / 80,82 / 84,26 / 80,39; TB 81,58 | **Bắt buộc** | GPU Colab vài phút; CPU chậm hơn nhưng chạy được |
-| R2 | Như R1 với `unsup-simcse-bert-base-uncased --pooler cls_before_pooler` | TB 76,25 | Khuyến nghị (rẻ) | như R1 |
-| R3 | `bert-base-uncased --pooler avg_first_last` (không fine-tune) | Paper: 56,70 (BERT first-last avg). Có thể lệch vì cách tính "first" tại commit | Khuyến nghị (rẻ) | như R1 |
-| R4 | Tự cài InfoNCE (unsup + sup có hard negative, log-weight) trong `repro/infonce.py`. Test: so với bản cài vòng lặp ngây thơ theo Eq. 4/5 và với đoạn tính loss trích từ `cl_forward` (ghi trích dẫn) trên tensor ngẫu nhiên; sai số < 1e-6 | — | **Bắt buộc** | CPU, vài giây |
+| R1 | `evaluation.py --model_name_or_path princeton-nlp/sup-simcse-bert-base-uncased --pooler cls --task_set sts --mode test` | README: 75,30 / 84,67 / 80,19 / 85,40 / 80,82 / 84,26 / 80,39; TB 81,58 | **Bắt buộc** | CPU laptop; thời gian thực ghi trong `results/R1/env.txt` |
+| R2 | Như R1 với `unsup-simcse-bert-base-uncased --pooler cls_before_pooler` | TB 76,25 | Khuyến nghị (rẻ) — **đã chạy** | như R1 |
+| R3 | `bert-base-uncased --pooler avg_first_last` (không fine-tune) | Paper: 56,70 (BERT first-last avg). [Confirmed bằng R3] Số của paper dùng đúng cách tính tại commit, tức `hidden_states[0]` (lớp embedding) và lớp cuối | Khuyến nghị (rẻ) — **đã chạy** | như R1 |
+| R4 | Tự cài InfoNCE (unsup + sup có hard negative, log-weight) trong `src/simcse_lab/model/infonce.py`. Test: so với bản cài vòng lặp ngây thơ theo Eq. 4/5 và với đoạn tính loss trích từ `cl_forward` (ghi trích dẫn) trên tensor ngẫu nhiên; sai số < 1e-6 | — | **Bắt buộc** | CPU, vài giây |
 | R5 | (O3) Train unsup mini bằng code tự viết, tập con wiki1m, p ∈ {0; 0,1}, đo STS-B dev | Chỉ tái hiện **xu hướng** của Table 3 | Tùy chọn | GPU T4 |
 | R6 | Đo alignment/uniformity (Eq. 2–3) cho R2 và R3 | Xu hướng định tính của Fig. 2–3 | Tùy chọn | CPU/GPU, ngắn |
 
-**Môi trường:**
-- Thử chạy `evaluation.py` trong môi trường hiện đại trước, vì script chỉ cần `AutoModel`/`AutoTokenizer` và SentEval.
-- Nếu lỗi, dựng venv riêng theo `requirements.txt` của repo.
-- Ghi rõ phiên bản thực tế vào `results/R1/env.txt` và nêu mọi sai lệch so với README.
+**Cách chạy R1–R3** [Confirmed – script đã chạy thử]
+
+- Trên Windows: double-click `experiments\reproduction\run_r1.bat`, hoặc chạy `experiments\reproduction\run_r1.bat R2` / `R3`.
+- Trên máy khác: `python experiments/reproduction/run_r1.py --exp R1`, dùng Python 3.9–3.11.
+- Bảng kết quả và môi trường chi tiết: [experiments/reproduction/README.md](../../experiments/reproduction/README.md).
+- Script tự làm từng bước và bỏ qua bước đã xong:
+  1. Kiểm tra `experiments/reproduction/SimCSE` đúng commit; nếu thiếu thì tải zip của commit.
+  2. Tạo `.venv-repro` ở thư mục gốc và cài `experiments/reproduction/requirements-r1.txt`.
+  3. Tải `senteval.tar` (cùng URL với script của repo).
+  4. Gọi **nguyên bản** `evaluation.py` của repo.
+  5. Ghi vào `experiments/reproduction/results/<exp>/`: `eval_log.txt`, `metrics.json` (điểm, chênh lệch so với README/paper, ngưỡng 0,5), `env.txt` (OS, CPU, phiên bản, commit, revision model), `pip_freeze.txt`, `status.txt`.
+
+**Môi trường đã chốt (D-12)**
+
+- Python 3.11 venv với các bản pin `numpy==1.23.5`, `scipy==1.10.1`, `scikit-learn==1.2.2`, `torch==2.5.1` (CPU), `transformers==4.46.3`.
+- [Confirmed bằng thử nghiệm] SentEval tại commit tạo `np.array` từ list các câu có độ dài khác nhau trong `STSEval.loadFile`, nên **lỗi với numpy ≥ 1.24**. Vì vậy cần numpy < 1.24, kéo theo Python ≤ 3.11.
+- **Sai lệch so với repo:** repo pin `transformers==4.2.1` và khuyên dùng torch 1.7.1. Hai bản này không có wheel cho Python hiện đại trên Windows. Nhóm dùng bản mới hơn và ghi rõ trong báo cáo. [Confirmed bằng R1] Với các bản này, R1 ra đúng số trong README ở cả 7 task, nên khác biệt phiên bản không ảnh hưởng tới kết quả inference.
 
 ### 4.6 SimCSE gốc và checkpoint tiếng Việt dùng trong ứng dụng
 
@@ -302,7 +333,7 @@ Câu hỏi → preprocess (cùng hàm) → điểm BM25 và cosine cho mọi chu
 
 ### 5.4 Interface & định dạng dữ liệu
 
-Hai người chốt phần này ở M0 để làm song song.
+Hai người chốt phần này trước 25/11 để làm song song. Owner theo [docs/PLAN.md](../PLAN.md).
 
 ```text
 corpus.jsonl   {chunk_id, doc_id, article_id, article, article_title, clause|null, text, char_start, char_end}
@@ -312,34 +343,48 @@ API: search(query: str, k: int = 3, method: "bm25"|"dense"|"hybrid") -> list[Hit
      Hit = {article_id, score, best_chunk_id, bm25_score, dense_cos, low_confidence: bool}
 ```
 
-| Module | Input → Output | Owner | Tái sử dụng / Mới |
+| Module (vị trí trong repo) | Input → Output | Owner | Tái sử dụng / Mới |
 |---|---|---|---|
-| `src/regqa/ingest.py` | PDF/DOCX/TXT + `documents.yaml` → `corpus.jsonl` | Minh | Mới (dùng pdfplumber, python-docx) |
-| `src/regqa/preprocess.py` | text → text chuẩn hóa / tách từ / token BM25 | Minh | Mới (dùng pyvi) |
-| `src/regqa/encoders.py` | list[str] → ndarray (L2-norm) | Minh | Model tái sử dụng; code mới (tham khảo `simcse/tool.py`) |
-| `src/regqa/retrieval.py` | query → list[Hit] (BM25 / dense / hybrid, MaxP, confidence) | Minh | Mới (dùng rank_bm25, faiss) |
-| `src/regqa/metrics.py` | runs + qrels → Hit@k, MRR@10, bootstrap CI | Minh (Hit@k, MRR), Huy (bootstrap CI) | Mới |
-| `scripts/prepare_virhe4qa.py` | CSV ViRE → corpus/queries D1 + group split | Minh | Mới |
-| `scripts/run_eval.py`, `bench_latency.py` | config → `results/<exp>/` | Minh (dense D1, latency), Huy (so sánh các phương pháp) | Mới |
-| `repro/` | Chạy `evaluation.py` tại commit; `infonce.py` + test | Huy | Code gốc + mới |
-| `app/app.py` | Gradio UI gọi `search` | Minh | Mới (dùng Gradio) |
+| `data/prepare_virhe4qa.py` | CSV ViRE → corpus/queries D1 + group split | Minh | Mới |
+| `src/simcse_lab/retrieval/ingest.py` | PDF/DOCX/TXT + `documents.yaml` → `corpus.jsonl` | Minh | Mới (dùng pdfplumber, python-docx) |
+| `src/simcse_lab/retrieval/preprocess.py` | text → text chuẩn hóa / tách từ / token BM25 | Minh | Mới (dùng pyvi) |
+| `src/simcse_lab/model/encoders.py` | list[str] → ndarray (L2-norm) | Minh | Model tái sử dụng; code mới (tham khảo `simcse/tool.py`) |
+| `src/simcse_lab/retrieval/search.py` | query → list[Hit] (BM25 / dense / hybrid, MaxP, confidence) | Minh | Mới (dùng rank_bm25, faiss) |
+| `src/simcse_lab/evaluation/metrics.py` | runs + qrels → Hit@k, MRR@10 | Minh | Mới |
+| `src/simcse_lab/evaluation/stats.py` | hai runs → paired bootstrap CI; đo cảnh báo (coverage, false-confidence) | Huy | Mới |
+| `experiments/external_dataset/` | Chạy 3 phương pháp trên D1 (Minh); chọn α, τ trên D1-dev (Huy) → `results/` | Minh, Huy | Mới |
+| `experiments/application/` | So sánh trên D1-test và D2, phân tích lỗi (Huy); đo latency (Minh) → `results/` | Huy, Minh | Mới |
+| `experiments/reproduction/` | `run_r1.py` gọi `evaluation.py` tại commit → `results/R1–R3` ✓ | Huy | Code gốc + mới |
+| `src/simcse_lab/model/infonce.py` + `tests/test_infonce.py` | R4: InfoNCE tự cài + test khớp `cl_forward` | Huy | Mới |
+| `apps/app.py` | Gradio UI gọi `search` | Minh | Mới (dùng Gradio) |
 
-### 5.5 Cấu trúc thư mục dự kiến
+### 5.5 Cấu trúc thư mục
+
+Theo repo GitHub. Mục có dấu ✓ là đã có nội dung.
 
 ```
-├── README.md · PROJECT.md · requirements.txt
-├── configs/default.yaml        # model, max_len, chunk, α, τ, seed, đường dẫn
-├── data/                       # raw/ processed/ (gitignore file lớn; có script tải)
-│   └── d2/                     # documents.yaml, queries_d2.jsonl (nhóm tự tạo)
-├── src/regqa/                  # ingest, preprocess, encoders, retrieval, metrics
-├── scripts/                    # prepare_virhe4qa, build_index, run_eval, bench_latency
-├── app/app.py
-├── repro/                      # setup_simcse.sh (clone + checkout 235f89e), run_repro.sh, infonce.py
-├── tests/                      # chunker, chuẩn hóa, metrics, infonce
-└── results/<exp_id>/           # metrics.json, runs/, config.yaml, env.txt
+├── README.md · pyproject.toml · .gitignore
+├── configs/default.yaml              # model, max_len, chunk, α, τ, seed (dự kiến)
+├── data/                             # README + prepare_virhe4qa.py; raw/ processed/ bị gitignore
+│   └── d2/                           # documents.yaml, queries_d2.jsonl (nhóm tự tạo)
+├── src/simcse_lab/
+│   ├── model/                        # encoders.py, infonce.py
+│   ├── retrieval/                    # ingest.py, preprocess.py, search.py
+│   └── evaluation/                   # metrics.py, stats.py
+├── experiments/
+│   ├── reproduction/                 # ✓ run_r1.py, run_r1.bat, requirements-r1.txt, results/R1–R3
+│   │   └── SimCSE/                   # code gốc @ 235f89e (gitignore; script tự tải nếu thiếu)
+│   ├── external_dataset/             # đánh giá D1 (E0, E1, E3-D1) → results/
+│   └── application/                  # D2, so sánh, latency, lỗi (E2–E5) → results/
+├── apps/app.py                       # Gradio
+├── tests/                            # chunker, chuẩn hóa, metrics, infonce
+├── docs/                             # PLAN.md, application/{README,PROJECT}.md, report/, demo/
+└── .venv-repro/ · .cache/            # venv tái hiện, cache HuggingFace (gitignore)
 ```
 
-**Stack:** Python 3.10 [Proposed; kiểm tra pyvi cài được ở M0], torch, transformers, pyvi, rank_bm25, faiss-cpu, gradio, pdfplumber, python-docx, pyyaml, numpy, pandas, pytest. Không dùng server, database, Docker hay CI.
+Môi trường cho ứng dụng dùng venv riêng (`.venv`, cài bằng `pip install -e .`), không dùng chung `.venv-repro`.
+
+**Stack:** Python 3.10 hoặc 3.11 [Proposed; kiểm tra pyvi cài được trước 25/11], torch, transformers, pyvi, rank_bm25, faiss-cpu, gradio, pdfplumber, python-docx, pyyaml, numpy, pandas, pytest. Không dùng server, database, Docker hay CI.
 
 ---
 
@@ -349,8 +394,8 @@ API: search(query: str, k: int = 3, method: "bm25"|"dense"|"hybrid") -> list[Hit
 
 | ID | Dataset | Vai trò | Thông tin | Truy cập / License |
 |---|---|---|---|---|
-| **D1** | ViRHE4QA, bản con trong ViRE: `data/ViRHE4QA_v2.csv` @ ViRE commit `60ea7155134eaa426ab1d0a82d2bbbf327d1b470` | **Dataset mới chính** (bắt buộc) | [Confirmed, đã đọc file] 1.000 câu hỏi, 297 context khác nhau (287 bắt đầu bằng "Điều"). Mỗi câu hỏi có đúng 1 context gold. Cột: `split, index, context, question, extractive answer, abstractive answer, label`. Theo nội dung mẫu, đây là quy định của Trường ĐH CNTT – ĐHQG-HCM. Context dài: trung vị 173 từ, p90 495, tối đa 1.249 → cần chunk. Ý nghĩa cột `label` (0/1, 500/500) chưa rõ [Unverified] và không dùng | Tải trực tiếp từ GitHub. ViRE: code MIT, dataset bên thứ ba giữ license gốc. Bài gốc R2GQA ghi dữ liệu cung cấp "on reasonable request" → license [Unverified]. Chỉ dùng đánh giá học thuật, trích dẫn cả hai; **không tự re-host** khi chưa được phép (Q4) |
-| **D2** | Quy chế của trường + câu hỏi nhóm tự viết | Test trong bối cảnh thực tế (**chỉ test**) | [Proposed] 80–100 câu trong phạm vi + 20 câu ngoài phạm vi | Văn bản công khai của trường; câu hỏi do nhóm tạo, không chứa dữ liệu cá nhân. Upload Drive/HF public |
+| **D1** | ViRHE4QA, bản con trong ViRE: `data/ViRHE4QA_v2.csv` @ ViRE commit `60ea7155134eaa426ab1d0a82d2bbbf327d1b470` | **Dataset mới chính** (bắt buộc) | [Confirmed, đã đọc file] 1.000 câu hỏi, 297 context khác nhau (287 bắt đầu bằng "Điều"). Mỗi câu hỏi có đúng 1 context gold. Cột: `split, index, context, question, extractive answer, abstractive answer, label`. Theo nội dung mẫu, đây là quy định của Trường ĐH CNTT – ĐHQG-HCM. Context dài: trung vị 173 từ, p90 495, tối đa 1.249 → cần chunk. Ý nghĩa cột `label` (0/1, 500/500) chưa rõ [Unverified] và không dùng | Tải trực tiếp từ GitHub. ViRE: code MIT, dataset bên thứ ba giữ license gốc. Bài gốc R2GQA ghi dữ liệu cung cấp "on reasonable request" → license [Unverified]. Chỉ dùng đánh giá học thuật, trích dẫn cả hai. **Nộp bằng link permalink** tới file ở commit trên (giảng viên cho phép nộp dataset bằng link) |
+| **D2** | Quy chế của trường + câu hỏi nhóm tự viết | Test trong bối cảnh thực tế (**chỉ test**) | [Proposed] 80–100 câu trong phạm vi + 20 câu ngoài phạm vi | Văn bản công khai của trường; câu hỏi do nhóm tạo, không chứa dữ liệu cá nhân. Upload Google Drive (public) và nộp link |
 | R-STS | STS12–16, STS-B, SICK-R | Tái hiện R1–R3 | Theo script repo | `senteval.tar` (HF `princeton-nlp/datasets-for-simcse`) |
 | D1-full | ViRHE4QA đầy đủ (9.758 cặp QA, 294 điều) | Tùy chọn | [Confirmed theo arXiv:2409.02840] | Xin tác giả; dự án **không phụ thuộc** vào bộ này |
 | Dự phòng | EduCoQA (`data/EduCoQA.csv` trong ViRE; 511 câu hỏi / 262 đoạn, tư vấn tuyển sinh HCMUT) | Chỉ dùng nếu D1 không dùng được | [Confirmed] | CC BY-NC 4.0; bản trên HF cần đăng nhập |
@@ -418,7 +463,7 @@ Thêm R1 và R4 ([§4.5](#45-kế-hoạch-tái-hiện-kết-quả-paper)). Kết
 
 ### 6.5 Tái lập thí nghiệm
 
-- Mọi thí nghiệm chạy qua `configs/*.yaml`. Mỗi lần chạy lưu `results/<exp_id>/{metrics.json, runs/, config.yaml, env.txt}`, trong đó `env.txt` gồm `pip freeze`, phiên bản Python, CPU/GPU và commit hash của repo nhóm.
+- Mọi thí nghiệm chạy qua `configs/*.yaml`. Mỗi lần chạy lưu `experiments/<nhóm>/results/<exp_id>/{metrics.json, runs/, config.yaml, env.txt}`, trong đó `env.txt` gồm `pip freeze`, phiên bản Python, CPU/GPU và commit hash của repo nhóm.
 - Seed 42 cho chia dữ liệu và bootstrap. Fine-tuning (nếu có) dùng 3 seed {42, 43, 44} và báo mean ± std.
 - Ghi rõ commit SimCSE `235f89e`, commit ViRE `60ea715`, và revision của checkpoint HF khi tải.
 - Khi so sánh với số của paper, README hoặc ViRE, ghi rõ "khác protocol/dữ liệu, không tương đương trực tiếp" nếu đúng như vậy.
@@ -429,7 +474,7 @@ Chỉ làm khi MVP xong và còn thời gian.
 
 | ID | Nội dung | Điều kiện làm |
 |---|---|---|
-| O1 | Domain-adaptive SimCSE: (a) unsup SimCSE tiếp tục trên câu của corpus quy chế; hoặc (b) supervised với cặp (câu hỏi, Điều đúng) + hard negative do BM25 khai thác, cần thêm D1-train theo group split. So với `dense` trên cùng test, 3 seed | Khi E1–E5 đã xong; ứng viên bonus (hỏi Q1) |
+| O1 | Domain-adaptive SimCSE: (a) unsup SimCSE tiếp tục trên câu của corpus quy chế; hoặc (b) supervised với cặp (câu hỏi, Điều đúng) + hard negative do BM25 khai thác, cần thêm D1-train theo group split. So với `dense` trên cùng test, 3 seed | Chỉ khi E1–E5 xong trước 06/12; dừng mọi việc tùy chọn sau 08/12 |
 | O2 | User study nhỏ: 5–8 sinh viên, 4–6 nhiệm vụ tra cứu, within-subject (Ctrl+F trên PDF và ứng dụng, đảo thứ tự). Đo task success, thời gian, 3–5 câu Likert | Khi có thời gian; báo cáo là nghiên cứu nhỏ, không khái quát hóa |
 | O3 | R5 mini dropout ablation | Có GPU rảnh |
 | O4 | pyvi vs VnCoreNLP (RDRSegmenter); RRF vs α-fusion; có/không tiền tố tiêu đề Điều trong chunk | Rẻ, nếu E5 chỉ ra vấn đề liên quan |
@@ -441,69 +486,46 @@ Chỉ điền khi đã có file kết quả.
 
 | Exp | Trạng thái | Kết quả chính | File |
 |---|---|---|---|
-| R1 | [ ] | — | `results/R1/` |
+| R1 | [x] 23/11 | TB 81,58 (README 81,58; paper 81,57). Từng task: 75,30 / 84,67 / 80,19 / 85,40 / 80,82 / 84,26 / 80,39 → khớp README 7/7 | `experiments/reproduction/results/R1/` |
+| R2 | [x] 23/11 | TB 76,25 = paper. Từng task: 68,40 / 82,41 / 74,38 / 80,91 / 78,56 / 76,85 / 72,23 → khớp 7/7 | `experiments/reproduction/results/R2/` |
+| R3 | [x] 23/11 | TB 56,70 = paper. Từng task: 39,70 / 59,37 / 49,67 / 66,03 / 66,19 / 53,88 / 62,06 → lệch ≤ 0,01 | `experiments/reproduction/results/R3/` |
 | R4 | [ ] | — | `tests/test_infonce.py` |
-| E0 | [ ] | — | `results/E0/` |
-| E1 | [ ] | — | `results/E1/` |
-| E2 | [ ] | — | `results/E2/` |
-| E3 | [ ] | — | `results/E3/` |
-| E4 | [ ] | — | `results/E4/` |
-| E5 | [ ] | — | `results/E5/` |
+| E0 | [ ] | — | `experiments/external_dataset/results/E0/` |
+| E1 | [ ] | — | `experiments/external_dataset/results/E1/` |
+| E2 | [ ] | — | `experiments/application/results/E2/` |
+| E3 | [ ] | — | `experiments/external_dataset/results/E3/` |
+| E4 | [ ] | — | `experiments/application/results/E4/` |
+| E5 | [ ] | — | `experiments/application/results/E5/` |
 
 ---
 
 ## 7. Development Plan & Team Workflow
 
+Phân công chi tiết và checklist nằm ở **[docs/PLAN.md](../PLAN.md)**, nguồn duy nhất về ai làm gì. Mục này chỉ giữ lịch, phụ thuộc và cách làm việc.
+
 ### 7.1 Cách làm việc
 
 - Một repo GitHub chung. Mỗi người làm trên branch riêng (`huy/...`, `minh/...`) và merge vào `main` khi chạy được; người kia xem lướt trước khi merge.
-- Phân công theo module ([§5.4](#54-interface--định-dạng-dữ-liệu)). Interface được chốt ở M0 để hai người ít phải chờ nhau.
-- Mỗi tuần sync ngắn một lần (khoảng 15 phút). Owner tự tick checklist và cập nhật [§1](#1-current-status) khi xong việc.
-- Mỗi milestone có **một owner**; người còn lại hỗ trợ hoặc review.
+- Interface ở [§5.4](#54-interface--định-dạng-dữ-liệu) được chốt trước 25/11 để hai người ít phải chờ nhau.
+- Mỗi tuần sync ngắn một lần (khoảng 15 phút). Xong việc nào thì người phụ trách tick trong PLAN.md và cập nhật [§1](#1-current-status).
+- Mỗi mục trong PLAN.md có **một người chủ trì**; người còn lại hỗ trợ hoặc kiểm tra chéo.
 
-### 7.2 Milestones
+### 7.2 Lịch theo PLAN.md
 
-Thứ tự theo phụ thuộc. Nếu có khoảng 6 tuần [Unverified – điền deadline thật], MVP (M0–M6b) nên xong trước tuần 5.
+Còn 18 ngày (23/11 → 11/12/2026). Phase 3 xong trước **06/12**. Từ 07/12 đến 10/12 viết báo cáo và quay video. Nộp sớm trong ngày **11/12, trước 20:00**.
 
-| ID | Milestone | Owner | Phụ thuộc | Đầu ra / tiêu chí xong |
-|---|---|---|---|---|
-| M0 | Khởi tạo và chốt | Minh | — | Repo theo §5.5; `requirements.txt` cài được (pyvi, faiss-cpu); schema §5.4 chốt; văn bản quy chế D2 đã chọn; email giảng viên đã gửi (Huy) |
-| M1 | Hiểu paper và tái hiện | Huy | — | R1 chạy xong, kết quả và env lưu ở `results/R1/`; R4 test pass; ghi chú §4.7 trả lời được |
-| M2a | D1 và đánh giá dense | Minh | Schema §5.4 | Corpus/queries chia theo context; run top-20 và bảng Hit@k, MRR@10 của SimCSE-VN trên D1-test |
-| M2b | Corpus quy chế trường | Minh | M0 | `ingest.py` tách đúng Điều/Khoản (test trên ≥ 2 văn bản); `documents.yaml` đầy đủ |
-| M3 | Lõi truy hồi | Minh | M2a, M2b | `search()` chạy cho bm25/dense/hybrid; test chuẩn hóa và chunker pass |
-| M4 | Đánh giá trên D1 | Huy | M2a để viết bootstrap và phép đo cảnh báo; M3 để chạy so sánh | E0, E1, E3 (phần D1) xong |
-| M5 | Ứng dụng MVP | Minh | M3 để dựng UI; cấu hình từ D1-dev ở M4 để chốt demo và đo độ trễ | Gradio app với top-3, nguồn/phiên bản, cảnh báo, so sánh BM25; E4 xong |
-| M6a | Bộ test D2 | Minh | M2b | `queries_d2.jsonl` gán nhãn và kiểm tra chéo (Huy kiểm tra), có tỉ lệ đồng ý |
-| M6b | Đánh giá D2 và phân tích lỗi | Huy | M4, M6a | E2, E3 (phần D2), E5 xong |
-| M7a | Báo cáo IEEE | Huy (Minh viết mục Application và Existing solutions) | M6b | PDF đủ mục theo §8.4 |
-| M7b | Video và đóng gói | Minh | M5, M6b | Video ≤ 30 phút; README chạy được từ clone sạch; link đã kiểm tra |
-| Opt | O1–O5 | Huy (O1, O3), Minh (O2, O4) | M6b | Chỉ khi MVP xong |
+| Phase (PLAN.md) | Hạn | Đầu ra chính | Phụ thuộc |
+|---|---|---|---|
+| 1 – Nghiên cứu paper | 27/11 | Hai phần viết đã đọc chéo. Huy: bài toán và phương pháp; Minh: dữ liệu, baseline, metric, kết quả, hạn chế | — |
+| 2 – Triển khai và tái hiện | 30/11 | **Huy:** R1 ✓ (thêm R2, R3 ✓), R4 InfoNCE + test, giải thích luồng code. **Minh:** D1 + group split; SimCSE-VN dense trên D1 (Hit@1/3, MRR@10, top-20, bảng D1-test) | D1 có sẵn |
+| 3 – Xây dựng ứng dụng | 06/12 | **Minh:** chọn văn bản (trước 27/11), tách Điều/Khoản, BM25 + Hybrid, Gradio, latency. **Huy:** bảng so sánh + CI, chọn α/τ trên D1-dev, so sánh D1-test và D2, phân tích lỗi. **Cả hai:** D2 chốt nhãn trước 02/12 | Phase 2 |
+| 4 – Hoàn thiện và nộp | 10/12; nộp 11/12 | **Huy:** PDF IEEE, chạy lại từ clone sạch. **Minh:** README, video, `[Group14].zip`, kiểm tra link | Phase 3 |
+| Tùy chọn O1–O5 | dừng 08/12 | Chỉ làm nếu Phase 3 xong trước 06/12 | Phase 3 |
 
-### 7.3 Checklist
-
-**Huy**
-- [ ] Gửi email giảng viên (Q1, Q4)
-- [ ] Clone SimCSE @ `235f89e`, chạy R1 (+R2, R3 nếu thuận lợi)
-- [ ] `repro/infonce.py` + `tests/test_infonce.py` (R4)
-- [ ] Bootstrap CI và đánh giá cảnh báo dựa trên định dạng run của Minh
-- [ ] E0, E1, E3; sau đó E2, E5
-- [ ] Viết các phần báo cáo được giao
-
-**Minh**
-- [ ] Tạo repo, cấu trúc thư mục, `requirements.txt`, `configs/default.yaml`
-- [ ] Chọn văn bản quy chế, lập `documents.yaml` (số hiệu, ngày, sha256)
-- [ ] `ingest.py`, `preprocess.py` (NFC, chuẩn hóa dấu thanh, pyvi) + test
-- [ ] Chuẩn bị D1 theo group split, chạy dense và kiểm thử Hit@k, MRR@10
-- [ ] `encoders.py`, `retrieval.py` (BM25, dense, hybrid, MaxP, confidence)
-- [ ] `app/app.py` (Gradio) + `bench_latency.py` (E4)
-- [ ] D2: tổng hợp câu hỏi, gán nhãn; Huy kiểm tra chéo
-- [ ] README cuối, video demo, kiểm tra link
-
-**Cả hai**
-- [ ] Chốt schema §5.4 (M0)
-- [ ] Mỗi người viết 40–50 câu hỏi D2 + 10 câu ngoài phạm vi
-- [ ] Tập vấn đáp chéo §4.7 trước khi nộp
+**Ràng buộc thứ tự**
+- Nhãn D2 phải chốt **trước** khi xem dự đoán trên D2.
+- α và τ phải cố định trên D1-dev **trước** khi chạy D1-test và D2.
+- Demo và video chỉ dùng cấu hình đã đánh giá.
 
 ---
 
@@ -513,17 +535,17 @@ Thứ tự theo phụ thuộc. Nếu có khoảng 6 tuần [Unverified – đi�
 
 | Rủi ro | Mức | Dự phòng |
 |---|---|---|
-| `transformers==4.2.1` / PyTorch 1.7.1 không cài được trên Python mới | Cao | Chạy `evaluation.py` với bản hiện đại trước (chỉ dùng AutoModel); nếu lỗi thì dùng venv Python cũ hoặc Colab; ghi khác biệt phiên bản |
-| SentEval của repo lỗi với numpy/scipy mới [Unverified] | Trung bình | Pin numpy/scipy trong venv repro; ghi lại bản vá nhỏ nếu có |
+| Môi trường tái hiện (transformers 4.2.1/torch 1.7.1 không cài được; SentEval lỗi với numpy ≥ 1.24) | Đã xử lý | Venv Python 3.11 với các bản pin ở D-12; sai lệch phiên bản ghi trong `env.txt` và báo cáo |
+| Thời gian còn 18 ngày cho 2 người | Cao | MVP trước; hạn từng milestone ở §7.2; dừng việc tùy chọn sau 08/12; nộp trước 20:00 ngày 11/12 |
 | pyvi không cài được [Unverified] | Trung bình | Thử Python 3.10; dự phòng VnCoreNLP (cần Java) hoặc underthesea và ghi rõ khác với model card |
-| Không có GPU / hết quota | Thấp với MVP | MVP chạy CPU; GPU chỉ cho R1 (tăng tốc), O1, O3; dùng Kaggle nếu cần |
+| Không có GPU / hết quota | Thấp với MVP | MVP và R1 chạy CPU; GPU chỉ cần cho O1, O3 (Kaggle/Colab) |
 | SimCSE-VN truy hồi kém, hybrid không thắng BM25 | Cao | Kết quả âm vẫn hợp lệ: phân tích theo mức trùng từ vựng (E2) và lỗi (E5); đóng góp vẫn gồm trích dẫn, phiên bản, cảnh báo được đánh giá; cân nhắc O1 |
-| License D1 không rõ hoặc repo ViRE bị gỡ | Trung bình | Lưu bản sao riêng để chạy lại (không public khi chưa được phép); hỏi giảng viên (Q4); dự phòng EduCoQA; D2 vẫn là dataset mới của nhóm |
+| License D1 không rõ hoặc repo ViRE bị gỡ | Trung bình | Link nộp là permalink theo commit (không đổi được nội dung); lưu bản sao riêng để chạy lại; dự phòng EduCoQA; D2 vẫn là dataset mới của nhóm |
 | PDF quy chế là bản scan | Trung bình | Chọn bản text-based hoặc DOCX từ website; nếu không có thì chuyển text thủ công cho 1–2 văn bản (OCR ngoài phạm vi) |
 | Regex tách Điều/Khoản sai do định dạng khác nhau | Trung bình | Test trên ≥ 2 văn bản; kiểm tra thủ công số Điều so với mục lục |
 | Nhãn D2 không nhất quán | Trung bình | Kiểm tra chéo, ghi tỉ lệ đồng ý, có log bất đồng |
 | Tách từ không nhất quán giữa index và query | Trung bình | Một hàm `preprocess` dùng chung + unit test |
-| Link nộp bài không truy cập được (−50%) | Cao | Kiểm tra mọi link ở chế độ ẩn danh trước khi nộp (M7b) |
+| Link nộp bài không truy cập được (−50%) | Cao | Kiểm tra mọi link ở chế độ ẩn danh trước khi nộp (Phase 4, Minh) |
 
 ### 8.2 Các nội dung đã điều chỉnh so với Research
 
@@ -532,6 +554,7 @@ Thứ tự theo phụ thuộc. Nếu có khoảng 6 tuần [Unverified – đi�
 - **Sửa thông tin code:** tại commit cố định không có `--mlp_only_train` (Research mô tả theo bản fork hoặc `main`). Thêm các khác biệt eval_steps 125/250 và 81,58/81,57.
 - **Số liệu R2GQA:** chỉ giữ những số đã đối chiếu được. Một số con số Research nêu (vd. ViSimCSE P@1 43,24, ensemble 72,13) chưa xác minh nên **không dùng**.
 - **Confidence:** dùng cosine tuyệt đối, không dùng điểm fused đã min-max. Dạng cảnh báo thay vì từ chối cứng.
+- **Bonus:** bỏ hẳn, vì giảng viên xác nhận không xét. O1 chỉ còn là thí nghiệm tùy chọn cho ứng dụng.
 
 ### 8.3 Decision log
 
@@ -547,18 +570,21 @@ Thứ tự theo phụ thuộc. Nếu có khoảng 6 tuần [Unverified – đi�
 | D-08 | Tái hiện = R1 (bắt buộc) + R4; R2, R3 khuyến nghị; train SimCSE là tùy chọn | Chốt |
 | D-09 | Gradio, chạy local; không server, database hay auth | Chốt |
 | D-10 | FAISS `IndexFlatIP`, fallback numpy | Chốt |
-| D-11 | Fine-tuning (O1) chỉ sau MVP | Chốt |
+| D-11 | Fine-tuning (O1) chỉ sau MVP; không nhắm bonus | Chốt |
+| D-12 | Môi trường tái hiện: venv Python 3.11 + `experiments/reproduction/requirements-r1.txt` (numpy 1.23.5, scipy 1.10.1, scikit-learn 1.2.2, torch 2.5.1 CPU, transformers 4.46.3); chạy qua `repro/run_r1.py` | Chốt |
+| D-13 | Dataset nộp bằng link: D1 = permalink ViRE @ `60ea715`; D2 = Google Drive public | Chốt (giảng viên cho phép) |
+| D-14 | Phân công theo `docs/PLAN.md`; PROJECT.md chỉ giữ lịch và phụ thuộc | Chốt (23/11) |
+| D-15 | Cấu trúc code theo repo `UniSearch-SimCSE` (package `simcse_lab`, thư mục `experiments/`) | Chốt (23/11) |
 
 **Vấn đề còn mở**
 
 | ID | Câu hỏi | Ai giải quyết |
 |---|---|---|
-| Q1 | Option 1 có được xét bonus Model Improvement nếu làm O1 không? | Huy hỏi giảng viên |
 | Q2 | Dùng văn bản quy chế nào của trường (tên, số hiệu, bản text-based)? | Minh |
-| Q3 | Deadline và Group-ID? | Cả hai |
-| Q4 | Có được dùng và nộp kèm D1 (bản ViRE) không? Hay chỉ nộp script tải? | Huy hỏi giảng viên |
-| Q5 | pyvi và faiss-cpu có cài được trên môi trường của nhóm không? | Minh (M0) |
-| Q6 | Ý nghĩa cột `label` trong D1 | Huy (không chặn tiến độ) |
+| Q5 | pyvi và faiss-cpu có cài được trên môi trường của nhóm không? | Minh (trước 25/11) |
+| Q6 | Ý nghĩa cột `label` trong D1 | Minh (không chặn tiến độ) |
+
+Đã giải quyết (23/11): không xét bonus; Group ID = 14; deadline 23:59 ngày 11/12/2026; dataset được nộp bằng link; không cần xin phép giảng viên để dùng dataset.
 
 ### 8.4 Definition of Done
 
@@ -574,7 +600,7 @@ Thứ tự theo phụ thuộc. Nếu có khoảng 6 tuần [Unverified – đi�
 - Chạy trên CPU; latency đã đo.
 
 **Thí nghiệm**
-- R1, R4, E0–E5 có file trong `results/`.
+- R1, R4, E0–E5 có file trong `results/` của thư mục `experiments/` tương ứng.
 - Bảng có CI.
 - Có các câu ghi rõ phần nào không so sánh trực tiếp được.
 - Có ≥ 20 ca lỗi được phân loại.
@@ -590,10 +616,10 @@ Thứ tự theo phụ thuộc. Nếu có khoảng 6 tuần [Unverified – đi�
 - Thí nghiệm và phân tích: ~8 phút.
 - Demo ứng dụng, so sánh với tìm kiếm từ khóa: ~6 phút.
 
-**Nộp bài**
-- `[Group-ID].zip` gồm code hoặc link GitHub, video, PDF.
-- Link dataset/code đã kiểm tra ở chế độ ẩn danh.
-- D2 public trên Drive/HF (giữ ≥ 2 năm).
+**Nộp bài** (trước 23:59 ngày 11/12/2026, mục tiêu trước 20:00)
+- `[Group14].zip` gồm code hoặc link GitHub, video, PDF.
+- Link dataset (D1 permalink ViRE, D2 Google Drive) và link code đã kiểm tra ở chế độ ẩn danh.
+- D2 public trên Google Drive (giữ ≥ 2 năm).
 
 ### 8.5 References
 

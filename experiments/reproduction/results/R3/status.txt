@@ -1,0 +1,6 @@
+[2026-11-23T16:41:13+07:00] Start R3: model=bert-base-uncased pooler=avg_first_last
+[2026-11-23T16:41:13+07:00] SimCSE code present at D:\Lab03_Group14\repro\SimCSE (commit 235f89e0244b23673b69fbbc4a1cd9868c5a5c24)
+[2026-11-23T16:41:13+07:00] Packages already installed for current requirements
+[2026-11-23T16:41:13+07:00] SentEval STS data present
+[2026-11-23T16:41:13+07:00] Running: evaluation.py --model_name_or_path bert-base-uncased --pooler avg_first_last --task_set sts --mode test  (cwd=D:\Lab03_Group14\repro\SimCSE)
+[2026-11-23T16:56:22+07:00] DONE R3: avg=56.70 vs ref 56.70 -> REPRODUCED (tolerance 0.5)

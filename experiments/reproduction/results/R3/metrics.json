@@ -1,0 +1,40 @@
+{
+  "exp": "R3",
+  "model": "bert-base-uncased",
+  "pooler": "avg_first_last",
+  "metric": "Spearman x100, 'all' setting, test",
+  "scores": {
+    "STS12": 39.7,
+    "STS13": 59.37,
+    "STS14": 49.67,
+    "STS15": 66.03,
+    "STS16": 66.19,
+    "STSBenchmark": 53.88,
+    "SICKRelatedness": 62.06,
+    "Avg.": 56.7
+  },
+  "ref_paper": {
+    "STS12": 39.7,
+    "STS13": 59.38,
+    "STS14": 49.67,
+    "STS15": 66.03,
+    "STS16": 66.19,
+    "STSBenchmark": 53.87,
+    "SICKRelatedness": 62.06,
+    "Avg.": 56.7
+  },
+  "diff_vs_paper": {
+    "STS12": 0.0,
+    "STS13": -0.01,
+    "STS14": 0.0,
+    "STS15": 0.0,
+    "STS16": 0.0,
+    "STSBenchmark": 0.01,
+    "SICKRelatedness": 0.0,
+    "Avg.": 0.0
+  },
+  "avg_abs_diff_vs_main_ref": 0.0,
+  "reproduced_within_tolerance": true,
+  "tolerance": 0.5,
+  "eval_seconds": 903.9
+}

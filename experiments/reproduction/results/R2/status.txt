@@ -1,0 +1,6 @@
+[2026-11-23T16:22:07+07:00] Start R2: model=princeton-nlp/unsup-simcse-bert-base-uncased pooler=cls_before_pooler
+[2026-11-23T16:22:07+07:00] SimCSE code present at D:\Lab03_Group14\repro\SimCSE (commit 235f89e0244b23673b69fbbc4a1cd9868c5a5c24)
+[2026-11-23T16:22:07+07:00] Packages already installed for current requirements
+[2026-11-23T16:22:07+07:00] SentEval STS data present
+[2026-11-23T16:22:07+07:00] Running: evaluation.py --model_name_or_path princeton-nlp/unsup-simcse-bert-base-uncased --pooler cls_before_pooler --task_set sts --mode test  (cwd=D:\Lab03_Group14\repro\SimCSE)
+[2026-11-23T16:37:19+07:00] DONE R2: avg=76.25 vs ref 76.25 -> REPRODUCED (tolerance 0.5)

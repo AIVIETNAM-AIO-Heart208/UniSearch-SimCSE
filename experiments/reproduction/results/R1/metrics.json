@@ -1,0 +1,60 @@
+{
+  "exp": "R1",
+  "model": "princeton-nlp/sup-simcse-bert-base-uncased",
+  "pooler": "cls",
+  "metric": "Spearman x100, 'all' setting, test",
+  "scores": {
+    "STS12": 75.3,
+    "STS13": 84.67,
+    "STS14": 80.19,
+    "STS15": 85.4,
+    "STS16": 80.82,
+    "STSBenchmark": 84.26,
+    "SICKRelatedness": 80.39,
+    "Avg.": 81.58
+  },
+  "ref_readme": {
+    "STS12": 75.3,
+    "STS13": 84.67,
+    "STS14": 80.19,
+    "STS15": 85.4,
+    "STS16": 80.82,
+    "STSBenchmark": 84.26,
+    "SICKRelatedness": 80.39,
+    "Avg.": 81.58
+  },
+  "diff_vs_readme": {
+    "STS12": 0.0,
+    "STS13": 0.0,
+    "STS14": 0.0,
+    "STS15": 0.0,
+    "STS16": 0.0,
+    "STSBenchmark": 0.0,
+    "SICKRelatedness": 0.0,
+    "Avg.": 0.0
+  },
+  "ref_paper": {
+    "STS12": 75.3,
+    "STS13": 84.67,
+    "STS14": 80.19,
+    "STS15": 85.4,
+    "STS16": 80.82,
+    "STSBenchmark": 84.25,
+    "SICKRelatedness": 80.39,
+    "Avg.": 81.57
+  },
+  "diff_vs_paper": {
+    "STS12": 0.0,
+    "STS13": 0.0,
+    "STS14": 0.0,
+    "STS15": 0.0,
+    "STS16": 0.0,
+    "STSBenchmark": 0.01,
+    "SICKRelatedness": 0.0,
+    "Avg.": 0.01
+  },
+  "avg_abs_diff_vs_main_ref": 0.0,
+  "reproduced_within_tolerance": true,
+  "tolerance": 0.5,
+  "eval_seconds": 867.9
+}

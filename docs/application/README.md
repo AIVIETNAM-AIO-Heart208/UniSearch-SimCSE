@@ -1,17 +1,19 @@
 # Trợ lý tra cứu quy chế học vụ tiếng Việt (SimCSE)
 
-Đồ án Lab 03 – Machine Learning, **Option 1: Practical Application**.
+Đồ án Lab 03 – Machine Learning, **Nhóm 14**, **Option 1: Practical Application**.
 Ứng dụng tìm đúng **Điều/Khoản** trong văn bản quy chế học vụ cho câu hỏi tự nhiên của sinh viên, hiển thị nguyên văn kèm nguồn và phiên bản văn bản.
 
-> **Trạng thái:** đang ở giai đoạn thiết kế, **chưa có code và chưa có kết quả thực nghiệm**.
+> **Trạng thái:** đã tái hiện R1–R3, khớp paper (TB STS 81,58 / 76,25 / 56,70); **chưa có code ứng dụng và chưa có kết quả đánh giá ứng dụng**.
 > Trạng thái chi tiết và việc tiếp theo: xem [PROJECT.md – Current Status](PROJECT.md#1-current-status).
 
 ## Thành viên
 
 | MSSV | Họ tên | Phụ trách chính |
 |---|---|---|
-| 24127177 | Thái Quang Huy | Phân tích SimCSE, tái hiện kết quả, đánh giá thực nghiệm |
-| 24127205 | Nguyễn Văn Minh | Dữ liệu quy chế, pipeline truy hồi, ứng dụng demo |
+| 24127177 | Thái Quang Huy | Phương pháp SimCSE, tái hiện, so sánh thực nghiệm, báo cáo |
+| 24127205 | Nguyễn Văn Minh | Dữ liệu tiếng Việt, truy hồi SimCSE-VN, ứng dụng, video |
+
+Phân công chi tiết: [docs/PLAN.md](../PLAN.md).
 
 ## Bài toán
 
@@ -48,33 +50,36 @@ Python · PyTorch · HuggingFace Transformers · pyvi · rank_bm25 · faiss-cpu 
 
 ## Cài đặt và chạy
 
+Chạy các lệnh từ thư mục gốc repo.
+
+### Tái hiện kết quả SimCSE gốc (đã có)
+
+Cần Python **3.9–3.11**, vì SentEval của repo gốc yêu cầu `numpy<1.24`. Script tự tạo venv, tải code SimCSE @ `235f89e`, dữ liệu STS và checkpoint, chạy `evaluation.py` gốc, rồi lưu kết quả cùng môi trường.
+
+```bat
+experiments\reproduction\run_r1.bat        :: R1: sup-simcse-bert-base-uncased (TB 81,58)
+experiments\reproduction\run_r1.bat R2     :: unsup-simcse-bert-base-uncased (TB 76,25)
+experiments\reproduction\run_r1.bat R3     :: bert-base-uncased chưa fine-tune (TB 56,70)
+```
+
+Trên Linux/macOS: `python3.11 experiments/reproduction/run_r1.py --exp R1`. Kết quả và môi trường: [experiments/reproduction/](../../experiments/reproduction/README.md).
+
+### Ứng dụng và đánh giá (dự kiến)
+
 > ⚠️ Các lệnh dưới đây là **dự kiến**. Sẽ được cập nhật và kiểm tra khi có code.
 
-```bash
-# 1. Cài đặt
-git clone <repo-url> && cd <repo>
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-
-# 2. Chuẩn bị dữ liệu và index
-python scripts/prepare_virhe4qa.py      # tải và xử lý bộ đánh giá ViRHE4QA (bản con trong ViRE)
-python scripts/build_index.py --config configs/default.yaml
-
-# 3. Chạy ứng dụng demo
-python app/app.py
-
-# 4. Đánh giá truy hồi (BM25 / SimCSE / Hybrid)
-python scripts/run_eval.py --config configs/default.yaml
-
-# 5. Tái hiện kết quả SimCSE gốc (STS, checkpoint chính thức)
-bash repro/run_repro.sh
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -e .
+.\.venv\Scripts\python.exe data\prepare_virhe4qa.py          # tải và xử lý ViRHE4QA (bản con trong ViRE)
+.\.venv\Scripts\python.exe apps\app.py                       # chạy ứng dụng demo
 ```
 
 ## Dữ liệu
 
 | Bộ dữ liệu | Vai trò | Nguồn |
 |---|---|---|
-| ViRHE4QA (bản con 1.000 câu hỏi trong benchmark ViRE) | Đánh giá chính trên dataset mới | [ViRE](https://github.com/longstnguyen/ViRE), bài báo gốc R2GQA ([arXiv:2409.02840](https://arxiv.org/abs/2409.02840)) |
+| ViRHE4QA (bản con 1.000 câu hỏi trong benchmark ViRE) | Đánh giá chính trên dataset mới | [ViRHE4QA_v2.csv @ ViRE `60ea715`](https://github.com/longstnguyen/ViRE/blob/60ea7155134eaa426ab1d0a82d2bbbf327d1b470/data/ViRHE4QA_v2.csv), bài báo gốc R2GQA ([arXiv:2409.02840](https://arxiv.org/abs/2409.02840)) |
 | Quy chế của trường + bộ câu hỏi nhóm tự gán nhãn | Đánh giá trong bối cảnh thực tế (chỉ dùng để test) | Nhóm tự xây dựng |
 | STS 2012–2016, STS-B, SICK-R | Tái hiện kết quả bài báo | Script của repo SimCSE |
 
@@ -82,7 +87,8 @@ bash repro/run_repro.sh
 
 ## Tài liệu dự án
 
-- **[PROJECT.md](PROJECT.md)** là nguồn thông tin duy nhất (single source of truth): phạm vi, ánh xạ yêu cầu Lab 03, nền tảng SimCSE, kiến trúc, thí nghiệm, phân công, rủi ro.
+- **[PROJECT.md](PROJECT.md)**: đặc tả và trạng thái (phạm vi, ánh xạ yêu cầu Lab 03, nền tảng SimCSE, kiến trúc, thí nghiệm, rủi ro).
+- **[docs/PLAN.md](../PLAN.md)**: checklist và phân công.
 
 ## Tham khảo
 

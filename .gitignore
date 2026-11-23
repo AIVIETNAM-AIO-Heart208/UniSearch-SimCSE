@@ -14,3 +14,9 @@ dist/
 /data/processed/
 /checkpoints/
 /outputs/
+
+# Reproduction (experiments/reproduction/run_r1.py)
+.venv-repro/
+.cache/
+experiments/reproduction/SimCSE/
+*.part

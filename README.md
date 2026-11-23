@@ -37,6 +37,14 @@ python -m venv .venv
 
 Trên Linux hoặc macOS, dùng `.venv/bin/python` thay cho `.\.venv\Scripts\python.exe`. Package hiện chỉ chứa khung mã nguồn. Khai báo thư viện thực sự sử dụng trong `pyproject.toml` khi triển khai.
 
+## Tái hiện kết quả SimCSE
+
+Đã đánh giá lại ba checkpoint công khai bằng `evaluation.py` gốc @ `235f89e`. Trung bình Spearman trên 7 tác vụ STS: **81,58** (sup SimCSE), **76,25** (unsup SimCSE), **56,70** (BERT chưa fine-tune), khớp Table 5 của paper. Bảng chi tiết, môi trường và sai lệch phiên bản: [experiments/reproduction/](experiments/reproduction/README.md).
+
+```powershell
+experiments\reproduction\run_r1.bat        # R1; thêm R2 hoặc R3 để chạy thí nghiệm khác. Cần Python 3.9–3.11
+```
+
 ## Tài liệu gốc
 
 Tianyu Gao, Xingcheng Yao và Danqi Chen. *SimCSE: Simple Contrastive Learning of Sentence Embeddings*. EMNLP 2021. [Paper](https://aclanthology.org/2021.emnlp-main.552/) · [Mã nguồn của tác giả](https://github.com/princeton-nlp/SimCSE)

@@ -1,0 +1,40 @@
+{
+  "exp": "R2",
+  "model": "princeton-nlp/unsup-simcse-bert-base-uncased",
+  "pooler": "cls_before_pooler",
+  "metric": "Spearman x100, 'all' setting, test",
+  "scores": {
+    "STS12": 68.4,
+    "STS13": 82.41,
+    "STS14": 74.38,
+    "STS15": 80.91,
+    "STS16": 78.56,
+    "STSBenchmark": 76.85,
+    "SICKRelatedness": 72.23,
+    "Avg.": 76.25
+  },
+  "ref_paper": {
+    "STS12": 68.4,
+    "STS13": 82.41,
+    "STS14": 74.38,
+    "STS15": 80.91,
+    "STS16": 78.56,
+    "STSBenchmark": 76.85,
+    "SICKRelatedness": 72.23,
+    "Avg.": 76.25
+  },
+  "diff_vs_paper": {
+    "STS12": 0.0,
+    "STS13": 0.0,
+    "STS14": 0.0,
+    "STS15": 0.0,
+    "STS16": 0.0,
+    "STSBenchmark": 0.0,
+    "SICKRelatedness": 0.0,
+    "Avg.": 0.0
+  },
+  "avg_abs_diff_vs_main_ref": 0.0,
+  "reproduced_within_tolerance": true,
+  "tolerance": 0.5,
+  "eval_seconds": 907.8
+}

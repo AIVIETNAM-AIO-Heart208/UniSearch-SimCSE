@@ -1,5 +1,7 @@
 # Checklist Lab 03 · Trợ lý tra cứu quy chế học vụ
 
+**Nhóm 14** · Deadline: **23:59 ngày 11/12/2026** · Hạn từng phase: [PROJECT.md §7.2](application/PROJECT.md#72-lịch-theo-planmd)
+
 **Thái Quang Huy** phụ trách phương pháp SimCSE và so sánh thực nghiệm. **Nguyễn Văn Minh** phụ trách dữ liệu tiếng Việt, đánh giá truy hồi bằng SimCSE-VN và ứng dụng. Mỗi ô ghi người chủ trì và đầu ra cần kiểm tra. [Thiết kế kỹ thuật](application/PROJECT.md)
 
 ## Phase 1 – Nghiên cứu paper
@@ -14,7 +16,7 @@
 
 *Mục 3.3 · Hai thí nghiệm độc lập, mỗi người tự chạy được từ dữ liệu đến kết quả.*
 
-- [ ] **Huy** — Chạy checkpoint supervised SimCSE gốc trên 7 tác vụ STS. Lưu môi trường, commit, checkpoint, cấu hình, lệnh chạy và bảng Spearman đối chiếu với số công bố.
+- [x] **Huy** — Chạy checkpoint supervised SimCSE gốc trên 7 tác vụ STS. Lưu môi trường, commit, checkpoint, cấu hình, lệnh chạy và bảng Spearman đối chiếu với số công bố. *Xong 23/11: TB 81,58, khớp README; chạy thêm unsup (76,25) và BERT thô (56,70), đều khớp paper. Xem [experiments/reproduction/](../experiments/reproduction/README.md).*
 - [ ] **Huy** — Giải thích luồng nạp dữ liệu, huấn luyện và suy luận. Tự cài InfoNCE, kiểm thử cả trường hợp có hard negative.
 - [ ] **Minh** — Chuẩn bị ViRHE4QA (D1): xuất corpus, câu hỏi và mã đoạn đúng. Chia **câu hỏi** theo nhóm đoạn nguồn để cùng một đoạn không xuất hiện làm đáp án ở cả dev và test. Giữ chung corpus tra cứu.
 - [ ] **Minh** — Mã hóa câu hỏi và các đoạn bằng SimCSE-VN, xếp hạng theo cosine và gộp về mã Điều/đoạn nguồn. Kiểm tra Hit@1, Hit@3, MRR@10 bằng ví dụ tính tay. Cố định cấu hình, lưu lệnh chạy, xếp hạng top 20 theo từng câu và bảng điểm D1-test. Các lần chỉnh cấu hình dùng D1-dev.
@@ -37,4 +39,4 @@
 
 - [ ] **Huy** — Dùng bảng số liệu đã chốt để viết phương pháp, kết quả và thảo luận theo mẫu IEEE. Ghép phần ứng dụng của Minh rồi xuất PDF.
 - [ ] **Minh** — Bàn giao phần viết về ứng dụng, đối chứng và đóng góp của nhóm. Hoàn thiện README với các lệnh cài đặt, dựng chỉ mục và chạy demo. Quay video tối đa 30 phút trên cấu hình đã đánh giá.
-- [ ] **Huy kiểm tra, Minh đóng gói** — Huy chạy lại theo README từ bản clone sạch. Khi PDF, video và mã nguồn đã sẵn sàng, Minh kiểm tra link và tạo `[Group-ID].zip`; một đại diện nộp lên Moodle.
+- [ ] **Huy kiểm tra, Minh đóng gói** — Huy chạy lại theo README từ bản clone sạch. Khi PDF, video và mã nguồn đã sẵn sàng, Minh kiểm tra link và tạo `[Group14].zip`; một đại diện nộp lên Moodle.

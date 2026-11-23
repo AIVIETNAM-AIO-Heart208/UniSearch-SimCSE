@@ -1,0 +1,10 @@
+[2026-11-23T16:00:37+07:00] Start R1: model=princeton-nlp/sup-simcse-bert-base-uncased pooler=cls
+[2026-11-23T16:00:37+07:00] SimCSE code present at D:\Lab03_Group14\repro\SimCSE (commit 235f89e0244b23673b69fbbc4a1cd9868c5a5c24)
+[2026-11-23T16:00:37+07:00] Creating venv D:\Lab03_Group14\.venv-repro with Python 3.11
+[2026-11-23T16:00:47+07:00] Installing packages (torch CPU wheel ~200 MB, rest ~60 MB)
+[2026-11-23T16:03:26+07:00] Downloading SentEval data (senteval.tar)
+[2026-11-23T16:03:28+07:00]   downloading senteval.tar: 1 MB (1%)
+[2026-11-23T16:03:37+07:00]   downloaded senteval.tar: 90 MB
+[2026-11-23T16:03:37+07:00] Extracting senteval.tar
+[2026-11-23T16:03:38+07:00] Running: evaluation.py --model_name_or_path princeton-nlp/sup-simcse-bert-base-uncased --pooler cls --task_set sts --mode test  (cwd=D:\Lab03_Group14\repro\SimCSE)
+[2026-11-23T16:18:10+07:00] DONE R1: avg=81.58 vs ref 81.58 -> REPRODUCED (tolerance 0.5)
