@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "simcse-lab"
+version = "0.1.0"
+description = "SimCSE reproduction, evaluation, and practical application for Lab 03"
+readme = "README.md"
+
+[tool.setuptools.packages.find]
+where = ["src"]
