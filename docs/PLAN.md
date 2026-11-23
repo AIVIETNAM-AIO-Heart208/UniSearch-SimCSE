@@ -32,16 +32,17 @@
 
 *Mục 3.4 · Option 1. Minh xây ứng dụng trong lúc Huy chuẩn bị phép so sánh trên đầu ra Phase 2.*
 
-- [ ] **Huy** — Duyệt bảng đối ứng Điều 2021 ↔ 2026 ([`data/d2/article_map.tsv`](../data/d2/article_map.tsv), gồm ba chủ đề gộp hai Điều cùng phiên bản T02/T09/T16) và quy tắc viết câu D2. *Làm ngay, trước khi viết câu D2.*
-- [ ] **Minh** — Dựng corpus của ứng dụng từ hai quy chế đào tạo HCMUS trong [`data/d2/`](../data/d2/README.md): QĐ 1175/2021 (24 Điều) và QĐ 3087/2026 (27 Điều). Toàn văn ở `data/raw/d2/`; nhờ Huy gửi vì thư mục này không có trong Git.
+- [x] **Huy** — Duyệt bảng đối ứng Điều 2021 ↔ 2026 ([`data/d2/article_map.tsv`](../data/d2/article_map.tsv), gồm ba chủ đề gộp hai Điều cùng phiên bản T02/T09/T16) và quy tắc viết câu D2. *Xong 24/11 (D-18): đã đối chiếu nội dung, giữ T02/T09/T16; câu D2 viết kiểu gập sách; bản 2026 hiển thị trước.*
+- [ ] **Huy** — Rà toàn văn bản chép QĐ 3087 tìm lỗi OCR còn sót (vd. "đơn vi", "cau thành" ở Điều 3), sửa có ghi nhật ký và cập nhật sha256 trong `documents.yaml`. *Làm trước khi Minh dựng index.*
+- [ ] **Minh** — Dựng corpus của ứng dụng từ hai quy chế đào tạo HCMUS trong [`data/d2/`](../data/d2/README.md): QĐ 1175/2021 (24 Điều) và QĐ 3087/2026 (27 Điều). Chữ QĐ 1175 có trong `data/d2/`; bản chép QĐ 3087 không có trong Git, nhờ Huy gửi riêng.
   - Tách Điều/Khoản, kiểm tra số Điều (24 và 27) và kiểm tra mỗi chunk khớp đúng văn bản trong `data/raw/d2/`.
   - Gắn metadata từ `documents.yaml`: văn bản, số hiệu, ngày ban hành, phạm vi áp dụng.
   - Ví dụ hạn chế của Ctrl+F: câu 9542 trong Introduction thuộc D1 (quy chế ĐH CNTT), nên chạy trên index D1, không phải corpus HCMUS.
 - [ ] **Huy** — Ngay đầu phase, dùng xếp hạng SimCSE-VN từ Phase 2 để chuẩn bị bảng so sánh, kiểm thử khoảng tin cậy 95% cho chênh lệch giữa hai phương pháp và phép đo cảnh báo bằng ví dụ tính tay.
 - [ ] **Minh** — Thêm BM25 và Hybrid vào phần truy hồi tiếng Việt. Giao cho Huy lệnh chạy ba phương pháp trên D1 và trên corpus HCMUS (D2), cho phép đổi trọng số Hybrid. Runs theo định dạng [PROJECT.md §5.4](application/PROJECT.md#54-interface--định-dạng-dữ-liệu), gồm Khoản tốt nhất và cosine của Khoản tốt nhất trong Điều đứng đầu. Dựng giao diện Gradio song song với việc Huy chọn cấu hình.
-- [ ] **Cả hai viết, kiểm tra chéo câu của nhau; Minh tổng hợp file** — Viết bộ test D2 trên hai quy chế đào tạo HCMUS: mỗi người 40–50 câu trong phạm vi và 10 câu ngoài phạm vi. Bắt đầu ngay khi Huy duyệt xong bảng đối ứng, không chờ Phase 2. Chốt nhãn trước 02/12 và trước khi xem dự đoán trên D2. Quy tắc viết và gán nhãn (gồm cách ghi gold khi hai phiên bản cùng trả lời): [PROJECT.md §6.2](application/PROJECT.md#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu).
+- [ ] **Cả hai viết, kiểm tra chéo câu của nhau; Minh tổng hợp file** — Viết bộ test D2 trên hai quy chế đào tạo HCMUS: mỗi người 40–50 câu trong phạm vi và 10 câu ngoài phạm vi. Bắt đầu ngay, không chờ Phase 2. Nếu kịp, Huy thu thêm khoảng 20 câu thật qua Google Form ẩn danh (`origin: form`). Chốt nhãn trước 02/12 và trước khi xem dự đoán trên D2. Quy tắc viết và gán nhãn (gồm cách ghi gold khi hai phiên bản cùng trả lời): [PROJECT.md §6.2](application/PROJECT.md#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu).
 - [ ] **Huy** — Chọn trọng số Hybrid và ngưỡng cảnh báo trên D1-dev, gửi cấu hình cố định cho Minh. So sánh ba phương pháp trên D1-test và D2 đã chốt nhãn; với D2 báo cả mức theo Điều và theo chủ đề. Báo riêng hiệu quả với câu ít trùng từ và tỷ lệ câu ngoài phạm vi bị gắn mức tin cậy cao.
-- [ ] **Minh** — Áp dụng cấu hình cố định vào demo CPU: hiển thị top 3 kết quả (các Điều cùng chủ đề gộp làm một), Khoản trích dẫn, tên văn bản, số hiệu, ngày ban hành, phạm vi áp dụng (ghi "bản chép từ bản scan" với QĐ 3087), cảnh báo và kết quả BM25 để đối chiếu. Lưu độ trễ p50/p95 của ba phương pháp.
+- [ ] **Minh** — Áp dụng cấu hình cố định vào demo CPU: hiển thị top 3 kết quả (các Điều cùng chủ đề gộp làm một, bản 2026 đứng trước), Khoản trích dẫn, tên văn bản, số hiệu, ngày ban hành, phạm vi áp dụng (ghi "bản chép từ bản scan" với QĐ 3087), cảnh báo và kết quả BM25 để đối chiếu. Lưu độ trễ p50/p95 của ba phương pháp.
 - [ ] **Huy tổng hợp, Minh đối chiếu văn bản** — Phân loại 20–30 truy vấn sai trên D1-test và D2. Chọn ví dụ cho thấy khi nào Hybrid hữu ích, khi nào xếp sai Điều và hướng cải thiện.
 
 ## Phase 4 – Hoàn thiện và nộp bài

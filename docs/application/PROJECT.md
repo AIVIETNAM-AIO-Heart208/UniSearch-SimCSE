@@ -71,8 +71,8 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
 - [x] **Corpus D2 (23/11, D-17):** quy chế đào tạo của Trường ĐH KHTN, gồm hai văn bản.
   - QĐ 1175/QĐ-KHTN (2021): 24 Điều, PDF có lớp chữ, công khai.
   - QĐ 3087/QĐ-KHTN ngày 29/9/2026: 27 Điều. ChatGPT chép từ bản scan; nhóm làm sạch 158 lỗi OCR có kiểm chứng.
-  - Mô tả và metadata ở [`data/d2/`](../../data/d2/README.md). Toàn văn ở `data/raw/d2/`, không đưa vào Git cho đến khi rõ Q7.
-  - Bảng đối ứng Điều 2021 ↔ 2026 (`data/d2/article_map.tsv`, 26 chủ đề): bản nháp, chờ Huy duyệt.
+  - Mô tả và metadata ở [`data/d2/`](../../data/d2/README.md). Chữ QĐ 1175 (văn bản công khai) có trong Git ở `data/d2/`; bản chép QĐ 3087 chỉ ở `data/raw/d2/`, không đăng công khai (D-18).
+  - Bảng đối ứng Điều 2021 ↔ 2026 (`data/d2/article_map.tsv`, 26 chủ đề): đã duyệt ngày 24/11 sau khi đối chiếu nội dung (D-18).
   - Rà soát lại ngày 24/11: sha256 khớp, URL công khai của QĐ 1175 vẫn tải được, hai đoạn có độ giống thấp của bản chép 2026 đã đọc tay đối chiếu.
 
 **Đang thực hiện:** không có.
@@ -82,11 +82,10 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
 **Blocker / chờ quyết định**
 
 - Chưa chia phần viết Related Work (mục 3.2.2, giao cho cả Huy và Minh) trong `docs/report/sections/related-work.tex`.
-- Chưa rõ có được công bố lại bản chép Quy chế đào tạo 2026 hay không (Q7 ở [§8.3](#83-decision-log)). Câu trả lời quyết định nội dung link D2 khi nộp bài.
 
 **Việc ưu tiên tiếp theo**
 
-1. **Huy:** báo Minh về D-17 (đã commit ngày 24/11); duyệt `data/d2/article_map.tsv` (gồm T02/T09/T16) và quy tắc viết câu D2 ([§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)).
+1. **Huy:** báo Minh về D-17 và D-18 (đã lên `main` ngày 24/11): bảng đối ứng đã duyệt, quy tắc viết câu D2 mới ([§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)), bản 2026 hiển thị trước. Rà lỗi OCR còn sót trong bản chép QĐ 3087 trước khi Minh dựng index.
 2. **Cả hai:** chốt schema dữ liệu ở [§5.4](#54-interface--định-dạng-dữ-liệu) trước 25/11.
 3. **Minh** đọc chéo phần bài toán và phương pháp của Huy (Phase 1, hạn 27/11): Introduction và Proposed Method trong `docs/report/sections/`. **Huy** đọc chéo phần của Minh khi Minh xong.
 4. **Minh:** chuẩn bị D1 (`data/prepare_virhe4qa.py`, group split) và chạy SimCSE-VN dense trên D1. Khi chia, nhóm đoạn của câu index 9542 phải vào D1-dev ([§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)).
@@ -335,7 +334,7 @@ Câu hỏi → preprocess (cùng hàm) → điểm BM25 và cosine cho mọi chu
   → gộp chunk về Điều (MaxP: lấy max) → min-max normalize theo từng phương pháp
   → Hybrid: s = λ·BM25_norm + (1−λ)·Dense_norm   (λ chọn trên D1-dev)
   → xếp hạng Điều (runs lưu ở mức này, top-20)
-  → corpus HCMUS: gộp các Điều cùng chủ đề theo data/d2/article_map.tsv thành một kết quả
+  → corpus HCMUS: gộp các Điều cùng chủ đề theo data/d2/article_map.tsv thành một kết quả, bản 2026 đứng trước
   → top-3 kết quả (kèm Khoản / chunk tốt nhất)
   → Confidence: cosine SimCSE của chunk tốt nhất trong Điều đứng đầu < θ  ⇒  cảnh báo "Độ tin cậy thấp"
   → UI: Điều/Khoản · trích đoạn · văn bản · số hiệu · ngày ban hành · phạm vi áp dụng · điểm · [so sánh BM25]
@@ -367,6 +366,7 @@ Câu hỏi → preprocess (cùng hàm) → điểm BM25 và cosine cho mọi chu
   - Với QĐ 3087, ghi thêm "bản chép từ bản scan", vì đây là bản ChatGPT chép và nhóm làm sạch, không phải nguyên văn.
   - Ứng dụng không tự xác định phiên bản nào áp dụng cho một khóa cụ thể: nó hiển thị kết quả của cả hai phiên bản, kèm phạm vi áp dụng ghi trong văn bản.
   - Các Điều cùng chủ đề (theo `data/d2/article_map.tsv`; một chủ đề có thể gồm 2–3 Điều) hiển thị thành **một** kết quả, có cả bản 2021 và bản 2026, để top-3 không tốn nhiều vị trí cho cùng một quy định.
+  - Trong mỗi kết quả, **bản 2026 hiển thị trước** vì là bản mới nhất (D-18); mọi chủ đề đều có Điều của bản 2026. Bản 2021 hiển thị phụ, ghi rõ áp dụng cho khóa tuyển từ năm học 2021–2022 đến 2025, trừ quy định mới có lợi hơn (Điều 27 bản 2026).
 - **Độ tin cậy thấp:** vẫn hiển thị top-3, gắn nhãn cảnh báo và gợi ý liên hệ phòng đào tạo. MVP **không từ chối cứng**. Ngưỡng θ được chọn và đánh giá theo E3 ([§6.4](#64-thí-nghiệm-thiết-yếu)).
 
 ### 5.4 Interface & định dạng dữ liệu
@@ -408,7 +408,7 @@ Theo repo GitHub. Mục có dấu ✓ là đã có nội dung.
 ├── README.md · pyproject.toml · .gitignore
 ├── configs/default.yaml              # model, max_len, chunk, λ, θ, seed (dự kiến)
 ├── data/                             # README + prepare_virhe4qa.py; raw/ processed/ bị gitignore
-│   └── d2/                           # ✓ README.md, documents.yaml, article_map.tsv; queries_d2.jsonl (Phase 3). Toàn văn ở raw/d2/
+│   └── d2/                           # ✓ README.md, documents.yaml, article_map.tsv, chữ QĐ 1175; queries_d2.jsonl (Phase 3). Bản chép QĐ 3087 ở raw/d2/
 ├── src/simcse_lab/
 │   ├── model/                        # encoders.py, infonce.py ✓
 │   ├── retrieval/                    # ingest.py, preprocess.py, search.py
@@ -437,7 +437,7 @@ Môi trường cho ứng dụng dùng venv riêng (`.venv`, cài bằng `pip ins
 | ID | Dataset | Vai trò | Thông tin | Truy cập / License |
 |---|---|---|---|---|
 | **D1** | ViRHE4QA, bản con trong ViRE: `data/ViRHE4QA_v2.csv` @ ViRE commit `60ea7155134eaa426ab1d0a82d2bbbf327d1b470` (sha256 `23fb9699…aa5682`) | **Dataset mới chính** (bắt buộc); đánh giá trên corpus riêng của D1 | [Confirmed, đã đọc file] 1.000 câu hỏi, 297 context khác nhau (287 bắt đầu bằng "Điều"). Mỗi câu hỏi có đúng 1 context gold. Cột: `split, index, context, question, extractive answer, abstractive answer, label`. Theo nội dung, đây là quy định của Trường ĐH CNTT – ĐHQG-HCM: 77/297 context nêu tên trường, không context nào nêu trường khác. Tóm tắt bài R2GQA không nêu tên trường, nên đây là suy ra từ nội dung (kiểm tra 23/11). Không có thông tin văn bản gốc, số hiệu hay phiên bản của từng Điều. Context dài: trung vị 173 từ, p90 495, tối đa 1.249 → cần chunk. Ý nghĩa cột `label` (0/1, 500/500) chưa rõ [Unverified] và không dùng | Tải trực tiếp từ GitHub. ViRE: code MIT, dataset bên thứ ba giữ license gốc. Bài gốc R2GQA ghi dữ liệu cung cấp "on reasonable request" → license [Unverified]. Chỉ dùng đánh giá học thuật, trích dẫn cả hai. **Nộp bằng link permalink** tới file ở commit trên (giảng viên cho phép nộp dataset bằng link) |
-| **D2** | Câu hỏi nhóm tự viết trên quy chế đào tạo HCMUS: QĐ 1175/2021 và QĐ 3087/2026 ([`data/d2/`](../../data/d2/README.md); D-17) | Test trong bối cảnh thực tế (**chỉ test**) | [Proposed] 80–100 câu trong phạm vi + khoảng 20 câu ngoài phạm vi. Corpus 51 Điều (24 + 27). QĐ 1175: nguyên văn từ PDF có chữ. QĐ 3087: bản ChatGPT chép từ scan, nhóm làm sạch, không phải nguyên văn | QĐ 1175 công khai trên website trường. QĐ 3087 chưa thấy công khai (Q7). Câu hỏi do nhóm viết, có thể thêm câu thu qua Google Form ẩn danh (`origin`); không chứa dữ liệu cá nhân. Nộp bằng link Google Drive công khai; phần đưa lên tùy Q7 |
+| **D2** | Câu hỏi nhóm tự viết trên quy chế đào tạo HCMUS: QĐ 1175/2021 và QĐ 3087/2026 ([`data/d2/`](../../data/d2/README.md); D-17) | Test trong bối cảnh thực tế (**chỉ test**) | [Proposed] 80–100 câu trong phạm vi + khoảng 20 câu ngoài phạm vi. Corpus 51 Điều (24 + 27). QĐ 1175: nguyên văn từ PDF có chữ. QĐ 3087: bản ChatGPT chép từ scan, nhóm làm sạch, không phải nguyên văn | QĐ 1175 công khai trên website trường. QĐ 3087 chưa thấy công khai (Q7). Câu hỏi do nhóm viết, có thể thêm câu thu qua Google Form ẩn danh (`origin`); không chứa dữ liệu cá nhân. Link Google Drive công khai gồm câu hỏi, nhãn, metadata và chữ QĐ 1175; bản chép QĐ 3087 chỉ nộp trong `[Group14].zip` (D-18) |
 | R-STS | STS12–16, STS-B, SICK-R | Tái hiện R1–R3 | Theo script repo | `senteval.tar` (HF `princeton-nlp/datasets-for-simcse`) |
 | D1-full | ViRHE4QA đầy đủ (9.758 cặp QA, 294 điều) | Tùy chọn | [Confirmed theo arXiv:2409.02840] | Xin tác giả; dự án **không phụ thuộc** vào bộ này |
 | Dự phòng | EduCoQA (`data/EduCoQA.csv` trong ViRE; 511 câu hỏi / 262 đoạn, tư vấn tuyển sinh HCMUT) | Chỉ dùng nếu D1 không dùng được | [Confirmed] | CC BY-NC 4.0; bản trên HF cần đăng nhập |
@@ -449,7 +449,7 @@ Môi trường cho ứng dụng dùng venv riêng (`.venv`, cài bằng `pip ins
 
 **Hệ quả:** câu hỏi D1 được viết từ chính văn bản nên trùng từ vựng cao, và BM25 rất mạnh. Nhóm **không cam kết** dense hay hybrid sẽ thắng BM25 trên D1.
 - Lợi ích ngữ nghĩa được kiểm tra chủ yếu trên D2 (câu hỏi kiểu sinh viên). Nhóm câu ít trùng từ trong D1-test là bằng chứng phụ (E2); nhóm này có thể nhỏ, nên phải báo kèm số câu và CI.
-- Câu D2 do nhóm viết theo quy tắc hạn chế chép từ văn bản (§6.2), nên bất lợi cho BM25 ngay từ cách xây dựng. Báo cáo phải nêu thiên lệch này; nếu có câu thu qua Google Form thì báo riêng nhóm đó.
+- Câu D2 do nhóm viết sau khi đã đọc văn bản (§6.2), nên phân phối từ vựng có thể khác câu hỏi thật (thường ít trùng từ hơn, bất lợi cho BM25). Báo cáo phải nêu thiên lệch này; nếu có câu thu qua Google Form thì báo riêng nhóm đó.
 - Corpus D2 nhỏ: 51 Điều nhưng chỉ 26 chủ đề, vì phần lớn Điều 2021 và 2026 nói cùng một quy định. Hit@3 vì vậy dễ cao với mọi phương pháp. D2 báo hai mức (theo Điều và theo chủ đề), kèm Clause@1 và mức ngẫu nhiên; báo cáo nêu rõ quy mô corpus (§6.3).
 
 ### 6.2 Tiền xử lý, gán nhãn và chia dữ liệu
@@ -467,8 +467,8 @@ Môi trường cho ứng dụng dùng venv riêng (`.venv`, cài bằng `pip ins
 
 - **Corpus:** 51 Điều của hai văn bản trong `data/d2/documents.yaml`. Không đưa ba Điều của QĐ 3087 (Quyết định ban hành) vào corpus.
 - **Người viết:** Huy và Minh mỗi người viết 40–50 câu trong phạm vi và 10 câu ngoài phạm vi (`origin: team`). Có thể thu thêm câu hỏi thật của bạn học qua Google Form ẩn danh (chỉ lấy nội dung câu hỏi; `origin: form`).
-- **Cách viết:** diễn đạt như sinh viên, không chép cụm quá 3 từ liên tiếp từ văn bản. Câu ngoài phạm vi là câu mà cả hai văn bản đều không trả lời (ví dụ ký túc xá, căn tin).
-  - Quy tắc này làm câu `team` ít trùng từ hơn câu hỏi tự nhiên, tức bất lợi cho BM25 ngay từ cách xây dựng. Báo cáo phải nêu điều này và báo riêng nhóm `form` nếu có.
+- **Cách viết (D-18):** viết kiểu "gập sách": đọc Điều, gập văn bản lại, rồi viết câu như khi hỏi bạn hoặc phòng đào tạo. Được dùng thuật ngữ thông dụng (học phần, tín chỉ, điểm trung bình tích lũy…), không chép nguyên câu hay mệnh đề từ văn bản. Câu ngoài phạm vi là câu mà cả hai văn bản đều không trả lời (ví dụ ký túc xá, căn tin).
+  - Lý do: quy tắc cũ "không chép quá 3 từ liên tiếp" cấm cả thuật ngữ sinh viên vẫn dùng, làm câu bất lợi cho BM25 ngay từ cách xây dựng. Cách viết mới vẫn có thể cho câu ít trùng từ hơn câu thật, nên báo E2 theo mức trùng từ và báo riêng nhóm `form` nếu có.
 - **Loại trùng:** trước khi chốt, loại câu trùng hoặc gần trùng giữa hai người viết và ghi số câu đã loại.
 - **Gán nhãn:** người viết ghi `gold_article_ids`, và `gold_clause_ids` khi xác định được Khoản. Người kia kiểm tra độc lập. Ghi tỉ lệ đồng ý trước khi thảo luận và lưu log bất đồng.
 - **Hai phiên bản:**
@@ -501,9 +501,9 @@ Môi trường cho ứng dụng dùng venv riêng (`.venv`, cài bằng `pip ins
 - **Mức Khoản (chỉ D2, trên câu có `gold_clause_ids`):** Khoản tốt nhất của Điều đứng đầu có thuộc gold không (Clause@1). Metric này chặt, vì gắn với Điều đứng đầu, và bù cho việc corpus D2 nhỏ.
 - **Hai mức cho D2:** luôn báo cả hai, không báo mức theo chủ đề một mình.
   - **Theo Điều (chặt):** như D1, không gộp. Một Điều chỉ đúng khi nằm trong gold.
-  - **Theo chủ đề (khớp giao diện, dễ hơn):** các Điều được gộp thành chủ đề theo [`data/d2/article_map.tsv`](../../data/d2/article_map.tsv) (26 chủ đề cho 51 Điều; bản nháp, chờ Huy duyệt). Trước khi cắt top-k, các Điều cùng chủ đề chỉ tính một lần; câu hỏi tính là đúng khi chủ đề của một gold nằm trong top-k.
+  - **Theo chủ đề (khớp giao diện, dễ hơn):** các Điều được gộp thành chủ đề theo [`data/d2/article_map.tsv`](../../data/d2/article_map.tsv) (26 chủ đề cho 51 Điều; đã duyệt 24/11, D-18). Trước khi cắt top-k, các Điều cùng chủ đề chỉ tính một lần; câu hỏi tính là đúng khi chủ đề của một gold nằm trong top-k.
   - **Vì sao mức chủ đề dễ hơn:** sau khi gộp, top-k chứa nhiều chủ đề khác nhau hơn, nên Hit@k và MRR@10 chỉ có thể tăng hoặc giữ nguyên. Kể cả Hit@1 cũng dễ hơn khi chỉ một phiên bản trả lời được câu hỏi. Ví dụ T18: bản 2026 thêm chuyển ngành, nên câu hỏi về chuyển ngành chỉ có gold là Điều 21 bản 2026; nếu Điều 20 bản 2021 đứng đầu thì mức chủ đề tính đúng, mức Điều tính sai.
-  - **Gộp trong cùng một phiên bản (cần Huy duyệt riêng):** T02 (Điều 2 và 3 bản 2021), T09 (Điều 12 và 13 bản 2026), T16 (Điều 17 và 18 bản 2021). Ở các chủ đề này, một bản tách thành hai Điều nội dung mà bản kia gộp trong một Điều.
+  - **Gộp trong cùng một phiên bản (giữ theo D-18):** T02 (Điều 2 và 3 bản 2021), T09 (Điều 12 và 13 bản 2026), T16 (Điều 17 và 18 bản 2021). Đã đối chiếu nội dung: một bản tách thành hai Điều nội dung mà bản kia gộp trong một Điều. Ví dụ Điều 10 bản 2021 gồm cả xét giao và đánh giá khóa luận, bản 2026 tách thành Điều 12 và 13.
   - **Mức ngẫu nhiên** (xếp hạng ngẫu nhiên): theo Điều, với g Điều gold, Hit@k = 1 − C(51−g, k)/C(51, k), vd. g = 2: Hit@1 ≈ 3,9%, Hit@3 ≈ 11,5%. Theo chủ đề, với một chủ đề gold: Hit@1 = 1/26 ≈ 3,8%, Hit@3 = 3/26 ≈ 11,5%.
   - Runs lưu ở mức Điều (§5.4); `metrics.py` tính mức chủ đề từ runs và `article_map.tsv`.
 - **Ý nghĩa thống kê:** paired bootstrap 1.000 lần trên câu hỏi (seed 42), báo 95% CI của ΔMRR@10 và ΔHit@1.
@@ -579,7 +579,7 @@ Tính từ 23/11, còn 18 ngày đến 11/12/2026. Phase 3 xong trước **06/12
 |---|---|---|---|
 | 1 – Nghiên cứu paper | 27/11 | Hai phần viết đã đọc chéo. Huy: bài toán và phương pháp; Minh: dữ liệu, baseline, metric, kết quả, hạn chế | — |
 | 2 – Triển khai và tái hiện | 30/11 | **Huy:** R1 ✓ (thêm R2, R3 ✓), R4 InfoNCE + test ✓, giải thích luồng code. **Minh:** D1 + group split; SimCSE-VN dense trên D1 (Hit@1/3, MRR@10, top-20, bảng D1-test) | D1 có sẵn |
-| 3 – Xây dựng ứng dụng | 06/12 | **Minh:** corpus HCMUS từ `data/d2/` (tách Điều/Khoản, metadata), BM25 + Hybrid, Gradio, latency. **Huy:** bảng so sánh + CI, chọn λ/θ trên D1-dev, so sánh trên D1-test và D2 (chung và theo mức trùng từ), phân tích lỗi. **Cả hai:** D2 chốt nhãn trước 02/12 | Phase 2. Riêng việc viết câu D2 không phụ thuộc Phase 2: bắt đầu ngay khi Huy duyệt xong `article_map.tsv` |
+| 3 – Xây dựng ứng dụng | 06/12 | **Minh:** corpus HCMUS từ `data/d2/` (tách Điều/Khoản, metadata), BM25 + Hybrid, Gradio, latency. **Huy:** bảng so sánh + CI, chọn λ/θ trên D1-dev, so sánh trên D1-test và D2 (chung và theo mức trùng từ), phân tích lỗi. **Cả hai:** D2 chốt nhãn trước 02/12 | Phase 2. Riêng việc viết câu D2 không phụ thuộc Phase 2: bắt đầu ngay (bảng đối ứng đã duyệt 24/11) |
 | 4 – Hoàn thiện và nộp | 10/12; nộp 11/12 | **Huy:** PDF IEEE, chạy lại từ clone sạch. **Minh:** README, video, `[Group14].zip`, kiểm tra link | Phase 3 |
 | Tùy chọn O1–O5 | dừng 08/12 | Chỉ làm nếu Phase 3 xong trước 06/12 | Phase 3 |
 
@@ -603,10 +603,10 @@ Tính từ 23/11, còn 18 ngày đến 11/12/2026. Phase 3 xong trước **06/12
 | Không có GPU / hết quota | Thấp với MVP | MVP và R1 chạy CPU; GPU chỉ cần cho O1, O3 (Kaggle/Colab) |
 | SimCSE-VN truy hồi kém, hybrid không thắng BM25 | Cao | Kết quả âm vẫn hợp lệ: phân tích theo mức trùng từ vựng (E2) và lỗi (E5); đóng góp vẫn gồm trích dẫn, phiên bản, cảnh báo được đánh giá; cân nhắc O1 |
 | License D1 không rõ hoặc repo ViRE bị gỡ | Trung bình | Link nộp là permalink theo commit (không đổi được nội dung); lưu bản sao riêng để chạy lại; dự phòng EduCoQA; D2 vẫn là dataset mới của nhóm |
-| Bản chép QĐ 3087/2026 (ChatGPT chép từ scan) khác bản gốc | Trung bình | Đã làm sạch 158 lỗi OCR có kiểm chứng: mọi con số có trong OCR, độ giống từng Điều trung bình 0,74 so với mức nền 0,15. Hai đoạn điểm thấp (Điều 6–7: 0,40; Điều 26: 0,35) đã đọc tay ngày 24/11: đủ Khoản, nội dung khớp, điểm thấp do OCR mất dấu. Script và kết quả chạy lại ở `data/raw/d2/verification/`. Trích dẫn quan trọng đối chiếu bản scan. Ứng dụng ghi "bản chép từ bản scan" |
-| Không được công bố lại bản chép quy chế 2026 (Q7) | Trung bình | Link D2 chỉ gồm câu hỏi, nhãn và metadata văn bản; corpus 2026 dẫn về nguồn chính thức khi trường đăng. QĐ 1175 vẫn công khai |
+| Bản chép QĐ 3087/2026 (ChatGPT chép từ scan) khác bản gốc | Trung bình | Đã làm sạch 158 lỗi OCR có kiểm chứng: mọi con số có trong OCR, độ giống từng Điều trung bình 0,74 so với mức nền 0,15. Hai đoạn điểm thấp (Điều 6–7: 0,40; Điều 26: 0,35) đã đọc tay ngày 24/11: đủ Khoản, nội dung khớp, điểm thấp do OCR mất dấu. Vẫn còn lỗi OCR sót ngoài 158 chỗ đã sửa (vd. "đơn vi", "cau thành" ở Điều 3, phát hiện 24/11), cần một lượt rà toàn văn. Script và kết quả chạy lại ở `data/raw/d2/verification/`. Trích dẫn quan trọng đối chiếu bản scan. Ứng dụng ghi "bản chép từ bản scan" |
+| Không được công bố lại bản chép quy chế 2026 (Q7) | Trung bình | Mặc định không đăng công khai (D-18): link D2 công khai gồm câu hỏi, nhãn, metadata và chữ QĐ 1175; bản chép QĐ 3087 chỉ nộp trong `[Group14].zip` để giảng viên chạy lại được. Khi trường đăng bản chính thức thì trỏ về đó |
 | Corpus D2 nhỏ (51 Điều, 26 chủ đề) làm Hit@3 cao với mọi phương pháp | Trung bình | Báo cả mức theo Điều (chặt) và theo chủ đề, kèm Clause@1 và mức ngẫu nhiên (§6.3); trong báo cáo nêu rõ quy mô corpus và việc mức chủ đề dễ hơn mức Điều |
-| Câu D2 do nhóm viết thiên lệch: quy tắc hạn chế chép từ văn bản làm câu ít trùng từ, bất lợi cho BM25 | Trung bình | Nêu rõ trong báo cáo; báo E2 theo mức trùng từ cả trên D2; nếu có câu từ Google Form (`origin: form`) thì báo riêng nhóm này |
+| Câu D2 do nhóm viết thiên lệch: người viết đã đọc văn bản nên câu có thể ít trùng từ hơn câu hỏi thật, bất lợi cho BM25 | Trung bình | Viết kiểu gập sách (D-18); nêu rõ trong báo cáo; báo E2 theo mức trùng từ cả trên D2; nếu có câu từ Google Form (`origin: form`) thì báo riêng nhóm này |
 | Regex tách Điều/Khoản sai do định dạng khác nhau | Trung bình | Test trên cả ba nguồn: QĐ 1175 (chữ trích từ PDF bằng pdftotext), QĐ 3087 (Markdown) và D1. Kiểm tra số Điều: 24 và 27 |
 | Nhãn D2 không nhất quán | Trung bình | Kiểm tra chéo, ghi tỉ lệ đồng ý, có log bất đồng |
 | Tách từ không nhất quán giữa index và query | Trung bình | Một hàm `preprocess` dùng chung + unit test |
@@ -637,11 +637,12 @@ Tính từ 23/11, còn 18 ngày đến 11/12/2026. Phase 3 xong trước **06/12
 | D-10 | FAISS `IndexFlatIP`, fallback numpy | Chốt |
 | D-11 | Fine-tuning (O1) chỉ sau MVP; không nhắm bonus | Chốt |
 | D-12 | Môi trường tái hiện: venv Python 3.11 + `experiments/reproduction/requirements-r1.txt` (numpy 1.23.5, scipy 1.10.1, scikit-learn 1.2.2, torch 2.5.1 CPU, transformers 4.46.3); chạy qua `experiments/reproduction/run_r1.py` | Chốt |
-| D-13 | Dataset nộp bằng link: D1 = permalink ViRE @ `60ea715`; D2 = Google Drive public | Chốt (giảng viên cho phép); nội dung link D2 tùy Q7 |
+| D-13 | Dataset nộp bằng link: D1 = permalink ViRE @ `60ea715`; D2 = Google Drive public | Chốt (giảng viên cho phép); nội dung link D2 theo D-18 |
 | D-14 | Phân công theo `docs/PLAN.md`; PROJECT.md chỉ giữ lịch và phụ thuộc | Chốt (23/11) |
 | D-15 | Cấu trúc code theo repo `UniSearch-SimCSE` (package `simcse_lab`, thư mục `experiments/`) | Chốt (23/11) |
 | D-16 | Bỏ D2. Chỉ đánh giá trên D1; corpus của ứng dụng là 297 đoạn quy chế ĐH CNTT trong D1, không dùng quy chế trường khác. Ứng dụng hiển thị số và tên Điều, không hiển thị văn bản gốc hay phiên bản vì D1 không có thông tin này. Không đo cảnh báo với câu ngoài phạm vi | Bị thay bởi D-17 (23/11). Các phần vẫn còn hiệu lực: D1 không có metadata văn bản/phiên bản; D1 chia theo nhóm đoạn, nhóm câu 9542 ghim vào dev; cột `split` gốc của D1 bị rò rỉ |
-| D-17 | Khôi phục D2. Corpus của ứng dụng và của D2 là quy chế đào tạo HCMUS: QĐ 1175/QĐ-KHTN (2021, 24 Điều, nguyên văn) và QĐ 3087/QĐ-KHTN (29/9/2026, 27 Điều, bản ChatGPT chép từ scan, nhóm làm sạch). Giữ cả hai phiên bản vì Điều 27 quy chế 2026 ghi: với các khóa tuyển sinh từ năm 2025 trở về trước, Trường lựa chọn áp dụng quy định mới có lợi hơn cho người học. Không dùng bản trích lược trong Sổ tay. D1 giữ vai trò đánh giá trên corpus riêng. Toàn văn để ngoài Git cho tới khi rõ Q7 | Chốt (23/11, Huy) |
+| D-17 | Khôi phục D2. Corpus của ứng dụng và của D2 là quy chế đào tạo HCMUS: QĐ 1175/QĐ-KHTN (2021, 24 Điều, nguyên văn) và QĐ 3087/QĐ-KHTN (29/9/2026, 27 Điều, bản ChatGPT chép từ scan, nhóm làm sạch). Giữ cả hai phiên bản vì Điều 27 quy chế 2026 ghi: với các khóa tuyển sinh từ năm 2025 trở về trước, Trường lựa chọn áp dụng quy định mới có lợi hơn cho người học. Không dùng bản trích lược trong Sổ tay. D1 giữ vai trò đánh giá trên corpus riêng. Toàn văn để ngoài Git cho tới khi rõ Q7 | Chốt (23/11, Huy); phần toàn văn, hiển thị và cách viết câu được cụ thể hóa ở D-18 |
+| D-18 | Chốt bốn điểm còn mở của D-17 và thứ tự hiển thị. (1) Duyệt `data/d2/article_map.tsv` sau khi đối chiếu nội dung; giữ T02/T09/T16. (2) Câu D2 viết kiểu gập sách, được dùng thuật ngữ thông dụng, không chép nguyên câu hay mệnh đề; bỏ quy tắc "không chép quá 3 từ liên tiếp". (3) Chữ QĐ 1175 (văn bản công khai) đưa vào Git ở `data/d2/`, giữ nguyên byte (`.gitattributes`) để sha256 khớp. (4) Bản chép QĐ 3087 không đăng công khai cho tới khi trường đăng bản chính thức hoặc Phòng Đào tạo đồng ý; nộp kèm trong `[Group14].zip`. (5) Trong mỗi kết quả, bản 2026 hiển thị trước, bản 2021 là phụ | Chốt (24/11; Huy chọn ưu tiên bản 2026 và giao Claude quyết bốn điểm còn lại) |
 
 **Vấn đề còn mở**
 
@@ -649,7 +650,7 @@ Tính từ 23/11, còn 18 ngày đến 11/12/2026. Phase 3 xong trước **06/12
 |---|---|---|
 | Q5 | pyvi và faiss-cpu có cài được trên môi trường của nhóm không? | Minh (trước 25/11) |
 | Q6 | Ý nghĩa cột `label` trong D1 | Minh (không chặn tiến độ) |
-| Q7 | Có được công bố lại bản chép QĐ 3087/2026 (từ bản scan chưa thấy đăng công khai) trong repo và link D2 không? Hệ quả cho việc chạy lại từ clone sạch: QĐ 1175 tải bằng script từ URL công khai và kiểm sha256 (bản chữ phải trích bằng pdftotext 4.00 như ghi trong `documents.yaml` và kiểm `text_sha256`, vì bản pdftotext khác có thể ngắt dòng khác); QĐ 3087 lấy từ link nộp bài nếu Q7 cho phép, nếu không thì phần D2 chỉ chạy lại được trên máy có `data/raw/d2/` | Huy (trước Phase 4) |
+| Q7 | Phòng Đào tạo có đồng ý cho đăng công khai bản chép QĐ 3087/2026 không? Không còn chặn tiến độ: mặc định theo D-18 (không đăng công khai, nộp trong zip; chữ QĐ 1175 đã có trong Git). Nếu được đồng ý hoặc trường đăng bản chính thức thì thêm vào link D2 | Huy (khi có dịp, không chặn) |
 
 Đã giải quyết (23/11): không xét bonus; Group ID = 14; deadline 23:59 ngày 11/12/2026; dataset được nộp bằng link; không cần xin phép giảng viên để dùng dataset; Q2 (chọn văn bản quy chế của trường) đóng: QĐ 1175/2021 và QĐ 3087/2026 (D-17).
 
@@ -686,7 +687,7 @@ Tính từ 23/11, còn 18 ngày đến 11/12/2026. Phase 3 xong trước **06/12
 **Nộp bài** (trước 23:59 ngày 11/12/2026, mục tiêu trước 20:00)
 - `[Group14].zip` gồm code hoặc link GitHub, video, PDF.
 - Link dataset (D1 permalink ViRE, D2 Google Drive) và link code đã kiểm tra ở chế độ ẩn danh.
-- D2 public trên Google Drive (giữ ≥ 2 năm); nội dung theo Q7.
+- D2 public trên Google Drive (giữ ≥ 2 năm), nội dung theo D-18; `[Group14].zip` có kèm bản chép QĐ 3087.
 
 ### 8.5 References
 

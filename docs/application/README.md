@@ -20,7 +20,7 @@ Phân công chi tiết: [docs/PLAN.md](../PLAN.md).
 Sinh viên hỏi bằng lời thường, còn quy chế viết bằng thuật ngữ. Ví dụ thật trong bộ dữ liệu công khai ViRHE4QA (theo nội dung là quy chế ĐH CNTT; câu index 9542): *"Việc làm KLTN có thể bị dừng giữa chừng không?"*. Câu trả lời nằm ở Điều 6 "Báo cáo tiến độ thực hiện KLTN", và Điều này dùng chữ "đình chỉ", không có cụm "dừng giữa chừng". Ctrl+F hoặc tìm kiếm từ khóa chỉ khớp đúng từ, nên dễ bỏ sót. Chatbot sinh câu trả lời thì có thể "bịa" và không chỉ ra căn cứ.
 
 **Mục tiêu:** trả về 3 Điều/Khoản liên quan nhất, kèm trích đoạn, tên văn bản, số hiệu, ngày ban hành và phạm vi áp dụng.
-- Corpus gồm hai phiên bản Quy chế đào tạo: QĐ 1175/2021 và QĐ 3087/2026. Điều 27 của quy chế 2026 ghi: quy chế áp dụng cho các khóa tuyển từ năm học 2026–2027; đối với các khóa tuyển sinh từ năm 2025 trở về trước, Trường lựa chọn áp dụng quy định mới có lợi hơn cho người học. Vì vậy ứng dụng giữ cả hai bản và ghi rõ phạm vi áp dụng.
+- Corpus gồm hai phiên bản Quy chế đào tạo: QĐ 1175/2021 và QĐ 3087/2026. Điều 27 của quy chế 2026 ghi: quy chế áp dụng cho các khóa tuyển từ năm học 2026–2027; đối với các khóa tuyển sinh từ năm 2025 trở về trước, Trường lựa chọn áp dụng quy định mới có lợi hơn cho người học. Vì vậy ứng dụng giữ cả hai bản và ghi rõ phạm vi áp dụng; trong mỗi kết quả, bản 2026 hiển thị trước vì là bản mới nhất.
 - Bản 2026 là bản ChatGPT chép từ bản scan và nhóm làm sạch lỗi OCR, không phải nguyên văn; ứng dụng ghi rõ điều này khi hiển thị.
 - Khi độ tin cậy thấp, ứng dụng cảnh báo để người dùng tự đối chiếu.
 - Hiệu quả được chứng minh bằng số liệu so với tìm kiếm từ khóa.
@@ -79,7 +79,7 @@ python -m venv .venv
 .\.venv\Scripts\python.exe apps\app.py                       # chạy ứng dụng demo
 ```
 
-Corpus của ứng dụng cần toàn văn hai quy chế trong `data/raw/d2/`. Thư mục này **không có trong Git** cho tới khi rõ quyền công bố bản chép 2026 (Q7); xem [data/d2/](../../data/d2/README.md).
+Chữ QĐ 1175 có trong Git (`data/d2/`). Bản chép QĐ 3087 **không có trong Git** vì chưa được phép đăng công khai (D-18); muốn chạy corpus HCMUS đầy đủ, đặt file này vào `data/raw/d2/`. Xem [data/d2/](../../data/d2/README.md).
 
 ## Dữ liệu
 

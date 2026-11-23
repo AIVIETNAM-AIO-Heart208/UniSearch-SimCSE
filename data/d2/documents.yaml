@@ -1,6 +1,6 @@
 # D2 corpus: undergraduate training regulations of the University of Science (HCMUS), VNU-HCM.
-# Decision D-17 (docs/application/PROJECT.md §8.3). Full texts are kept in data/raw/d2/ (git-ignored)
-# until the right to publish them is confirmed (PROJECT.md §8.3, Q7).
+# Decisions D-17 and D-18 (docs/application/PROJECT.md §8.3). The 2021 text is public and tracked in data/d2/;
+# the 2021 PDF and the 2026 transcription stay in data/raw/d2/ (git-ignored; Q7).
 # Only the regulation articles go into the corpus. The 2026 file also contains the signing decision
 # (Quyết định 3087, three articles); those are not indexed, so article numbers are never ambiguous.
 # The 2021 PDF contains the regulation only, without its signing decision.
@@ -22,7 +22,7 @@ documents:
     source_url: https://www.ctda.hcmus.edu.vn/wp-content/uploads/2023/03/Quy-che-dao-tao-2021.pdf
     file: data/raw/d2/Quy_che_dao_tao_2021_QD1175.pdf
     sha256: 951eb00d75e0517040291d2e07a6b33f2650bb861fbd313977000943448626dd
-    text_file: data/raw/d2/Quy_che_dao_tao_2021_QD1175.txt
+    text_file: data/d2/Quy_che_dao_tao_2021_QD1175.txt
     text_sha256: cf2e60f03571ed669a4afd4283890e426a46f0c7e14e097be59db670b7661def
     text_method: >-
       pdftotext -enc UTF-8 -layout, pdftotext 4.00 (Xpdf, Glyph & Cog; kèm Git for Windows). PDF 18 trang có lớp chữ,
@@ -63,4 +63,4 @@ documents:
       nội dung khớp (OCR cắt mất cuối Khoản 2 Điều 26); điểm thấp do OCR mất dấu nặng và đọc tiêu đề "Điều 7" thành "Di6u l". Số Thông báo 1396/TB-KHTN và dòng căn cứ
       2933/QĐ-TTg do Huy đối chiếu với bản scan ngày 23/11/2026. Đầu vào, script và kết quả chạy lại:
       data/raw/d2/verification/ (README.md, outputs_2026-11-23.txt).
-    cong_khai: unknown  # Q7: chưa rõ có được công bố lại bản chép này hay không
+    cong_khai: unknown  # Q7 chưa có câu trả lời; theo D-18 không đăng công khai, chỉ nộp trong zip bài nộp

@@ -1,0 +1,2 @@
+# Keep regulation texts byte-exact so their sha256 in data/d2/documents.yaml matches on every OS
+data/d2/*.txt -text
