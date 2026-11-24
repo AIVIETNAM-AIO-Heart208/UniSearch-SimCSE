@@ -1,0 +1,104 @@
+{
+    "split":  "dev",
+    "smoke":  false,
+    "queries":  224,
+    "contexts":  297,
+    "chunks":  955,
+    "scale":  "0-1",
+    "metrics":  {
+                    "hit_at_1":  0.4642857142857143,
+                    "hit_at_3":  0.65625,
+                    "mrr_at_10":  0.5828355300453515
+                },
+    "example":  {
+                    "qid":  "1034",
+                    "rank":  1,
+                    "gold_article_id":  "0dd234e0c49cdef2a996f3633eed3630435d29f329d626690648cf3435ae926e",
+                    "chunk_id":  "0dd234e0c49cdef2a996f3633eed3630435d29f329d626690648cf3435ae926e:0001",
+                    "article":  21,
+                    "clause":  1,
+                    "char_start":  96,
+                    "char_end":  424
+                },
+    "dataset":  {
+                    "source":  "https://github.com/longstnguyen/ViRE/blob/60ea7155134eaa426ab1d0a82d2bbbf327d1b470/data/ViRHE4QA_v2.csv",
+                    "sha256":  "23fb969985150599d3ad0b5229d039b8541ed335fbc29dcfa0b0d733ccaa5682",
+                    "seed":  42,
+                    "input_rows":  1000,
+                    "contexts":  297,
+                    "duplicates_removed":  17,
+                    "duplicate_indices":  [
+                                              "1147",
+                                              "1242",
+                                              "129",
+                                              "1409",
+                                              "1472",
+                                              "1655",
+                                              "1802",
+                                              "2306",
+                                              "2783",
+                                              "288",
+                                              "3923",
+                                              "4192",
+                                              "5142",
+                                              "580",
+                                              "5850",
+                                              "6586",
+                                              "8084"
+                                          ],
+                    "forced_dev_qids":  [
+                                            "9512",
+                                            "9538",
+                                            "9539",
+                                            "9542"
+                                        ],
+                    "dev":  {
+                                "queries":  224,
+                                "gold_contexts":  59
+                            },
+                    "test":  {
+                                 "queries":  759,
+                                 "gold_contexts":  238
+                             }
+                },
+    "model":  "VoVanPhuc/sup-SimCSE-VietNamese-phobert-base",
+    "revision":  "608779b86741a8acd8c8d38132974ff04086b138",
+    "model_sha256":  "2559811f500b42fa23b8fe313d94a9503299aff1f0e0f58fdd4824571cb4423c",
+    "config":  {
+                   "max_length":  256,
+                   "overlap_words":  24,
+                   "pooling":  "pooler_output",
+                   "device":  "cpu",
+                   "batch_size":  16,
+                   "threads":  4,
+                   "search":  "NumPy cosine, MaxP, top 20"
+               },
+    "environment":  {
+                        "platform":  "Windows-11-10.0.26100-SP0",
+                        "python":  "3.13.9",
+                        "packages":  {
+                                         "torch":  "2.14.1+cu126",
+                                         "transformers":  "5.15.1",
+                                         "numpy":  "2.5.5",
+                                         "pyvi":  "0.1.1",
+                                         "scikit-learn":  "1.9.1",
+                                         "sklearn-crfsuite":  "0.5.0"
+                                     }
+                    },
+    "base_commit":  "ece5a53c72187c80394886cc81f36ca93b743272",
+    "command":  "C:\\Users\\nakro\\AppData\\Local\\Programs\\Python\\Python313\\python.exe experiments/external_dataset/run_dense_dev.py --model-path outputs/d1-model --output experiments/external_dataset/results/D1-dev",
+    "snapshot_sha256":  {
+                            "model.safetensors":  "2559811f500b42fa23b8fe313d94a9503299aff1f0e0f58fdd4824571cb4423c",
+                            "config.json":  "4bc82a39c36f328f3fbcbfd83c26d00621b396ac7e9ff1a38cfa7c70d88fa608",
+                            "vocab.txt":  "dffd7543c401fb6567253ae7c3313004532c33d062525250049c616544bad777",
+                            "bpe.codes":  "9dfe53fb8abbddd3387da99641c36e00bee757a3679aad9cf0a7cdc4b30f6ef8",
+                            "tokenizer_config.json":  "f80601760ebdd7737e988a60bb3c14bca12a6786c06e84c99bd2f3329ad80fa0",
+                            "special_tokens_map.json":  "7638f5bbbe86ef6d604ef28ad3647dc690d6d117c81c0d63e885416be8da1150",
+                            "added_tokens.json":  "895678a80ea84920b4240c0616a1b0b086368c7ca3cbacb80996a2b30b4f2b67"
+                        },
+    "verification":  {
+                         "command":  "C:\\Users\\nakro\\AppData\\Local\\Programs\\Python\\Python313\\python.exe experiments/external_dataset/run_dense_dev.py --model-path outputs/d1-model --output outputs/d1-verified",
+                         "ranking_matches_byte_for_byte":  true,
+                         "ranking_sha256":  "092bcb227fc7447db08312388470a6693d83b4090c55d49eeb42b245ba85ad2f"
+                     }
+}

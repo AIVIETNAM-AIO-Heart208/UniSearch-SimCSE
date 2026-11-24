@@ -42,7 +42,7 @@ Kết quả lấy từ tài liệu bên ngoài **không phải** kết quả c�
 
 Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của lần chạy R1–R3; xóa được khi không cần nữa.
 
-**Giai đoạn hiện tại:** Phase 1 đã hoàn tất và hai thành viên đã đọc chéo theo [docs/PLAN.md](../PLAN.md). Phase 2 đã xong R1–R4 và còn phần đánh giá trên D1. Phần thống kê của Phase 3 đã kiểm thử bằng dữ liệu giả, đang chờ xếp hạng D1 để đánh giá thực nghiệm.
+**Giai đoạn hiện tại:** Phase 1 đã hoàn tất và hai thành viên đã đọc chéo theo [docs/PLAN.md](../PLAN.md). Phase 2 đã có R1–R4, split ViRHE4QA và xếp hạng SimCSE-VN trên D1-dev. Xếp hạng dev dùng cho so sánh và chọn cấu hình ở Phase 3.
 
 **Đã hoàn thành**
 
@@ -85,8 +85,7 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
 **Việc ưu tiên tiếp theo**
 
 1. **Cả hai:** viết câu hỏi D2 ngay, song song với Phase 2 (quy tắc ở [§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)), để kịp chốt nhãn trước 02/12.
-2. **Minh:** chuẩn bị D1 (`data/prepare_virhe4qa.py`, group split) và chạy SimCSE-VN dense trên D1. Khi chia, nhóm đoạn của câu index 9542 phải vào D1-dev ([§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)).
-3. Khi có xếp hạng D1-dev, kiểm tra bảng so sánh và ngưỡng cảnh báo trước khi mở tập test.
+2. Dùng [xếp hạng dense trên D1-dev](../../experiments/external_dataset/results/D1-dev/runs/dense.jsonl) để chuẩn bị so sánh và chọn ngưỡng cảnh báo trước khi mở tập test.
 
 ---
 
@@ -463,7 +462,7 @@ Môi trường cho ứng dụng dùng venv riêng (`.venv`, cài bằng `pip ins
 
 **D1**
 
-- Corpus là 297 context, mỗi context một `article_id`. Queries là cả 1.000 câu hỏi.
+- Corpus là 297 context, mỗi context một `article_id`. Trong 1.000 dòng nguồn, có 17 dòng câu hỏi trùng nguyên văn. Sau khi loại trùng, D1-dev có 224 câu thuộc 59 context và D1-test có 759 câu thuộc 238 context.
 - **Group split theo context** (seed 42): dev khoảng 20% context, test khoảng 80%. Câu hỏi về cùng một Điều không nằm ở cả dev và test.
 - **Bắt buộc:** nhóm context "Điều 6. Báo cáo tiến độ thực hiện KLTN" (4 câu hỏi, gồm câu index 9542) phải vào **dev**, vì câu 9542 đã dùng làm ví dụ lexical gap trong Introduction của báo cáo. Gán nhóm này trước, rồi chia ngẫu nhiên phần còn lại.
 - Corpus vẫn chứa **toàn bộ** 297 context, vì đây là kho tri thức chứ không phải nhãn.
@@ -560,6 +559,7 @@ Chỉ điền khi đã có file kết quả.
 | R3 | [x] 23/11 | TB 56,70 = paper. Từng task: 39,70 / 59,37 / 49,67 / 66,03 / 66,19 / 53,88 / 62,06 → lệch ≤ 0,01 | `experiments/reproduction/results/R3/` |
 | R4 | [x] 24/11 | Chạy lại sau khi ổn định phép tính ở nhiệt độ thấp. 689/689 test đạt. Lệch tối đa ở float64 là 8,7e-15 so với vòng lặp Eq. 4/8 và 1,4e-9 so với `cl_forward`. Ở float32 lệch tối đa 9,5e-7 | [Kết quả, seed và cấu hình](../../experiments/reproduction/results/R4-2026-11-24/metrics.json) |
 | R4 | [x] 23/11 | 689/689 test pass. float64: lệch tối đa 8,4e-15 so với vòng lặp Eq. 4/8; so với `cl_forward` 6,0e-15 (w biểu diễn đúng trong float32) và 1,4e-9 (w = log 0,5, log 2; nguyên nhân: `cl_forward` dựng ma trận trọng số bằng float32, dựng bằng float64 thì còn 7,1e-15). Gradient khớp < 1e-6 trên một batch (N=8, d=32, τ=0,05, w ∈ {0, log 2}). float32: 3,7e-6, ngưỡng riêng 5e-5 | `experiments/reproduction/results/R4/`, `tests/test_infonce.py` |
+| Dense D1-dev (Phase 2) | [x] | 224 câu, Hit@1 46,43%, Hit@3 65,63%, MRR@10 58,28% | [Kết quả và cấu hình](../../experiments/external_dataset/results/D1-dev/metrics.json) |
 | E0 | [ ] | — | `experiments/external_dataset/results/E0/` |
 | E1 | [ ] | — | `experiments/external_dataset/results/E1/` |
 | E2 | [ ] | — | `experiments/application/results/E2/` |
@@ -586,7 +586,7 @@ Tính từ 23/11, còn 18 ngày đến 11/12/2026. Phase 3 xong trước **06/12
 | Phase (PLAN.md) | Hạn | Đầu ra chính | Phụ thuộc |
 |---|---|---|---|
 | 1 – Nghiên cứu paper | 27/11 | Hai phần viết đã đọc chéo. Huy: bài toán và phương pháp; Minh: dữ liệu, baseline, metric, kết quả, hạn chế | — |
-| 2 – Triển khai và tái hiện | 30/11 | **Huy:** R1 ✓ (thêm R2, R3 ✓), R4 InfoNCE + test ✓, giải thích luồng code. **Minh:** D1 + group split; SimCSE-VN dense trên D1-dev (Hit@1/3, MRR@10, top-20). Bảng D1-test thuộc E1 sau khi chốt cấu hình | D1 có sẵn |
+| 2 – Triển khai và tái hiện | 30/11 | **Huy:** R1 ✓ (thêm R2, R3 ✓), R4 InfoNCE + test ✓, giải thích luồng code. **Minh:** D1 + group split ✓, SimCSE-VN dense trên D1-dev ✓ (Hit@1/3, MRR@10, top-20). Bảng D1-test thuộc E1 sau khi chốt cấu hình | D1 có sẵn |
 | 3 – Xây dựng ứng dụng | 06/12 | **Minh:** corpus HCMUS từ `data/d2/` (tách Điều/Khoản, metadata), BM25 + Hybrid, Gradio, latency. **Huy:** bảng so sánh + CI, chọn λ/θ trên D1-dev, so sánh trên D1-test và D2 (chung và theo mức trùng từ), phân tích lỗi. **Cả hai:** D2 chốt nhãn trước 02/12 | Phase 2. Riêng việc viết câu D2 không phụ thuộc Phase 2: bắt đầu ngay (bảng đối ứng đã duyệt 24/11) |
 | 4 – Hoàn thiện và nộp | 10/12; nộp 11/12 | **Huy:** PDF IEEE, chạy lại từ clone sạch. **Minh:** README, video, `[Group14].zip`, kiểm tra link | Phase 3 |
 | Tùy chọn O1–O5 | dừng 08/12 | Chỉ làm nếu Phase 3 xong trước 06/12 | Phase 3 |

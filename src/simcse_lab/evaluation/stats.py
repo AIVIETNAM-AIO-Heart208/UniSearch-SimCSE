@@ -69,13 +69,18 @@ def _levels(queries: Mapping[Identifier, Row], topics: Topics | None) -> tuple[s
     return ("article", "topic")
 
 
-def _rr_at_10(ranked: Iterable[Identifier], gold: set[Identifier]) -> float:
+def first_relevant_rank(ranked: Iterable[Identifier], gold: set[Identifier], limit: int):
     for rank, item in enumerate(ranked, start=1):
-        if rank > 10:
+        if rank > limit:
             break
         if item in gold:
-            return 1.0 / rank
-    return 0.0
+            return rank
+    return None
+
+
+def _rr_at_10(ranked: Iterable[Identifier], gold: set[Identifier]) -> float:
+    rank = first_relevant_rank(ranked, gold, 10)
+    return 1.0 / rank if rank is not None else 0.0
 
 
 def _ranked_articles(row: Row, topics: Topics | None) -> list[Identifier]:

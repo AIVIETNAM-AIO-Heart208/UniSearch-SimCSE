@@ -25,10 +25,10 @@
 - [x] **Huy** — Giải thích luồng nạp dữ liệu, huấn luyện và suy luận. Tự cài InfoNCE, kiểm thử cả trường hợp có hard negative. *Xong 23/11:*
   - *Phần giải thích luồng code mới là bản nháp, ở §Execution Flow của `docs/report/sections/method.tex`.*
   - *InfoNCE (R4): 689 test pass, ở float64 lệch ≤ 1,4e-9 so với `cl_forward`. Xem [experiments/reproduction/](../experiments/reproduction/README.md).*
-- [ ] **Minh** — Chuẩn bị ViRHE4QA (D1): xuất corpus, câu hỏi và mã đoạn đúng. Chia **câu hỏi** theo nhóm đoạn nguồn để cùng một đoạn không xuất hiện làm đáp án ở cả dev và test. Giữ chung corpus tra cứu.
+- [x] **Minh** — Chuẩn bị ViRHE4QA (D1): xuất corpus, câu hỏi và mã đoạn đúng. Chia **câu hỏi** theo nhóm đoạn nguồn để cùng một đoạn không xuất hiện làm đáp án ở cả dev và test. Giữ chung corpus tra cứu. *Đã xác minh 224 câu dev, 759 câu test và 297 context sau khi bỏ 17 dòng trùng.* [Thống kê split](../experiments/external_dataset/results/D1-dev/metrics.json)
   - Không dùng cột `split` gốc: cách chia này bị rò rỉ, cùng một đoạn có câu hỏi ở cả train và test.
   - **Bắt buộc:** nhóm đoạn "Điều 6. Báo cáo tiến độ thực hiện KLTN" (chứa câu index 9542, 4 câu hỏi) phải vào D1-dev, vì câu 9542 đã dùng làm ví dụ trong Introduction.
-- [ ] **Minh** — Mã hóa câu hỏi và các đoạn bằng SimCSE-VN, xếp hạng theo cosine và gộp về mã Điều/đoạn nguồn. Kiểm tra Hit@1, Hit@3, MRR@10 bằng ví dụ tính tay. Lưu lệnh chạy, top 20 theo từng câu và bảng điểm D1-dev. Bảng D1-test làm ở E1 sau khi chốt tiền xử lý, λ và θ.
+- [x] **Minh** — Mã hóa câu hỏi và các đoạn bằng SimCSE-VN, xếp hạng theo cosine và gộp về mã Điều/đoạn nguồn. Kiểm tra Hit@1, Hit@3, MRR@10 bằng ví dụ tính tay. Đã lưu lệnh chạy, top 20 theo từng câu và bảng điểm D1-dev. Bảng D1-test làm ở E1 sau khi chốt tiền xử lý, λ và θ. [Hướng dẫn và kết quả](../experiments/external_dataset/README.md)
 
 ## Phase 3 – Xây dựng ứng dụng
 
