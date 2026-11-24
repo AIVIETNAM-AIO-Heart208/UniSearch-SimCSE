@@ -41,9 +41,17 @@ def _unit_rows(values: Tensor) -> Tensor:
     return values / norms
 
 
-def _cosine_logits(a: Tensor, b: Tensor, temperature: float) -> Tensor:
-    """Return the (len(a), len(b)) matrix of cos(a_i, b_j) / temperature."""
-    return _unit_rows(a) @ _unit_rows(b).T / temperature
+def _cosines(a: Tensor, b: Tensor) -> Tensor:
+    return _unit_rows(a) @ _unit_rows(b).T
+
+
+def _loss_rows(cosines: Tensor, temperature: float, hard_negative_weight: float = 0.0) -> Tensor:
+    # Shift before scaling so tied candidates retain their multiplicity and
+    # a small log-weight survives a large common offset at low temperature.
+    logits = (cosines - cosines.amax(dim=1, keepdim=True).detach()) / temperature
+    if hard_negative_weight:
+        logits[:, cosines.size(0):].diagonal().add_(hard_negative_weight)
+    return -torch.log_softmax(logits, dim=1).diagonal()
 
 
 def infonce_loss(
@@ -98,16 +106,8 @@ def infonce_loss(
         raise ValueError(f"reduction must be 'mean' or 'none'; got {reduction!r}")
 
     # Row i: logits of anchor i against every candidate; positives on the diagonal.
-    logits = _cosine_logits(z1, z2, temperature)  # (N, N)
-    positive = logits.diagonal()
-
+    cosines = _cosines(z1, z2)
     if z3 is not None:
-        hard = _cosine_logits(z1, z3, temperature)  # (N, N)
-        if hard_negative_weight != 0:
-            # alpha^{delta_ij}: only anchor i's own hard negative (j == i) is reweighted.
-            hard.diagonal().add_(hard_negative_weight)
-        logits = torch.cat([logits, hard], dim=1)  # (N, 2N)
-
-    # -log softmax at the positive, written out as logsumexp - positive.
-    losses = torch.logsumexp(logits, dim=1) - positive
+        cosines = torch.cat([cosines, _cosines(z1, z3)], dim=1)
+    losses = _loss_rows(cosines, temperature, hard_negative_weight)
     return (losses.mean() if reduction == "mean" else losses).to(z1.dtype)

@@ -1,5 +1,7 @@
 """Regression cases outside the original R4 benchmark grid."""
 
+import math
+
 import pytest
 import torch
 
@@ -24,6 +26,14 @@ def test_zero_half_precision_vectors_have_a_finite_loss():
     actual = infonce_loss(zeros, zeros)
     expected = cl_forward_loss(zeros.float(), zeros.float()).half()
     torch.testing.assert_close(actual, expected)
+
+
+@pytest.mark.parametrize("hard", [False, True])
+def test_ties_at_small_temperature_keep_the_partition_and_weight(hard):
+    z = torch.tensor([[1.0, 0.0], [1.0, 0.0]])
+    loss = infonce_loss(z, z, z if hard else None, temperature=1e-8,
+                        hard_negative_weight=math.log(2) if hard else 0, reduction="none")
+    torch.testing.assert_close(loss, torch.full((2,), math.log(5 if hard else 2)))
 
 
 @pytest.mark.parametrize("kwargs", [{"temperature": float("inf")}, {"hard_negative_weight": float("nan")}])

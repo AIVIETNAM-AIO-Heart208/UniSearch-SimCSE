@@ -41,6 +41,7 @@ HERE = Path(__file__).resolve().parent          # experiments/reproduction
 ROOT = HERE.parents[1]                          # repo root
 SIMCSE_DIR = HERE / "SimCSE"
 SIMCSE_COMMIT = "235f89e0244b23673b69fbbc4a1cd9868c5a5c24"
+EVALUATOR_SHA256 = "f020a0747c773b7f0c412c18a1e4fb237392d3da0321a3974ba665715469dd1a"
 SIMCSE_ZIP = f"https://github.com/princeton-nlp/SimCSE/archive/{SIMCSE_COMMIT}.zip"
 SENTEVAL_REVISION = "e145e8bb659b2aa2669f32ef79cb4cdef6c58fef"
 SENTEVAL_TAR = f"https://huggingface.co/datasets/princeton-nlp/datasets-for-simcse/resolve/{SENTEVAL_REVISION}/senteval.tar"
@@ -140,6 +141,18 @@ def simcse_commit() -> str:
     return marker.read_text().strip() if marker.exists() else "unknown"
 
 
+def verify_evaluator(directory: Path) -> None:
+    """Verify the same Python sources for Git and ZIP checkouts, allowing CRLF."""
+    files = [directory / "evaluation.py", *(directory / "SentEval/senteval").rglob("*.py")]
+    digest = hashlib.sha256()
+    for path in sorted(files, key=lambda p: p.relative_to(directory).as_posix()):
+        name = path.relative_to(directory).as_posix()
+        content = path.read_bytes().replace(b"\r\n", b"\n")
+        digest.update(name.encode() + b"\0" + hashlib.sha256(content).digest())
+    if digest.hexdigest() != EVALUATOR_SHA256:
+        raise RuntimeError("SimCSE evaluation source differs from the pinned commit")
+
+
 def ensure_simcse(status: Status):
     if (SIMCSE_DIR / "evaluation.py").exists():
         status(f"SimCSE code present at {SIMCSE_DIR} (commit {simcse_commit()})")
@@ -152,15 +165,14 @@ def ensure_simcse(status: Status):
             with zipfile.ZipFile(zpath) as archive:
                 archive.extractall(tmp)
             source = Path(tmp) / f"SimCSE-{SIMCSE_COMMIT}"
+            verify_evaluator(source)
             (source / "COMMIT").write_text(SIMCSE_COMMIT + "\n")
             if not (SIMCSE_DIR / "evaluation.py").exists():
                 source.rename(SIMCSE_DIR)
     commit = simcse_commit()
     if commit != SIMCSE_COMMIT:
         raise RuntimeError(f"SimCSE commit is {commit}, expected {SIMCSE_COMMIT}")
-    if (SIMCSE_DIR / ".git").exists():
-        subprocess.run(["git", "-c", "core.filemode=false", "diff", "--quiet", "HEAD", "--",
-                        "evaluation.py", "SentEval/senteval"], cwd=SIMCSE_DIR, check=True)
+    verify_evaluator(SIMCSE_DIR)
     return commit
 
 
@@ -260,6 +272,9 @@ def parse_sts_table(log_text: str):
                     scores = list(map(float, vals))
                     if len(scores) != len(header) or not all(math.isfinite(v) and abs(v) <= 100 for v in scores):
                         raise ValueError("Invalid STS scores")
+                    # evaluation.py averages the seven displayed (already rounded) scores.
+                    if scores[-1] != round(sum(scores[:-1]) / len(TASKS), 2):
+                        raise ValueError("STS average differs from the seven task scores")
                     return dict(zip(header, scores))
     raise RuntimeError("Could not find the STS result table in the evaluation log")
 

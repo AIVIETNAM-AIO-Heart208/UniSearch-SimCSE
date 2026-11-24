@@ -1,0 +1,108 @@
+{
+  "experiment": "R4",
+  "description": "infonce_loss vs a naive loop over SimCSE Eq. 4 / Eq. 8 (alpha = 1 is Eq. 5) and vs the verbatim cl_forward loss block (SimCSE @235f89e)",
+  "acceptance": {
+    "atol_float64": 1e-06,
+    "atol_float32": 5e-05
+  },
+  "grid": {
+    "batch_sizes": [
+      1,
+      2,
+      8,
+      32
+    ],
+    "large_batch_sizes_cl_forward_only": [
+      128,
+      512
+    ],
+    "dims": [
+      16,
+      768
+    ],
+    "temperatures": [
+      0.01,
+      0.05,
+      0.1,
+      1.0
+    ],
+    "hard_negative_weights_log_alpha": [
+      0.0,
+      1.0,
+      -0.5,
+      -0.6931471805599453,
+      0.6931471805599453
+    ],
+    "inputs": "z1 ~ N(0, I); z2 = z1 + 0.8 * N(0, I); z3 = z1 + 1.0 * N(0, I)"
+  },
+  "seed": 0,
+  "results": {
+    "naive_loop_float64": {
+      "unsup": {
+        "max_abs_diff": 1.1102230246251565e-16,
+        "worst_case": "unsup-N2-d768-tau1.0-w0",
+        "n_cases": 32
+      },
+      "sup_w_exact_in_fp32": {
+        "max_abs_diff": 8.659739592076221e-15,
+        "worst_case": "sup-N1-d16-tau0.01-w1",
+        "n_cases": 96
+      },
+      "sup_w_log_half_or_log_two": {
+        "max_abs_diff": 7.105427357601002e-15,
+        "worst_case": "sup-N2-d16-tau0.01-w-0.693",
+        "n_cases": 64
+      }
+    },
+    "cl_forward_float64": {
+      "unsup": {
+        "max_abs_diff": 1.7763568394002505e-15,
+        "worst_case": "unsup-N512-d16-tau1.0-w0",
+        "n_cases": 48
+      },
+      "sup_w_exact_in_fp32": {
+        "max_abs_diff": 3.552713678800501e-15,
+        "worst_case": "sup-N2-d16-tau0.01-w0",
+        "n_cases": 144
+      },
+      "sup_w_log_half_or_log_two": {
+        "max_abs_diff": 1.3537706511357328e-09,
+        "worst_case": "sup-N2-d16-tau0.1-w0.693",
+        "n_cases": 96
+      }
+    },
+    "cl_forward_float32": {
+      "unsup": {
+        "max_abs_diff": 4.76837158203125e-07,
+        "worst_case": "unsup-N32-d16-tau1.0-w0",
+        "n_cases": 32
+      },
+      "sup_w_exact_in_fp32": {
+        "max_abs_diff": 9.5367431640625e-07,
+        "worst_case": "sup-N1-d16-tau0.05-w1",
+        "n_cases": 96
+      },
+      "sup_w_log_half_or_log_two": {
+        "max_abs_diff": 9.5367431640625e-07,
+        "worst_case": "sup-N32-d16-tau0.01-w0.693",
+        "n_cases": 64
+      }
+    }
+  },
+  "diagnostics": {
+    "cl_forward_float64_with_float64_weights_log_w": {
+      "max_abs_diff": 5.329070518200751e-15,
+      "worst_case": "sup-N2-d16-tau0.01-w-0.693",
+      "n_cases": 96
+    },
+    "float32_breakdown_unsup_cases": {
+      "max_abs_logit_gap": 3.0517578125e-05,
+      "max_abs_loss_head_gap_same_logits": 4.76837158203125e-07
+    }
+  },
+  "pytest": {
+    "returncode": 0,
+    "summary": "689 passed in 44.41s"
+  },
+  "measure_seconds": 46.9
+}

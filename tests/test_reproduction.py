@@ -56,6 +56,20 @@ def test_only_verified_data_is_installed(tmp_path, monkeypatch):
     assert target.read_bytes() == payload
 
 
+def test_contradictory_sts_average_is_rejected():
+    header = "| " + " | ".join(run_r1.TASKS + ["Avg."]) + " |"
+    with pytest.raises(ValueError, match="STS average"):
+        run_r1.parse_sts_table(header + "\n|" + "|".join(["0.00"] * 7 + ["81.58"]) + "|")
+
+
+def test_zip_checkout_marker_does_not_verify_modified_code(tmp_path, monkeypatch):
+    monkeypatch.setattr(run_r1, "SIMCSE_DIR", tmp_path)
+    (tmp_path / "COMMIT").write_text(run_r1.SIMCSE_COMMIT)
+    (tmp_path / "evaluation.py").write_text("# local edits\n")
+    with pytest.raises(RuntimeError, match="evaluation source"):
+        run_r1.ensure_simcse(lambda _: None)
+
+
 def test_failed_reruns_preserve_published_files(tmp_path, monkeypatch):
     published = tmp_path / "experiments/reproduction/results/R1"
     published.mkdir(parents=True)

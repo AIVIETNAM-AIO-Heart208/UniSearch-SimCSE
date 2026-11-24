@@ -19,12 +19,12 @@ Trên Linux/macOS: `python3.11 experiments/reproduction/run_r1.py --exp R1`. C�
 
 Script tự làm các bước sau, bước nào đã có sẵn thì bỏ qua:
 
-1. Lấy code gốc @ `235f89e` vào `SimCSE/`. Thư mục này nằm trong `.gitignore`.
+1. Lấy code gốc @ `235f89e` vào `SimCSE/`. Mỗi lần chạy đều kiểm nội dung `evaluation.py` và các file Python của SentEval bằng SHA-256, kể cả khi dùng bản lưu sẵn.
 2. Tạo `.venv-repro` ở thư mục gốc và cài `requirements-r1.txt`.
 3. Kiểm SHA-256 của 54 file đầu vào STS. Nếu cần, tải `senteval.tar` từ revision cố định (khoảng 90 MB), kiểm SHA-256 rồi khôi phục các file cần dùng.
 4. Gọi nguyên bản `evaluation.py` với snapshot checkpoint cố định theo bảng môi trường bên dưới.
 5. Mỗi lần chạy tạo một thư mục riêng trong `outputs/reproduction/`. Bộ số liệu công bố nằm trong `experiments/reproduction/results/`. Lần chạy có `--model` mang nhãn debug. File của một lần tái hiện gồm:
-   - `metrics.json`: điểm và chênh lệch so với README/paper.
+   - `metrics.json`: điểm và chênh lệch so với README/paper. Script đối chiếu cột trung bình với bảy điểm thành phần trước khi ghi kết quả.
    - `env.txt`, `pip_freeze.txt`, `eval_log.txt`, `status.txt`.
 
 | Exp | Checkpoint | Pooler |
@@ -71,6 +71,8 @@ Script tự làm các bước sau, bước nào đã có sẵn thì bỏ qua:
 - Log ngày 23/11 mô tả đúng lệnh và môi trường ngày đo. Script hiện tại cố định revision checkpoint trước khi đánh giá và kiểm đầu vào SentEval.
 
 ## R4: tự cài InfoNCE (23/11/2026)
+
+Ngày 24/11, sau khi sửa phép tính với các ứng viên đồng điểm ở nhiệt độ thấp, cùng lưới và seed 0 đạt 689/689 test. Lệch tối đa so với `cl_forward` là 1,4e-9 ở float64 và 9,5e-7 ở float32. Bảng bên dưới giữ số đo ngày 23/11. [Số đo ngày 24/11](results/R4-2026-11-24/metrics.json) · [Môi trường](results/R4-2026-11-24/env.txt)
 
 Hàm `infonce_loss` ở [src/simcse_lab/model/infonce.py](../../src/simcse_lab/model/infonce.py) được so với hai bản đối chiếu trong [tests/infonce_reference.py](../../tests/infonce_reference.py):
 - vòng lặp ngây thơ tính từng số hạng theo Eq. 4 (unsup) và Eq. 8 (§6.3 của paper; Eq. 8 là Eq. 5 có thêm trọng số α), dùng α = e^w;

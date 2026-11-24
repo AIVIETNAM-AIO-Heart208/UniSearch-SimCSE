@@ -34,7 +34,7 @@ import torch  # noqa: E402
 
 import test_infonce as t  # noqa: E402  # pyright: ignore[reportMissingImports]
 from infonce_reference import Similarity, cl_forward_loss, naive_loss  # noqa: E402  # pyright: ignore[reportMissingImports]
-from simcse_lab.model.infonce import _cosine_logits, infonce_loss  # noqa: E402
+from simcse_lab.model.infonce import _cosines, _loss_rows, infonce_loss  # noqa: E402
 
 
 def max_diff(cases, reference, dtype):
@@ -84,9 +84,9 @@ def float32_breakdown(cases):
     for n, d, tau, _, _ in cases:
         z1, z2, _ = t.make_batch(n, d, hard=False, dtype=torch.float32)
         ref_logits = Similarity(tau)(z1.unsqueeze(1), z2.unsqueeze(0))
-        logit_gap = max(logit_gap, (_cosine_logits(z1, z2, tau) - ref_logits).abs().max().item())
-        # Same logits, two loss heads: logsumexp - positive vs CrossEntropyLoss.
-        ours = (torch.logsumexp(ref_logits, 1) - ref_logits.diagonal()).mean()
+        logit_gap = max(logit_gap, (_cosines(z1, z2) / tau - ref_logits).abs().max().item())
+        # Feed both heads the same logits to isolate loss-reduction rounding.
+        ours = _loss_rows(ref_logits, 1.0).mean()
         head_gap = max(head_gap, abs(ours.item() - torch.nn.CrossEntropyLoss()(ref_logits, torch.arange(n)).item()))
     return {"max_abs_logit_gap": logit_gap, "max_abs_loss_head_gap_same_logits": head_gap}
 
