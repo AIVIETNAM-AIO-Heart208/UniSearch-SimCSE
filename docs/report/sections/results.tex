@@ -46,11 +46,47 @@ these tasks despite its higher mean correlation on STS.
 Vietnamese regulation retrieval poses a further test. Two articles might both describe academic
 warnings, yet one might apply to first-year students and the other to
 students in later years. A semantically similar passage can therefore
-be ranked highly even when its eligibility rule does not apply. We can
-test retrieval directly using
-Vietnamese questions labeled with their relevant articles. Hit@3 is the
-fraction of questions for which at least one relevant article appears
-among the first three results.
+be ranked highly even when its eligibility rule does not apply. We can test this
+by retrieving labelled passages for Vietnamese questions.
+
+\subsection{SimCSE-VN Retrieval on D1-dev}
+\label{sec:d1-dev-results}
+We evaluated SimCSE-VN on the 224 development questions described in
+Section~\ref{sec:d1-setup}. Hit@$k$ is the proportion of questions whose
+reference passage appears in the first $k$ results. MRR@10 is the mean
+reciprocal rank of the reference passage, with a contribution of zero when
+that passage is outside the first ten results.
+
+% Recomputed from experiments/external_dataset/results/D1-dev/runs/dense.jsonl
+% and data/processed/d1/queries.jsonl. See experiments/external_dataset/results/D1-dev/metrics.json.
+\begin{table}[htbp]
+\caption{SimCSE-VN retrieval on D1-dev (224 questions)}
+\label{tab:d1-dev-dense}
+\centering\footnotesize
+\begin{tabular}{@{}lrr@{}}
+\hline
+Hit@1 (\%) & Hit@3 (\%) & MRR@10 ($0$--$1$) \\
+\hline
+46.43 & 65.625 & 0.5828 \\
+\hline
+\end{tabular}
+\end{table}
+
+For query 1034, which asks whether a decision to amend a diploma or
+certificate records the changes and their reasons, Article~21 ranked
+first. Its highest-scoring chunk, Clause~1, explicitly lists both the
+changes and their reasons among the required contents of the decision.
+For query 1185, which asks whether a university may refuse to issue a copy
+of a diploma, the system ranked a clause on dismissal from a combined
+bachelor's--master's programme first. The labelled passage, Article~27 on
+procedures for issuing copies from the original register, was outside the
+top 20.
+
+For 147 of the 224 D1-dev questions, a student would see the labelled
+passage among the first three suggestions (Table~\ref{tab:d1-dev-dense}).
+Hit@3 here measures passage retrieval on D1-dev. The English STS results use
+Spearman's $\rho$ to measure rank agreement with human similarity
+judgments across sentence pairs.
 
 \TODO{Report retrieval scores and paired confidence intervals on D1-test and
 D2, including lexical-overlap groups and article-, topic- and clause-level
