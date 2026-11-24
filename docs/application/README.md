@@ -23,14 +23,14 @@ Sinh viên hỏi bằng lời thường, còn quy chế viết bằng thuật ng
 - Corpus gồm hai phiên bản Quy chế đào tạo: QĐ 1175/2021 và QĐ 3087/2026. Điều 27 của quy chế 2026 ghi: quy chế áp dụng cho các khóa tuyển từ năm học 2026–2027; đối với các khóa tuyển sinh từ năm 2025 trở về trước, Trường lựa chọn áp dụng quy định mới có lợi hơn cho người học. Vì vậy ứng dụng giữ cả hai bản và ghi rõ phạm vi áp dụng; trong mỗi kết quả, bản 2026 hiển thị trước vì là bản mới nhất.
 - Bản 2026 là bản ChatGPT chép từ bản scan và nhóm làm sạch lỗi OCR, không phải nguyên văn; ứng dụng ghi rõ điều này khi hiển thị.
 - Khi độ tin cậy thấp, ứng dụng cảnh báo để người dùng tự đối chiếu.
-- Hiệu quả được chứng minh bằng số liệu so với tìm kiếm từ khóa.
+- Nhóm sẽ so sánh kết quả tra cứu với BM25 trên D1-test và D2 sau khi cố định cấu hình.
 
 ## Giải pháp
 
 - **Encoder câu tiếng Việt huấn luyện theo SimCSE:** checkpoint cộng đồng `VoVanPhuc/sup-SimCSE-VietNamese-phobert-base`, dựa trên PhoBERT, cần tách từ bằng `pyvi`.
 - **Truy hồi lai (hybrid):** BM25 cho khớp từ khóa, kết hợp SimCSE cho khớp ngữ nghĩa và câu hỏi diễn đạt khác văn bản.
 - **Chunking theo cấu trúc văn bản:** chia theo Điều/Khoản, giữ metadata văn bản và phiên bản để trích dẫn chính xác.
-- **Cảnh báo độ tin cậy thấp:** ngưỡng được chọn và đánh giá trên tập dev. Ngưỡng này không phải xác suất đúng.
+- **Cảnh báo độ tin cậy thấp:** chọn ngưỡng trên D1-dev, sau đó đánh giá trên D1-test và D2. Ngưỡng này không phải xác suất đúng.
 - **Không dùng LLM sinh câu trả lời:** ứng dụng chỉ hiển thị đoạn văn bản có trong corpus kèm nguồn.
 
 Phần tái hiện bài báo dùng mã nguồn chính thức [princeton-nlp/SimCSE](https://github.com/princeton-nlp/SimCSE) tại commit `235f89e0244b23673b69fbbc4a1cd9868c5a5c24`.

@@ -7,13 +7,11 @@ warnings, graduation and similar matters. They are issued as long documents
 divided into articles (\emph{Điều}) and clauses (\emph{Khoản}). Students ask
 about these rules in everyday language, so a question is often worded quite
 differently from the article that answers it. This mismatch is known as the
-\emph{lexical gap}. Keyword search, such as Ctrl+F in a PDF or the search box
-of a faculty website, matches exact strings only and does not rank its hits.
-It therefore misses relevant articles whenever the student does not guess the
-official term, and reading the whole document instead takes a long time.
+\emph{lexical gap}. A literal search with Ctrl+F in a PDF lists matching
+strings in document order. A student searching for a phrase that the relevant
+article never uses may therefore miss it.
 General-purpose chatbots answer fluently, but they may produce statements that
-are not in the regulations, and they do not point to the article that supports
-their answer.
+are not in the regulations or cite an article that does not support their answer.
 
 % Example: data/ViRHE4QA_v2.csv of https://github.com/longstnguyen/ViRE at commit
 % 60ea7155134eaa426ab1d0a82d2bbbf327d1b470 (file sha256 23fb969985150599d3ad0b5229d039b8541ed335fbc29dcfa0b0d733ccaa5682),
@@ -94,14 +92,14 @@ computation in the official code (Section~\ref{sec:method-infonce}).
 In float64 the two agree within $1.4\times10^{-9}$ over all tested batch
 sizes, temperatures and hard-negative weights;
 % Corpus: data/d2/documents.yaml (decision D-17 in docs/application/PROJECT.md).
-\item builds a retrieval assistant for the undergraduate training regulations of
+\item specifies a retrieval assistant for the undergraduate training regulations of
 our own university, the University of Science, VNU-HCM. Its corpus holds both
 the 2021 regulation and the 2026 regulation that replaces it, because the 2026
 text applies to cohorts admitted from the 2026--2027 academic year, while for
 earlier cohorts it lets the university apply the new rules that are more
 favourable to students. The assistant combines
 BM25 with a SimCSE-style Vietnamese encoder, ranks whole articles, shows the
-text of each article with its document, decision number and scope of
+best-matching passage with its document, decision number and scope of
 application, and flags low-confidence results instead of generating an answer
 (Sections~\ref{sec:method-pipeline} and~\ref{sec:app});
 % Checked 23/11 on ViRHE4QA_v2.csv @ ViRE 60ea715: 77 of the 297 distinct
@@ -109,21 +107,20 @@ application, and flags low-confidence results instead of generating an answer
 % is named (data/raw/virhe4qa/checks/outputs_2026-11-23.txt). The R2GQA abstract
 % does not name the source university, so the attribution below rests on the
 % article text.
-\item evaluates the encoder and the assistant on two datasets that the paper
+\item defines an evaluation protocol on two datasets that the paper
 does not use. The first is the public ViRHE4QA
 subset~\cite{do2024r2gqaretrieverreadergeneratorquestionanswering,nguyen-quan-2026-works},
 evaluated on its own corpus with a development/test split grouped by source
 article. Judging by their wording, its articles are regulations of the
 University of Information Technology (UIT), VNU-HCM, the only university that
-they name. The second is a test set of student-style questions that we wrote
+they name. The second is a planned test set of student-style questions
 about our university's two regulations, including questions that the
-regulations do not answer. Comparisons are reported with bootstrap confidence
-intervals \TODO{one-sentence main finding once E1--E3 are done; do not claim
-that the hybrid beats BM25 unless the results show it}.
+regulations do not answer. The protocol calls for paired bootstrap confidence
+intervals. \TODO{Report the main retrieval finding once E1--E3 are complete.}
 \end{itemize}
 
 Section~\ref{sec:related} reviews related work. Section~\ref{sec:method}
 describes SimCSE and our retrieval pipeline, and Section~\ref{sec:setup} gives
 the datasets, metrics and protocols. Section~\ref{sec:results} reports the
-reproduction and retrieval results, Section~\ref{sec:app} presents the
-application, and Section~\ref{sec:conclusion} concludes.
+reproduction results. The retrieval experiments and application evaluation
+are pending.

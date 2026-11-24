@@ -61,7 +61,7 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
 - [x] **R3:** BERT-base chưa fine-tune ra trung bình **56,70**, khớp paper; hai task lệch ±0,01.
   - Kết luận: tái hiện được đúng khoảng cách của paper, từ 56,70 (BERT thô) lên 76,25 (unsup SimCSE) rồi 81,58 (sup SimCSE).
 - [x] **R4 (23/11):** tự cài InfoNCE ở `src/simcse_lab/model/infonce.py`, cho cả unsup và sup có hard negative với log-weight.
-  - Kiểm thử: 689/689 test pass. Ở float64, lệch ≤ 1,4e-9 so với `cl_forward` và ≤ 8,4e-15 so với vòng lặp tính theo Eq. 4/8.
+  - Kiểm thử: 689/689 test pass. Ở float64, độ lệch lớn nhất so với `cl_forward` là khoảng 1,4e-9 và so với vòng lặp Eq. 4/8 là khoảng 8,4e-15.
   - File: `experiments/reproduction/results/R4/` ([§6.7](#67-bảng-theo-dõi-kết-quả)).
 - [x] Bản nháp phần Introduction và Proposed Method của báo cáo IEEE (commit `652fa4e`), gồm cả phần giải thích luồng code gốc. Chưa đọc chéo.
   - Bổ sung ngày 23/11 cho phần Phase 1 của Huy:
@@ -77,19 +77,15 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
 
 **Đang thực hiện:** không có.
 
-**Chưa thực hiện:** phần còn lại của Phase 2–4 ([§7.2](#72-lịch-theo-planmd)).
-
-**Blocker / chờ quyết định**
-
-- Chưa chia phần viết Related Work (mục 3.2.2, giao cho cả Huy và Minh) trong `docs/report/sections/related-work.tex`.
+**Chưa thực hiện:** phần còn lại của Phase 1–4 ([§7.2](#72-lịch-theo-planmd)).
 
 **Việc ưu tiên tiếp theo**
 
-1. **Huy:** báo Minh về D-17 và D-18 (đã lên `main` ngày 24/11): bảng đối ứng đã duyệt, quy tắc viết câu D2 mới ([§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)), bản 2026 hiển thị trước.
-2. **Cả hai:** chốt schema dữ liệu ở [§5.4](#54-interface--định-dạng-dữ-liệu) trước 25/11.
+1. **Cả hai:** viết câu hỏi D2 ngay, song song với Phase 2 (quy tắc ở [§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)), để kịp chốt nhãn trước 02/12.
+2. Viết Related Work theo phần đã ghi ở [PLAN.md](../PLAN.md#phase-1--nghiên-cứu-paper).
 3. **Minh** đọc chéo phần bài toán và phương pháp của Huy (Phase 1, hạn 27/11): Introduction và Proposed Method trong `docs/report/sections/`. **Huy** đọc chéo phần của Minh khi Minh xong.
 4. **Minh:** chuẩn bị D1 (`data/prepare_virhe4qa.py`, group split) và chạy SimCSE-VN dense trên D1. Khi chia, nhóm đoạn của câu index 9542 phải vào D1-dev ([§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)).
-5. **Cả hai:** bắt đầu viết câu hỏi D2 ngay sau bước 1, song song với Phase 2, để kịp chốt nhãn trước 02/12.
+5. **Huy:** viết sớm `src/simcse_lab/evaluation/stats.py` + test trên dữ liệu giả (bootstrap CI, đo cảnh báo), việc đầu Phase 3 trong PLAN, không cần chờ dữ liệu thật.
 
 ---
 
@@ -263,7 +259,7 @@ Rà soát tĩnh ngày 2026-11-23 [Confirmed]. Nhóm vẫn phải tự đọc l�
 |---|---|---|---|---|
 | R1 | `evaluation.py --model_name_or_path princeton-nlp/sup-simcse-bert-base-uncased --pooler cls --task_set sts --mode test` | README: 75,30 / 84,67 / 80,19 / 85,40 / 80,82 / 84,26 / 80,39; TB 81,58 | **Bắt buộc** | CPU laptop; thời gian thực ghi trong `results/R1/env.txt` |
 | R2 | Như R1 với `unsup-simcse-bert-base-uncased --pooler cls_before_pooler` | TB 76,25 | Khuyến nghị (rẻ) — **đã chạy** | như R1 |
-| R3 | `bert-base-uncased --pooler avg_first_last` (không fine-tune) | Paper: 56,70 (BERT first-last avg). [Confirmed bằng R3] Số của paper dùng đúng cách tính tại commit, tức `hidden_states[0]` (lớp embedding) và lớp cuối | Khuyến nghị (rẻ) — **đã chạy** | như R1 |
+| R3 | `bert-base-uncased --pooler avg_first_last` (không fine-tune) | Paper: 56,70 (BERT first-last avg). R3 thu được cùng điểm trung bình với cách tính tại commit, dùng `hidden_states[0]` (lớp embedding) và lớp cuối | Khuyến nghị (rẻ) — **đã chạy** | như R1 |
 | R4 | Tự cài InfoNCE (unsup + sup có hard negative, log-weight) trong `src/simcse_lab/model/infonce.py`. Test: so với bản cài vòng lặp ngây thơ theo Eq. 4/8 (Eq. 8 ở §6.3 là Eq. 5 có trọng số α) và với đoạn tính loss trích từ `cl_forward` (ghi trích dẫn) trên tensor ngẫu nhiên; sai số < 1e-6 (float64) | — | **Bắt buộc** | CPU, khoảng 1 phút |
 | R5 | (O3) Train unsup mini bằng code tự viết, tập con wiki1m, p ∈ {0; 0,1}, đo STS-B dev | Chỉ tái hiện **xu hướng** của Table 3 | Tùy chọn | GPU T4 |
 | R6 | Đo alignment/uniformity (Eq. 2–3) cho R2 và R3 | Xu hướng định tính của Fig. 2–3 | Tùy chọn | CPU/GPU, ngắn |
@@ -276,9 +272,9 @@ Rà soát tĩnh ngày 2026-11-23 [Confirmed]. Nhóm vẫn phải tự đọc l�
 - Script tự làm từng bước và bỏ qua bước đã xong:
   1. Kiểm tra `experiments/reproduction/SimCSE` đúng commit; nếu thiếu thì tải zip của commit.
   2. Tạo `.venv-repro` ở thư mục gốc và cài `experiments/reproduction/requirements-r1.txt`.
-  3. Tải `senteval.tar` (cùng URL với script của repo).
-  4. Gọi **nguyên bản** `evaluation.py` của repo.
-  5. Ghi vào `experiments/reproduction/results/<exp>/`: `eval_log.txt`, `metrics.json` (điểm, chênh lệch so với README/paper, ngưỡng 0,5), `env.txt` (OS, CPU, phiên bản, commit, revision model), `pip_freeze.txt`, `status.txt`.
+  3. Kiểm SHA-256 của các đầu vào STS. Nếu cần tải, dùng bản SentEval cố định và kiểm SHA-256 của gói trước khi giải nén.
+  4. Gọi `evaluation.py` gốc với đường dẫn đến đúng revision checkpoint ghi trong kết quả đã công bố.
+  5. Mỗi lần chạy ghi log, điểm và môi trường vào thư mục riêng dưới `outputs/reproduction/`. Số liệu đã công bố ở [§6.7](#67-bảng-theo-dõi-kết-quả).
 
 **Môi trường đã chốt (D-12)**
 
@@ -333,7 +329,7 @@ Corpus D1 (chỉ để đánh giá D1): 297 đoạn trong ViRHE4QA_v2.csv, khôn
 Câu hỏi → preprocess (cùng hàm) → điểm BM25 và cosine cho mọi chunk
   → gộp chunk về Điều (MaxP: lấy max) → min-max normalize theo từng phương pháp
   → Hybrid: s = λ·BM25_norm + (1−λ)·Dense_norm   (λ chọn trên D1-dev)
-  → xếp hạng Điều (runs lưu ở mức này, top-20)
+  → xếp hạng Điều (D1 lưu top-20, D2 lưu đủ 51 Điều)
   → corpus HCMUS: gộp các Điều cùng chủ đề theo data/d2/article_map.tsv thành một kết quả, bản 2026 đứng trước
   → top-3 kết quả (kèm Khoản / chunk tốt nhất)
   → Confidence: cosine SimCSE của chunk tốt nhất trong Điều đứng đầu < θ  ⇒  cảnh báo "Độ tin cậy thấp"
@@ -350,7 +346,7 @@ Câu hỏi → preprocess (cùng hàm) → điểm BM25 và cosine cho mọi chu
 | FAISS `IndexFlatIP` | Tìm kiếm chính xác (exact) theo inner product trên vector đã chuẩn hóa; cùng cách với `simcse/tool.py` | Nếu cài lỗi, dùng numpy dot product (kết quả giống hệt vì đều exact) |
 | Gộp MaxP theo Điều | Điều dài phải chia chunk vì giới hạn 256 token; hiển thị và đánh giá ở mức Điều | Nhãn gold của D1 ở mức Điều |
 
-**Lưu ý:** min-max normalize theo từng câu hỏi làm top-1 luôn gần 1, nên **không** dùng điểm fused làm độ tin cậy. Confidence dùng cosine tuyệt đối của SimCSE-VN.
+Min-max theo từng câu hỏi làm mất thang điểm tuyệt đối. Nếu mọi Điều có cùng điểm cho một phương pháp, thành phần chuẩn hóa của phương pháp đó bằng 0. Cảnh báo dùng cosine của SimCSE-VN.
 
 ### 5.3 Metadata, trích dẫn, phiên bản và trường hợp không chắc chắn
 
@@ -365,13 +361,13 @@ Câu hỏi → preprocess (cùng hàm) → điểm BM25 và cosine cho mọi chu
   - Kèm dòng nhắc "Kết quả để tham khảo, hãy đối chiếu văn bản gốc".
   - Với QĐ 3087, ghi thêm "bản chép từ bản scan", vì đây là bản ChatGPT chép và nhóm làm sạch, không phải nguyên văn.
   - Ứng dụng không tự xác định phiên bản nào áp dụng cho một khóa cụ thể: nó hiển thị kết quả của cả hai phiên bản, kèm phạm vi áp dụng ghi trong văn bản.
-  - Các Điều cùng chủ đề (theo `data/d2/article_map.tsv`; một chủ đề có thể gồm 2–3 Điều) hiển thị thành **một** kết quả, có cả bản 2021 và bản 2026, để top-3 không tốn nhiều vị trí cho cùng một quy định.
+  - Các Điều cùng chủ đề (theo `data/d2/article_map.tsv`, mỗi chủ đề có 1–3 Điều) hiển thị thành **một** kết quả, kèm các phiên bản có trong chủ đề đó.
   - Trong mỗi kết quả, **bản 2026 hiển thị trước** vì là bản mới nhất (D-18); mọi chủ đề đều có Điều của bản 2026. Bản 2021 hiển thị phụ, ghi rõ áp dụng cho khóa tuyển từ năm học 2021–2022 đến 2025, trừ quy định mới có lợi hơn (Điều 27 bản 2026).
 - **Độ tin cậy thấp:** vẫn hiển thị top-3, gắn nhãn cảnh báo và gợi ý liên hệ phòng đào tạo. MVP **không từ chối cứng**. Ngưỡng θ được chọn và đánh giá theo E3 ([§6.4](#64-thí-nghiệm-thiết-yếu)).
 
 ### 5.4 Interface & định dạng dữ liệu
 
-Hai người chốt phần này trước 25/11 để làm song song. Owner theo [docs/PLAN.md](../PLAN.md).
+Dùng định dạng dưới đây cho dữ liệu và kết quả truy hồi.
 
 ```text
 corpus.jsonl   {chunk_id, doc_id, article_id, article, article_title, clause|null, text, char_start, char_end}
@@ -380,7 +376,9 @@ queries.jsonl  {qid, question, gold_article_ids: [..], gold_clause_ids: [..], sp
                # D2: origin = team (nhóm viết) hoặc form (câu thu qua Google Form); D1: origin = null
                # D1: chỉ có split dev|test, gold_clause_ids rỗng; D2 luôn là test
 runs/<method>.jsonl  {qid, ranked: [[article_id, score, best_chunk_id], ...], top1_dense_cos}
-               # top-20 ở mức Điều, chưa gộp chủ đề; best_chunk_id cho Clause@1, top1_dense_cos cho E3
+               # D1: top-20 Điều. D2: cả 51 Điều để tính đủ 10 chủ đề sau khi gộp.
+               # Clause@1 tra Điều và Khoản của best_chunk_id, kể cả khi Khoản có nhiều cửa sổ.
+               # top1_dense_cos là cosine của chunk được trích trong Điều xếp đầu trước khi gộp.
 API: search(query: str, k: int = 3, method: "bm25"|"dense"|"hybrid", corpus: "hcmus"|"virhe4qa" = "hcmus") -> list[Hit]
      Hit = {article_id, score, best_chunk_id, bm25_score, dense_cos, low_confidence: bool}
 ```
@@ -396,7 +394,7 @@ API: search(query: str, k: int = 3, method: "bm25"|"dense"|"hybrid", corpus: "hc
 | `src/simcse_lab/evaluation/stats.py` | hai runs → paired bootstrap CI; đo cảnh báo (coverage, Hit@1 theo nhóm tin cậy / không tin cậy, false-confidence trên câu ngoài phạm vi của D2) | Huy | Mới |
 | `experiments/external_dataset/` | Chạy 3 phương pháp trên D1 (Minh); chọn λ, θ trên D1-dev (Huy) → `results/` | Minh, Huy | Mới |
 | `experiments/application/` | So sánh trên D1-test và D2, phân tích lỗi (Huy); đo latency (Minh) → `results/` | Huy, Minh | Mới |
-| `experiments/reproduction/` | `run_r1.py` gọi `evaluation.py` tại commit → `results/R1–R3` ✓; `run_r4.py` → `results/R4` ✓ | Huy | Code gốc + mới |
+| `experiments/reproduction/` | Chạy R1–R4 vào `outputs/reproduction/`. Kết quả đã công bố ở [§6.7](#67-bảng-theo-dõi-kết-quả) | Huy | Code gốc + mới |
 | `src/simcse_lab/model/infonce.py` + `tests/test_infonce.py` | R4: InfoNCE tự cài + test khớp `cl_forward` | Huy | Mới |
 | `apps/app.py` | Gradio UI gọi `search` | Minh | Mới (dùng Gradio) |
 
@@ -504,7 +502,7 @@ Môi trường cho ứng dụng dùng venv riêng (`.venv`, cài bằng `pip ins
   - **Theo chủ đề (khớp giao diện, dễ hơn):** các Điều được gộp thành chủ đề theo [`data/d2/article_map.tsv`](../../data/d2/article_map.tsv) (26 chủ đề cho 51 Điều; đã duyệt 24/11, D-18). Trước khi cắt top-k, các Điều cùng chủ đề chỉ tính một lần; câu hỏi tính là đúng khi chủ đề của một gold nằm trong top-k.
   - **Vì sao mức chủ đề dễ hơn:** sau khi gộp, top-k chứa nhiều chủ đề khác nhau hơn, nên Hit@k và MRR@10 chỉ có thể tăng hoặc giữ nguyên. Kể cả Hit@1 cũng dễ hơn khi chỉ một phiên bản trả lời được câu hỏi. Ví dụ T18: bản 2026 thêm chuyển ngành, nên câu hỏi về chuyển ngành chỉ có gold là Điều 21 bản 2026; nếu Điều 20 bản 2021 đứng đầu thì mức chủ đề tính đúng, mức Điều tính sai.
   - **Gộp trong cùng một phiên bản (giữ theo D-18):** T02 (Điều 2 và 3 bản 2021), T09 (Điều 12 và 13 bản 2026), T16 (Điều 17 và 18 bản 2021). Đã đối chiếu nội dung: một bản tách thành hai Điều nội dung mà bản kia gộp trong một Điều. Ví dụ Điều 10 bản 2021 gồm cả xét giao và đánh giá khóa luận, bản 2026 tách thành Điều 12 và 13.
-  - **Mức ngẫu nhiên** (xếp hạng ngẫu nhiên): theo Điều, với g Điều gold, Hit@k = 1 − C(51−g, k)/C(51, k), vd. g = 2: Hit@1 ≈ 3,9%, Hit@3 ≈ 11,5%. Theo chủ đề, với một chủ đề gold: Hit@1 = 1/26 ≈ 3,8%, Hit@3 = 3/26 ≈ 11,5%.
+  - **Mức ngẫu nhiên:** với g Điều gold, xáo đều 51 Điều cho Hit@k kỳ vọng bằng 1 − C(51−g, k)/C(51, k). Để tính mốc chủ đề của cùng hệ thống, gộp mỗi hoán vị Điều theo đúng quy tắc trên rồi tính Hit@k. Ví dụ, chủ đề chứa 3 Điều có xác suất đứng đầu là 3/51. Công thức k/26 cho một chủ đề gold chỉ áp dụng nếu xáo đều trực tiếp 26 chủ đề.
   - Runs lưu ở mức Điều (§5.4); `metrics.py` tính mức chủ đề từ runs và `article_map.tsv`.
 - **Ý nghĩa thống kê:** paired bootstrap 1.000 lần trên câu hỏi (seed 42), báo 95% CI của ΔMRR@10 và ΔHit@1.
 - **Latency:** p50/p95 mỗi truy vấn trên CPU, tách riêng thời gian tách từ, encode và search; thời gian build index.
@@ -513,7 +511,7 @@ Môi trường cho ứng dụng dùng venv riêng (`.venv`, cài bằng `pip ins
 
 | ID | Mục đích | Thiết lập | Đầu ra |
 |---|---|---|---|
-| E0 | Kiểm tra cài đặt | BM25 trên toàn bộ 1.000 câu D1, so sơ bộ với MRR@10 = 76,05 của ViRE. Lệch lớn → kiểm tra tách từ/chuẩn hóa | Ghi chú sanity check |
+| E0 | Kiểm tra cài đặt | Chạy BM25 trên D1-dev và đối chiếu cách tính hạng bằng ví dụ tính tay. Số ViRE ở §6.1 là tham khảo trên toàn bộ dữ liệu. Chỉ mở D1-test sau khi cố định tiền xử lý và cấu hình | Ghi chú kiểm tra |
 | E1 | Chất lượng truy hồi trên dataset mới | `bm25`, `dense`, `hybrid` (+ `phobert-raw`) trên D1-test. λ chọn trên D1-dev (lưới 0..1, bước 0,1, tối ưu MRR@10) | Bảng + CI cho `hybrid`−`bm25`, `dense`−`phobert-raw` |
 | E2 | Bối cảnh thực tế và câu hỏi diễn đạt khác văn bản | Như E1 trên D2-in-scope (kết quả chính) và trên D1-test (bằng chứng phụ), cấu hình giữ nguyên. Chia câu hỏi theo mức trùng từ vựng với Điều gold (Jaccard token, ba nhóm thấp/vừa/cao) và báo metric từng nhóm kèm số câu mỗi nhóm. D2 báo cả mức theo Điều và theo chủ đề, thêm Clause@1, và báo riêng nhóm `origin: form` nếu có (§6.3) | Bảng + phân tích theo nhóm |
 | E3 | Đánh giá cảnh báo độ tin cậy | θ chọn trên D1-dev: θ lớn nhất sao cho coverage ≥ 80% [Proposed, chốt khi có dữ liệu dev]. Trên D1-test và D2: coverage, Hit@1 trong nhóm "tin cậy" và nhóm "không tin cậy", tỉ lệ câu ngoài phạm vi của D2 bị đánh dấu tin cậy (false-confidence). Hạn chế phải nêu trong báo cáo: θ chọn trên corpus và kiểu câu hỏi của D1 (UIT) rồi dùng nguyên cho HCMUS, không chỉnh trên D2 | Bảng + biểu đồ risk–coverage |
@@ -524,7 +522,7 @@ Thêm R1 và R4 ([§4.5](#45-kế-hoạch-tái-hiện-kết-quả-paper)). Kết
 
 ### 6.5 Tái lập thí nghiệm
 
-- Mọi thí nghiệm chạy qua `configs/*.yaml`. Mỗi lần chạy lưu `experiments/<nhóm>/results/<exp_id>/{metrics.json, runs/, config.yaml, env.txt}`, trong đó `env.txt` gồm `pip freeze`, phiên bản Python, CPU/GPU và commit hash của repo nhóm.
+- R1–R4 chạy bằng [script tái hiện](../../experiments/reproduction/README.md). Với các thí nghiệm ứng dụng E0–E5, lưu cấu hình, điểm, xếp hạng (nếu có), phiên bản thư viện, Python, CPU/GPU và commit của nhóm cùng kết quả.
 - Seed 42 cho chia dữ liệu và bootstrap. Fine-tuning (nếu có) dùng 3 seed {42, 43, 44} và báo mean ± std.
 - Ghi rõ commit SimCSE `235f89e`, commit ViRE `60ea715`, revision của checkpoint HF khi tải, và với D2 là sha256 các văn bản trong `data/d2/documents.yaml` cùng commit của `article_map.tsv` đã dùng.
 - Khi so sánh với số của paper, README hoặc ViRE, ghi rõ "khác protocol/dữ liệu, không tương đương trực tiếp" nếu đúng như vậy.
@@ -567,8 +565,7 @@ Phân công chi tiết và checklist nằm ở **[docs/PLAN.md](../PLAN.md)**, n
 ### 7.1 Cách làm việc
 
 - Một repo GitHub chung. Mỗi người làm trên branch riêng (`huy/...`, `minh/...`) và merge vào `main` khi chạy được; người kia xem lướt trước khi merge.
-- Interface ở [§5.4](#54-interface--định-dạng-dữ-liệu) được chốt trước 25/11 để hai người ít phải chờ nhau.
-- Mỗi tuần sync ngắn một lần (khoảng 15 phút). Xong việc nào thì người phụ trách tick trong PLAN.md và cập nhật [§1](#1-current-status).
+- Xong việc nào thì người phụ trách tick trong PLAN.md và cập nhật [§1](#1-current-status).
 - Mỗi mục trong PLAN.md có **một người chủ trì**; người còn lại hỗ trợ hoặc kiểm tra chéo.
 
 ### 7.2 Lịch theo PLAN.md
@@ -578,7 +575,7 @@ Tính từ 23/11, còn 18 ngày đến 11/12/2026. Phase 3 xong trước **06/12
 | Phase (PLAN.md) | Hạn | Đầu ra chính | Phụ thuộc |
 |---|---|---|---|
 | 1 – Nghiên cứu paper | 27/11 | Hai phần viết đã đọc chéo. Huy: bài toán và phương pháp; Minh: dữ liệu, baseline, metric, kết quả, hạn chế | — |
-| 2 – Triển khai và tái hiện | 30/11 | **Huy:** R1 ✓ (thêm R2, R3 ✓), R4 InfoNCE + test ✓, giải thích luồng code. **Minh:** D1 + group split; SimCSE-VN dense trên D1 (Hit@1/3, MRR@10, top-20, bảng D1-test) | D1 có sẵn |
+| 2 – Triển khai và tái hiện | 30/11 | **Huy:** R1 ✓ (thêm R2, R3 ✓), R4 InfoNCE + test ✓, giải thích luồng code. **Minh:** D1 + group split; SimCSE-VN dense trên D1-dev (Hit@1/3, MRR@10, top-20). Bảng D1-test thuộc E1 sau khi chốt cấu hình | D1 có sẵn |
 | 3 – Xây dựng ứng dụng | 06/12 | **Minh:** corpus HCMUS từ `data/d2/` (tách Điều/Khoản, metadata), BM25 + Hybrid, Gradio, latency. **Huy:** bảng so sánh + CI, chọn λ/θ trên D1-dev, so sánh trên D1-test và D2 (chung và theo mức trùng từ), phân tích lỗi. **Cả hai:** D2 chốt nhãn trước 02/12 | Phase 2. Riêng việc viết câu D2 không phụ thuộc Phase 2: bắt đầu ngay (bảng đối ứng đã duyệt 24/11) |
 | 4 – Hoàn thiện và nộp | 10/12; nộp 11/12 | **Huy:** PDF IEEE, chạy lại từ clone sạch. **Minh:** README, video, `[Group14].zip`, kiểm tra link | Phase 3 |
 | Tùy chọn O1–O5 | dừng 08/12 | Chỉ làm nếu Phase 3 xong trước 06/12 | Phase 3 |
@@ -643,6 +640,8 @@ Tính từ 23/11, còn 18 ngày đến 11/12/2026. Phase 3 xong trước **06/12
 | D-16 | Bỏ D2. Chỉ đánh giá trên D1; corpus của ứng dụng là 297 đoạn quy chế ĐH CNTT trong D1, không dùng quy chế trường khác. Ứng dụng hiển thị số và tên Điều, không hiển thị văn bản gốc hay phiên bản vì D1 không có thông tin này. Không đo cảnh báo với câu ngoài phạm vi | Bị thay bởi D-17 (23/11). Các phần vẫn còn hiệu lực: D1 không có metadata văn bản/phiên bản; D1 chia theo nhóm đoạn, nhóm câu 9542 ghim vào dev; cột `split` gốc của D1 bị rò rỉ |
 | D-17 | Khôi phục D2. Corpus của ứng dụng và của D2 là quy chế đào tạo HCMUS: QĐ 1175/QĐ-KHTN (2021, 24 Điều, nguyên văn) và QĐ 3087/QĐ-KHTN (29/9/2026, 27 Điều, bản ChatGPT chép từ scan, nhóm làm sạch). Giữ cả hai phiên bản vì Điều 27 quy chế 2026 ghi: với các khóa tuyển sinh từ năm 2025 trở về trước, Trường lựa chọn áp dụng quy định mới có lợi hơn cho người học. Không dùng bản trích lược trong Sổ tay. D1 giữ vai trò đánh giá trên corpus riêng. Toàn văn để ngoài Git cho tới khi rõ Q7 | Chốt (23/11, Huy); phần toàn văn, hiển thị và cách viết câu được cụ thể hóa ở D-18 |
 | D-18 | Chốt bốn điểm còn mở của D-17 và thứ tự hiển thị. (1) Duyệt `data/d2/article_map.tsv` sau khi đối chiếu nội dung; giữ T02/T09/T16. (2) Câu D2 viết kiểu gập sách, được dùng thuật ngữ thông dụng, không chép nguyên câu hay mệnh đề; bỏ quy tắc "không chép quá 3 từ liên tiếp". (3) Chữ QĐ 1175 (văn bản công khai) đưa vào Git ở `data/d2/`, giữ nguyên byte (`.gitattributes`) để sha256 khớp. (4) Bản chép QĐ 3087 không đăng công khai cho tới khi trường đăng bản chính thức hoặc Phòng Đào tạo đồng ý; nộp kèm trong `[Group14].zip`. (5) Trong mỗi kết quả, bản 2026 hiển thị trước, bản 2021 là phụ | Chốt (24/11; Huy chọn ưu tiên bản 2026 và giao Claude quyết bốn điểm còn lại) |
+| D-19 | Dùng ngay định dạng ở [§5.4](#54-interface--định-dạng-dữ-liệu). Mỗi người viết Related Work theo phần phụ trách trong [PLAN.md](../PLAN.md#phase-1--nghiên-cứu-paper) | Áp dụng từ 24/11 |
+| D-20 | E0 dùng D1-dev. Bổ sung cho D-19: D2 lưu đủ thứ hạng theo Điều để tính đúng MRR@10 sau khi gộp chủ đề (§6.3). D1 lưu top-20 | Chốt 24/11 khi rà soát |
 
 **Vấn đề còn mở**
 

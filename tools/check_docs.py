@@ -63,8 +63,8 @@ def check(path: str) -> list[str]:
                 problems.append(f"{path}:{i}: table row has {cols} pipes, header has {header_cols}")
         else:
             header_cols = None
-        for m in re.finditer(r"\]\(([^)\s]+)\)", re.sub(r"`[^`]*`", "", line)):
-            target = m.group(1)
+        for m in re.finditer(r"\]\((?:<([^>]+)>|([^)\s]+))\)", re.sub(r"`[^`]*`", "", line)):
+            target = m.group(1) or m.group(2)
             if re.match(r"^[a-z]+:", target):
                 continue
             file_part, _, anchor = target.partition("#")
@@ -78,9 +78,10 @@ def check(path: str) -> list[str]:
 
 
 def main() -> int:
-    tracked = subprocess.run(["git", "ls-files", "*.md"], capture_output=True, text=True,
-                             encoding="utf-8", check=True).stdout.split()
-    files = tracked + [f for f in ("STATUS.md", "AGENTS.md") if os.path.exists(f)] + sys.argv[1:]
+    tracked = subprocess.check_output(["git", "ls-files", "-z", "--", "*.md"])
+    files = [os.fsdecode(name) for name in tracked.split(b"\0") if name]
+    files += [f for f in ("STATUS.md", "AGENTS.md") if os.path.exists(f)] + sys.argv[1:]
+    files = list(dict.fromkeys(files))
     problems = [p for f in files for p in check(f)]
     for p in problems:
         print(p)

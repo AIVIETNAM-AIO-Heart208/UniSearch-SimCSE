@@ -3,4 +3,32 @@
 % Every number must come from a results file: put its path in a comment next to the table.
 \section{Results and Discussion}
 \label{sec:results}
-\TODO{Bảng R1--R3 so với số công bố; BM25, SimCSE-VN và Hybrid trên D1-test và D2 kèm khoảng tin cậy 95\%, tính chung và theo mức trùng từ giữa câu hỏi và Điều đúng (E2), thêm Clause@1 cho D2; cảnh báo độ tin cậy trên D1-test và D2, gồm câu ngoài phạm vi (E3), và hạn chế: ngưỡng chọn trên D1 rồi dùng nguyên cho D2; phân tích lỗi; hạn chế và trường hợp thất bại.}
+\subsection{English Sentence Similarity}
+% Measured and paper values: experiments/reproduction/results/R1/metrics.json,
+% experiments/reproduction/results/R2/metrics.json, experiments/reproduction/results/R3/metrics.json.
+Table~\ref{tab:sts-reproduction} gives the mean Spearman correlation
+across the seven STS tasks under the paper's \emph{all} protocol. The supervised
+run matches the official repository's mean and differs from the paper by
+0.01 points. The reproduced ordering holds on these English benchmarks.
+Vietnamese regulation retrieval requires a separate evaluation.
+
+\begin{table}[htbp]
+\caption{Mean STS Spearman correlation ($\times 100$).
+Paper values are from Table~5 of~\cite{gao-etal-2021-simcse}.}
+\label{tab:sts-reproduction}
+\centering
+\begin{tabular}{lrr}
+\hline
+Encoder and pooling & Paper & Reproduced \\
+\hline
+Supervised SimCSE, CLS with MLP & 81.57 & 81.58 \\ % experiments/reproduction/results/R1/metrics.json
+Unsupervised SimCSE, raw CLS & 76.25 & 76.25 \\ % experiments/reproduction/results/R2/metrics.json
+BERT-base, first--last average & 56.70 & 56.70 \\ % experiments/reproduction/results/R3/metrics.json
+\hline
+\end{tabular}
+\end{table}
+
+\TODO{Report retrieval scores and paired confidence intervals on D1-test and
+D2, including lexical-overlap groups and article-, topic- and clause-level
+results on D2. Report warning coverage, out-of-scope errors and the limits of
+transferring a threshold from D1. Analyse representative failures.}
