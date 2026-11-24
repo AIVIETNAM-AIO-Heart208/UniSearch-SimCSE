@@ -8,19 +8,20 @@
 
 ## Cách chạy
 
+Trên Windows, chạy từ thư mục gốc của repo.
+
 ```bat
-:: Windows (từ bất kỳ đâu; script tự chuyển về thư mục gốc repo)
-experiments\reproduction\run_r1.bat        :: R1
+experiments\reproduction\run_r1.bat
 experiments\reproduction\run_r1.bat R2
 experiments\reproduction\run_r1.bat R3
 ```
 
 Trên Linux/macOS: `python3.11 experiments/reproduction/run_r1.py --exp R1`. Cần Python 3.9–3.11.
 
-Script tự làm các bước sau, bước nào đã có sẵn thì bỏ qua:
+Script thực hiện các bước sau:
 
 1. Lấy code gốc @ `235f89e` vào `SimCSE/`. Mỗi lần chạy đều kiểm nội dung `evaluation.py` và các file Python của SentEval bằng SHA-256, kể cả khi dùng bản lưu sẵn.
-2. Tạo `.venv-repro` ở thư mục gốc và cài `requirements-r1.txt`.
+2. Tạo `.venv-repro` nếu cần. Mỗi lần chạy, pip kiểm tra môi trường theo `requirements-r1.txt` và cài lại các gói thiếu hoặc sai phiên bản. Tùy chọn `--skip-install` dành cho môi trường người chạy đã tự kiểm tra.
 3. Kiểm SHA-256 của 54 file đầu vào STS. Nếu cần, tải `senteval.tar` từ revision cố định (khoảng 90 MB), kiểm SHA-256 rồi khôi phục các file cần dùng.
 4. Gọi nguyên bản `evaluation.py` với snapshot checkpoint cố định theo bảng môi trường bên dưới.
 5. Mỗi lần chạy tạo một thư mục riêng trong `outputs/reproduction/`. Bộ số liệu công bố nằm trong `experiments/reproduction/results/`. Lần chạy có `--model` mang nhãn debug. File của một lần tái hiện gồm:

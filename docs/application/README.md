@@ -61,9 +61,9 @@ Chạy các lệnh từ thư mục gốc repo.
 Cần Python **3.9–3.11**, vì SentEval của repo gốc yêu cầu `numpy<1.24`. Script tự tạo venv, tải code SimCSE @ `235f89e`, dữ liệu STS và checkpoint, chạy `evaluation.py` gốc, rồi lưu kết quả cùng môi trường.
 
 ```bat
-experiments\reproduction\run_r1.bat        :: R1: sup-simcse-bert-base-uncased (TB 81,58)
-experiments\reproduction\run_r1.bat R2     :: unsup-simcse-bert-base-uncased (TB 76,25)
-experiments\reproduction\run_r1.bat R3     :: bert-base-uncased chưa fine-tune (TB 56,70)
+experiments\reproduction\run_r1.bat
+experiments\reproduction\run_r1.bat R2
+experiments\reproduction\run_r1.bat R3
 ```
 
 Trên Linux/macOS: `python3.11 experiments/reproduction/run_r1.py --exp R1`. Kết quả và môi trường: [experiments/reproduction/](../../experiments/reproduction/README.md).
@@ -89,7 +89,7 @@ Chữ QĐ 1175 có trong Git (`data/d2/`). Để tái lập corpus HCMUS, đặt
 
 | Bộ dữ liệu | Vai trò | Nguồn |
 |---|---|---|
-| ViRHE4QA (bản con 1.000 câu hỏi trong benchmark ViRE) | Đánh giá chính trên dataset mới (D1), trên corpus riêng của bộ dữ liệu (quy chế ĐH CNTT) | [ViRHE4QA_v2.csv @ ViRE `60ea715`](https://github.com/longstnguyen/ViRE/blob/60ea7155134eaa426ab1d0a82d2bbbf327d1b470/data/ViRHE4QA_v2.csv), bài báo gốc R2GQA ([arXiv:2409.02840](https://arxiv.org/abs/2409.02840)) |
+| ViRHE4QA (bản con 1.000 câu hỏi trong benchmark ViRE) | Đánh giá chính trên các đoạn quy chế đi kèm D1 | [ViRHE4QA_v2.csv @ ViRE `60ea715`](https://github.com/longstnguyen/ViRE/blob/60ea7155134eaa426ab1d0a82d2bbbf327d1b470/data/ViRHE4QA_v2.csv), bài báo gốc R2GQA ([arXiv:2409.02840](https://arxiv.org/abs/2409.02840)) |
 | D2: quy chế đào tạo HCMUS (QĐ 1175/2021, QĐ 3087/2026) + bộ câu hỏi nhóm tự gán nhãn | Corpus của ứng dụng; đánh giá trong bối cảnh thực tế, có câu ngoài phạm vi (chỉ dùng để test) | Nhóm tự xây dựng; mô tả ở [data/d2/](../../data/d2/README.md) |
 | STS 2012–2016, STS-B, SICK-R | Tái hiện kết quả bài báo | Script của repo SimCSE |
 

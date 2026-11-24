@@ -6,10 +6,10 @@ Usage (from the repo root, Python 3.9-3.11 to create the venv):
     python experiments/reproduction/run_r1.py --exp R3   # bert-base-uncased (no fine-tuning), avg_first_last
 On Windows: experiments\reproduction\run_r1.bat [R1|R2|R3]
 
-What it does (each step is skipped if already done):
+What it does:
   1. Get princeton-nlp/SimCSE at commit 235f89e into experiments/reproduction/SimCSE (GitHub zip if missing).
   2. Create .venv-repro (repo root) and install experiments/reproduction/requirements-r1.txt.
-  3. Download SentEval STS data (senteval.tar, same URL as SentEval/data/downstream/download_dataset.sh).
+  3. Verify the STS inputs and restore them from the pinned SentEval archive if needed.
   4. Run the official evaluation.py (--task_set sts --mode test).
   5. Save eval_log.txt, metrics.json, env.txt, pip_freeze.txt and status.txt in a fresh outputs/reproduction/ directory.
 
@@ -178,7 +178,8 @@ def ensure_simcse(status: Status):
 
 def ensure_venv(venv: Path, base_python: str, skip_install: bool, status: Status):
     py = venv_python(venv)
-    if not py.exists():
+    created = not py.exists()
+    if created:
         ver = subprocess.check_output([base_python, "-c", "import sys;print('%d.%d' % sys.version_info[:2])"], text=True).strip()
         major, minor = map(int, ver.split("."))
         if not (major == 3 and 9 <= minor <= 11):
@@ -190,16 +191,11 @@ def ensure_venv(venv: Path, base_python: str, skip_install: bool, status: Status
     if skip_install:
         status("Skipping package install (--skip-install)")
         return py
-    req_hash = hashlib.sha256(REQ_FILE.read_bytes()).hexdigest()[:12]
-    stamp = venv / f".installed-{req_hash}"
-    if stamp.exists():
-        status("Packages already installed for current requirements")
-        return py
-    status("Installing packages (torch CPU wheel ~200 MB, rest ~60 MB)")
+    status("Checking pinned packages with pip and installing missing or mismatched versions")
     with (venv / "pip_install_log.txt").open("w", encoding="utf-8") as log:
-        run([str(py), "-m", "pip", "install", "--upgrade", "pip"], log=log)
-        run([str(py), "-m", "pip", "install", "-r", str(REQ_FILE)], log=log)
-    stamp.write_text(now())
+        if created:
+            run([str(py), "-m", "pip", "install", "--upgrade", "pip"], log=log)
+        run([str(py), "-m", "pip", "install", "--disable-pip-version-check", "-r", str(REQ_FILE)], log=log)
     return py
 
 
@@ -262,7 +258,7 @@ def parse_sts_table(log_text: str):
     """Return the 8 numbers (7 STS tasks + Avg.) from evaluation.py's final STS table."""
     lines = log_text.splitlines()
     for i in range(len(lines) - 1, -1, -1):
-        if lines[i].startswith("|") and "STS12" in lines[i] and "SICKRelatedness" in lines[i]:
+        if lines[i].startswith("|") and lines[i].strip("|").split("|", 1)[0].strip() == TASKS[0]:
             header = [c.strip() for c in lines[i].strip("|").split("|")]
             if header != TASKS + ["Avg."]:
                 raise ValueError("Unexpected STS table columns")
@@ -276,6 +272,7 @@ def parse_sts_table(log_text: str):
                     if scores[-1] != round(sum(scores[:-1]) / len(TASKS), 2):
                         raise ValueError("STS average differs from the seven task scores")
                     return dict(zip(header, scores))
+            raise ValueError("Missing scores in the final STS table")
     raise RuntimeError("Could not find the STS result table in the evaluation log")
 
 

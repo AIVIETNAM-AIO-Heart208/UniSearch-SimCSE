@@ -62,6 +62,27 @@ def test_contradictory_sts_average_is_rejected():
         run_r1.parse_sts_table(header + "\n|" + "|".join(["0.00"] * 7 + ["81.58"]) + "|")
 
 
+@pytest.mark.parametrize("partial", ["| STS12 | STS13 |", "| " + " | ".join(run_r1.TASKS + ["Avg."]) + " |"])
+def test_truncated_final_table_cannot_reuse_previous_scores(partial):
+    log = (run_r1.HERE / "results/R1/eval_log.txt").read_text(encoding="utf-8")
+    with pytest.raises(ValueError, match="STS table"):
+        run_r1.parse_sts_table(log + "\n" + partial)
+
+
+def test_cached_environment_rechecks_its_installed_packages(tmp_path, monkeypatch):
+    py = run_r1.venv_python(tmp_path)
+    py.parent.mkdir()
+    py.touch()
+    req_hash = hashlib.sha256(run_r1.REQ_FILE.read_bytes()).hexdigest()[:12]
+    (tmp_path / f".installed-{req_hash}").touch()
+    commands = []
+    monkeypatch.setattr(run_r1, "run", lambda cmd, log: commands.append(cmd))
+    assert run_r1.ensure_venv(tmp_path, "python", False, lambda _: None) == py
+    assert len(commands) == 1
+    assert commands[0][:4] == [str(py), "-m", "pip", "install"]
+    assert commands[0][-2:] == ["-r", str(run_r1.REQ_FILE)]
+
+
 def test_zip_checkout_marker_does_not_verify_modified_code(tmp_path, monkeypatch):
     monkeypatch.setattr(run_r1, "SIMCSE_DIR", tmp_path)
     (tmp_path / "COMMIT").write_text(run_r1.SIMCSE_COMMIT)
