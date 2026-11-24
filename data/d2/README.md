@@ -56,6 +56,8 @@ Từ gốc repo, chạy `python data/d2/prepare_2026.py` khi đã có bản `_cl
 
 ## Câu hỏi (Phase 3, chốt nhãn trước 02/12)
 
+- [Bản nháp cho Minh](queries_draft.jsonl) có 41 câu trong phạm vi và 10 câu dự kiến ngoài phạm vi, do trợ lý soạn để Minh duyệt. `origin: team` chỉ nguồn bản nháp nội bộ. Gold hiện dựa trên quy chế 2021. Khi có nguồn 2026, đối chiếu tất cả câu với cả hai bản, bổ sung gold và ghi chú khác biệt giữa hai bản, xác minh các câu ngoài phạm vi rồi chuyển câu hỏi không kèm gold cho Huy kiểm tra độc lập. Dùng file đã hợp nhất và chốt nhãn cho E2.
+- [Bản gán nhãn độc lập](queries_blind.jsonl) có đủ 51 câu, trộn với seed 42 và dùng ID rà soát mới. Huy dùng riêng file này khi gán nhãn. Khi đối chiếu, ghép hai bản bằng toàn văn câu hỏi.
 - **Số lượng:** 80–100 câu trong phạm vi và khoảng 20 câu ngoài phạm vi. Huy và Minh mỗi người viết 40–50 câu trong phạm vi và 10 câu ngoài phạm vi.
 - **Định dạng:** mỗi dòng của `queries_d2.jsonl` theo schema ở PROJECT.md §5.4, với `source: "d2"` và `origin: "team"` hoặc `"form"` (câu thu qua Google Form). Mã Điều có tiền tố `doc_id`, ví dụ `hcmus-qcdt-2026:dieu-15`; mã Khoản ví dụ `hcmus-qcdt-2026:dieu-15:khoan-1`.
 - **Cách viết và thiên lệch đã biết (D-18):** viết kiểu gập sách, được dùng thuật ngữ thông dụng, không chép nguyên câu hay mệnh đề. Người viết đã đọc văn bản nên câu vẫn có thể ít trùng từ hơn câu hỏi thật, bất lợi cho BM25. Báo cáo phải nêu điều này; nếu có câu từ Google Form thì báo riêng nhóm `origin: "form"`.

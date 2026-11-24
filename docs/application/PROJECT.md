@@ -518,6 +518,8 @@ Môi trường cho ứng dụng dùng venv riêng (`.venv`, cài bằng `pip ins
 
 ### 6.4 Thí nghiệm thiết yếu
 
+Gói D1-dev lưu xếp hạng của ba phương pháp trên 224 câu và lệnh kiểm chứng. Hybrid dùng λ = 0,5 để kiểm tra đầu ra. Bước chọn cấu hình thuộc E1 và E3. Corpus HCMUS đang chờ bản nguồn 2026 đúng checksum để kiểm tra đủ 51 Điều. Bản nháp câu hỏi của Minh sẽ được đối chiếu với nguồn 2026 và duyệt chéo trước khi chạy E2. [Lệnh và kết quả kiểm tra](../../experiments/external_dataset/README.md#bàn-giao-cho-huy)
+
 | ID | Mục đích | Thiết lập | Đầu ra |
 |---|---|---|---|
 | E0 | Kiểm tra cài đặt | Chạy BM25 trên D1-dev và đối chiếu cách tính hạng bằng ví dụ tính tay. Số ViRE ở §6.1 là tham khảo trên toàn bộ dữ liệu. Chỉ mở D1-test sau khi cố định tiền xử lý và cấu hình | Ghi chú kiểm tra |

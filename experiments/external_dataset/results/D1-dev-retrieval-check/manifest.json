@@ -1,0 +1,73 @@
+{
+  "purpose": "D1-dev pipeline check. Hybrid weight 0.5 is a test value.",
+  "corpus": "d1",
+  "split": "dev",
+  "queries": 224,
+  "metric_scale": "0-1",
+  "dataset": {
+    "source": "https://github.com/longstnguyen/ViRE/blob/60ea7155134eaa426ab1d0a82d2bbbf327d1b470/data/ViRHE4QA_v2.csv",
+    "sha256": "23fb969985150599d3ad0b5229d039b8541ed335fbc29dcfa0b0d733ccaa5682",
+    "seed": 42
+  },
+  "checkpoint": "VoVanPhuc/sup-SimCSE-VietNamese-phobert-base",
+  "revision": "608779b86741a8acd8c8d38132974ff04086b138",
+  "model_sha256": "2559811f500b42fa23b8fe313d94a9503299aff1f0e0f58fdd4824571cb4423c",
+  "hybrid_bm25_weight": 0.5,
+  "bm25": {
+    "implementation": "rank_bm25.BM25Okapi",
+    "k1": 1.5,
+    "b": 0.75,
+    "epsilon": 0.25,
+    "tokenization": "shared pyvi segmentation, lowercase, whitespace split"
+  },
+  "pooling": "pooler_output",
+  "device": "cpu",
+  "batch_size": 16,
+  "torch_threads": 4,
+  "environment": {
+    "phase2_dense_logged": {
+      "platform": "Windows-11-10.0.26100-SP0",
+      "python": "3.13.9",
+      "packages": {
+        "torch": "2.14.1+cu126",
+        "transformers": "5.15.1",
+        "numpy": "2.5.5",
+        "pyvi": "0.1.1",
+        "scikit-learn": "1.9.1",
+        "sklearn-crfsuite": "0.5.0"
+      }
+    },
+    "phase3_run": null,
+    "reproduction_note": "The original Phase 3 summary did not record software versions. Use the pinned dense environment in the parent README and rank-bm25==0.2.2."
+  },
+  "rerun_arguments": "experiments/external_dataset/run_retrieval.py run --corpus d1 --chunks data/processed/d1/dense/corpus.jsonl --queries data/processed/d1/queries.jsonl --split dev --methods bm25 dense hybrid --weight 0.5 --model-path outputs/d1-model --output outputs/d1-dev-check",
+  "runs": {
+    "bm25": {
+      "path": "runs/bm25.jsonl",
+      "sha256": "84cba4cb4b761174472cb7d8efa4ae878e1712f47ffc8e584aaa9af3ad05e0be",
+      "metrics": {
+        "hit_at_1": 0.6651785714285714,
+        "hit_at_3": 0.8080357142857143,
+        "mrr_at_10": 0.7496758078231293
+      }
+    },
+    "dense": {
+      "path": "../D1-dev/runs/dense.jsonl",
+      "sha256": "092bcb227fc7447db08312388470a6693d83b4090c55d49eeb42b245ba85ad2f",
+      "metrics": {
+        "hit_at_1": 0.4642857142857143,
+        "hit_at_3": 0.65625,
+        "mrr_at_10": 0.5828355300453515
+      }
+    },
+    "hybrid": {
+      "path": "runs/hybrid.jsonl",
+      "sha256": "b4be11e7dcc90bfff071c50b43864820b60b501337373245b0da1844ce57dc6b",
+      "metrics": {
+        "hit_at_1": 0.6651785714285714,
+        "hit_at_3": 0.8616071428571429,
+        "mrr_at_10": 0.7687889739229025
+      }
+    }
+  }
+}

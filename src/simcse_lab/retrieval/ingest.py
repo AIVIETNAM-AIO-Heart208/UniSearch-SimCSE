@@ -1,14 +1,14 @@
-"""Map original D1 text spans to model-sized chunks."""
+"""Map original source spans to model-sized chunks."""
 
 import re
 
 _CLAUSE = re.compile(r"(?m)^[ \t]*(?:Khoản[ \t]+)?(\d+)[.)][ \t]+")
 
 
-def article_chunks(source, count_tokens, limit=256, overlap=24):
+def article_chunks(source, count_tokens, limit=256, overlap=24, clause_pattern=_CLAUSE):
     text = source["text"]
     boundaries = [(0, None)]
-    boundaries.extend((match.start(), int(match[1])) for match in _CLAUSE.finditer(text))
+    boundaries.extend((match.start(), int(match[1])) for match in clause_pattern.finditer(text))
     chunks = []
     for (start, clause), (end, _) in zip(boundaries, boundaries[1:] + [(len(text), None)]):
         words = list(re.finditer(r"\S+", text[start:end]))

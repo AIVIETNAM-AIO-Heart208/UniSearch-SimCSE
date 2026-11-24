@@ -1,2 +1,5 @@
 # Keep regulation texts byte-exact so their sha256 in data/d2/documents.yaml matches on every OS
 data/d2/*.txt -text
+
+# Preserve the bytes used by the D1-dev handoff manifest.
+experiments/external_dataset/results/**/runs/*.jsonl text eol=lf

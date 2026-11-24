@@ -21,6 +21,51 @@ Model và tokenizer cùng lấy tại [revision 608779b](https://huggingface.co/
 
 Để kiểm tra công thức bằng các thứ hạng đã biết và kiểm tra MaxP, cài `pytest` rồi chạy `python -m pytest -q tests/test_d1_dense.py tests/test_stats.py`.
 
+## Bàn giao cho Huy
+
+Mở [manifest D1-dev](results/D1-dev-retrieval-check/manifest.json) để xem cấu hình, SHA-256 và điểm của từng run. Run BM25 và Hybrid nằm trong [gói kiểm tra](results/D1-dev-retrieval-check/runs/). Run dense dùng [bản Phase 2 đã xác minh](results/D1-dev/runs/dense.jsonl). Hybrid dùng λ = 0,5 để kiểm tra pipeline. Để quét các giá trị λ khác, phép trộn cần điểm trên toàn bộ corpus trước khi cắt top 20.
+
+Sau khi chuẩn bị `data/processed/d1/` bằng `prepare_virhe4qa.py`, chạy từ gốc repo để tính lại chỉ số, đối chiếu SHA-256, ID và thứ tự. Nếu đã có file chunk từ Phase 2, thêm `--chunks data/processed/d1/dense/corpus.jsonl` để kiểm tra từng ID với catalog.
+
+```powershell
+$env:PYTHONPATH = 'src'
+python experiments/external_dataset/run_retrieval.py verify-d1-dev --manifest experiments/external_dataset/results/D1-dev-retrieval-check/manifest.json
+```
+
+## Truy hồi Phase 3
+
+Dùng môi trường D1 ở trên và cài thêm các phần phụ thuộc truy hồi. Các lệnh chạy từ gốc repo. Mỗi lần chạy dùng một thư mục đầu ra mới.
+
+```powershell
+& $d1Python -m pip install -e ".[retrieval]"
+& $d1Python experiments/external_dataset/run_retrieval.py run --corpus d1 --chunks data/processed/d1/dense/corpus.jsonl --queries data/processed/d1/queries.jsonl --split dev --methods bm25 dense hybrid --weight 0.5 --model-path outputs/d1-model --output outputs/d1-dev-check
+```
+
+`--weight` là trọng số BM25. Lần kiểm tra trên 224 câu dùng `0.5`. Mỗi run lưu top 20 Điều. Bảng dưới dùng thang 0–1. Run dense trùng SHA-256 với run Phase 2 đã lưu.
+
+| Phương pháp | Hit@1 | Hit@3 | MRR@10 |
+|---|---:|---:|---:|
+| BM25 | 0,665179 | 0,808036 | 0,749676 |
+| Dense | 0,464286 | 0,656250 | 0,582836 |
+| Hybrid (λ = 0,5, kiểm tra) | 0,665179 | 0,861607 | 0,768789 |
+
+Khi đo E4, dùng `RetrievalIndex.rank_bm25(question)` để đo đường tách từ và xếp hạng BM25 riêng. Đường xuất run dùng cosine của chunk được BM25 chọn cho trường `top1_dense_cos`. Nếu đo chức năng có cảnh báo, ghi riêng thời gian mã hóa và tính cosine.
+
+### Lệnh chuẩn bị HCMUS và cú pháp cho lượt test của Huy
+
+Khi đã có bản `_clean.md` đúng SHA-256, chạy `python data/d2/prepare_2026.py` để tạo bản verified. Nếu bản verified đã có đúng SHA-256, chạy thẳng lệnh chuẩn bị corpus. Có thể thêm `--only-2021` để kiểm tra nguồn 2021 bằng một thư mục đầu ra riêng. Đích corpus phải nằm trong repo, được Git bỏ qua và chưa được theo dõi.
+
+```powershell
+& $d1Python experiments/external_dataset/run_retrieval.py prepare-hcmus --model-path outputs/d1-model --output data/processed/d2
+```
+
+Khi Huy đã chốt cấu hình và nhãn, truyền `$hybridWeight` từ cấu hình đã chốt. Hai lệnh này lưu toàn bộ 51 Điều cho D2 và top 20 cho D1-test.
+
+```powershell
+& $d1Python experiments/external_dataset/run_retrieval.py run --corpus d1 --chunks data/processed/d1/dense/corpus.jsonl --queries data/processed/d1/queries.jsonl --split test --methods bm25 dense hybrid --weight $hybridWeight --model-path outputs/d1-model --output outputs/d1-test
+& $d1Python experiments/external_dataset/run_retrieval.py run --corpus hcmus --chunks data/processed/d2/corpus.jsonl --queries data/d2/queries_d2.jsonl --split test --methods bm25 dense hybrid --weight $hybridWeight --model-path outputs/d1-model --output outputs/d2-test
+```
+
 ## Đầu ra và giao thức
 
 - `data/processed/d1/corpus.jsonl` giữ nguyên văn từng đoạn nguồn. `queries.jsonl` giữ qid gốc và mã đoạn đúng. `split.json` ghi nguồn, SHA-256, seed, 17 dòng lặp đã bỏ và số câu theo split. Bốn câu có qid `9512`, `9538`, `9539`, `9542` thuộc cùng nhóm dev.

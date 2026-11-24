@@ -1,7 +1,20 @@
-# Ứng dụng thực tế
+# Tra cứu quy chế đào tạo HCMUS
 
-Khi nhóm chốt bài toán, ghi tại đây người dùng mục tiêu, tác vụ họ cần hoàn thành, cách họ đang thực hiện và điểm nhóm muốn cải thiện.
+Demo Gradio dùng chung bộ truy hồi với CLI. Giao diện hiển thị tối đa ba chủ đề, Điều/Khoản, trích đoạn, thông tin và phạm vi áp dụng của văn bản, kèm tab đối chiếu BM25.
 
-Đặt entry point của demo và logic giao diện tại đây. Demo gọi bộ mã hóa từ `simcse_lab.model`, nhận đầu vào thực tế và hiển thị kết quả của mô hình. Phần xử lý nghiệp vụ dùng cả trong demo lẫn thí nghiệm có thể đặt trong `src/simcse_lab/` khi triển khai.
+Tạo lại corpus để nạp tiêu đề đầy đủ, trạng thái thay thế và liên kết sửa đổi QĐ 91/2023 của Điều 15 bản 2021.
 
-Bổ sung lệnh khởi động từ thư mục gốc, dữ liệu hoặc checkpoint cần có và một đầu vào mẫu. Liên kết kết quả đo ở [thí nghiệm ứng dụng](../experiments/application/README.md).
+Từ gốc repo, dùng [môi trường và checkpoint D1](../experiments/external_dataset/README.md) rồi chuẩn bị corpus HCMUS đủ hai phiên bản theo hướng dẫn bên đó.
+
+```powershell
+& $d1Python -m pip install -e ".[retrieval,demo]"
+& $d1Python apps/app.py --model-path outputs/d1-model --corpus data/processed/d2/corpus.jsonl
+```
+
+Mở địa chỉ cục bộ Gradio in ra. Khi chưa truyền trọng số, tab tra cứu dùng dense SimCSE-VN. Truyền `--weight` và `--threshold` sau khi nhóm chốt cấu hình bằng D1-dev. Giao diện báo trạng thái khi chưa cấu hình ngưỡng.
+
+Kiểm thử giao diện bằng corpus giả lập và endpoint Gradio cục bộ.
+
+```powershell
+& $d1Python -m pytest -q tests/test_retrieval_app.py
+```
