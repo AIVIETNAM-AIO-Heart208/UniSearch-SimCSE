@@ -1,4 +1,4 @@
-"""Reproduce SimCSE STS results with the official code at a pinned commit.
+r"""Reproduce SimCSE STS results with the official code at a pinned commit.
 
 Usage (from the repo root, Python 3.9-3.11 to create the venv):
     python experiments/reproduction/run_r1.py            # R1: sup-simcse-bert-base-uncased, pooler cls
@@ -11,33 +11,41 @@ What it does (each step is skipped if already done):
   2. Create .venv-repro (repo root) and install experiments/reproduction/requirements-r1.txt.
   3. Download SentEval STS data (senteval.tar, same URL as SentEval/data/downstream/download_dataset.sh).
   4. Run the official evaluation.py (--task_set sts --mode test).
-  5. Save experiments/reproduction/results/<exp>/: eval_log.txt, metrics.json, env.txt, pip_freeze.txt, status.txt.
+  5. Save eval_log.txt, metrics.json, env.txt, pip_freeze.txt and status.txt in a fresh outputs/reproduction/ directory.
 
 Only the Python standard library is used here, so it runs before the venv exists.
 """
 import argparse
 import datetime as dt
 import hashlib
-import io
 import json
+import math
 import os
 import platform
-import re
 import shutil
 import subprocess
 import sys
 import tarfile
+import tempfile
 import time
 import urllib.request
 import zipfile
 from pathlib import Path
+
+if __package__:
+    from .run_output import create_run_dir
+else:
+    from run_output import create_run_dir
 
 HERE = Path(__file__).resolve().parent          # experiments/reproduction
 ROOT = HERE.parents[1]                          # repo root
 SIMCSE_DIR = HERE / "SimCSE"
 SIMCSE_COMMIT = "235f89e0244b23673b69fbbc4a1cd9868c5a5c24"
 SIMCSE_ZIP = f"https://github.com/princeton-nlp/SimCSE/archive/{SIMCSE_COMMIT}.zip"
-SENTEVAL_TAR = "https://huggingface.co/datasets/princeton-nlp/datasets-for-simcse/resolve/main/senteval.tar"
+SENTEVAL_REVISION = "e145e8bb659b2aa2669f32ef79cb4cdef6c58fef"
+SENTEVAL_TAR = f"https://huggingface.co/datasets/princeton-nlp/datasets-for-simcse/resolve/{SENTEVAL_REVISION}/senteval.tar"
+SENTEVAL_SHA256 = "bc43c148f7be97471c78fc4255399d3158cb99dfe8f2221999c918338b138c38"
+STS_INPUTS_SHA256 = "7872ce7a0841174929c9dbad56cd9ee6a6934c63f26508a463dbfd686203e54a"
 REQ_FILE = HERE / "requirements-r1.txt"
 TASKS = ["STS12", "STS13", "STS14", "STS15", "STS16", "STSBenchmark", "SICKRelatedness"]
 
@@ -46,18 +54,21 @@ TASKS = ["STS12", "STS13", "STS14", "STS15", "STS16", "STSBenchmark", "SICKRelat
 EXPERIMENTS = {
     "R1": {
         "model": "princeton-nlp/sup-simcse-bert-base-uncased",
+        "revision": "2d82fab19ac3a73a20dd20333d27eb8a52d6e97f",
         "pooler": "cls",
         "ref_readme": [75.30, 84.67, 80.19, 85.40, 80.82, 84.26, 80.39, 81.58],
         "ref_paper": [75.30, 84.67, 80.19, 85.40, 80.82, 84.25, 80.39, 81.57],
     },
     "R2": {
         "model": "princeton-nlp/unsup-simcse-bert-base-uncased",
+        "revision": "218baf6bc48c463a53f5b4e1c568299537fab124",
         "pooler": "cls_before_pooler",
         "ref_readme": None,  # README lists only the average (76.25)
         "ref_paper": [68.40, 82.41, 74.38, 80.91, 78.56, 76.85, 72.23, 76.25],
     },
     "R3": {
         "model": "bert-base-uncased",
+        "revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
         "pooler": "avg_first_last",
         "ref_readme": None,
         "ref_paper": [39.70, 59.38, 49.67, 66.03, 66.19, 53.87, 62.06, 56.70],
@@ -105,7 +116,7 @@ def run(cmd, log=None, **kw):
 
 def download(url: str, dest: Path, status: Status):
     tmp = dest.with_suffix(dest.suffix + ".part")
-    with urllib.request.urlopen(url) as r, tmp.open("wb") as f:
+    with urllib.request.urlopen(url, timeout=90) as r, tmp.open("wb") as f:
         total = int(r.headers.get("Content-Length") or 0)
         done, last = 0, 0.0
         while True:
@@ -123,13 +134,8 @@ def download(url: str, dest: Path, status: Status):
 
 
 def simcse_commit() -> str:
-    head = SIMCSE_DIR / ".git" / "HEAD"
-    if head.exists():
-        ref = head.read_text().strip()
-        if ref.startswith("ref:"):
-            ref_file = SIMCSE_DIR / ".git" / ref.split(" ", 1)[1]
-            ref = ref_file.read_text().strip() if ref_file.exists() else ref
-        return ref
+    if (SIMCSE_DIR / ".git").exists():
+        return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=SIMCSE_DIR, text=True).strip()
     marker = SIMCSE_DIR / "COMMIT"
     return marker.read_text().strip() if marker.exists() else "unknown"
 
@@ -140,16 +146,21 @@ def ensure_simcse(status: Status):
     else:
         status("Downloading SimCSE source at the pinned commit")
         SIMCSE_DIR.parent.mkdir(parents=True, exist_ok=True)
-        zpath = SIMCSE_DIR.parent / "simcse.zip"
-        download(SIMCSE_ZIP, zpath, status)
-        with zipfile.ZipFile(zpath) as z:
-            z.extractall(SIMCSE_DIR.parent)
-        (SIMCSE_DIR.parent / f"SimCSE-{SIMCSE_COMMIT}").rename(SIMCSE_DIR)
-        (SIMCSE_DIR / "COMMIT").write_text(SIMCSE_COMMIT + "\n")
-        zpath.unlink()
+        with tempfile.TemporaryDirectory(dir=SIMCSE_DIR.parent) as tmp:
+            zpath = Path(tmp) / "simcse.zip"
+            download(SIMCSE_ZIP, zpath, status)
+            with zipfile.ZipFile(zpath) as archive:
+                archive.extractall(tmp)
+            source = Path(tmp) / f"SimCSE-{SIMCSE_COMMIT}"
+            (source / "COMMIT").write_text(SIMCSE_COMMIT + "\n")
+            if not (SIMCSE_DIR / "evaluation.py").exists():
+                source.rename(SIMCSE_DIR)
     commit = simcse_commit()
     if commit != SIMCSE_COMMIT:
         raise RuntimeError(f"SimCSE commit is {commit}, expected {SIMCSE_COMMIT}")
+    if (SIMCSE_DIR / ".git").exists():
+        subprocess.run(["git", "-c", "core.filemode=false", "diff", "--quiet", "HEAD", "--",
+                        "evaluation.py", "SentEval/senteval"], cwd=SIMCSE_DIR, check=True)
     return commit
 
 
@@ -180,28 +191,59 @@ def ensure_venv(venv: Path, base_python: str, skip_install: bool, status: Status
     return py
 
 
+def sts_inputs() -> list[str]:
+    # The files opened by the pinned SentEval STS loaders (including train/dev).
+    subsets = [
+        ("MSRpar", "MSRvid", "SMTeuroparl", "surprise.OnWN", "surprise.SMTnews"),
+        ("FNWN", "headlines", "OnWN"),
+        ("deft-forum", "deft-news", "headlines", "images", "OnWN", "tweet-news"),
+        ("answers-forums", "answers-students", "belief", "headlines", "images"),
+        ("answer-answer", "headlines", "plagiarism", "postediting", "question-question"),
+    ]
+    names = [f"STS/STS{year}-en-test/STS.{kind}.{subset}.txt"
+             for year, group in enumerate(subsets, 12) for subset in group for kind in ("input", "gs")]
+    names.extend(f"STS/STSBenchmark/sts-{split}.csv" for split in ("train", "dev", "test"))
+    return sorted(names + ["SICK/SICK_train.txt", "SICK/SICK_trial.txt", "SICK/SICK_test_annotated.txt"])
+
+
+def sts_data_matches(directory: Path, names: list[str]) -> bool:
+    digest = hashlib.sha256()
+    for name in names:
+        file = directory / name
+        if not file.is_file():
+            return False
+        digest.update(name.encode() + b"\0" + hashlib.sha256(file.read_bytes()).digest())
+    return digest.hexdigest() == STS_INPUTS_SHA256
+
+
 def ensure_senteval_data(status: Status):
     ddir = SIMCSE_DIR / "SentEval" / "data" / "downstream"
-    needed = [ddir / "STS" / "STSBenchmark" / "sts-test.csv", ddir / "SICK" / "SICK_test_annotated.txt"] + [
-        ddir / "STS" / f"STS{y}-en-test" for y in (12, 13, 14, 15, 16)]
-    if all(p.exists() for p in needed):
-        status("SentEval STS data present")
+    names = sts_inputs()
+    if sts_data_matches(ddir, names):
+        status("Verified cached SentEval STS inputs")
         return
-    status("Downloading SentEval data (senteval.tar)")
     ddir.mkdir(parents=True, exist_ok=True)
-    tar_path = ddir / "senteval.tar"
-    if not tar_path.exists():
+    with tempfile.TemporaryDirectory(dir=ddir) as tmp:
+        staging = Path(tmp)
+        tar_path = staging / "senteval.tar"
         download(SENTEVAL_TAR, tar_path, status)
-    status("Extracting senteval.tar")
-    with tarfile.open(tar_path) as t:
-        for m in t.getmembers():  # refuse absolute paths / path traversal
-            if m.name.startswith(("/", "\\")) or ".." in Path(m.name).parts:
-                raise RuntimeError(f"Unsafe path in tar: {m.name}")
-        t.extractall(ddir)
-    missing = [str(p) for p in needed if not p.exists()]
-    if missing:
-        raise RuntimeError(f"SentEval data incomplete, missing: {missing}")
-    tar_path.unlink()
+        if hashlib.sha256(tar_path.read_bytes()).hexdigest() != SENTEVAL_SHA256:
+            raise RuntimeError("SentEval archive SHA-256 mismatch")
+        with tarfile.open(tar_path) as archive:
+            for name in names:
+                member = archive.getmember(name)
+                if not member.isfile():
+                    raise ValueError(f"Expected a regular file: {name}")
+                target = staging / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                with archive.extractfile(member) as source, target.open("wb") as output:
+                    shutil.copyfileobj(source, output)
+        if not sts_data_matches(staging, names):
+            raise RuntimeError("SentEval STS input SHA-256 mismatch")
+        for name in names:
+            target = ddir / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            (staging / name).replace(target)
 
 
 def parse_sts_table(log_text: str):
@@ -210,14 +252,19 @@ def parse_sts_table(log_text: str):
     for i in range(len(lines) - 1, -1, -1):
         if lines[i].startswith("|") and "STS12" in lines[i] and "SICKRelatedness" in lines[i]:
             header = [c.strip() for c in lines[i].strip("|").split("|")]
+            if header != TASKS + ["Avg."]:
+                raise ValueError("Unexpected STS table columns")
             for row in lines[i + 1:i + 4]:
                 if row.startswith("|"):
                     vals = [c.strip() for c in row.strip("|").split("|")]
-                    return dict(zip(header, map(float, vals)))
+                    scores = list(map(float, vals))
+                    if len(scores) != len(header) or not all(math.isfinite(v) and abs(v) <= 100 for v in scores):
+                        raise ValueError("Invalid STS scores")
+                    return dict(zip(header, scores))
     raise RuntimeError("Could not find the STS result table in the evaluation log")
 
 
-def venv_info(py: Path, model: str):
+def venv_info(py: Path):
     code = r"""
 import json, platform, sys
 info = {"python": sys.version.split()[0]}
@@ -226,14 +273,9 @@ info.update(torch=torch.__version__, transformers=transformers.__version__, nump
             scipy=scipy.__version__, scikit_learn=sklearn.__version__,
             cuda_available=torch.cuda.is_available(), torch_threads=torch.get_num_threads())
 info["device"] = torch.cuda.get_device_name(0) if torch.cuda.is_available() else "cpu"
-try:
-    from huggingface_hub import HfApi
-    info["model_revision"] = HfApi().model_info(sys.argv[1]).sha
-except Exception as e:  # offline / no access
-    info["model_revision"] = "unknown (%s)" % type(e).__name__
 print(json.dumps(info))
 """
-    out = subprocess.check_output([str(py), "-c", code, model], text=True)
+    out = subprocess.check_output([str(py), "-c", code], text=True)
     return json.loads(out.strip().splitlines()[-1])
 
 
@@ -247,13 +289,11 @@ def main():
     args = ap.parse_args()
 
     exp = dict(EXPERIMENTS[args.exp])
-    if args.model:
-        exp["model"] = args.model
-    out_dir = HERE / "results" / args.exp
-    out_dir.mkdir(parents=True, exist_ok=True)
+    run_id = f"debug-{args.exp}" if args.model else args.exp
+    out_dir = create_run_dir(ROOT, run_id)
     status = Status(out_dir)
     t0 = time.time()
-    status(f"Start {args.exp}: model={exp['model']} pooler={exp['pooler']}")
+    status(f"Start {run_id}: model={args.model or exp['model']} pooler={exp['pooler']} output={out_dir.relative_to(ROOT)}")
     try:
         commit = ensure_simcse(status)
         py = ensure_venv(Path(args.venv).resolve(), args.python, args.skip_install, status)
@@ -261,7 +301,17 @@ def main():
 
         env = dict(os.environ, PYTHONUTF8="1", PYTHONIOENCODING="utf-8")
         env.setdefault("HF_HOME", str(ROOT / ".cache" / "huggingface"))
-        cmd = [str(py), "evaluation.py", "--model_name_or_path", exp["model"], "--pooler", exp["pooler"],
+        if args.model:
+            local = Path(args.model)
+            model_path = str(local.resolve()) if local.exists() else args.model
+        else:
+            weights = "model.safetensors" if args.exp == "R3" else "pytorch_model.bin"
+            code = ("from huggingface_hub import snapshot_download; import sys; "
+                    "print(snapshot_download(sys.argv[1], revision=sys.argv[2], "
+                    "allow_patterns=['*.json','vocab.txt',sys.argv[3]]))")
+            model_path = subprocess.check_output([str(py), "-c", code, exp["model"], exp["revision"], weights],
+                                                 text=True, encoding="utf-8", env=env).strip()
+        cmd = [str(py), "evaluation.py", "--model_name_or_path", model_path, "--pooler", exp["pooler"],
                "--task_set", "sts", "--mode", "test"]
         status("Running: " + " ".join(cmd[1:]) + f"  (cwd={SIMCSE_DIR})")
         t_eval = time.time()
@@ -272,35 +322,36 @@ def main():
         table = parse_sts_table(log_text)
         ours = [table[t] for t in TASKS] + [table["Avg."]]
         names = TASKS + ["Avg."]
-        metrics = {"exp": args.exp, "model": exp["model"], "pooler": exp["pooler"],
+        metrics = {"exp": run_id, "model": args.model or exp["model"], "pooler": exp["pooler"],
                    "metric": "Spearman x100, 'all' setting, test", "scores": dict(zip(names, ours))}
-        for key in ("ref_readme", "ref_paper"):
+        for key in (() if args.model else ("ref_readme", "ref_paper")):
             ref = exp[key]
             if ref:
                 diffs = [round(a - b, 2) for a, b in zip(ours, ref)]
                 metrics[key] = dict(zip(names, ref))
                 metrics["diff_vs_" + key[4:]] = dict(zip(names, diffs))
         main_ref = exp["ref_readme"] or exp["ref_paper"]
-        metrics["avg_abs_diff_vs_main_ref"] = round(abs(ours[-1] - main_ref[-1]), 2)
-        metrics["reproduced_within_tolerance"] = metrics["avg_abs_diff_vs_main_ref"] <= TOLERANCE
-        metrics["tolerance"] = TOLERANCE
+        if not args.model:
+            metrics["model_revision"] = exp["revision"]
+            metrics["avg_abs_diff_vs_main_ref"] = round(abs(ours[-1] - main_ref[-1]), 2)
+            metrics["reproduced_within_tolerance"] = metrics["avg_abs_diff_vs_main_ref"] <= TOLERANCE
+            metrics["tolerance"] = TOLERANCE
         metrics["eval_seconds"] = eval_seconds
-        (out_dir / "metrics.json").write_text(json.dumps(metrics, indent=2, ensure_ascii=False), encoding="utf-8")
-
-        info = venv_info(py, exp["model"])
+        info = venv_info(py)
         freeze = subprocess.check_output([str(py), "-c", (
             "import importlib.metadata as m;"
             "print('\\n'.join(sorted(f\"{d.metadata['Name']}=={d.version}\" for d in m.distributions())))")],
             text=True)
         (out_dir / "pip_freeze.txt").write_text(freeze, encoding="utf-8")
         env_lines = [
-            f"experiment: {args.exp}",
+            f"experiment: {run_id}",
             f"finished: {now()}",
             f"total_seconds: {round(time.time() - t0, 1)}",
             f"eval_seconds: {eval_seconds}",
-            f"command (cwd=experiments/reproduction/SimCSE): python {' '.join(cmd[1:])}",
+            f"evaluation argv (cwd=experiments/reproduction/SimCSE): {json.dumps(cmd[1:], ensure_ascii=False)}",
             f"simcse_repo: https://github.com/princeton-nlp/SimCSE @ {commit}",
-            f"model: {exp['model']} @ {info.get('model_revision')}",
+            f"model: {args.model or exp['model']} @ {exp['revision'] if not args.model else 'debug override'}",
+            f"senteval_revision: {SENTEVAL_REVISION} | archive_sha256: {SENTEVAL_SHA256}",
             f"os: {platform.platform()}",
             f"machine: {platform.machine()} | cpu: {platform.processor() or 'n/a'} | logical_cpus: {os.cpu_count()}",
             f"device: {info.get('device')} | cuda_available: {info.get('cuda_available')} | torch_threads: {info.get('torch_threads')}",
@@ -312,12 +363,15 @@ def main():
             "full package list: pip_freeze.txt",
         ]
         (out_dir / "env.txt").write_text("\n".join(env_lines) + "\n", encoding="utf-8")
-        verdict = "REPRODUCED" if metrics["reproduced_within_tolerance"] else "DIFFERS"
-        status(f"DONE {args.exp}: avg={ours[-1]:.2f} vs ref {main_ref[-1]:.2f} -> {verdict} (tolerance {TOLERANCE})")
+        (out_dir / "metrics.json").write_text(json.dumps(metrics, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+        verdict = "DEBUG" if args.model else ("REPRODUCED" if metrics["reproduced_within_tolerance"] else "DIFFERS")
+        status(f"DONE {run_id}: avg={ours[-1]:.2f} ({verdict})")
+        return int(verdict == "DIFFERS")
     except Exception as e:
         status(f"FAILED: {type(e).__name__}: {e}")
         raise
 
 
 if __name__ == "__main__":
-    main()
+    sys.stdout.reconfigure(errors="backslashreplace")
+    sys.exit(main())

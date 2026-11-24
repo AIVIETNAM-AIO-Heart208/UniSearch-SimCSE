@@ -21,9 +21,9 @@ Script tự làm các bước sau, bước nào đã có sẵn thì bỏ qua:
 
 1. Lấy code gốc @ `235f89e` vào `SimCSE/`. Thư mục này nằm trong `.gitignore`.
 2. Tạo `.venv-repro` ở thư mục gốc và cài `requirements-r1.txt`.
-3. Tải dữ liệu STS (`senteval.tar`, khoảng 90 MB).
-4. Gọi nguyên bản `evaluation.py`.
-5. Ghi `results/<exp>/`:
+3. Kiểm SHA-256 của 54 file đầu vào STS. Nếu cần, tải `senteval.tar` từ revision cố định (khoảng 90 MB), kiểm SHA-256 rồi khôi phục các file cần dùng.
+4. Gọi nguyên bản `evaluation.py` với snapshot checkpoint cố định theo bảng môi trường bên dưới.
+5. Mỗi lần chạy tạo một thư mục riêng trong `outputs/reproduction/`. Bộ số liệu công bố nằm trong `experiments/reproduction/results/`. Lần chạy có `--model` mang nhãn debug. File của một lần tái hiện gồm:
    - `metrics.json`: điểm và chênh lệch so với README/paper.
    - `env.txt`, `pip_freeze.txt`, `eval_log.txt`, `status.txt`.
 
@@ -48,7 +48,7 @@ Script tự làm các bước sau, bước nào đã có sẵn thì bỏ qua:
 
 - **Cả ba thí nghiệm đều khớp.** Mọi chênh lệch đều ≤ 0,01. R1 trùng tuyệt đối với README repo; chỉ lệch 0,01 so với paper vì paper ghi STS-B là 84,25, còn README ghi 84,26.
 - **Thứ tự chất lượng của paper được tái hiện đúng:** BERT thô 56,70 → unsup SimCSE 76,25 → sup SimCSE 81,58.
-- **Về pooler `avg_first_last` (R3):** tại commit này, "first" là `hidden_states[0]`, tức output của lớp embedding. R3 ra đúng 56,70, nên số của paper được tính đúng theo cách này.
+- **Về pooler `avg_first_last` (R3):** tại commit này, "first" là `hidden_states[0]`, tức output của lớp embedding. Với cách tính đó, nhóm thu được cùng điểm trung bình 56,70 như trong paper.
 
 ## Môi trường
 
@@ -68,7 +68,7 @@ Script tự làm các bước sau, bước nào đã có sẵn thì bỏ qua:
 **Ghi chú đường dẫn**
 
 - R1–R3 được chạy ở thư mục cũ `D:\Lab03_Group14\repro\` trước khi chuyển vào repo. Vì vậy `status.txt` và `env.txt` vẫn ghi đường dẫn cũ.
-- Code chỉ được cập nhật đường dẫn cho cấu trúc mới. Bản đã cập nhật được chạy thử trên dữ liệu giả, không phải chạy lại thật.
+- Log ngày 23/11 mô tả đúng lệnh và môi trường ngày đo. Script hiện tại cố định revision checkpoint trước khi đánh giá và kiểm đầu vào SentEval.
 
 ## R4: tự cài InfoNCE (23/11/2026)
 
@@ -78,7 +78,7 @@ Hàm `infonce_loss` ở [src/simcse_lab/model/infonce.py](../../src/simcse_lab/m
 
 ```bash
 python -m pytest tests/test_infonce.py -q    # 689 test của R4, khoảng 50 giây trên CPU
-python experiments/reproduction/run_r4.py    # chạy test và ghi results/R4/
+python experiments/reproduction/run_r4.py    # chạy test và ghi outputs/reproduction/R4-*/
 ```
 
 **Lưới kiểm thử:**

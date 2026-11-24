@@ -31,11 +31,11 @@ Chạy từ thư mục gốc bằng PowerShell trên Windows.
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -e .
+.\.venv\Scripts\python.exe -m pip install -e ".[test]"
 .\.venv\Scripts\python.exe -c "import simcse_lab; print(simcse_lab.__file__)"
 ```
 
-Trên Linux hoặc macOS, dùng `.venv/bin/python` thay cho `.\.venv\Scripts\python.exe`. Package hiện mới có `simcse_lab.model.infonce`, và module này cần `torch`. `pyproject.toml` chưa khai báo `torch` và `pytest`, nên cần cài tay. Các thư viện khác sẽ khai báo trong `pyproject.toml` khi triển khai.
+Trên Linux hoặc macOS, dùng `.venv/bin/python` thay cho `.\.venv\Scripts\python.exe`. Package khai báo PyTorch để chạy InfoNCE. Tùy chọn `[test]` cài thêm pytest.
 
 ## Tái hiện kết quả SimCSE
 
@@ -44,9 +44,9 @@ Trên Linux hoặc macOS, dùng `.venv/bin/python` thay cho `.\.venv\Scripts\pyt
 Đã tự cài lại InfoNCE (R4) và kiểm thử đối chiếu với `cl_forward` của code gốc. Ở float64, mức lệch ≤ 1,4e-9.
 
 ```powershell
-experiments\reproduction\run_r1.bat        # R1; thêm R2 hoặc R3 để chạy thí nghiệm khác. Cần Python 3.9–3.11
-python -m pytest tests -q                  # 699 test (689 của R4, 10 kiểm số liệu ví dụ trong báo cáo), khoảng 1 phút CPU. Cần torch và pytest
-python experiments\reproduction\run_r4.py  # R4: đo lại và ghi results/R4/
+experiments\reproduction\run_r1.bat                     # R1, thêm R2 hoặc R3 nếu cần. Python 3.9–3.11
+.\.venv\Scripts\python.exe -m pytest tests -q            # Toàn bộ bộ test
+.\.venv\Scripts\python.exe experiments\reproduction\run_r4.py  # R4, kết quả mới ở outputs/reproduction/
 ```
 
 ## Tài liệu gốc

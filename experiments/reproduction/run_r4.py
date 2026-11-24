@@ -3,7 +3,7 @@
 Usage (from the repo root; needs torch and pytest):
     python experiments/reproduction/run_r4.py
 
-Writes experiments/reproduction/results/R4/:
+Writes a fresh outputs/reproduction/R4-*/ directory:
     metrics.json    max |ours - ref| per reference and dtype, with the grid and seed
     env.txt         interpreter and package versions
     pytest_log.txt  output of `pytest tests/test_infonce.py`
@@ -15,6 +15,7 @@ recorded numbers describe exactly the cases the tests assert on.
 from __future__ import annotations
 
 import json
+import math
 import platform
 import subprocess
 import sys
@@ -23,7 +24,10 @@ from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-OUT = Path(__file__).resolve().parent / "results" / "R4"
+if __package__:
+    from .run_output import create_run_dir
+else:
+    from run_output import create_run_dir
 sys.path[:0] = [str(ROOT / "src"), str(ROOT / "tests")]
 
 import torch  # noqa: E402
@@ -41,6 +45,8 @@ def max_diff(cases, reference, dtype):
         ours = infonce_loss(z1, z2, z3, temperature=tau, hard_negative_weight=w).item()
         ref = reference(z1, z2, z3, temperature=tau, hard_negative_weight=w).item()
         diff = abs(ours - ref)
+        if not math.isfinite(diff):
+            raise ValueError(f"Non-finite difference for {t.case_id(case)}")
         if diff > worst:
             worst, worst_case = diff, t.case_id(case)
     return {"max_abs_diff": worst, "worst_case": worst_case, "n_cases": len(cases)}
@@ -86,7 +92,7 @@ def float32_breakdown(cases):
 
 
 def main():
-    OUT.mkdir(parents=True, exist_ok=True)
+    out = create_run_dir(ROOT, "R4")
     start = time.perf_counter()
     results = {}
     for name, ref, cases, dtype in [
@@ -108,7 +114,7 @@ def main():
         [sys.executable, "-m", "pytest", "tests/test_infonce.py", "-q", "-p", "no:cacheprovider"],
         cwd=ROOT, capture_output=True, text=True,
     )
-    (OUT / "pytest_log.txt").write_text(log.stdout + log.stderr, encoding="utf-8")
+    (out / "pytest_log.txt").write_text(log.stdout + log.stderr, encoding="utf-8")
     summary = log.stdout.strip().splitlines()[-1] if log.stdout.strip() else ""
 
     metrics = {
@@ -130,11 +136,11 @@ def main():
         "pytest": {"returncode": log.returncode, "summary": summary},
         "measure_seconds": round(measure_seconds, 1),
     }
-    (OUT / "metrics.json").write_text(json.dumps(metrics, indent=2) + "\n", encoding="utf-8")
+    (out / "metrics.json").write_text(json.dumps(metrics, indent=2, allow_nan=False) + "\n", encoding="utf-8")
 
     import pytest
 
-    (OUT / "env.txt").write_text(
+    (out / "env.txt").write_text(
         "\n".join([
             "experiment: R4",
             f"finished: {datetime.now().astimezone().isoformat(timespec='seconds')}",
@@ -150,7 +156,7 @@ def main():
     )
     print(f"pytest: {summary} (returncode {log.returncode})")
     # Relative path: the absolute one has Vietnamese characters a cp1252 console cannot print.
-    print(f"wrote {OUT.relative_to(ROOT).as_posix()}")
+    print(f"wrote {out.relative_to(ROOT).as_posix()}")
     return log.returncode
 
 

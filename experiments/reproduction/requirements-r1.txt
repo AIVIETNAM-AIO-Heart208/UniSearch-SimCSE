@@ -3,4 +3,5 @@ scipy==1.10.1
 scikit-learn==1.2.2
 torch==2.5.1
 transformers==4.46.3
+huggingface_hub==0.36.2
 prettytable==3.10.0

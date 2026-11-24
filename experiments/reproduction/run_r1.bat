@@ -1,17 +1,22 @@
 @echo off
-REM Tai hien SimCSE: R1 mac dinh; truyen R2 hoac R3 de chay thi nghiem khac.
-REM Can Python 3.9-3.11. Ket qua luu o experiments\reproduction\results\<EXP>\
+REM Reproduce R1 by default. Pass R2 or R3 to select a different experiment.
 setlocal
-chcp 65001 >nul
-cd /d "%~dp0..\.."
+set "PYTHONUTF8=1"
 set "EXP=%~1"
 if "%EXP%"=="" set "EXP=R1"
 set "PY311=%LOCALAPPDATA%\Programs\Python\Python311\python.exe"
 if exist "%PY311%" (
-  "%PY311%" experiments\reproduction\run_r1.py --exp %EXP%
-) else (
-  py -3.11 experiments\reproduction\run_r1.py --exp %EXP%
+  "%PY311%" "%~dp0run_r1.py" --exp "%EXP%"
+  goto :done
 )
-echo.
-echo Ket qua: %CD%\experiments\reproduction\results\%EXP%\
-pause
+for %%V in (3.11 3.10 3.9) do (
+  py -%%V -c "pass" >nul 2>&1
+  if not errorlevel 1 (
+    py -%%V "%~dp0run_r1.py" --exp "%EXP%"
+    goto :done
+  )
+)
+echo Python 3.9-3.11 is required. 1>&2
+exit /b 1
+:done
+exit /b %errorlevel%
