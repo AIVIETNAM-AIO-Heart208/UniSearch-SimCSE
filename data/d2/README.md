@@ -21,7 +21,7 @@ D2 bù ba chỗ D1 (ViRHE4QA) không có:
 
 Chỉ các Điều của quy chế được đưa vào corpus. File 2026 có kèm Quyết định ban hành (3 Điều); ba Điều này không được đưa vào, để số Điều không bị trùng. File PDF 2021 chỉ có phần quy chế.
 
-Thông tin từng văn bản (số hiệu, ngày ban hành, hiệu lực, nguồn, cách chép, sha256, kết quả kiểm chứng): [documents.yaml](documents.yaml).
+Số hiệu, ngày ban hành, phạm vi áp dụng, tình trạng thay thế, nguồn và mã kiểm tra SHA-256 của từng văn bản nằm trong [documents.yaml](documents.yaml).
 
 QĐ 91/QĐ-KHTN ngày 18/01/2023 sửa bảng xếp loại ở điểm b khoản 2 Điều 15 của bản 2021. Corpus lưu nguyên bản 2021. Với câu hỏi về xếp loại học tập hoặc tốt nghiệp, cần đối chiếu bản sửa đổi trước khi gán nhãn. [Danh mục văn bản của Trường](https://ttpc.hcmus.edu.vn/he-thong-van-ban-quan-ly-noi-bo/)
 

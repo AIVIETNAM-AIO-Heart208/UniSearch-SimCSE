@@ -35,7 +35,7 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -c "import simcse_lab; print(simcse_lab.__file__)"
 ```
 
-Trên Linux hoặc macOS, dùng `.venv/bin/python` thay cho `.\.venv\Scripts\python.exe`. Package khai báo PyTorch để chạy InfoNCE. Tùy chọn `[test]` cài thêm pytest.
+Trên Linux hoặc macOS, dùng `.venv/bin/python` thay cho `.\.venv\Scripts\python.exe`. Package khai báo PyTorch để chạy InfoNCE. Tùy chọn `[test]` cài pytest và PyYAML để kiểm tra cả metadata của hai quy chế.
 
 ## Tái hiện kết quả SimCSE
 

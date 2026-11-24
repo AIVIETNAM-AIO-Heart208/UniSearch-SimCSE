@@ -5,8 +5,26 @@ import hashlib
 from pathlib import Path
 
 import pytest
+import yaml
 
 from data.d2 import prepare_2026
+
+
+def test_corpus_manifest_identifies_both_sources_and_their_index_inputs():
+    root = Path(__file__).resolve().parents[1]
+    documents = yaml.safe_load((root / "data/d2/documents.yaml").read_bytes())["documents"]
+    by_id = {doc["doc_id"]: doc for doc in documents}
+    assert len(documents) == 2 and set(by_id) == {"hcmus-qcdt-2021", "hcmus-qcdt-2026"}
+    for doc in documents:
+        for key in ("title", "so_hieu", "hieu_luc", "trang_thai", "source_url"):
+            assert isinstance(doc[key], str) and doc[key].strip(), (doc["doc_id"], key)
+    public = by_id["hcmus-qcdt-2021"]
+    assert hashlib.sha256((root / public["text_file"]).read_bytes()).hexdigest() == public["text_sha256"]
+    transcribed = by_id["hcmus-qcdt-2026"]
+    assert root / transcribed["base_file"] == prepare_2026.BASE
+    assert root / transcribed["file"] == prepare_2026.TARGET
+    assert transcribed["base_sha256"] == prepare_2026.BASE_SHA256
+    assert transcribed["sha256"] == prepare_2026.TARGET_SHA256
 
 
 def test_topic_map_covers_each_regulation_article_once():
