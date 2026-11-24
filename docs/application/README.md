@@ -3,7 +3,7 @@
 Đồ án Lab 03 – Machine Learning, **Nhóm 14**, **Option 1: Practical Application**.
 Ứng dụng tìm đúng **Điều/Khoản** trong quy chế đào tạo của Trường ĐH Khoa học Tự nhiên – ĐHQG-HCM cho câu hỏi tự nhiên của sinh viên, hiển thị đoạn văn bản kèm tên văn bản, số hiệu và phạm vi áp dụng.
 
-> **Trạng thái:** đã tái hiện R1–R3, khớp paper (TB STS 81,58 / 76,25 / 56,70), và R4 (InfoNCE tự cài khớp `cl_forward`, lệch ≤ 1,4e-9 ở float64); **chưa có code ứng dụng và chưa có kết quả đánh giá ứng dụng**.
+> **Trạng thái:** đã tái hiện R1–R3, khớp paper (TB STS 81,58 / 76,25 / 56,70), và R4 (InfoNCE tự cài khớp `cl_forward`, lệch ≤ 1,4e-9 ở float64). Module thống kê và đo cảnh báo đã chạy qua kiểm thử trên dữ liệu giả. Kết quả truy hồi thực nghiệm đang chờ xếp hạng D1 và D2.
 > Trạng thái chi tiết và việc tiếp theo: xem [PROJECT.md – Current Status](PROJECT.md#1-current-status).
 
 ## Thành viên
@@ -21,7 +21,7 @@ Sinh viên hỏi bằng lời thường, còn quy chế viết bằng thuật ng
 
 **Mục tiêu:** trả về 3 Điều/Khoản liên quan nhất, kèm trích đoạn, tên văn bản, số hiệu, ngày ban hành và phạm vi áp dụng.
 - Corpus gồm hai phiên bản Quy chế đào tạo: QĐ 1175/2021 và QĐ 3087/2026. Điều 27 của quy chế 2026 ghi: quy chế áp dụng cho các khóa tuyển từ năm học 2026–2027; đối với các khóa tuyển sinh từ năm 2025 trở về trước, Trường lựa chọn áp dụng quy định mới có lợi hơn cho người học. Vì vậy ứng dụng giữ cả hai bản và ghi rõ phạm vi áp dụng; trong mỗi kết quả, bản 2026 hiển thị trước vì là bản mới nhất.
-- Bản 2026 là bản ChatGPT chép từ bản scan và nhóm làm sạch lỗi OCR, không phải nguyên văn; ứng dụng ghi rõ điều này khi hiển thị.
+- Bản 2026 là bản ChatGPT chép từ bản scan và nhóm đã hiệu đính theo PDF chính thức. Ứng dụng ghi rõ nguồn bản chép khi hiển thị. [Hướng dẫn tạo corpus](../../data/d2/README.md#file)
 - Khi độ tin cậy thấp, ứng dụng cảnh báo để người dùng tự đối chiếu.
 - Nhóm sẽ so sánh kết quả tra cứu với BM25 trên D1-test và D2 sau khi cố định cấu hình.
 
@@ -68,7 +68,11 @@ experiments\reproduction\run_r1.bat R3     :: bert-base-uncased chưa fine-tune 
 
 Trên Linux/macOS: `python3.11 experiments/reproduction/run_r1.py --exp R1`. Kết quả và môi trường: [experiments/reproduction/](../../experiments/reproduction/README.md).
 
-### Ứng dụng và đánh giá (dự kiến)
+### Kiểm tra phần thống kê
+
+Chạy `python -m pytest tests/test_stats.py -q` từ gốc repo. Bộ kiểm thử dùng xếp hạng giả với kết quả tính tay. Đầu vào và cách dùng với xếp hạng thực được mô tả ở [PROJECT.md §5.4](PROJECT.md#54-interface--định-dạng-dữ-liệu).
+
+### Chạy ứng dụng (dự kiến)
 
 > ⚠️ Các lệnh dưới đây là **dự kiến**. Sẽ được cập nhật và kiểm tra khi có code.
 
@@ -79,7 +83,7 @@ python -m venv .venv
 .\.venv\Scripts\python.exe apps\app.py                       # chạy ứng dụng demo
 ```
 
-Chữ QĐ 1175 có trong Git (`data/d2/`). Bản chép QĐ 3087 **không có trong Git** vì chưa được phép đăng công khai (D-18); muốn chạy corpus HCMUS đầy đủ, đặt file này vào `data/raw/d2/`. Xem [data/d2/](../../data/d2/README.md).
+Chữ QĐ 1175 có trong Git (`data/d2/`). Để tái lập corpus HCMUS, đặt bản chép QĐ 3087 sau hai lượt làm sạch vào `data/raw/d2/` và chạy `python data/d2/prepare_2026.py`. Nguồn PDF chính thức và ghi chú về sửa đổi năm 2023 nằm ở [data/d2/](../../data/d2/README.md).
 
 ## Dữ liệu
 
@@ -101,4 +105,4 @@ Chữ QĐ 1175 có trong Git (`data/d2/`). Bản chép QĐ 3087 **không có tro
 - T. Gao, X. Yao, D. Chen. *SimCSE: Simple Contrastive Learning of Sentence Embeddings.* EMNLP 2021, pp. 6894–6910. <https://aclanthology.org/2021.emnlp-main.552/>
 - Mã nguồn: <https://github.com/princeton-nlp/SimCSE/tree/235f89e0244b23673b69fbbc4a1cd9868c5a5c24>
 - Trường ĐH Khoa học Tự nhiên, ĐHQG-HCM. *Quy chế đào tạo trình độ đại học*, ban hành kèm QĐ 1175/QĐ-KHTN ngày 24/9/2021. <https://www.ctda.hcmus.edu.vn/wp-content/uploads/2023/03/Quy-che-dao-tao-2021.pdf>
-- Trường ĐH Khoa học Tự nhiên, ĐHQG-HCM. *Quy chế đào tạo trình độ đại học*, ban hành kèm QĐ 3087/QĐ-KHTN ngày 29/9/2026 (bản scan, chưa thấy đăng công khai).
+- Trường ĐH Khoa học Tự nhiên, ĐHQG-HCM. *Quy chế đào tạo trình độ đại học*, ban hành kèm QĐ 3087/QĐ-KHTN ngày 29/9/2026. [PDF do Trường công bố](https://www.hcmus.edu.vn/wp-content/uploads/2026/10/QD3087_QD-Quy-che-dao-tao-2026.pdf).

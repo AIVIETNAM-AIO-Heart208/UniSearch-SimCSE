@@ -311,9 +311,10 @@ To check our understanding of Eqs.~\eqref{eq:infonce}--\eqref{eq:sup}, we
 implement the loss ourselves in \path{src/simcse_lab/model/infonce.py}. It
 covers the unsupervised case and the supervised case with a log-weighted hard
 negative. Unlike \texttt{cl\_forward}, it normalises the embeddings, takes
-their dot products divided by $\tau$ as logits, adds $w$ to the diagonal of
-the hard-negative block and computes each $\ell_i$ as a log-sum-exp minus the
-positive logit, without a cross-entropy module or an explicit weight matrix.
+their dot products, subtracts the row maximum before dividing by $\tau$,
+and adds $w$ to each anchor's own hard-negative logit. The negative diagonal
+of the row-wise log-softmax gives the loss for each positive pair. Centering
+first preserves the contribution of tied candidates at low temperatures.
 It takes the already gathered batch, so multi-GPU gathering is out of scope.
 
 The implementation is tested on random embeddings against two references: a
@@ -321,7 +322,7 @@ naive loop that evaluates Eqs.~\eqref{eq:unsup} and~\eqref{eq:sup} term by term
 with $\alpha=e^{w}$, and the loss computation copied verbatim from
 \texttt{cl\_forward} (\path{tests/infonce_reference.py}). The acceptance
 criterion is an absolute difference below $10^{-6}$ in float64.
-% Numbers below: experiments/reproduction/results/R4/metrics.json (seed 0,
+% Numbers below: experiments/reproduction/results/R4-2026-11-24/metrics.json (seed 0,
 % torch 2.9.1 on CPU).
 The test grid (seed 0) covers batch sizes $N\in\{1,2,8,32\}$, plus
 $N\in\{128,512\}$ against \texttt{cl\_forward} only, embedding sizes 16 and
@@ -329,15 +330,15 @@ $N\in\{128,512\}$ against \texttt{cl\_forward} only, embedding sizes 16 and
 $w\in\{0,1,-0.5,\log 0.5,\log 2\}$. Positives and hard negatives are noisy
 copies of the anchor, so that the hard negatives compete with the positive.
 All 689 test cases pass. In float64, the largest difference is
-$8.4\times10^{-15}$ from the naive loop. Against \texttt{cl\_forward} it is
-$6.0\times10^{-15}$ when $w$ is exactly representable in float32, and
+$8.7\times10^{-15}$ from the naive loop. Against \texttt{cl\_forward} it is
+$3.6\times10^{-15}$ when $w$ is exactly representable in float32, and
 $1.4\times10^{-9}$ for $w=\log 0.5$ and $w=\log 2$. The larger gap comes from
 \texttt{cl\_forward} building its weight matrix in float32: with that matrix
-built in float64 instead, the gap falls to $7.1\times10^{-15}$. On one batch
+built in float64 instead, the gap falls to $5.3\times10^{-15}$. On one batch
 ($N=8$, $d=32$, $\tau=0.05$, $w\in\{0,\log 2\}$), the gradients with respect
 to all three inputs also agree within $10^{-6}$. In float32 the two
 implementations round differently, both in the cosine logits and in the
-cross-entropy step, and the loss gap reaches $3.7\times10^{-6}$. The float32
+cross-entropy step, and the loss gap reaches $9.5\times10^{-7}$. The float32
 check therefore uses a tolerance of $5\times10^{-5}$.
 
 \subsection{Retrieval Pipeline for Vietnamese Regulations}
@@ -367,10 +368,11 @@ university's regulations, each document also records its decision number,
 issue date and scope of application, which the interface displays. ViRHE4QA
 records no such metadata. The 2026 regulation was available to us only as a
 scanned PDF. Its indexed text is a transcription of the scan made with ChatGPT,
-which we cleaned of OCR-style errors (165 corrections in two passes, each rule checked
-against its expected number of matches) and compared with the scan's own OCR
-layer. It is therefore not the official text, and the interface labels it as
-such. Text is normalised to
+which we first cleaned in two passes and compared with the scan's OCR layer.
+We then checked discrepancies against images of the signed regulation and
+corrected substantive differences, including the threshold for dismissal
+after consecutive academic warnings. The interface identifies the indexed
+text as a transcription. Text is normalised to
 Unicode NFC, tone-mark placement is unified (e.g.\ \emph{khoá} and \emph{khóa}),
 and words are segmented with pyvi, which the PhoBERT vocabulary requires. The
 same function is applied to queries, so that index and queries are always
