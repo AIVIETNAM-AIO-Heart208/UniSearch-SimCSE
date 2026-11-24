@@ -63,7 +63,7 @@ def naive_loss(
 #   commit 235f89e0244b23673b69fbbc4a1cd9868c5a5c24, file simcse/models.py
 #   - class Similarity: lines 35-46
 #   - loss computation inside cl_forward: lines 193-211
-# Copyright (c) 2021 Princeton Natural Language Processing, MIT License.
+# Copyright (c) 2021 Princeton Natural Language Processing. See LICENSE-SimCSE.txt.
 # Both blocks are byte-for-byte copies (tests/test_infonce.py checks this when
 # the upstream checkout exists). `cls` is a stand-in object that supplies the
 # three attributes the block reads: cls.sim, cls.device and

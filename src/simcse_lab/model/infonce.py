@@ -22,18 +22,28 @@ caller's job and is out of scope here.
 
 from __future__ import annotations
 
+import math
 from typing import Literal
 
 import torch
-import torch.nn.functional as F
 from torch import Tensor
 
 __all__ = ["infonce_loss"]
 
 
+def _unit_rows(values: Tensor) -> Tensor:
+    # Match nn.CosineSimilarity's forward and backward for sub-epsilon norms.
+    if values.dtype in (torch.float16, torch.bfloat16):
+        values = values.float()
+    norms = values.norm(dim=-1, keepdim=True).clone()
+    with torch.no_grad():
+        norms.clamp_min_(1e-8)
+    return values / norms
+
+
 def _cosine_logits(a: Tensor, b: Tensor, temperature: float) -> Tensor:
     """Return the (len(a), len(b)) matrix of cos(a_i, b_j) / temperature."""
-    return F.normalize(a, dim=-1) @ F.normalize(b, dim=-1).T / temperature
+    return _unit_rows(a) @ _unit_rows(b).T / temperature
 
 
 def infonce_loss(
@@ -62,21 +72,26 @@ def infonce_loss(
         The loss in the dtype of ``z1``.
 
     Raises:
-        ValueError: On mismatched shapes, dtypes or devices, an empty batch, a
-            non-positive temperature, a non-zero ``hard_negative_weight``
+        ValueError: On mismatched shapes, dtypes or devices, empty embeddings,
+            non-floating inputs, non-finite parameters, a non-positive
+            temperature, a non-zero ``hard_negative_weight``
             without ``z3``, or an unknown reduction.
     """
     if z1.ndim != 2 or z1.shape != z2.shape:
         raise ValueError(f"z1 and z2 must both be (N, d); got {tuple(z1.shape)} and {tuple(z2.shape)}")
     if z1.size(0) == 0:
         raise ValueError("the batch is empty")
+    if z1.size(1) == 0 or not z1.is_floating_point():
+        raise ValueError("embeddings must have a positive dimension and a floating dtype")
     if z3 is not None and z3.shape != z1.shape:
         raise ValueError(f"z3 must match z1 {tuple(z1.shape)}; got {tuple(z3.shape)}")
     others = (z2,) if z3 is None else (z2, z3)
     if any(z.dtype != z1.dtype or z.device != z1.device for z in others):
         raise ValueError("z1, z2 and z3 must share dtype and device")
-    if not temperature > 0:
-        raise ValueError(f"temperature must be > 0; got {temperature}")
+    if not math.isfinite(temperature) or temperature <= 0:
+        raise ValueError(f"temperature must be > 0 and finite; got {temperature}")
+    if not math.isfinite(hard_negative_weight):
+        raise ValueError("hard_negative_weight must be finite")
     if z3 is None and hard_negative_weight != 0:
         raise ValueError("hard_negative_weight is set but no hard negatives (z3) were given")
     if reduction not in ("mean", "none"):
@@ -90,10 +105,9 @@ def infonce_loss(
         hard = _cosine_logits(z1, z3, temperature)  # (N, N)
         if hard_negative_weight != 0:
             # alpha^{delta_ij}: only anchor i's own hard negative (j == i) is reweighted.
-            eye = torch.eye(hard.size(0), dtype=hard.dtype, device=hard.device)
-            hard = hard + hard_negative_weight * eye
+            hard.diagonal().add_(hard_negative_weight)
         logits = torch.cat([logits, hard], dim=1)  # (N, 2N)
 
     # -log softmax at the positive, written out as logsumexp - positive.
     losses = torch.logsumexp(logits, dim=1) - positive
-    return losses.mean() if reduction == "mean" else losses
+    return (losses.mean() if reduction == "mean" else losses).to(z1.dtype)
