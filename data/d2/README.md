@@ -23,6 +23,8 @@ Chỉ các Điều của quy chế được đưa vào corpus. File 2026 có kè
 
 Thông tin từng văn bản (số hiệu, ngày ban hành, hiệu lực, nguồn, cách chép, sha256, kết quả kiểm chứng): [documents.yaml](documents.yaml).
 
+QĐ 91/QĐ-KHTN ngày 18/01/2023 sửa bảng xếp loại ở điểm b khoản 2 Điều 15 của bản 2021. Corpus lưu nguyên bản 2021. Với câu hỏi về xếp loại học tập hoặc tốt nghiệp, cần đối chiếu bản sửa đổi trước khi gán nhãn. [Danh mục văn bản của Trường](https://ttpc.hcmus.edu.vn/he-thong-van-ban-quan-ly-noi-bo/)
+
 ## Đối ứng 2021 ↔ 2026
 
 [article_map.tsv](article_map.tsv) gộp 51 Điều thành 26 chủ đề. **Đã duyệt ngày 24/11 (D-18)** sau khi đối chiếu nội dung các cặp có tiêu đề khác nhau.
@@ -41,12 +43,16 @@ Thông tin từng văn bản (số hiệu, ngày ban hành, hiệu lực, nguồ
 | `data/d2/Quy_che_dao_tao_2021_QD1175.txt` | Chữ trích từ PDF công khai, dùng làm corpus 2021. `.gitattributes` giữ nguyên byte để sha256 khớp | Có |
 | `data/raw/d2/Quy_che_dao_tao_2021_QD1175.pdf` | Bản PDF công khai (tải lại từ `source_url`) | Không (`data/raw/` bị bỏ qua) |
 | `data/raw/d2/Quy_che_dao_tao_2026_QD3087.md` | Bản ChatGPT chép từ scan (bản gốc, giữ nguyên) | Không |
-| `data/raw/d2/Quy_che_dao_tao_2026_QD3087_clean.md` | Bản đã làm sạch, dùng làm corpus | Không |
+| `data/raw/d2/Quy_che_dao_tao_2026_QD3087_clean.md` | Bản sau hai lượt làm sạch, đầu vào của `prepare_2026.py` | Không |
+| `data/raw/d2/Quy_che_dao_tao_2026_QD3087_verified.md` | Bản dùng để lập chỉ mục sau khi hiệu đính theo PDF đã ký | Không |
+| [prepare_2026.py](prepare_2026.py) | Tạo bản hiệu đính và kiểm SHA-256 đầu vào, đầu ra | Có |
 | `data/raw/d2/Quy_che_dao_tao_2026_QD3087_corrections.md` | Nhật ký 165 chỗ sửa (hai lượt) | Không |
 | `data/raw/d2/verification/` | Đầu vào, script và kết quả kiểm chứng bản chép 2026 và bảng đối ứng | Không |
 | `data/d2/queries_d2.jsonl` | Câu hỏi và nhãn do nhóm viết (chưa có, Phase 3) | Có |
 
-Chữ QĐ 1175 có trong Git vì văn bản đã công khai. Bản chép QĐ 3087 không đăng công khai cho tới khi trường đăng bản chính thức hoặc Phòng Đào tạo đồng ý; bản này được nộp kèm trong `[Group14].zip` (D-18, Q7). Bản scan gốc do Huy giữ.
+Chữ QĐ 1175 có trong Git. QĐ 3087 đã có [PDF chính thức của Trường](https://www.hcmus.edu.vn/wp-content/uploads/2026/10/QD3087_QD-Quy-che-dao-tao-2026.pdf). Khi chia sẻ, dẫn tới PDF này. Bản ChatGPT chép từ scan và nhóm làm sạch dùng để lập chỉ mục, nộp kèm trong `[Group14].zip` theo D-18.
+
+Từ gốc repo, chạy `python data/d2/prepare_2026.py` khi đã có bản `_clean.md` trong `data/raw/d2/`. Đường dẫn và SHA-256 của PDF chính thức, bản đầu vào và bản dùng để lập chỉ mục nằm trong [documents.yaml](documents.yaml). Các hiệu đính gồm mốc tín chỉ làm khóa luận (Điều 12), thành phần hội đồng (Điều 13), cách xếp loại (Điều 16) và số lần cảnh báo liên tiếp (Điều 17).
 
 ## Câu hỏi (Phase 3, chốt nhãn trước 02/12)
 

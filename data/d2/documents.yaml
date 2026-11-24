@@ -1,6 +1,6 @@
 # D2 corpus: undergraduate training regulations of the University of Science (HCMUS), VNU-HCM.
 # Decisions D-17 and D-18 (docs/application/PROJECT.md §8.3). The 2021 text is public and tracked in data/d2/;
-# the 2021 PDF and the 2026 transcription stay in data/raw/d2/ (git-ignored; Q7).
+# the 2021 PDF and the 2026 transcription stay in data/raw/d2/ (git-ignored).
 # Only the regulation articles go into the corpus. The 2026 file also contains the signing decision
 # (Quyết định 3087, three articles); those are not indexed, so article numbers are never ambiguous.
 # The 2021 PDF contains the regulation only, without its signing decision.
@@ -20,6 +20,11 @@ documents:
     so_chuong: 4
     so_dieu: 24
     source_url: https://www.ctda.hcmus.edu.vn/wp-content/uploads/2023/03/Quy-che-dao-tao-2021.pdf
+    sua_doi:
+      - so_hieu: 91/QĐ-KHTN
+        ngay_ban_hanh: 2023-01-18
+        noi_dung: Bảng xếp loại kết quả học tập và tốt nghiệp theo điểm trung bình. Tiêu đề và danh mục của Trường ghi điểm b khoản 2 Điều 15. Câu dẫn ở Điều 1 của QĐ 91 in là Điều 5. File corpus 2021 là văn bản gốc, chưa hợp nhất sửa đổi này.
+        source_url: https://drive.google.com/file/d/1jNYskZmwL866hip7yL9AHlBuLOb9y1xJ/view
     file: data/raw/d2/Quy_che_dao_tao_2021_QD1175.pdf
     sha256: 951eb00d75e0517040291d2e07a6b33f2650bb861fbd313977000943448626dd
     text_file: data/d2/Quy_che_dao_tao_2021_QD1175.txt
@@ -48,20 +53,26 @@ documents:
     so_chuong: 4
     so_dieu: 27
     source: >-
-      Bản scan PDF 21 trang có chữ ký, do Huy cung cấp. Chưa thấy đăng công khai trên hcmus.edu.vn (kiểm tra 23/11/2026).
-    file: data/raw/d2/Quy_che_dao_tao_2026_QD3087_clean.md
-    sha256: e8415f9d8c4bbf2c2dcc33aae0380f404cd3a180f3a4124a67a92b2dc852d478
+      Bản scan PDF 21 trang. Khoa Môi trường thông báo ngày 19/10/2026. Phòng Thanh tra - Pháp chế dẫn tới PDF chính thức của Trường.
+      Đã đọc Điều 27 trên trang cuối của PDF chính thức ngày 24/11/2026.
+    source_url: https://www.hcmus.edu.vn/wp-content/uploads/2026/10/QD3087_QD-Quy-che-dao-tao-2026.pdf
+    source_sha256: 3e80be3ddf51c72bfc778d197523e33281c0bf43fae74518dbda23bde86c140e
+    file: data/raw/d2/Quy_che_dao_tao_2026_QD3087_verified.md
+    sha256: caee800b1a10a3ad929b15d1dbc212b3c651520134336eb50df2611ce792f916
+    base_file: data/raw/d2/Quy_che_dao_tao_2026_QD3087_clean.md
+    base_sha256: e8415f9d8c4bbf2c2dcc33aae0380f404cd3a180f3a4124a67a92b2dc852d478
     text_method: >-
       ChatGPT chép từ bản scan (data/raw/d2/Quy_che_dao_tao_2026_QD3087.md,
       sha256 e1d6e24417ff3a3a5b4a2adbe6f77272cfc67190eebb4fddf54b180c22c16eee), sau đó làm sạch 165 lỗi OCR bằng
       các quy tắc có kiểm số lần khớp (nhật ký: data/raw/d2/Quy_che_dao_tao_2026_QD3087_corrections.md).
       Lượt 1 (23/11/2026): 158 chỗ. Lượt 2 (24/11/2026): 7 lỗi dấu còn sót, tìm bằng so cặp âm tiết với văn bản tham chiếu.
+      Sau hai lượt, data/d2/prepare_2026.py áp dụng các hiệu đính đối chiếu với ảnh trang 4, 8, 9, 12, 14, 15 và 20 của PDF chính thức.
     nguyen_van: false  # bản chép đã làm sạch, không phải văn bản gốc; trích dẫn quan trọng phải đối chiếu bản scan
     kiem_tra: >-
-      So với lớp OCR của bản scan: độ giống theo từng Điều trung bình 0,74 (mức nền giữa hai Điều khác nhau: 0,15);
-      mọi con số của quy chế có trong OCR; ngày ký xác nhận qua OCR. Hai đoạn bị đánh dấu thấp: Điều 6-7 (0,40) và
+      Đối với base_file trước khi hiệu đính, so với lớp OCR của bản scan: độ giống theo từng Điều trung bình 0,74 (mức nền giữa hai Điều khác nhau: 0,15);
+      phép dò số chỉ kiểm sự xuất hiện trong OCR, không xác nhận con số đúng vị trí. Hai đoạn bị đánh dấu thấp: Điều 6-7 (0,40) và
       Điều 26 (0,35). Ngày 24/11/2026 đã đọc tay đối chiếu với OCR: đủ mọi Khoản (Điều 6: 3, Điều 7: 8, Điều 26: 3),
       nội dung khớp (OCR cắt mất cuối Khoản 2 Điều 26); điểm thấp do OCR mất dấu nặng và đọc tiêu đề "Điều 7" thành "Di6u l". Số Thông báo 1396/TB-KHTN và dòng căn cứ
       2933/QĐ-TTg do Huy đối chiếu với bản scan ngày 23/11/2026. Đầu vào, script và kết quả chạy lại:
       data/raw/d2/verification/ (README.md, outputs_2026-11-23.txt, outputs_2026-11-24.txt).
-    cong_khai: unknown  # Q7 chưa có câu trả lời; theo D-18 không đăng công khai, chỉ nộp trong zip bài nộp
+    cong_khai: true  # Official PDF. The local ChatGPT transcription is distributed only in the submission zip.
