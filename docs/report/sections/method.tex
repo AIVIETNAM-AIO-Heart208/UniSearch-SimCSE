@@ -36,29 +36,10 @@ differ only in how positives (and, optionally, hard negatives) are obtained.
 noise. \emph{Supervised} SimCSE uses sentence pairs from natural language
 inference (NLI) data.
 
-% Sources: Sections 4, 5, 6.2, 7 and 8 of the SimCSE paper (Gao et al., 2021).
-SimCSE differs from earlier sentence-embedding methods in three ways.
-\begin{itemize}
-\item Post-processing methods such as BERT-flow~\cite{li-etal-2020-sentence}
-and whitening~\cite{su2021whiteningsentencerepresentationsbetter} transform
-fixed BERT embeddings to make them more isotropic. SimCSE fine-tunes the
-encoder, and its objective also pulls positive pairs together, which these
-methods do not optimise (Section~5 of~\cite{gao-etal-2021-simcse}). Gao et
-al.\ find that they improve uniformity but degrade alignment (Section~7
-of~\cite{gao-etal-2021-simcse}; see Section~\ref{sec:method-theory}).
-\item Other contrastive methods take two views of the same sentence or
-document, either from data augmentation or from different copies of the
-model. SimCSE takes two outputs of one encoder for the same sentence, which
-differ only in their standard dropout masks. It is the simplest of these
-methods and gives the best STS results (Section~8
-of~\cite{gao-etal-2021-simcse}). With BERT-base, the previous best
-unsupervised average in Table~5 of~\cite{gao-etal-2021-simcse} is 72.05,
-against 76.25 for SimCSE.
-\item Earlier supervised methods fine-tune a Siamese model on NLI
-data~\cite{reimers-gurevych-2019-sentence}. Supervised SimCSE uses the same
-data in a contrastive objective: entailment pairs are positives and
-contradictions are hard negatives (Section~\ref{sec:method-sup}).
-\end{itemize}
+In both settings the loss updates the encoder itself. Its numerator rewards
+similarity to the positive, while the denominator makes that positive
+compete with other candidates. Section~\ref{sec:related-embeddings}
+compares the supervision and geometry of earlier sentence encoders.
 
 \subsection{Contrastive Objective}
 \label{sec:method-objective}
@@ -129,8 +110,10 @@ weighted form:
 Here $\delta_{ij}$ is 1 if $i=j$ and 0 otherwise, so the weight $\alpha$
 applies only to the sentence's own hard negative, and
 $\alpha=1$ gives Eq.~5 itself. Adding hard negatives raises the STS-B
-development score from 84.9 to 86.2 (Table~4 of~\cite{gao-etal-2021-simcse}),
-and $\alpha=1$ works best (Table~7 of~\cite{gao-etal-2021-simcse}). In the code, the weight is passed as
+development score from 84.9 to 86.2 (Table~4 of~\cite{gao-etal-2021-simcse}).
+% Published ablation: ../2021.emnlp-main.552.pdf (repo root), Table 7.
+With contradiction hard negatives, $\alpha=1$ and $\alpha=2$ tie at the
+reported precision in Table~7 of~\cite{gao-etal-2021-simcse}. In the code, the weight is passed as
 $w=\log\alpha$ (argument \texttt{hard\_negative\_weight}, default $0$) and
 added to the corresponding logit, because
 $e^{s/\tau+w}=\alpha\,e^{s/\tau}$. Adding to a logit fits directly into the
@@ -202,7 +185,7 @@ removed at test time. Supervised SimCSE keeps the MLP at test time
 (Table~6 of~\cite{gao-etal-2021-simcse}). Unsupervised models are trained on
 $10^6$ sentences sampled from English Wikipedia for one epoch (BERT-base: batch
 size 64, learning rate $3\times10^{-5}$). Supervised models are trained on the
-314k SNLI and MNLI triples for three epochs (batch size 512, learning rate
+combined SNLI and MNLI data for three epochs (batch size 512, learning rate
 $5\times10^{-5}$). In both settings the STS-B development set is evaluated
 periodically and the best checkpoint is kept (Appendix~A
 of~\cite{gao-etal-2021-simcse}).
@@ -240,14 +223,15 @@ deteriorates.
 Uniformity is closely linked to \emph{anisotropy}. Embeddings from pretrained
 language models occupy a narrow cone of the vector
 space~\cite{ethayarajh-2019-contextual}, so even unrelated sentences have high
-cosine similarity. Gao et al.\ show that, as the number of negatives grows, the
-negative term of the objective is bounded via Jensen's inequality by the sum of
-all entries of $\mathbf{W}\mathbf{W}^\top$, where $\mathbf{W}$ stacks the
-normalised sentence embeddings (Section~5 of~\cite{gao-etal-2021-simcse}).
-Minimising this sum flattens the singular value spectrum of $\mathbf{W}$, which
-makes the embedding space more isotropic. The positive term keeps similar
-sentences together at the same time, so isotropy is not gained at the cost of
-meaning.
+cosine similarity. For a uniform sample of $m$ normalised embeddings,
+let $G=\mathbf{W}\mathbf{W}^\top$ be their Gram matrix. Jensen's inequality
+shows that the asymptotic negative term of the contrastive loss is at least
+the mean of the entries of $G$ divided by $\tau$
+(Eq.~7 of~\cite{gao-etal-2021-simcse}). When all entries of $G$ are
+positive, their sum also bounds its largest eigenvalue from above, while
+its trace stays fixed at $m$. This motivates the paper's spectral argument.
+Appendix~F of~\cite{gao-etal-2021-simcse} shows a flatter singular value
+spectrum for SimCSE on the sampled STS-B sentences.
 
 \subsection{Execution Flow of the Official Code}
 \label{sec:method-code}
@@ -398,13 +382,19 @@ BM25 captures exact terms, numbers and abbreviations, and the encoder captures
 paraphrases. The weight $\lambda\in[0,1]$ is the only fitted parameter of the
 ranking. It is chosen on the development split of ViRHE4QA only
 (Section~\ref{sec:setup}). The system returns the top three results, each an
-article with its best clause, its text and its source document. For our
-university's regulations, articles that state the same rule in the two versions
-are grouped into one result that shows the 2026 version first, so the three
-results cover three different rules.
+article with an excerpt and its source document. For BM25 or dense retrieval
+we quote the chunk with the highest score for that method. For hybrid retrieval
+with $0<\lambda<1$, we apply each method's article-level min--max transform to
+every chunk in the article and quote the chunk with the largest weighted sum.
+Values below the article-level minimum may be negative. A method with zero
+range contributes zero. At either endpoint we use the corresponding single
+method. Ties are broken by ascending article or chunk identifier.
+For the university's regulations we group articles by topic and show the
+2026 edition first within each group. Two editions can cover the same topic
+and still prescribe different rules.
 
 \textbf{Low-confidence warning.} Let $c^\star$ be the best chunk of the
-top-ranked article. If $\mathrm{sim}(q,c^\star)<\theta$, the results are still
+top-ranked article before topic grouping. If $\mathrm{sim}(q,c^\star)<\theta$, the results are still
 shown but are labelled as low confidence, and the student is advised to contact
 the academic affairs office. Per-query min--max normalisation discards
 absolute score levels, and the two methods may rank different articles first.

@@ -13,7 +13,8 @@
   - *Lý do chọn SimCSE, thông tin xuất bản, hạng CORE, SimCSE khác cách làm trước thế nào.*
   - *Ví dụ tính tay cho cả hai cách huấn luyện* (§Worked Example). Câu lấy từ Figure 1 của paper; cosine là giá trị minh hoạ; số liệu kiểm bằng `tests/test_worked_example.py`.
 - [ ] **Minh** — Lập bảng tóm tắt dữ liệu, cách chia tập, baseline, chỉ số Spearman và kết quả chính. Giải thích một hạn chế khi dùng kết quả STS tiếng Anh để dự đoán chất lượng tra cứu quy chế tiếng Việt.
-- [ ] **Related Work (mục 3.2.2)** — Huy viết về biểu diễn câu trước SimCSE và học tương phản. Minh viết về BM25 và truy hồi bằng vector cho tiếng Việt.
+- [x] **Huy** — Related Work (mục 3.2.2), biểu diễn câu trước SimCSE và học tương phản. Bản nháp ngày 24/11 đối chiếu các phương pháp và kết quả STS với bài gốc. [Mục II-A](report/sections/related-work.tex)
+- [ ] **Minh** — Related Work (mục 3.2.2), BM25 và truy hồi bằng vector cho tiếng Việt (mục II-B).
 - [ ] **Cả hai** — Đọc chéo hai phần. Huy giải thích cách tính một kết quả trong bảng, Minh diễn giải được cách tạo cặp huấn luyện.
 
 ## Phase 2 – Triển khai và tái hiện
@@ -38,7 +39,7 @@
 - [ ] **Minh** — Dựng corpus của ứng dụng từ hai quy chế đào tạo HCMUS trong [`data/d2/`](../data/d2/README.md): QĐ 1175/2021 (24 Điều) và QĐ 3087/2026 (27 Điều). Chữ QĐ 1175 có trong `data/d2/`; bản chép QĐ 3087 nằm trên máy, chạy `python data/d2/prepare_2026.py` với bản nhóm đã chia sẻ.
   - Tách Điều/Khoản, kiểm tra số Điều (24 và 27) và kiểm tra mỗi chunk khớp đúng văn bản trong `data/raw/d2/`.
   - Gắn metadata từ `documents.yaml`: văn bản, số hiệu, ngày ban hành, phạm vi áp dụng.
-  - Ví dụ hạn chế của Ctrl+F: câu 9542 trong Introduction thuộc D1 (quy chế ĐH CNTT), nên chạy trên index D1, không phải corpus HCMUS.
+  - Khi minh họa hạn chế của Ctrl+F bằng câu 9542 trong Introduction, chạy trên các đoạn quy chế của D1.
 - [x] **Huy** — Kiểm thử khoảng tin cậy 95% cho chênh lệch giữa hai phương pháp và phép đo cảnh báo bằng ví dụ tính tay. *Xong 24/11, giao diện ở [PROJECT.md §5.4](application/PROJECT.md#54-interface--định-dạng-dữ-liệu).*
 - [ ] **Huy** — Khi có xếp hạng SimCSE-VN từ Phase 2, chuẩn bị bảng so sánh trên D1-dev.
 - [ ] **Minh** — Thêm BM25 và Hybrid vào phần truy hồi tiếng Việt. Giao cho Huy lệnh chạy ba phương pháp trên D1 và trên corpus HCMUS (D2), cho phép đổi trọng số Hybrid. Runs theo định dạng [PROJECT.md §5.4](application/PROJECT.md#54-interface--định-dạng-dữ-liệu), gồm Khoản tốt nhất và cosine của Khoản tốt nhất trong Điều đứng đầu. Dựng giao diện Gradio song song với việc Huy chọn cấu hình.

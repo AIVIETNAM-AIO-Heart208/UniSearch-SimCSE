@@ -1,4 +1,48 @@
 % Owner: Huy + Minh (Phase 1). Lab item 3.2.2; docs/application/PROJECT.md §4.
 \section{Related Work}
 \label{sec:related}
-\TODO{Review sentence representations before SimCSE, contrastive learning, BM25 and dense retrieval for Vietnamese.}
+
+\subsection{Learning Sentence Embeddings for Similarity}
+\label{sec:related-embeddings}
+
+InferSent~\cite{conneau-etal-2017-supervised} used natural language inference
+(NLI) as a source of supervision. Its encoder maps a premise and a hypothesis
+separately to vectors, which a classifier uses to predict entailment,
+contradiction or neutrality. Sentence-BERT (SBERT)~\cite{reimers-gurevych-2019-sentence}
+applied this idea to BERT with shared encoder weights. At retrieval time,
+each passage can be encoded once and compared with a new query by cosine
+similarity. Supervised SimCSE~\cite{gao-etal-2021-simcse} keeps this property
+and uses the NLI labels to train the similarity score directly. For a given
+premise, the encoder learns to rank an entailed hypothesis above a
+contradictory one.
+
+Another line of work starts with a fixed encoder. Li et
+al.~\cite{li-etal-2020-sentence} observed that BERT sentence vectors
+concentrate along a few directions. Their BERT-flow method learns an
+invertible transformation to map this distribution towards an isotropic
+Gaussian. Su et al.~\cite{su2021whiteningsentencerepresentationsbetter}
+used whitening, a linear transformation of centred vectors based on their
+covariance. Both methods can be fitted on unlabelled sentences. In their
+analysis of these baselines, Gao et al.~\cite{gao-etal-2021-simcse} found
+that the vectors spread out more evenly but semantically related pairs
+also moved farther apart. This helps explain why SimCSE explicitly rewards
+similarity within each positive pair.
+
+Without NLI labels, the choice of a positive pair determines what counts as
+similar during training. DeCLUTR~\cite{giorgi-etal-2021-declutr} samples nearby
+spans from one document, so a passage and a shorter span within it can form a
+positive pair. Contrastive Tension~\cite{carlsson2021semantic} trains two
+encoders with separate parameters to distinguish copies of the same sentence
+from randomly paired sentences. Unsupervised SimCSE uses one encoder with independent
+dropout masks on two passes over the same words. The other sentences in the
+batch supply the negatives.
+% Published comparison, not a local rerun of CT: ../2021.emnlp-main.552.pdf
+% (relative to the repo root), Table 5, BERT-base, seven STS tasks, all setting.
+Under the same BERT-base evaluation in Table~5 of~\cite{gao-etal-2021-simcse},
+Contrastive Tension and unsupervised SimCSE average 72.05 and 76.25,
+respectively, in Spearman correlation multiplied by 100. These scores measure
+agreement with human judgements of sentence similarity. Our retrieval task
+instead asks which article contains the clause that answers a question.
+
+\subsection{Lexical and Dense Retrieval for Vietnamese}
+\TODO{Review BM25 and dense retrieval for Vietnamese.}

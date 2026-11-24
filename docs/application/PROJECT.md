@@ -69,6 +69,7 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
     - đoạn so sánh SimCSE với các cách làm trước (post-processing, các phương pháp contrastive khác, SBERT);
     - §Worked Example: ví dụ tính loss cho cả hai cách huấn luyện, dùng câu của Figure 1 và cosine minh hoạ, kiểm bằng `tests/test_worked_example.py`;
     - ví dụ lexical gap thật trong Introduction: câu D1 index 9542 ("bị dừng giữa chừng" và "đình chỉ" trong Điều 6). Nhóm đoạn của câu này phải vào D1-dev ([§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)).
+- [x] Bản nháp [Related Work, mục II-A](../report/sections/related-work.tex) về biểu diễn câu và học tương phản. Mục II-A đối chiếu các baseline trong Bảng 5 của SimCSE với nghiên cứu gốc.
 - [x] **Corpus D2 (23/11, D-17):** quy chế đào tạo của Trường ĐH KHTN, gồm hai văn bản.
   - QĐ 1175/QĐ-KHTN (2021): 24 Điều, PDF có lớp chữ, công khai.
   - QĐ 3087/QĐ-KHTN ngày 29/9/2026: 27 Điều. ChatGPT chép từ bản scan; nhóm làm sạch 165 lỗi OCR có kiểm chứng (158 ở lượt 1, 7 ở lượt 2 ngày 24/11). Bản dùng để lập chỉ mục đã hiệu đính tiếp theo ảnh PDF chính thức, gồm Điều 12, 13, 16 và 17.
@@ -83,7 +84,7 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
 **Việc ưu tiên tiếp theo**
 
 1. **Cả hai:** viết câu hỏi D2 ngay, song song với Phase 2 (quy tắc ở [§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)), để kịp chốt nhãn trước 02/12.
-2. Viết Related Work theo phần đã ghi ở [PLAN.md](../PLAN.md#phase-1--nghiên-cứu-paper).
+2. Hoàn thiện mục II-B của Related Work về BM25 và truy hồi tiếng Việt theo [PLAN.md](../PLAN.md#phase-1--nghiên-cứu-paper).
 3. **Minh** đọc chéo phần bài toán và phương pháp của Huy (Phase 1, hạn 27/11): Introduction và Proposed Method trong `docs/report/sections/`. **Huy** đọc chéo phần của Minh khi Minh xong.
 4. **Minh:** chuẩn bị D1 (`data/prepare_virhe4qa.py`, group split) và chạy SimCSE-VN dense trên D1. Khi chia, nhóm đoạn của câu index 9542 phải vào D1-dev ([§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)).
 5. Khi có xếp hạng D1-dev, kiểm tra bảng so sánh và ngưỡng cảnh báo trước khi mở tập test.
@@ -121,7 +122,7 @@ Các nhận định trong bảng là đánh giá định tính [Proposed]; cần
 
 Truy hồi lai **BM25 + SimCSE-VN** trên corpus quy chế đào tạo của Trường ĐH KHTN (QĐ 1175/2021 và QĐ 3087/2026; D-17), chia theo Điều/Khoản.
 - **Kết quả hiển thị:** trích đoạn kèm tên văn bản, số hiệu, ngày ban hành và phạm vi áp dụng, có cảnh báo khi độ tin cậy thấp.
-- **D1** (ViRHE4QA, quy chế ĐH CNTT) chỉ dùng để đánh giá, trên corpus riêng của nó.
+- **D1** (ViRHE4QA) dùng để đánh giá trên các đoạn quy chế đi kèm bộ dữ liệu.
 - Ứng dụng **không** sinh câu trả lời bằng LLM.
 
 ### 2.5 Phạm vi
@@ -213,10 +214,10 @@ Nguồn: paper (PDF nhóm cung cấp) và code tại commit `235f89e` [Confirmed
 | InfoNCE (Eq. 1) | $\ell_i=-\log \frac{e^{\mathrm{sim}(h_i,h_i^+)/\tau}}{\sum_{j=1}^{N} e^{\mathrm{sim}(h_i,h_j^+)/\tau}}$, với sim là cosine và τ là temperature (mặc định 0,05 trong `train.py`) |
 | Unsupervised (Eq. 4) | $x_i^+=x_i$. Cùng một câu đi qua encoder 2 lần với **dropout mask khác nhau** (dropout chuẩn p = 0,1) → 2 embedding làm positive pair. Dropout đóng vai trò data augmentation tối thiểu |
 | Bằng chứng về dropout | Table 3 (STS-B dev): p = 0,1 → 82,5; p = 0 → 71,1; "fixed 0.1" (cùng mask) → 43,6. Table 1: dropout tốt hơn crop, word deletion, synonym replacement, MLM. Table 2: một encoder tốt hơn hai encoder |
-| Supervised (Eq. 5) | Dùng NLI (SNLI+MNLI): entailment làm positive, contradiction làm **hard negative**. Table 4: 84,9 → 86,2 khi thêm hard negative. Table 7: trọng số α (Eq. 8, §6.3) bằng 1 là tốt nhất |
+| Supervised (Eq. 5) | Dùng NLI (SNLI+MNLI): entailment làm positive, contradiction làm **hard negative**. Table 4: 84,9 → 86,2 khi thêm hard negative. Trong Table 7, α = 1 và α = 2 cùng đạt 86,2 trên STS-B dev ở độ chính xác công bố |
 | Pooling (Table 6) | Unsup: [CLS] + MLP **chỉ khi train**, bỏ MLP khi test. Sup: [CLS] + MLP |
 | Alignment / uniformity (Eq. 2–3) | Alignment: positive pair gần nhau. Uniformity: embedding trải đều trên hypersphere. Unsup SimCSE cải thiện uniformity mà vẫn giữ alignment (Fig. 2–3) |
-| Anisotropy (§5) | Embedding của PLM bị dồn vào một "nón" hẹp. Contrastive objective làm phẳng phổ trị riêng → isotropic hơn |
+| Anisotropy (§5) | Với vector đã chuẩn hóa, khi các phần tử ma trận Gram đều dương, tổng các phần tử chặn trên trị riêng lớn nhất. Đây là lập luận giải thích xu hướng. Phụ lục F đo được phổ giá trị kỳ dị phẳng hơn trên các câu STS-B được khảo sát |
 | Đánh giá (§6.1, App. B) | 7 STS task (STS12–16, STS-B, SICK-R). Lấy cosine trực tiếp, **không** dùng regressor. Báo **Spearman**, gộp theo setting "all" |
 | Kết quả chính (Table 5) | Trung bình 7 STS, BERT-base: unsup SimCSE **76,25**, sup SimCSE **81,57**. Baseline BERT first-last avg 56,70; SBERT 74,89 |
 | Training (App. A) | Unsup: 10⁶ câu Wikipedia, 1 epoch, BERT-base bs 64, lr 3e-5. Sup: SNLI+MNLI (314k), 3 epoch, bs 512, lr 5e-5. Đánh giá STS-B dev mỗi 250 step và giữ checkpoint tốt nhất. Paper dùng GPU 3090, CUDA 11 |
@@ -344,10 +345,12 @@ Câu hỏi → preprocess (cùng hàm) → điểm BM25 và cosine cho mọi chu
 | SimCSE-VN | Khớp ngữ nghĩa, xử lý câu hỏi diễn đạt khác văn bản | Thành phần ML chính, gắn trực tiếp với paper |
 | BM25 (`rank_bm25`) | Khớp từ khóa, số liệu, thuật ngữ, viết tắt | Đại diện giải pháp hiện có; rất mạnh trên D1 theo tham chiếu ngoài ([§6.1](#61-datasets)) |
 | Hybrid λ-fusion | Kết hợp hai loại tín hiệu; chỉ 1 tham số | Đơn giản, chọn trên dev, dễ giải thích |
-| FAISS `IndexFlatIP` | Tìm kiếm chính xác (exact) theo inner product trên vector đã chuẩn hóa; cùng cách với `simcse/tool.py` | Nếu cài lỗi, dùng numpy dot product (kết quả giống hệt vì đều exact) |
+| FAISS `IndexFlatIP` | Tính tích vô hướng trên toàn bộ vector đã chuẩn hóa, cùng cách với `simcse/tool.py` | Nếu cài lỗi, dùng NumPy tính tích vô hướng trên cùng các vector. Sai số dấu phẩy động có thể ảnh hưởng thứ tự các điểm rất sát nhau |
 | Gộp MaxP theo Điều | Điều dài phải chia chunk vì giới hạn 256 token; hiển thị và đánh giá ở mức Điều | Nhãn gold của D1 ở mức Điều |
 
 Min-max theo từng câu hỏi làm mất thang điểm tuyệt đối. Nếu mọi Điều có cùng điểm cho một phương pháp, thành phần chuẩn hóa của phương pháp đó bằng 0. Cảnh báo dùng cosine của SimCSE-VN.
+
+**Chọn đoạn trích sau khi xếp hạng Điều.** Với BM25 và dense, lấy chunk có điểm thô cao nhất theo phương pháp tương ứng. Hybrid ở λ = 1 hoặc λ = 0 dùng đúng quy tắc BM25 hoặc dense. Với 0 < λ < 1, áp dụng cho từng chunk trong Điều cùng hai phép chuẩn hóa đã dùng khi xếp hạng Điều (min và max lấy trên các điểm MaxP của mọi Điều cho câu hỏi đó). Giữ cả giá trị âm khi điểm chunk thấp hơn min, cho thành phần bằng 0 nếu max = min, rồi chọn chunk có tổng có trọng số λ và 1−λ lớn nhất. Khi bằng điểm, chọn theo ID tăng dần: `article_id` cho Điều và `chunk_id` cho đoạn, theo kiểu ID của corpus. `top1_dense_cos` là cosine thô của chính đoạn đã chọn trong Điều đầu tiên, trước khi gộp chủ đề.
 
 ### 5.3 Metadata, trích dẫn, phiên bản và trường hợp không chắc chắn
 
@@ -379,7 +382,7 @@ queries.jsonl  {qid, question, gold_article_ids: [..], gold_clause_ids: [..], sp
 runs/<method>.jsonl  {qid, ranked: [[article_id, score, best_chunk_id], ...], top1_dense_cos}
                # D1: top-20 Điều. D2: cả 51 Điều để tính đủ 10 chủ đề sau khi gộp.
                # Clause@1 tra Điều và Khoản của best_chunk_id, kể cả khi Khoản có nhiều cửa sổ.
-               # top1_dense_cos là cosine của chunk được trích trong Điều xếp đầu trước khi gộp.
+               # Chọn best_chunk_id và top1_dense_cos theo quy tắc trích đoạn ở §5.2.
 API: search(query: str, k: int = 3, method: "bm25"|"dense"|"hybrid", corpus: "hcmus"|"virhe4qa" = "hcmus") -> list[Hit]
      Hit = {article_id, score, best_chunk_id, bm25_score, dense_cos, low_confidence: bool}
 ```
@@ -651,6 +654,7 @@ Tính từ 23/11, còn 18 ngày đến 11/12/2026. Phase 3 xong trước **06/12
 | D-18 | Chốt bốn điểm còn mở của D-17 và thứ tự hiển thị. (1) Duyệt `data/d2/article_map.tsv` sau khi đối chiếu nội dung; giữ T02/T09/T16. (2) Câu D2 viết kiểu gập sách, được dùng thuật ngữ thông dụng, không chép nguyên câu hay mệnh đề; bỏ quy tắc "không chép quá 3 từ liên tiếp". (3) Chữ QĐ 1175 (văn bản công khai) đưa vào Git ở `data/d2/`, giữ nguyên byte (`.gitattributes`) để sha256 khớp. (4) Bản chép QĐ 3087 không đăng công khai cho tới khi trường đăng bản chính thức hoặc Phòng Đào tạo đồng ý; nộp kèm trong `[Group14].zip`. (5) Trong mỗi kết quả, bản 2026 hiển thị trước, bản 2021 là phụ | Chốt (24/11; Huy chọn ưu tiên bản 2026 và giao Claude quyết bốn điểm còn lại) |
 | D-19 | Dùng ngay định dạng ở [§5.4](#54-interface--định-dạng-dữ-liệu). Mỗi người viết Related Work theo phần phụ trách trong [PLAN.md](../PLAN.md#phase-1--nghiên-cứu-paper) | Áp dụng từ 24/11 |
 | D-20 | E0 dùng D1-dev. Bổ sung cho D-19: D2 lưu đủ thứ hạng theo Điều để tính đúng MRR@10 sau khi gộp chủ đề (§6.3). D1 lưu top-20 | Chốt 24/11 khi rà soát |
+| D-21 | Bổ sung D-06 và D-19: cố định cách chọn đoạn trích khi hai phương pháp chọn hai chunk khác nhau và cách xử lý đồng điểm ở [§5.2](#52-vai-trò-từng-thành-phần-proposed). Căn cứ Clause@1 và cảnh báo dùng cùng một đoạn | 24/11, trước khi có xếp hạng D1/D2 |
 
 **Vấn đề còn mở**
 
