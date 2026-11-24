@@ -45,4 +45,29 @@ agreement with human judgements of sentence similarity. Our retrieval task
 instead asks which article contains the clause that answers a question.
 
 \subsection{Lexical and Dense Retrieval for Vietnamese}
-\TODO{Review BM25 and dense retrieval for Vietnamese.}
+BM25 scores a passage using the query terms it contains, accounting for
+their rarity in the collection, their frequency in the passage, and
+passage length~\cite{Robertson_2009}. In our lexical baseline, each
+article receives the score of its highest-scoring passage
+(Section~\ref{sec:method-pipeline}). Term matching is useful
+when a student uses a distinctive term from the regulations. The
+ViRHE4QA example in Section~\ref{sec:intro} illustrates a case where
+word overlap can offer weaker evidence. The question describes an
+interruption in everyday language, while the relevant article uses the
+formal term for suspension.
+
+Dense retrieval represents questions and passages as vectors, so passages
+can receive high scores even when their wording differs from the query.
+Dense Passage Retrieval (DPR) trains separate question and passage
+encoders on examples with relevant and irrelevant passages and ranks by
+dot product~\cite{karpukhin-etal-2020-dense}. In our setting, a shared
+Vietnamese SimCSE checkpoint encodes both questions and passages without
+further training on question--passage pairs. The ranking uses cosine
+similarity between these embeddings.
+
+Nguyen and Quan~\cite{nguyen-quan-2026-works} evaluate lexical, dense,
+and hybrid retrieval under a common protocol across Vietnamese domains,
+including education. Their analysis highlights trade-offs between lexical
+and semantic matching. We test whether these signals complement each other
+for academic regulations by comparing BM25, SimCSE-VN, and their hybrid
+on the same labelled queries and passage collection.

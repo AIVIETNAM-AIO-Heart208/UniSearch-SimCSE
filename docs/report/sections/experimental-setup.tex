@@ -2,6 +2,49 @@
 % Lab items 3.2.4--3.2.5, 3.3.3--3.3.5; docs/application/PROJECT.md §4.5 and §6.
 \section{Experimental Setup}
 \label{sec:setup}
+\subsection{Evaluation protocol in the original study}
+Gao et al.~\cite{gao-etal-2021-simcse} used separate data for learning
+sentence representations, selecting a checkpoint, and evaluating semantic
+textual similarity (STS), as summarized in Table~\ref{tab:paper-data}.
+
+\begin{table}[htbp]
+\caption{Data used by Gao et al.~\cite{gao-etal-2021-simcse}}
+\label{tab:paper-data}
+\centering\footnotesize
+\begin{tabular}{@{}p{0.33\columnwidth}p{0.60\columnwidth}@{}}
+\hline
+Data & Role in the study \\
+\hline
+English Wikipedia & Train unsupervised SimCSE on one million randomly sampled sentences. \\
+SNLI and MNLI & Train supervised SimCSE using 314k entailment pairs as positives and contradictions as hard negatives. \\
+STS-B development set & Select batch size and learning rate. Evaluate every 250 training steps to select the best checkpoint. \\
+STS12, STS13, STS14, STS15, STS16, STS-B, SICK-R & Evaluate the selected encoder on seven English similarity tasks. \\
+\hline
+\end{tabular}
+\end{table}
+
+For each sentence pair, the authors encoded the two sentences separately
+and computed the cosine similarity of their embedding vectors. Across
+pairs, Spearman's $\rho$ measured agreement between the ranks of these
+cosines and the ranks of human similarity judgments. This choice matches
+the goal of STS: a pair judged more similar by annotators should receive a
+higher cosine score, even though the two scores use different scales.
+Even the supervised
+encoder was evaluated directly. Its training labels came from natural
+language inference, and no regressor was fitted on STS training data.
+
+For STS12--STS16, the aggregation protocol called \emph{all} pooled the
+topic subsets within each year before computing one correlation for that
+year. The Avg.\ column then gave equal weight to each of the seven tasks.
+The published STS-B split contains 1,500 development pairs and 1,379
+test pairs.\footnote{Cer et al., Table~11,
+\url{https://aclanthology.org/S17-2001/}.} SentEval lists approximately
+4,900 test pairs for SICK-R.\footnote{\url{https://github.com/facebookresearch/SentEval#evaluation-tasks}}
+
+The authors report using NVIDIA 3090 GPUs with CUDA~11 for the published
+experiments.\footnote{SimCSE training documentation at commit
+\texttt{235f89e}, \url{https://github.com/princeton-nlp/SimCSE/tree/235f89e#training}.}
+
 % Recorded environments: experiments/reproduction/results/R1/env.txt,
 % experiments/reproduction/results/R2/env.txt and experiments/reproduction/results/R3/env.txt.
 For R1--R3 we evaluated the released checkpoints on CPU using the original

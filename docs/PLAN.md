@@ -8,14 +8,14 @@
 
 *Mục 3.1–3.2 · Hai người đọc cùng paper, mỗi người viết một phần.*
 
-- [x] **Huy** — Viết phần bài toán, lý do chọn SimCSE, thông tin xuất bản và hạng CORE. Giải thích hai cách huấn luyện bằng ví dụ về dropout, cặp dương, mẫu âm và contrastive loss. *Bản nháp xong 23/11 (`introduction.tex`, `method.tex`), chờ đọc chéo:*
+- [x] **Huy** — Viết phần bài toán, lý do chọn SimCSE, thông tin xuất bản và hạng CORE. Giải thích hai cách huấn luyện bằng ví dụ về dropout, cặp dương, mẫu âm và contrastive loss. *Bản nháp xong 23/11 (`introduction.tex`, `method.tex`), đã đọc chéo.*
   - *Bài toán, kèm ví dụ lexical gap thật từ D1:* câu index 9542, hỏi "bị dừng giữa chừng" trong khi Điều 6 dùng "đình chỉ".
   - *Lý do chọn SimCSE, thông tin xuất bản, hạng CORE, SimCSE khác cách làm trước thế nào.*
   - *Ví dụ tính tay cho cả hai cách huấn luyện* (§Worked Example). Câu lấy từ Figure 1 của paper; cosine là giá trị minh hoạ; số liệu kiểm bằng `tests/test_worked_example.py`.
-- [ ] **Minh** — Lập bảng tóm tắt dữ liệu, cách chia tập, baseline, chỉ số Spearman và kết quả chính. Giải thích một hạn chế khi dùng kết quả STS tiếng Anh để dự đoán chất lượng tra cứu quy chế tiếng Việt.
+- [x] **Minh** — Lập bảng tóm tắt dữ liệu, cách chia tập, baseline, chỉ số Spearman và kết quả chính. Giải thích một hạn chế khi dùng kết quả STS tiếng Anh để dự đoán chất lượng tra cứu quy chế tiếng Việt. [Experimental Setup](report/sections/experimental-setup.tex) · [Results and Discussion](report/sections/results.tex)
 - [x] **Huy** — Related Work (mục 3.2.2), biểu diễn câu trước SimCSE và học tương phản. Bản nháp ngày 24/11 đối chiếu các phương pháp và kết quả STS với bài gốc. [Mục II-A](report/sections/related-work.tex)
-- [ ] **Minh** — Related Work (mục 3.2.2), BM25 và truy hồi bằng vector cho tiếng Việt (mục II-B).
-- [ ] **Cả hai** — Đọc chéo hai phần. Huy giải thích cách tính một kết quả trong bảng, Minh diễn giải được cách tạo cặp huấn luyện.
+- [x] **Minh** — Related Work (mục 3.2.2), BM25 và truy hồi bằng vector cho tiếng Việt. [Mục II-B](report/sections/related-work.tex)
+- [x] **Cả hai** — Đọc chéo hai phần. Huy giải thích cách tính một kết quả trong bảng, Minh diễn giải được cách tạo cặp huấn luyện. Minh xác nhận đã trao đổi xong.
 
 ## Phase 2 – Triển khai và tái hiện
 

@@ -10,23 +10,47 @@ Table~\ref{tab:sts-reproduction} gives the mean Spearman correlation
 across the seven STS tasks under the paper's \emph{all} protocol. The supervised
 run matches the official repository's mean and differs from the paper by
 0.01 points. The reproduced ordering holds on these English benchmarks.
-Vietnamese regulation retrieval requires a separate evaluation.
 
 \begin{table}[htbp]
-\caption{Mean STS Spearman correlation ($\times 100$).
+\caption{STS-B test and seven-task mean Spearman correlation ($\times 100$).
 Paper values are from Table~5 of~\cite{gao-etal-2021-simcse}.}
 \label{tab:sts-reproduction}
 \centering
-\begin{tabular}{lrr}
+\footnotesize
+\begin{tabular}{@{}p{0.40\columnwidth}rrr@{}}
 \hline
-Encoder and pooling & Paper & Reproduced \\
+Encoder and pooling & \shortstack[r]{STS-B\\paper} & \shortstack[r]{Mean\\paper} & \shortstack[r]{Mean\\ours} \\
 \hline
-Supervised SimCSE, CLS with MLP & 81.57 & 81.58 \\ % experiments/reproduction/results/R1/metrics.json
-Unsupervised SimCSE, raw CLS & 76.25 & 76.25 \\ % experiments/reproduction/results/R2/metrics.json
-BERT-base, first--last average & 56.70 & 56.70 \\ % experiments/reproduction/results/R3/metrics.json
+Supervised SimCSE, CLS with MLP & 84.25 & 81.57 & 81.58 \\ % experiments/reproduction/results/R1/metrics.json
+Unsupervised SimCSE, raw CLS & 76.85 & 76.25 & 76.25 \\ % experiments/reproduction/results/R2/metrics.json
+BERT-base, first--last average & 53.87 & 56.70 & 56.70 \\ % experiments/reproduction/results/R3/metrics.json
 \hline
 \end{tabular}
 \end{table}
+
+The BERT-base baseline measures how well pretrained
+BERT ranks sentence pairs when its first and last layers are averaged.
+Unsupervised SimCSE improved the seven-task mean by 19.55 points over
+this baseline using contrastive training on unlabeled sentences and a
+different pooling procedure. Supervised SimCSE gained a further 5.32
+points. This comparison changes both the training corpus (Wikipedia
+versus SNLI and MNLI) and the construction of training pairs, so it
+cannot isolate the effect of labels alone.
+
+The gains also depend on the task. In Appendix~E, Gao et
+al.~\cite{gao-etal-2021-simcse} evaluated seven classification tasks by
+training a logistic regression classifier on frozen sentence embeddings.
+They found no clear performance trend for unsupervised SimCSE across
+these tasks despite its higher mean correlation on STS.
+
+Vietnamese regulation retrieval poses a further test. Two articles might both describe academic
+warnings, yet one might apply to first-year students and the other to
+students in later years. A semantically similar passage can therefore
+be ranked highly even when its eligibility rule does not apply. We can
+test retrieval directly using
+Vietnamese questions labeled with their relevant articles. Hit@3 is the
+fraction of questions for which at least one relevant article appears
+among the first three results.
 
 \TODO{Report retrieval scores and paired confidence intervals on D1-test and
 D2, including lexical-overlap groups and article-, topic- and clause-level

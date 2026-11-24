@@ -42,7 +42,7 @@ Kết quả lấy từ tài liệu bên ngoài **không phải** kết quả c�
 
 Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của lần chạy R1–R3; xóa được khi không cần nữa.
 
-**Giai đoạn hiện tại:** Phase 1 và Phase 2 theo [docs/PLAN.md](../PLAN.md). R1–R4 đã xong. Phần thống kê của Phase 3 đã kiểm thử bằng dữ liệu giả, đang chờ xếp hạng D1 để đánh giá thực nghiệm.
+**Giai đoạn hiện tại:** Phase 1 đã hoàn tất và hai thành viên đã đọc chéo theo [docs/PLAN.md](../PLAN.md). Phase 2 đã xong R1–R4 và còn phần đánh giá trên D1. Phần thống kê của Phase 3 đã kiểm thử bằng dữ liệu giả, đang chờ xếp hạng D1 để đánh giá thực nghiệm.
 
 **Đã hoàn thành**
 
@@ -64,12 +64,13 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
 - [x] **R4 (23/11):** tự cài InfoNCE ở `src/simcse_lab/model/infonce.py`, cho cả unsup và sup có hard negative với log-weight.
   - Kiểm thử: 689/689 test pass. Ở float64, độ lệch lớn nhất so với `cl_forward` là khoảng 1,4e-9 và so với vòng lặp Eq. 4/8 là khoảng 8,4e-15.
   - File: `experiments/reproduction/results/R4/` ([§6.7](#67-bảng-theo-dõi-kết-quả)).
-- [x] Bản nháp phần Introduction và Proposed Method của báo cáo IEEE (commit `652fa4e`), gồm cả phần giải thích luồng code gốc. Chưa đọc chéo.
+- [x] Introduction và Proposed Method của báo cáo IEEE (bản nháp ban đầu ở commit `652fa4e`), gồm cả phần giải thích luồng code gốc. Hai thành viên đã đọc chéo.
   - Bổ sung ngày 23/11 cho phần Phase 1 của Huy:
     - đoạn so sánh SimCSE với các cách làm trước (post-processing, các phương pháp contrastive khác, SBERT);
     - §Worked Example: ví dụ tính loss cho cả hai cách huấn luyện, dùng câu của Figure 1 và cosine minh hoạ, kiểm bằng `tests/test_worked_example.py`;
     - ví dụ lexical gap thật trong Introduction: câu D1 index 9542 ("bị dừng giữa chừng" và "đình chỉ" trong Điều 6). Nhóm đoạn của câu này phải vào D1-dev ([§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)).
 - [x] Bản nháp [Related Work, mục II-A](../report/sections/related-work.tex) về biểu diễn câu và học tương phản. Mục II-A đối chiếu các baseline trong Bảng 5 của SimCSE với nghiên cứu gốc.
+- [x] [Related Work, mục II-B](../report/sections/related-work.tex) về BM25 và truy hồi bằng vector tiếng Việt. Phần của Minh cũng đã có bảng dữ liệu, giao thức STS, kết quả gốc và giới hạn khi áp dụng sang tra cứu quy chế. [Experimental Setup](../report/sections/experimental-setup.tex) · [Results and Discussion](../report/sections/results.tex)
 - [x] **Corpus D2 (23/11, D-17):** quy chế đào tạo của Trường ĐH KHTN, gồm hai văn bản.
   - QĐ 1175/QĐ-KHTN (2021): 24 Điều, PDF có lớp chữ, công khai.
   - QĐ 3087/QĐ-KHTN ngày 29/9/2026: 27 Điều. ChatGPT chép từ bản scan; nhóm làm sạch 165 lỗi OCR có kiểm chứng (158 ở lượt 1, 7 ở lượt 2 ngày 24/11). Bản dùng để lập chỉ mục đã hiệu đính tiếp theo ảnh PDF chính thức, gồm Điều 12, 13, 16 và 17.
@@ -79,15 +80,13 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
 
 **Đang thực hiện:** không có.
 
-**Chưa thực hiện:** phần còn lại của Phase 1–4 ([§7.2](#72-lịch-theo-planmd)).
+**Chưa thực hiện:** các đầu việc còn lại của Phase 2–4 ([§7.2](#72-lịch-theo-planmd)).
 
 **Việc ưu tiên tiếp theo**
 
 1. **Cả hai:** viết câu hỏi D2 ngay, song song với Phase 2 (quy tắc ở [§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)), để kịp chốt nhãn trước 02/12.
-2. Hoàn thiện mục II-B của Related Work về BM25 và truy hồi tiếng Việt theo [PLAN.md](../PLAN.md#phase-1--nghiên-cứu-paper).
-3. **Minh** đọc chéo phần bài toán và phương pháp của Huy (Phase 1, hạn 27/11): Introduction và Proposed Method trong `docs/report/sections/`. **Huy** đọc chéo phần của Minh khi Minh xong.
-4. **Minh:** chuẩn bị D1 (`data/prepare_virhe4qa.py`, group split) và chạy SimCSE-VN dense trên D1. Khi chia, nhóm đoạn của câu index 9542 phải vào D1-dev ([§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)).
-5. Khi có xếp hạng D1-dev, kiểm tra bảng so sánh và ngưỡng cảnh báo trước khi mở tập test.
+2. **Minh:** chuẩn bị D1 (`data/prepare_virhe4qa.py`, group split) và chạy SimCSE-VN dense trên D1. Khi chia, nhóm đoạn của câu index 9542 phải vào D1-dev ([§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)).
+3. Khi có xếp hạng D1-dev, kiểm tra bảng so sánh và ngưỡng cảnh báo trước khi mở tập test.
 
 ---
 
@@ -220,7 +219,7 @@ Nguồn: paper (PDF nhóm cung cấp) và code tại commit `235f89e` [Confirmed
 | Anisotropy (§5) | Với vector đã chuẩn hóa, khi các phần tử ma trận Gram đều dương, tổng các phần tử chặn trên trị riêng lớn nhất. Đây là lập luận giải thích xu hướng. Phụ lục F đo được phổ giá trị kỳ dị phẳng hơn trên các câu STS-B được khảo sát |
 | Đánh giá (§6.1, App. B) | 7 STS task (STS12–16, STS-B, SICK-R). Lấy cosine trực tiếp, **không** dùng regressor. Báo **Spearman**, gộp theo setting "all" |
 | Kết quả chính (Table 5) | Trung bình 7 STS, BERT-base: unsup SimCSE **76,25**, sup SimCSE **81,57**. Baseline BERT first-last avg 56,70; SBERT 74,89 |
-| Training (App. A) | Unsup: 10⁶ câu Wikipedia, 1 epoch, BERT-base bs 64, lr 3e-5. Sup: SNLI+MNLI (314k), 3 epoch, bs 512, lr 5e-5. Đánh giá STS-B dev mỗi 250 step và giữ checkpoint tốt nhất. Paper dùng GPU 3090, CUDA 11 |
+| Training (App. A) | Unsup: 10⁶ câu Wikipedia, 1 epoch, BERT-base bs 64, lr 3e-5. Sup: SNLI+MNLI (314k), 3 epoch, bs 512, lr 5e-5. Đánh giá STS-B dev mỗi 250 step và giữ checkpoint tốt nhất. Theo [README của tác giả](https://github.com/princeton-nlp/SimCSE/blob/235f89e0244b23673b69fbbc4a1cd9868c5a5c24/README.md#training), các kết quả trong paper được chạy trên GPU NVIDIA 3090 với CUDA 11. |
 
 ### 4.3 Training và inference
 
