@@ -25,6 +25,8 @@ Model và tokenizer cùng lấy tại [revision 608779b](https://huggingface.co/
 
 Mở [manifest D1-dev](results/D1-dev-retrieval-check/manifest.json) để xem cấu hình, SHA-256 và điểm của từng run. Run BM25 và Hybrid nằm trong [gói kiểm tra](results/D1-dev-retrieval-check/runs/). Run dense dùng [bản Phase 2 đã xác minh](results/D1-dev/runs/dense.jsonl). Hybrid dùng λ = 0,5 để kiểm tra pipeline. Để quét các giá trị λ khác, phép trộn cần điểm trên toàn bộ corpus trước khi cắt top 20.
 
+Bộ xuất JSONL ghi xuống dòng LF theo `.gitattributes`. Manifest ghi SHA-256 của các file LF trong Git. Trường `verification.ranking_sha256` trong [kết quả Dense](results/D1-dev/metrics.json) ghi SHA-256 của đầu ra CRLF dùng trong lần đối chiếu ban đầu trên Windows.
+
 Sau khi chuẩn bị `data/processed/d1/` bằng `prepare_virhe4qa.py`, chạy từ gốc repo để tính lại chỉ số, đối chiếu SHA-256, ID và thứ tự. Nếu đã có file chunk từ Phase 2, thêm `--chunks data/processed/d1/dense/corpus.jsonl` để kiểm tra từng ID với catalog.
 
 ```powershell
@@ -49,9 +51,52 @@ Dùng môi trường D1 ở trên và cài thêm các phần phụ thuộc truy 
 | Dense | 0,464286 | 0,656250 | 0,582836 |
 | Hybrid (λ = 0,5, kiểm tra) | 0,665179 | 0,861607 | 0,768789 |
 
+[Ghi chú E0](results/E0/d1-dev.md) đối chiếu điểm BM25 từng chunk và thứ tự top 20 cho câu 9542 trên D1-dev.
+
 Khi đo E4, dùng `RetrievalIndex.rank_bm25(question)` để đo đường tách từ và xếp hạng BM25 riêng. Đường xuất run dùng cosine của chunk được BM25 chọn cho trường `top1_dense_cos`. Nếu đo chức năng có cảnh báo, ghi riêng thời gian mã hóa và tính cosine.
 
-### Lệnh chuẩn bị HCMUS và cú pháp cho lượt test của Huy
+### Chốt cấu hình bằng D1-dev
+
+[Phiếu bàn giao cho Minh](results/D1-dev-tuning/handoff.md) ghi tham số demo, bảng so sánh và độ bao phủ. [Kết quả quét](results/D1-dev-tuning/summary.json) ghi cả 11 mức trọng số, checkpoint, checksum và môi trường thực chạy.
+
+Từ gốc repo, dùng môi trường truy hồi với các phiên bản trong kết quả quét và nhập đúng đường dẫn CSV đã kiểm SHA-256.
+
+```powershell
+$env:PYTHONPATH = 'src'
+& $d1Python -m experiments.external_dataset.tune_d1_dev --input data/raw/d1/ViRHE4QA_v2.csv --model-path outputs/d1-model --output outputs/d1-dev-tuning-rerun
+```
+
+`scores.npz` chứa hai ma trận `bm25` và `cosine`. Hàng theo `qids` và cột theo `chunk_ids`, với `article_ids` lưu đoạn nguồn của từng cột. Đọc bằng `numpy.load(..., allow_pickle=False)`. Script đọc lại bảng điểm trước khi quét và ghi `selected.jsonl` với top 20 của cấu hình được chọn.
+
+### Đánh giá D1-test
+
+[Bảng kết quả D1-test](results/E1/d1-test.md) và [dữ liệu kết quả, cấu hình](results/E1/d1-test.json) ghi kết quả ba phương pháp trên 759 câu test, khoảng tin cậy Hybrid so với BM25 và số liệu cảnh báo của Hybrid.
+
+[So sánh theo mức trùng từ E2 trên D1-test](../application/results/E2/d1-test.md) tính chỉ số từng nhóm từ cùng ba bảng xếp hạng.
+
+[Phân tích lỗi E5 trên D1-test](../application/results/E5/d1-test.md) đối chiếu các trường hợp Hybrid trượt Hit@1 và ví dụ Hybrid đưa đoạn chuẩn lên đầu.
+
+Chạy từ gốc repo với môi trường truy hồi, CSV đúng checksum và checkpoint đã ghim. Chọn đường dẫn CSV thực tế và thư mục đầu ra mới.
+
+```powershell
+$env:HF_HUB_OFFLINE = '1'
+& $d1Python -m experiments.external_dataset.evaluate_d1_test --input data/raw/d1/ViRHE4QA_v2.csv --model-path outputs/d1-model --output outputs/d1-test-rerun
+```
+
+Script lấy trọng số và ngưỡng từ [kết quả D1-dev](results/D1-dev-tuning/summary.json). Script dựng lại chunk và chia tập từ CSV, lưu corpus cùng các câu test vào `inputs/`, rồi lưu top 20 đoạn nguồn mỗi câu vào `retrieval/runs/`. `summary.json` ở thư mục đầu ra ghi Hit@1, Hit@3, MRR@10, khoảng tin cậy và độ bao phủ tại ngưỡng cố định. Bảng kết quả kèm Hit@5 và Hit@10 tính từ cùng các bảng xếp hạng.
+
+### Biểu đồ risk–coverage D1-test
+
+[Biểu đồ PNG](results/E3/d1-test-risk-coverage.png), [bản vector dùng trong báo cáo](../../docs/report/figures/d1-test-risk-coverage.pdf) và [dữ liệu đường cong](results/E3/d1-test.json) lấy từ xếp hạng Hybrid cùng nhãn chuẩn đã lưu ở lượt E1. Script kiểm SHA-256 và dùng ngưỡng đã chốt ghi trong E1. Các điểm trên đường cong dùng cosine của chunk trích dẫn ở hạng đầu. Cách tính độ bao phủ và risk ở [PROJECT §6.3](../../docs/application/PROJECT.md#63-baseline-và-metrics).
+
+Chạy từ gốc repo bằng môi trường Python có Matplotlib. Lượt tạo hình dùng Matplotlib 3.11.1. Lệnh đọc các tệp D1-test đã lưu và ghi kết quả vào thư mục mới.
+
+```powershell
+$env:PYTHONPATH = 'src'
+python -m experiments.external_dataset.plot_d1_risk_coverage --output outputs/d1-test-risk-coverage-rerun
+```
+
+### Lệnh chuẩn bị HCMUS và đánh giá D2
 
 Khi đã có bản `_clean.md` đúng SHA-256, chạy `python data/d2/prepare_2026.py` để tạo bản verified. Nếu bản verified đã có đúng SHA-256, chạy thẳng lệnh chuẩn bị corpus. Có thể thêm `--only-2021` để kiểm tra nguồn 2021 bằng một thư mục đầu ra riêng. Đích corpus phải nằm trong repo, được Git bỏ qua và chưa được theo dõi.
 
@@ -59,12 +104,14 @@ Khi đã có bản `_clean.md` đúng SHA-256, chạy `python data/d2/prepare_20
 & $d1Python experiments/external_dataset/run_retrieval.py prepare-hcmus --model-path outputs/d1-model --output data/processed/d2
 ```
 
-Khi Huy đã chốt cấu hình và nhãn, truyền `$hybridWeight` từ cấu hình đã chốt. Hai lệnh này lưu toàn bộ 51 Điều cho D2 và top 20 cho D1-test.
+Nếu `data/processed/d2/corpus.jsonl` đã được tạo từ đúng hai nguồn và checkpoint đã ghim, dùng lại file đó. D2 dùng nhãn đã thống nhất, áp dụng trọng số trong [cấu hình D1-dev](results/D1-dev-tuning/handoff.md) và lưu toàn bộ 51 Điều.
 
 ```powershell
-& $d1Python experiments/external_dataset/run_retrieval.py run --corpus d1 --chunks data/processed/d1/dense/corpus.jsonl --queries data/processed/d1/queries.jsonl --split test --methods bm25 dense hybrid --weight $hybridWeight --model-path outputs/d1-model --output outputs/d1-test
+$hybridWeight = '0.6'
 & $d1Python experiments/external_dataset/run_retrieval.py run --corpus hcmus --chunks data/processed/d2/corpus.jsonl --queries data/d2/queries_d2.jsonl --split test --methods bm25 dense hybrid --weight $hybridWeight --model-path outputs/d1-model --output outputs/d2-test
 ```
+
+`summary.json` của lượt truy hồi HCMUS lưu SHA-256 của file corpus, nhãn và từng bảng xếp hạng. Dùng [lệnh chấm D2-test](../application/README.md#chấm-d2-test) để tính chỉ số theo Điều, chủ đề và Khoản, phân nhóm E2 và đánh giá cảnh báo E3 từ các file vừa lưu.
 
 ## Đầu ra và giao thức
 
@@ -73,4 +120,4 @@ Khi Huy đã chốt cấu hình và nhãn, truyền `$hybridWeight` từ cấu h
 - [Xếp hạng D1-dev](results/D1-dev/runs/dense.jsonl) lưu top 20 đoạn nguồn phân biệt mỗi câu. NumPy tính cosine trên vector L2, rồi MaxP lấy điểm cao nhất trên các chunk của từng đoạn nguồn. Nếu bằng điểm, ưu tiên mã tăng dần.
 - [Bảng điểm và cấu hình thực chạy](results/D1-dev/metrics.json) ghi Hit@1, Hit@3 và MRR@10 theo thang 0–1. Ví dụ trong trường `example` chỉ ra qid, đoạn đúng, hạng và offset để đối chiếu với corpus. Script tính lại điểm từ file run đã lưu.
 
-Kết quả này dùng cho D1-dev. Giao thức khác ViRE công bố do nhóm chia câu hỏi theo nguồn. D1-test được đánh giá ở E1 sau khi nhóm chốt tiền xử lý và cấu hình Hybrid.
+Nhóm chia câu hỏi theo đoạn nguồn trước khi chốt cấu hình trên D1-dev và đánh giá D1-test, theo giao thức của đồ án.

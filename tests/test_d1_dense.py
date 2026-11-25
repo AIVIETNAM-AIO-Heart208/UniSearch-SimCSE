@@ -1,11 +1,33 @@
+import json
+from hashlib import sha256
+from pathlib import Path
+
 import pytest
 
 from data.prepare_virhe4qa import prepare, source_record
+from experiments.external_dataset.run_dense_dev import write_rows
 from simcse_lab.evaluation.metrics import query_metrics
 from simcse_lab.evaluation.stats import _rr_at_10
 from simcse_lab.retrieval.ingest import article_chunks
 from simcse_lab.retrieval.preprocess import normalize
 from simcse_lab.retrieval.search import maxp
+
+
+def test_run_jsonl_uses_lf(tmp_path: Path) -> None:
+    output = tmp_path / "runs" / "dense.jsonl"
+    write_rows(output, [{"qid": "q1"}, {"qid": "q2"}])
+
+    assert output.read_bytes() == b'{"qid": "q1"}\n{"qid": "q2"}\n'
+
+
+def test_d1_dev_manifest_hashes_match_rankings() -> None:
+    root = Path(__file__).resolve().parents[1]
+    manifest_path = root / "experiments/external_dataset/results/D1-dev-retrieval-check/manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+    for method, entry in manifest["runs"].items():
+        ranking_path = manifest_path.parent / entry["path"]
+        assert sha256(ranking_path.read_bytes()).hexdigest() == entry["sha256"], method
 
 
 @pytest.mark.parametrize("rank, expected", [

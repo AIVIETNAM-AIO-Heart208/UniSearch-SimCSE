@@ -344,8 +344,11 @@ admitted from the 2026--2027 academic year, while for earlier cohorts it lets
 the university apply the new rules that are more favourable to students. For the evaluation on
 ViRHE4QA, a separate index holds the distinct passages of that dataset, most of
 which are single articles (\emph{Điều}). Each article is split into its
-clauses (\emph{Khoản}), and each clause becomes a chunk of at most 256 subword
-tokens, the input limit of PhoBERT. A longer clause is split into windows.
+clauses (\emph{Khoản}).
+% Window limit and overlap: src/simcse_lab/retrieval/ingest.py and src/simcse_lab/model/encoders.py.
+Each chunk fits the 256-token input budget,
+including special tokens. Longer clauses are split at whitespace with up to
+24 overlapping whitespace-delimited units between consecutive windows.
 Every chunk keeps its document, article number and title, clause and character
 offsets, so the interface can quote the indexed text exactly. For our
 university's regulations, each document also records its decision number,
@@ -362,9 +365,8 @@ and words are segmented with pyvi, which the PhoBERT vocabulary requires. The
 same function is applied to queries, so that index and queries are always
 segmented in the same way. We then build a BM25 index~\cite{Robertson_2009}
 over lower-cased tokens and a dense index of L2-normalised SimCSE embeddings
-(\texttt{pooler\_output}). The dense index uses exact inner-product search in
-FAISS~\cite{Johnson_2021}, which equals cosine similarity on normalised
-vectors.
+(\texttt{pooler\_output}). We compute each exact cosine score as the inner
+product of the L2-normalised query and chunk vectors in NumPy.
 
 \textbf{Querying.} For a question $q$, each chunk $c$ receives a BM25 score and
 a cosine score. Because the gold labels and the displayed results are at the
@@ -380,8 +382,9 @@ s_{\mathrm{hyb}}(q,a) = \lambda\,\hat{s}_{\mathrm{bm25}}(q,a)
 \end{equation}
 BM25 captures exact terms, numbers and abbreviations, and the encoder captures
 paraphrases. The weight $\lambda\in[0,1]$ is the only fitted parameter of the
-ranking. It is chosen on the development split of ViRHE4QA only
-(Section~\ref{sec:setup}). The system returns the top three results, each an
+ranking. We selected $\lambda=0.6$ on D1-dev (Section~\ref{sec:setup}).
+% Selected configuration: experiments/external_dataset/results/D1-dev-tuning/summary.json.
+The system returns the top three results, each an
 article with an excerpt and its source document. For BM25 or dense retrieval
 we quote the chunk with the highest score for that method. For hybrid retrieval
 with $0<\lambda<1$, we apply each method's article-level min--max transform to
@@ -398,12 +401,10 @@ top-ranked article before topic grouping. If $\mathrm{sim}(q,c^\star)<\theta$, t
 shown but are labelled as low confidence, and the student is advised to contact
 the academic affairs office. Per-query min--max normalisation discards
 absolute score levels, and the two methods may rank different articles first.
-We therefore use the cosine for the warning. It is not a calibrated probability, so
-$\theta$ is chosen empirically on the development split of ViRHE4QA. It is then
-evaluated on that dataset's test split and on our own test set, which includes
-questions that the regulations do not answer. Because $\theta$ is not tuned on
-our university's regulations, this second evaluation also shows how well the
-threshold transfers. No language model generates text at query time, so every
-displayed sentence comes from the indexed regulation texts.
-\TODO{Report the selected $\lambda$ and $\theta$ and the window length and
-overlap for long clauses after Phase~3.}
+We therefore use the cosine for the warning.
+% Selected threshold and coverage rule: experiments/external_dataset/results/D1-dev-tuning/summary.json.
+We selected $\theta=0.6201629042625427$ on D1-dev to retain at least 80\% coverage.
+We evaluated that operating point on D1-test. The D2 evaluation uses the same
+threshold to measure how well it transfers to our university's regulations,
+including for questions outside their scope. The system displays excerpts
+directly from the indexed regulation texts.

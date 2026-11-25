@@ -54,11 +54,19 @@ Chữ QĐ 1175 có trong Git. QĐ 3087 đã có [PDF chính thức của Trườ
 
 Từ gốc repo, chạy `python data/d2/prepare_2026.py` khi đã có bản `_clean.md` trong `data/raw/d2/`. Đường dẫn và SHA-256 của PDF chính thức, bản đầu vào và bản dùng để lập chỉ mục nằm trong [documents.yaml](documents.yaml). Các hiệu đính gồm mốc tín chỉ làm khóa luận (Điều 12), thành phần hội đồng (Điều 13), cách xếp loại (Điều 16) và số lần cảnh báo liên tiếp (Điều 17).
 
+Dùng [lệnh `prepare-hcmus`](../../experiments/external_dataset/README.md#lệnh-chuẩn-bị-hcmus-và-đánh-giá-d2) để tạo `data/processed/d2/corpus.jsonl` từ hai nguồn đã kiểm SHA-256 và checkpoint đã ghim. Git bỏ qua file corpus đã xử lý.
+
 ## Câu hỏi (Phase 3, chốt nhãn trước 02/12)
 
 - [Bản nháp cho Minh](queries_draft.jsonl) có 41 câu trong phạm vi và 10 câu dự kiến ngoài phạm vi, do trợ lý soạn để Minh duyệt. `origin: team` chỉ nguồn bản nháp nội bộ. Gold hiện dựa trên quy chế 2021. Khi có nguồn 2026, đối chiếu tất cả câu với cả hai bản, bổ sung gold và ghi chú khác biệt giữa hai bản, xác minh các câu ngoài phạm vi rồi chuyển câu hỏi không kèm gold cho Huy kiểm tra độc lập. Dùng file đã hợp nhất và chốt nhãn cho E2.
 - [Bản gán nhãn độc lập](queries_blind.jsonl) có đủ 51 câu, trộn với seed 42 và dùng ID rà soát mới. Huy dùng riêng file này khi gán nhãn. Khi đối chiếu, ghép hai bản bằng toàn văn câu hỏi.
 - **Số lượng:** 80–100 câu trong phạm vi và khoảng 20 câu ngoài phạm vi. Huy và Minh mỗi người viết 40–50 câu trong phạm vi và 10 câu ngoài phạm vi.
-- **Định dạng:** mỗi dòng của `queries_d2.jsonl` theo schema ở PROJECT.md §5.4, với `source: "d2"` và `origin: "team"` hoặc `"form"` (câu thu qua Google Form). Mã Điều có tiền tố `doc_id`, ví dụ `hcmus-qcdt-2026:dieu-15`; mã Khoản ví dụ `hcmus-qcdt-2026:dieu-15:khoan-1`.
+- **Định dạng:** mỗi dòng của `queries_d2.jsonl` theo [PROJECT §5.4](../../docs/application/PROJECT.md#54-interface--định-dạng-dữ-liệu), với `split: "test"`, `source: "d2"` và `origin: "team"` hoặc `"form"` (câu thu qua Google Form). Ghi mã Điều và mã Khoản theo nguồn như dưới đây.
 - **Cách viết và thiên lệch đã biết (D-18):** viết kiểu gập sách, được dùng thuật ngữ thông dụng, không chép nguyên câu hay mệnh đề. Người viết đã đọc văn bản nên câu vẫn có thể ít trùng từ hơn câu hỏi thật, bất lợi cho BM25. Báo cáo phải nêu điều này; nếu có câu từ Google Form thì báo riêng nhóm `origin: "form"`.
 - Quy tắc viết, gán nhãn và chống rò rỉ: PROJECT.md §6.2.
+
+### Mã Điều và Khoản
+
+- `gold_article_ids` dùng mã như `hcmus-qcdt-2026:dieu-15`. `gold_clause_ids` dùng mã như `hcmus-qcdt-2026:dieu-15:khoan-1` khi xác định được Khoản trả lời trong Điều gold.
+- Điều 8 bản 2021 có hai mục cùng ghi Khoản 3. Chọn `hcmus-qcdt-2021:dieu-8:khoan-3:1` cho mục xuất hiện trước hoặc `hcmus-qcdt-2021:dieu-8:khoan-3:2` cho mục xuất hiện sau, theo nội dung trả lời trong văn bản. Corpus giữ `clause: 3` ở cả hai mục và giữ offset để đối chiếu nguyên văn.
+- Corpus HCMUS xuất `clause_id` cho mỗi chunk. Các cửa sổ của một Khoản có chung mã, còn phần đầu Điều không có số Khoản dùng `null`. [Bộ chấm D2](../../experiments/application/README.md#chấm-d2-test) có thể tra mã từ offset đối với corpus cũ và kiểm mã trong nhãn chính thức trước khi tính Clause@1.

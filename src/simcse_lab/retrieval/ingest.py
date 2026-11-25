@@ -1,16 +1,25 @@
 """Map original source spans to model-sized chunks."""
 
+from __future__ import annotations
+
 import re
+from typing import Pattern
 
 _CLAUSE = re.compile(r"(?m)^[ \t]*(?:Khoản[ \t]+)?(\d+)[.)][ \t]+")
 
 
+def clause_spans(text: str, pattern: Pattern[str]) -> list[tuple[int, int, int | None]]:
+    """Return character ranges and the printed number of each clause."""
+    boundaries = [(0, None)]
+    boundaries.extend((match.start(), int(match[1])) for match in pattern.finditer(text))
+    return [(start, end, number) for (start, number), (end, _) in
+            zip(boundaries, boundaries[1:] + [(len(text), None)])]
+
+
 def article_chunks(source, count_tokens, limit=256, overlap=24, clause_pattern=_CLAUSE):
     text = source["text"]
-    boundaries = [(0, None)]
-    boundaries.extend((match.start(), int(match[1])) for match in clause_pattern.finditer(text))
     chunks = []
-    for (start, clause), (end, _) in zip(boundaries, boundaries[1:] + [(len(text), None)]):
+    for start, end, clause in clause_spans(text, clause_pattern):
         words = list(re.finditer(r"\S+", text[start:end]))
         left = 0
         while left < len(words):

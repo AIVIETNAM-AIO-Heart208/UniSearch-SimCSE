@@ -3,7 +3,7 @@
 Đồ án Lab 03 – Machine Learning, **Nhóm 14**, **Option 1: Practical Application**.
 Ứng dụng tìm đúng **Điều/Khoản** trong quy chế đào tạo của Trường ĐH Khoa học Tự nhiên – ĐHQG-HCM cho câu hỏi tự nhiên của sinh viên, hiển thị đoạn văn bản kèm tên văn bản, số hiệu và phạm vi áp dụng.
 
-> **Trạng thái:** đã tái hiện R1–R3, khớp paper (TB STS 81,58 / 76,25 / 56,70), và R4 (InfoNCE tự cài khớp `cl_forward`, lệch ≤ 1,4e-9 ở float64). Module thống kê và đo cảnh báo đã chạy qua kiểm thử trên dữ liệu giả. Kết quả truy hồi thực nghiệm đang chờ xếp hạng D1 và D2.
+> **Trạng thái:** đã tái hiện R1–R4, có demo Gradio, [chốt cấu hình bằng D1-dev](../../experiments/external_dataset/results/D1-dev-tuning/handoff.md) và [đánh giá ba phương pháp trên D1-test](../../experiments/external_dataset/results/E1/d1-test.md). [Bộ chấm D2](../../experiments/application/README.md#chấm-d2-test) đã qua kiểm tra với dữ liệu giả. Nhóm còn kiểm tra demo hai quy chế, chốt nhãn và đánh giá D2 chính thức.
 > Trạng thái chi tiết và việc tiếp theo: xem [PROJECT.md – Current Status](PROJECT.md#1-current-status).
 
 ## Thành viên
@@ -23,14 +23,14 @@ Sinh viên hỏi bằng lời thường, còn quy chế viết bằng thuật ng
 - Corpus gồm hai phiên bản Quy chế đào tạo: QĐ 1175/2021 và QĐ 3087/2026. Điều 27 của quy chế 2026 ghi: quy chế áp dụng cho các khóa tuyển từ năm học 2026–2027; đối với các khóa tuyển sinh từ năm 2025 trở về trước, Trường lựa chọn áp dụng quy định mới có lợi hơn cho người học. Vì vậy ứng dụng giữ cả hai bản và ghi rõ phạm vi áp dụng; trong mỗi kết quả, bản 2026 hiển thị trước vì là bản mới nhất.
 - Bản 2026 là bản ChatGPT chép từ bản scan và nhóm đã hiệu đính theo PDF chính thức. Ứng dụng ghi rõ nguồn bản chép khi hiển thị. [Hướng dẫn tạo corpus](../../data/d2/README.md#file)
 - Khi độ tin cậy thấp, ứng dụng cảnh báo để người dùng tự đối chiếu.
-- Nhóm sẽ so sánh kết quả tra cứu với BM25 trên D1-test và D2 sau khi cố định cấu hình.
+- Nhóm dùng BM25 làm mốc so sánh trên D1-test và D2. Bảng D1-test có khoảng tin cậy cho chênh lệch giữa Hybrid và BM25.
 
 ## Giải pháp
 
 - **Encoder câu tiếng Việt huấn luyện theo SimCSE:** checkpoint cộng đồng `VoVanPhuc/sup-SimCSE-VietNamese-phobert-base`, dựa trên PhoBERT, cần tách từ bằng `pyvi`.
 - **Truy hồi lai (hybrid):** BM25 cho khớp từ khóa, kết hợp SimCSE cho khớp ngữ nghĩa và câu hỏi diễn đạt khác văn bản.
 - **Chunking theo cấu trúc văn bản:** chia theo Điều/Khoản, giữ metadata văn bản và phiên bản để trích dẫn chính xác.
-- **Cảnh báo độ tin cậy thấp:** chọn ngưỡng trên D1-dev, sau đó đánh giá trên D1-test và D2. Ngưỡng này không phải xác suất đúng.
+- **Cảnh báo độ tin cậy thấp:** chọn ngưỡng trên D1-dev, sau đó đánh giá trên D1-test và D2. Ngưỡng này không phải xác suất đúng. [Biểu đồ risk–coverage trên D1-test](../../experiments/external_dataset/results/E3/d1-test-risk-coverage.png)
 - **Không dùng LLM sinh câu trả lời:** ứng dụng chỉ hiển thị đoạn văn bản có trong corpus kèm nguồn.
 
 Phần tái hiện bài báo dùng mã nguồn chính thức [princeton-nlp/SimCSE](https://github.com/princeton-nlp/SimCSE) tại commit `235f89e0244b23673b69fbbc4a1cd9868c5a5c24`.
@@ -41,7 +41,7 @@ Phần tái hiện bài báo dùng mã nguồn chính thức [princeton-nlp/SimC
 Quy chế đào tạo HCMUS (QĐ 1175/2021, QĐ 3087/2026) + data/d2/documents.yaml
    └─► Tách Điều/Khoản + metadata ─► Chuẩn hóa + tách từ (pyvi)
                                     ├─► BM25 index
-                                    └─► SimCSE-VN embeddings (FAISS)
+                                    └─► SimCSE-VN embeddings (NumPy cosine)
 Câu hỏi ─► Chuẩn hóa + tách từ ─► BM25 + SimCSE ─► Kết hợp điểm ─► Xếp hạng theo Điều
    └─► Giao diện Gradio: top-3 Điều/Khoản · trích đoạn · văn bản/số hiệu/phạm vi áp dụng · cảnh báo tin cậy
 ```
@@ -50,7 +50,7 @@ Chi tiết xem [PROJECT.md §5](PROJECT.md#5-application-architecture--implement
 
 ## Công nghệ
 
-Python · PyTorch · HuggingFace Transformers · pyvi · rank_bm25 · faiss-cpu · Gradio. Chạy được trên CPU; GPU chỉ cần cho phần mở rộng tùy chọn.
+Python · PyTorch · Hugging Face Transformers · pyvi · rank_bm25 · NumPy · Gradio. Demo chạy trên CPU.
 
 ## Cài đặt và chạy
 
@@ -72,18 +72,9 @@ Trên Linux/macOS: `python3.11 experiments/reproduction/run_r1.py --exp R1`. K�
 
 Chạy `python -m pytest tests/test_stats.py -q` từ gốc repo. Bộ kiểm thử dùng xếp hạng giả với kết quả tính tay. Đầu vào và cách dùng với xếp hạng thực được mô tả ở [PROJECT.md §5.4](PROJECT.md#54-interface--định-dạng-dữ-liệu).
 
-### Chạy ứng dụng (dự kiến)
+### Chạy ứng dụng
 
-> ⚠️ Các lệnh dưới đây là **dự kiến**. Sẽ được cập nhật và kiểm tra khi có code.
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -e .
-.\.venv\Scripts\python.exe data\prepare_virhe4qa.py          # tải và xử lý ViRHE4QA (bản con trong ViRE)
-.\.venv\Scripts\python.exe apps\app.py                       # chạy ứng dụng demo
-```
-
-Chữ QĐ 1175 có trong Git (`data/d2/`). Để tái lập corpus HCMUS, đặt bản chép QĐ 3087 sau hai lượt làm sạch vào `data/raw/d2/` và chạy `python data/d2/prepare_2026.py`. Nguồn PDF chính thức và ghi chú về sửa đổi năm 2023 nằm ở [data/d2/](../../data/d2/README.md).
+Xem [hướng dẫn chạy demo Gradio](../../apps/README.md) để chuẩn bị checkpoint, dựng corpus HCMUS và khởi động giao diện cục bộ. Chữ QĐ 1175 có trong Git. Cách chuẩn bị bản ChatGPT chép từ scan của QĐ 3087 và nguồn PDF chính thức nằm ở [hướng dẫn dữ liệu HCMUS](../../data/d2/README.md).
 
 ## Dữ liệu
 

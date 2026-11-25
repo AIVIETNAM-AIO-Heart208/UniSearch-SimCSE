@@ -4,6 +4,8 @@
 # Only the regulation articles go into the corpus. The 2026 file also contains the signing decision
 # (Quyết định 3087, three articles); those are not indexed, so article numbers are never ambiguous.
 # The 2021 PDF contains the regulation only, without its signing decision.
+# The corpus preparation command verifies these source hashes. See data/d2/README.md under "File".
+# Generated corpus clause IDs are documented in data/d2/README.md under "Mã Điều và Khoản".
 
 documents:
   - doc_id: hcmus-qcdt-2021

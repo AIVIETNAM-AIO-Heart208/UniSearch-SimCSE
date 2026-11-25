@@ -1,0 +1,179 @@
+{
+  "split": "D1-test",
+  "queries": 759,
+  "contexts": 297,
+  "chunks": 955,
+  "dataset": {
+    "source": "https://github.com/longstnguyen/ViRE/blob/60ea7155134eaa426ab1d0a82d2bbbf327d1b470/data/ViRHE4QA_v2.csv",
+    "sha256": "23fb969985150599d3ad0b5229d039b8541ed335fbc29dcfa0b0d733ccaa5682",
+    "split_seed": 42,
+    "test_gold_contexts": 238
+  },
+  "checkpoint": {
+    "model": "VoVanPhuc/sup-SimCSE-VietNamese-phobert-base",
+    "revision": "608779b86741a8acd8c8d38132974ff04086b138",
+    "snapshot_sha256": {
+      "model.safetensors": "2559811f500b42fa23b8fe313d94a9503299aff1f0e0f58fdd4824571cb4423c",
+      "config.json": "4bc82a39c36f328f3fbcbfd83c26d00621b396ac7e9ff1a38cfa7c70d88fa608",
+      "vocab.txt": "dffd7543c401fb6567253ae7c3313004532c33d062525250049c616544bad777",
+      "bpe.codes": "9dfe53fb8abbddd3387da99641c36e00bee757a3679aad9cf0a7cdc4b30f6ef8",
+      "tokenizer_config.json": "f80601760ebdd7737e988a60bb3c14bca12a6786c06e84c99bd2f3329ad80fa0",
+      "special_tokens_map.json": "7638f5bbbe86ef6d604ef28ad3647dc690d6d117c81c0d63e885416be8da1150",
+      "added_tokens.json": "895678a80ea84920b4240c0616a1b0b086368c7ca3cbacb80996a2b30b4f2b67"
+    }
+  },
+  "frozen": {
+    "path": "experiments/external_dataset/results/D1-dev-tuning/summary.json",
+    "sha256": "f8f90b47af945fff0ff468f60e135b60f9495eadc32657bdb1a76009a09a17f2",
+    "weight": 0.6,
+    "threshold": 0.6201629042625427
+  },
+  "run": {
+    "git_commit": "6ed517602e9913cf151a9dd00a81b475bfd11d74",
+    "runner_sha256": "a913a0853e000a278be38bfc04a790b58e1a72f7f4ee9795a6f3de2a19801e35",
+    "retrieval_sha256": "e0e0266dd331312b142ed1861aa15eafbc306f001cd9e575e4a50b400c04fa0c",
+    "input": "data/raw/virhe4qa/ViRHE4QA_v2.csv",
+    "retrieval_arguments": [
+      "experiments/external_dataset/run_retrieval.py",
+      "run",
+      "--corpus",
+      "d1",
+      "--split",
+      "test",
+      "--chunks",
+      "outputs/d1-test/inputs/corpus.jsonl",
+      "--queries",
+      "outputs/d1-test/inputs/queries.jsonl",
+      "--methods",
+      "bm25",
+      "dense",
+      "hybrid",
+      "--weight",
+      "0.6",
+      "--model-path",
+      "outputs/d1-model",
+      "--output",
+      "outputs/d1-test/retrieval"
+    ],
+    "device": "cpu",
+    "threads": 4,
+    "batch_size": 16,
+    "platform": "Windows-11-10.0.26300-SP0",
+    "python": "3.14.0",
+    "torch": "2.9.1+cpu",
+    "packages": {
+      "numpy": "2.3.4",
+      "transformers": "4.57.3",
+      "pyvi": "0.1.1",
+      "scikit-learn": "1.8.0",
+      "sklearn-crfsuite": "0.5.0",
+      "python-crfsuite": "0.9.12",
+      "rank-bm25": "0.2.2",
+      "safetensors": "0.7.0"
+    },
+    "elapsed_seconds": 212.13806949999707
+  },
+  "metrics": {
+    "bm25": {
+      "hit_at_1": 0.7035573122529645,
+      "hit_at_3": 0.8682476943346509,
+      "hit_at_5": 0.9130434782608695,
+      "hit_at_10": 0.9472990777338604,
+      "mrr_at_10": 0.7917916222264049
+    },
+    "dense": {
+      "hit_at_1": 0.4598155467720685,
+      "hit_at_3": 0.6706192358366272,
+      "hit_at_5": 0.7707509881422925,
+      "hit_at_10": 0.857707509881423,
+      "mrr_at_10": 0.5881626827279001
+    },
+    "hybrid": {
+      "hit_at_1": 0.7246376811594203,
+      "hit_at_3": 0.8866930171277997,
+      "hit_at_5": 0.9262187088274044,
+      "hit_at_10": 0.9578392621870883,
+      "mrr_at_10": 0.8107796390405086
+    }
+  },
+  "hybrid_minus_bm25": {
+    "n_in_scope": 759,
+    "n_resamples": 1000,
+    "seed": 42,
+    "levels": {
+      "article": {
+        "mrr_at_10": {
+          "delta": 0.018988016814103774,
+          "lower": 0.008362807683459858,
+          "upper": 0.029811429512516464
+        },
+        "hit_at_1": {
+          "delta": 0.021080368906455864,
+          "lower": 0.003919631093544137,
+          "upper": 0.03820816864295125
+        }
+      }
+    }
+  },
+  "hybrid_warning_metrics": {
+    "threshold": 0.6201629042625427,
+    "n_queries": 759,
+    "groups": {
+      "confident": {
+        "n": 618,
+        "n_in_scope": 618,
+        "hit_at_1": {
+          "article": 0.7605177993527508
+        }
+      },
+      "warned": {
+        "n": 141,
+        "n_in_scope": 141,
+        "hit_at_1": {
+          "article": 0.5673758865248227
+        }
+      }
+    },
+    "coverage": 0.8142292490118577,
+    "n_out_of_scope": 0,
+    "n_confident_out_of_scope": 0,
+    "false_confidence": null
+  },
+  "rankings": {
+    "bm25": {
+      "path": "outputs/d1-test/retrieval/runs/bm25.jsonl",
+      "sha256": "9c79789e0ab476979b92be8fd7405831a26908eaff24257dac39d6a08896966f"
+    },
+    "dense": {
+      "path": "outputs/d1-test/retrieval/runs/dense.jsonl",
+      "sha256": "bca2eb191b2600923c57701cd4bf627fd08463d99a0bead96b784007d47e3fdc"
+    },
+    "hybrid": {
+      "path": "outputs/d1-test/retrieval/runs/hybrid.jsonl",
+      "sha256": "e8cebcdbd47eab38913d43a15c5451c7ed441aadb7790d4554bbbfedf730c6de"
+    }
+  },
+  "verification": {
+    "recomputed_from_saved_rankings": true,
+    "additional_hit_cutoffs": [
+      5,
+      10
+    ],
+    "run_summary_path": "outputs/d1-test/summary.json",
+    "run_summary_sha256": "735492d3bff322094cd8b1000f0a82f581a88f7b23673103e9cbab071002d111",
+    "inputs": {
+      "corpus.jsonl": {
+        "path": "outputs/d1-test/inputs/corpus.jsonl",
+        "sha256": "6a1bc351060f33c60beb0bb7923b1a9ca67c0d0e8b1f765f75478ab23ff696fc"
+      },
+      "queries.jsonl": {
+        "path": "outputs/d1-test/inputs/queries.jsonl",
+        "sha256": "041e5d0beea63f78fd8d6f95a03ca4dfa30e2cc8758fbbe8d1d059233a69c851"
+      },
+      "split.json": {
+        "path": "outputs/d1-test/inputs/split.json",
+        "sha256": "85ff81154f5fd9c04d93d8cb2df011772d5bf62177b491cc38cd2fe8ae251c22"
+      }
+    }
+  }
+}

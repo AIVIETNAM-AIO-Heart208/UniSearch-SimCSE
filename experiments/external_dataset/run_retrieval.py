@@ -129,11 +129,16 @@ def main():
         print(f"{len({chunk['article_id'] for chunk in chunks})} articles, {len(chunks)} chunks")
         return
 
-    corpus = read_rows(args.chunks)
+    if args.corpus == "hcmus":
+        inputs = {name: path.read_bytes() for name, path in (("corpus", args.chunks), ("queries", args.queries))}
+        corpus = [json.loads(line) for line in inputs["corpus"].splitlines()]
+        query_rows = [json.loads(line) for line in inputs["queries"].splitlines()]
+    else:
+        corpus, query_rows = read_rows(args.chunks), read_rows(args.queries)
     expected_source = "virhe4qa" if args.corpus == "d1" else "d2"
     if args.corpus == "hcmus" and args.split != "test":
         parser.error("The HCMUS question set only has a test split")
-    queries = [q for q in read_rows(args.queries) if q["split"] == args.split]
+    queries = [q for q in query_rows if q["split"] == args.split]
     if not queries or any(q["source"] != expected_source for q in queries):
         parser.error(f"No valid {expected_source} queries for {args.split}")
     if len({q["qid"] for q in queries}) != len(queries):
@@ -149,6 +154,9 @@ def main():
             rows.append({"qid": query["qid"], "ranked": ranked, "top1_dense_cos": cosine})
     summary = {"corpus": args.corpus, "split": args.split, "model_revision": REVISION,
                "weight": args.weight, "queries": len(queries), "metrics": {}}
+    if args.corpus == "hcmus":
+        summary["input_sha256"] = {name: sha256(blob).hexdigest() for name, blob in inputs.items()}
+        summary["ranking_sha256"] = {}
     chunk_articles = {chunk_id: chunk["article_id"] for chunk_id, chunk in index.by_chunk.items()}
     for method, rows in results.items():
         path = args.output / "runs" / f"{method}.jsonl"
@@ -157,6 +165,8 @@ def main():
         validate_run(saved, queries, chunk_articles, count)
         if args.corpus == "d1":
             summary["metrics"][method] = evaluate_d1(queries, saved)
+        else:
+            summary["ranking_sha256"][method] = sha256(path.read_bytes()).hexdigest()
     (args.output / "summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(summary, indent=2))
 

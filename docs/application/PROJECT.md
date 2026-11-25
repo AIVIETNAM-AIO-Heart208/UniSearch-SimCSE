@@ -34,7 +34,7 @@ Kết quả lấy từ tài liệu bên ngoài **không phải** kết quả c�
 
 ## 1. Current Status
 
-**Nhóm 14** · **Deadline: 23:59 ngày 11/12/2026** · Cập nhật lần cuối: 2026-11-24 (Huy)
+**Nhóm 14** · **Deadline: 23:59 ngày 11/12/2026** · Cập nhật lần cuối: 2026-11-25 (Codex)
 
 **Repo GitHub:** <https://github.com/AIVIETNAM-AIO-Heart208/UniSearch-SimCSE>. Minh tạo ngày 23/11.
 
@@ -46,6 +46,7 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
 
 **Đã hoàn thành**
 
+- [x] Chuẩn bị split D1 theo nhóm đoạn nguồn và lưu xếp hạng SimCSE-VN trên D1-dev. Xem cấu hình, điểm và file kết quả ở [§6.7](#67-bảng-theo-dõi-kết-quả).
 - [x] Kiểm thử khoảng tin cậy cho chênh lệch giữa hai phương pháp và phép đo cảnh báo bằng ví dụ tính tay. Giao diện dùng với xếp hạng ở [§5.4](#54-interface--định-dạng-dữ-liệu).
 - [x] Chọn bài báo SimCSE (EMNLP 2021) và mã nguồn tại commit cố định `235f89e` (release 0.4, ngày 2021-05-12).
 - [x] Chọn Option 1 và đề tài "Trợ lý tra cứu quy chế học vụ" (từ Research).
@@ -77,15 +78,25 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
   - Mô tả và metadata ở [`data/d2/`](../../data/d2/README.md). Chữ QĐ 1175 (văn bản công khai) có trong Git ở `data/d2/`; bản chép QĐ 3087 chỉ ở `data/raw/d2/`, không đăng công khai (D-18).
   - Bảng đối ứng Điều 2021 ↔ 2026 (`data/d2/article_map.tsv`, 26 chủ đề): đã duyệt ngày 24/11 sau khi đối chiếu nội dung (D-18).
   - Rà soát lại ngày 24/11: sha256 khớp, URL công khai của QĐ 1175 vẫn tải được, hai đoạn có độ giống thấp của bản chép 2026 đã đọc tay đối chiếu.
+  - Ngày 25/11 đã xuất corpus hai quy chế trên máy Huy bằng checkpoint đã ghim và kiểm file đầu ra với hai nguồn. [Đường dẫn và cách tạo lại](../../data/d2/README.md#file).
 
-**Đang thực hiện:** không có.
+- [x] **E0 trên D1-dev (25/11):** kiểm ba bảng xếp hạng bàn giao và đối chiếu điểm BM25 của câu 9542 bằng phép tính độc lập. [Kết quả E0](../../experiments/external_dataset/results/E0/d1-dev.md)
+- [x] **D1-test (25/11):** chạy BM25, SimCSE-VN và Hybrid với cấu hình đã chốt trên D1-dev, tính khoảng tin cậy Hybrid so với BM25 và đánh giá cảnh báo ở ngưỡng cố định. [Bảng kết quả và khoảng tin cậy](../../experiments/external_dataset/results/E1/d1-test.md)
+- [x] **E2 trên D1-test (25/11):** so sánh ba phương pháp theo ba mức trùng từ, báo chỉ số và khoảng tin cậy trong mỗi nhóm. [Kết quả E2](../../experiments/application/results/E2/d1-test.md)
+- [x] **E3 trên D1-test (25/11):** vẽ đường cong risk–coverage từ xếp hạng Hybrid đã lưu, đánh dấu ngưỡng cố định từ D1-dev. [Biểu đồ E3](../../experiments/external_dataset/results/E3/d1-test-risk-coverage.png)
+- [x] **E5 trên D1-test (25/11):** rà 20 câu Hybrid trượt Hit@1, đối chiếu cả ba bảng xếp hạng với văn bản và chọn ví dụ cho báo cáo. [Bảng phân loại](../../experiments/application/results/E5/d1-test.md)
+- [x] **Bộ chấm D2 (25/11):** gắn mã riêng cho các Khoản lặp số và kiểm bằng dữ liệu giả rằng lệnh chấm đọc được ba bảng xếp hạng, xuất chỉ số theo Điều, chủ đề và Khoản, khoảng tin cậy, bảng theo mức trùng từ và đánh giá cảnh báo. [Lệnh và đầu ra](../../experiments/application/README.md#chấm-d2-test)
+- [x] **Phần soạn câu hỏi D2 của Huy (25/11):** Huy xác nhận đã tự soạn đủ phần của mình. Hai thành viên tiếp tục kiểm tra nhãn độc lập theo [checklist Phase 3](../PLAN.md#phase-3--xây-dựng-ứng-dụng).
 
-**Chưa thực hiện:** các đầu việc còn lại của Phase 2–4 ([§7.2](#72-lịch-theo-planmd)).
+**Đang thực hiện:** Phase 3. Nhóm có CLI truy hồi cùng [demo Gradio](../../apps/README.md).
+
+**Chưa thực hiện:** chốt nhãn D2, kiểm tra demo với corpus hai phiên bản, đánh giá D2 (gồm so sánh theo mức trùng từ và phân tích lỗi), đo độ trễ và chuẩn bị nộp ([§7.2](#72-lịch-theo-planmd)).
 
 **Việc ưu tiên tiếp theo**
 
-1. **Cả hai:** viết câu hỏi D2 ngay, song song với Phase 2 (quy tắc ở [§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu)), để kịp chốt nhãn trước 02/12.
-2. Dùng [xếp hạng dense trên D1-dev](../../experiments/external_dataset/results/D1-dev/runs/dense.jsonl) để chuẩn bị so sánh và chọn ngưỡng cảnh báo trước khi mở tập test.
+1. Hoàn tất gán nhãn độc lập và đối chiếu nhãn D2 theo [§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu) để chốt nhãn trước 02/12.
+2. Bàn giao [cấu hình đã chốt](../../experiments/external_dataset/results/D1-dev-tuning/handoff.md) cho Minh để kiểm demo hai phiên bản và đo độ trễ.
+3. Sau khi chốt nhãn, xuất [ba bảng xếp hạng D2](../../experiments/external_dataset/README.md#lệnh-chuẩn-bị-hcmus-và-đánh-giá-d2) với hai tham số đã chốt, chấm E2 và E3, rồi bổ sung ví dụ D2 cho E5.
 
 ---
 
@@ -150,7 +161,7 @@ Truy hồi lai **BM25 + SimCSE-VN** trên corpus quy chế đào tạo của Tr�
 |---|---|
 | Mã nguồn và checkpoint SimCSE chính thức (tái hiện) | Pipeline tách Điều/Khoản, giữ metadata văn bản, phiên bản và vị trí ký tự để trích đúng đoạn |
 | Checkpoint `VoVanPhuc/sup-SimCSE-VietNamese-phobert-base`, PhoBERT | Truy hồi lai, gộp điểm theo Điều, chọn λ trên dev |
-| pyvi, rank_bm25, faiss, Gradio | Cơ chế cảnh báo độ tin cậy cùng cách chọn và đánh giá ngưỡng |
+| pyvi, rank_bm25, NumPy, Gradio | Cơ chế cảnh báo độ tin cậy cùng cách chọn và đánh giá ngưỡng |
 | Bộ ViRHE4QA (bản con trong ViRE) | Chia lại D1 theo nhóm đoạn nguồn, vì cột `split` gốc bị rò rỉ (cùng một đoạn có câu hỏi ở cả train và test) |
 | Quy chế đào tạo HCMUS (QĐ 1175/2021, QĐ 3087/2026); bản chép QĐ 3087 từ scan do ChatGPT tạo | Bộ test D2: câu hỏi kiểu sinh viên kèm câu ngoài phạm vi. Làm sạch bản chép QĐ 3087 (165 chỗ sửa trong hai lượt đầu), đối chiếu với OCR và hiệu đính theo PDF đã ký. Bảng đối ứng Điều 2021 ↔ 2026 |
 | `evaluation.py` + SentEval của repo | Tự cài lại InfoNCE (unsup/sup + hard negative) và kiểm thử khớp với `cl_forward` |
@@ -323,7 +334,7 @@ Corpus HCMUS (ứng dụng, D2): data/raw/d2/* + data/d2/documents.yaml (metadat
 Corpus D1 (chỉ để đánh giá D1): 297 đoạn trong ViRHE4QA_v2.csv, không có metadata văn bản
   → ingest: tách Điều / Khoản → chunk ≤ 256 token → corpus.jsonl
   → preprocess: Unicode NFC → chuẩn hóa dấu thanh (khoá→khóa) → tách từ pyvi
-  → BM25 index (token thường hóa)  +  SimCSE-VN embeddings (chuẩn hóa L2) → FAISS IndexFlatIP
+  → BM25 index (token thường hóa)  +  SimCSE-VN embeddings (chuẩn hóa L2) → NumPy cosine
 
 [Online – mỗi câu hỏi]
 Câu hỏi → preprocess (cùng hàm) → điểm BM25 và cosine cho mọi chunk
@@ -343,7 +354,7 @@ Câu hỏi → preprocess (cùng hàm) → điểm BM25 và cosine cho mọi chu
 | SimCSE-VN | Khớp ngữ nghĩa, xử lý câu hỏi diễn đạt khác văn bản | Thành phần ML chính, gắn trực tiếp với paper |
 | BM25 (`rank_bm25`) | Khớp từ khóa, số liệu, thuật ngữ, viết tắt | Đại diện giải pháp hiện có; rất mạnh trên D1 theo tham chiếu ngoài ([§6.1](#61-datasets)) |
 | Hybrid λ-fusion | Kết hợp hai loại tín hiệu; chỉ 1 tham số | Đơn giản, chọn trên dev, dễ giải thích |
-| FAISS `IndexFlatIP` | Tính tích vô hướng trên toàn bộ vector đã chuẩn hóa, cùng cách với `simcse/tool.py` | Nếu cài lỗi, dùng NumPy tính tích vô hướng trên cùng các vector. Sai số dấu phẩy động có thể ảnh hưởng thứ tự các điểm rất sát nhau |
+| NumPy | Tính tích vô hướng trên toàn bộ vector đã chuẩn hóa L2, tương đương cosine | Quét toàn bộ chunk ở quy mô corpus hiện tại (D-24). Sai số dấu phẩy động có thể ảnh hưởng thứ tự các điểm rất sát nhau |
 | Gộp MaxP theo Điều | Điều dài phải chia chunk vì giới hạn 256 token; hiển thị và đánh giá ở mức Điều | Nhãn gold của D1 ở mức Điều |
 
 Min-max theo từng câu hỏi làm mất thang điểm tuyệt đối. Nếu mọi Điều có cùng điểm cho một phương pháp, thành phần chuẩn hóa của phương pháp đó bằng 0. Cảnh báo dùng cosine của SimCSE-VN.
@@ -373,29 +384,38 @@ Dùng định dạng dưới đây cho dữ liệu và kết quả truy hồi.
 
 ```text
 corpus.jsonl   {chunk_id, doc_id, article_id, article, article_title, clause|null, text, char_start, char_end}
+               # D2 thêm clause_id|null; các cửa sổ trong cùng một Khoản có chung mã.
 queries.jsonl  {qid, question, gold_article_ids: [..], gold_clause_ids: [..], split: dev|test, source: virhe4qa|d2, origin: team|form|null, in_scope: bool}
-               # D2: article_id = "<doc_id>:dieu-<n>", clause id = "<article_id>:khoan-<m>"; câu ngoài phạm vi có gold rỗng
+               # D2: article_id = "<doc_id>:dieu-<n>"; gold_clause_ids lấy từ clause_id của corpus.
+               # Mã Khoản: "<article_id>:khoan-<m>", thêm ":1", ":2", ... theo thứ tự nếu số Khoản lặp.
+               # Câu ngoài phạm vi có hai danh sách gold rỗng.
                # D2: origin = team (nhóm viết) hoặc form (câu thu qua Google Form); D1: origin = null
                # D1: chỉ có split dev|test, gold_clause_ids rỗng; D2 luôn là test
 runs/<method>.jsonl  {qid, ranked: [[article_id, score, best_chunk_id], ...], top1_dense_cos}
                # D1: top-20 Điều. D2: cả 51 Điều để tính đủ 10 chủ đề sau khi gộp.
-               # Clause@1 tra Điều và Khoản của best_chunk_id, kể cả khi Khoản có nhiều cửa sổ.
+               # Clause@1 tra clause_id của best_chunk_id trong Điều hạng 1 trước khi gộp chủ đề.
                # Chọn best_chunk_id và top1_dense_cos theo quy tắc trích đoạn ở §5.2.
-API: search(query: str, k: int = 3, method: "bm25"|"dense"|"hybrid", corpus: "hcmus"|"virhe4qa" = "hcmus") -> list[Hit]
+API dự kiến: search(query: str, k: int = 3, method: "bm25"|"dense"|"hybrid", corpus: "hcmus"|"virhe4qa" = "hcmus") -> list[Hit]
      Hit = {article_id, score, best_chunk_id, bm25_score, dense_cos, low_confidence: bool}
 ```
+
+Xem [cách xác định mã khi số Khoản lặp](../../data/d2/README.md#mã-điều-và-khoản). Bộ chấm hỗ trợ corpus cũ bằng cách tra Khoản từ offset trong nguồn đã kiểm SHA-256.
 
 | Module (vị trí trong repo) | Input → Output | Owner | Tái sử dụng / Mới |
 |---|---|---|---|
 | `data/prepare_virhe4qa.py` | CSV ViRE → corpus/queries D1 + group split | Minh | Mới |
-| `src/simcse_lab/retrieval/ingest.py` | `data/d2/documents.yaml` (đọc đúng file đã kiểm chứng: `text_file` của QĐ 1175, `file` của QĐ 3087), hoặc context của D1 → tách Điều/Khoản, chunk → `corpus.jsonl` | Minh | Mới |
+| `src/simcse_lab/retrieval/hcmus.py` và `ingest.py` | Metadata và nguồn HCMUS đã kiểm SHA-256, hoặc context D1 → Điều/Khoản, chunk có offset | Minh | Mới |
 | `src/simcse_lab/retrieval/preprocess.py` | text → text chuẩn hóa / tách từ / token BM25 | Minh | Mới (dùng pyvi) |
 | `src/simcse_lab/model/encoders.py` | list[str] → ndarray (L2-norm) | Minh | Model tái sử dụng; code mới (tham khảo `simcse/tool.py`) |
-| `src/simcse_lab/retrieval/search.py` | query → list[Hit] (BM25 / dense / hybrid, MaxP, confidence) | Minh | Mới (dùng rank_bm25, faiss) |
-| `src/simcse_lab/evaluation/metrics.py` | runs + qrels (+ `data/d2/article_map.tsv` cho D2) → Hit@k, MRR@10 theo Điều; với D2 thêm mức theo chủ đề (gộp từ runs theo Điều) và Clause@1 | Minh | Mới |
+| `src/simcse_lab/retrieval/search.py` | Câu hỏi → điểm từng chunk → xếp hạng Điều và cosine của đoạn trích đầu tiên | Minh | Mới (dùng rank_bm25, NumPy) |
+| `src/simcse_lab/evaluation/metrics.py` | D1: câu hỏi + xếp hạng → Hit@1, Hit@3, MRR@10 | Minh | Đã có |
 | [`src/simcse_lab/evaluation/stats.py`](../../src/simcse_lab/evaluation/stats.py) | Câu hỏi và xếp hạng theo `qid`. Tính CI theo cặp, chọn θ trên D1-dev và đánh giá cảnh báo. Đã kiểm bằng [ví dụ tính tay](../../tests/test_stats.py) | Huy | Đã có |
 | `experiments/external_dataset/` | Chạy 3 phương pháp trên D1 (Minh); chọn λ, θ trên D1-dev (Huy) → `results/` | Minh, Huy | Mới |
+| [`experiments/external_dataset/evaluate_d1_test.py`](../../experiments/external_dataset/evaluate_d1_test.py) | CSV, checkpoint và cấu hình đã chốt → corpus D1, xếp hạng D1-test, chỉ số, CI theo cặp và độ bao phủ | Huy | Đã có |
+| [`experiments/external_dataset/plot_d1_risk_coverage.py`](../../experiments/external_dataset/plot_d1_risk_coverage.py) | Xếp hạng Hybrid và nhãn D1-test đã lưu → điểm đường cong và hình risk–coverage tại cấu hình đã chốt | Huy | Đã có |
 | `experiments/application/` | So sánh trên D1-test và D2, phân tích lỗi (Huy); đo latency (Minh) → `results/` | Huy, Minh | Mới |
+| [`experiments/application/analyze_d1_overlap.py`](../../experiments/application/analyze_d1_overlap.py) | CSV và kết quả E1 đã lưu → mã câu, Hit@k, MRR@10 và CI theo mức Jaccard trên D1-test | Huy | Đã có |
+| [`experiments/application/evaluate_d2.py`](../../experiments/application/evaluate_d2.py) | Nhãn D2 đã chốt, corpus và ba xếp hạng đã lưu → E2 theo Điều, chủ đề và Khoản, CI theo cặp và biểu đồ E3. [Lệnh](../../experiments/application/README.md#chấm-d2-test) | Huy | Đã kiểm với dữ liệu giả |
 | `experiments/reproduction/` | Chạy R1–R4 vào `outputs/reproduction/`. Kết quả đã công bố ở [§6.7](#67-bảng-theo-dõi-kết-quả) | Huy | Code gốc + mới |
 | `src/simcse_lab/model/infonce.py` + `tests/test_infonce.py` | R4: InfoNCE tự cài + test khớp `cl_forward` | Huy | Mới |
 | `apps/app.py` | Gradio UI gọi `search` | Minh | Mới (dùng Gradio) |
@@ -417,8 +437,8 @@ Theo repo GitHub. Mục có dấu ✓ là đã có nội dung.
 │   └── d2/                           # ✓ README.md, documents.yaml, article_map.tsv, chữ QĐ 1175; queries_d2.jsonl (Phase 3). Bản chép QĐ 3087 ở raw/d2/
 ├── src/simcse_lab/
 │   ├── model/                        # encoders.py, infonce.py ✓
-│   ├── retrieval/                    # ingest.py, preprocess.py, search.py
-│   └── evaluation/                   # metrics.py (dự kiến), stats.py ✓
+│   ├── retrieval/                    # hcmus.py, ingest.py, preprocess.py, search.py
+│   └── evaluation/                   # metrics.py (D1), stats.py ✓
 ├── experiments/
 │   ├── reproduction/                 # ✓ run_r1.py, run_r1.bat, requirements-r1.txt, results/R1–R3; run_r4.py, results/R4
 │   │   └── SimCSE/                   # code gốc @ 235f89e (gitignore; script tự tải nếu thiếu)
@@ -430,9 +450,9 @@ Theo repo GitHub. Mục có dấu ✓ là đã có nội dung.
 └── .venv-repro/ · .cache/            # venv tái hiện, cache HuggingFace (gitignore)
 ```
 
-Môi trường cho ứng dụng dùng venv riêng (`.venv`, cài bằng `pip install -e .`), không dùng chung `.venv-repro`.
+Môi trường truy hồi và demo dùng venv riêng. Xem [lệnh cài và kiểm chứng D1](../../experiments/external_dataset/README.md) và [lệnh khởi động Gradio](../../apps/README.md).
 
-**Stack:** Python 3.10 hoặc 3.11 [Proposed; kiểm tra pyvi cài được trước 25/11], torch, transformers, pyvi, rank_bm25, faiss-cpu, gradio, pyyaml, numpy, pandas, pytest. Không dùng server, database, Docker hay CI.
+**Stack bản bàn giao:** Python, PyTorch, Transformers, pyvi, rank_bm25, NumPy, PyYAML, Gradio và pytest. Phiên bản môi trường tái lập D1 có trong hướng dẫn D1.
 
 ---
 
@@ -447,6 +467,8 @@ Môi trường cho ứng dụng dùng venv riêng (`.venv`, cài bằng `pip ins
 | R-STS | STS12–16, STS-B, SICK-R | Tái hiện R1–R3 | Theo script repo | `senteval.tar` (HF `princeton-nlp/datasets-for-simcse`) |
 | D1-full | ViRHE4QA đầy đủ (9.758 cặp QA, 294 điều) | Tùy chọn | [Confirmed theo arXiv:2409.02840] | Xin tác giả; dự án **không phụ thuộc** vào bộ này |
 | Dự phòng | EduCoQA (`data/EduCoQA.csv` trong ViRE; 511 câu hỏi / 262 đoạn, tư vấn tuyển sinh HCMUT) | Chỉ dùng nếu D1 không dùng được | [Confirmed] | CC BY-NC 4.0; bản trên HF cần đăng nhập |
+
+Cách tạo [corpus D2 từ hai quy chế](../../data/d2/README.md#file) và quy trình [chốt nhãn D2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu) là hai bước chuẩn bị đầu vào cho đánh giá.
 
 **Tham chiếu bên ngoài trên D1** (không phải kết quả của nhóm; protocol khác nên **không so sánh trực tiếp**):
 
@@ -476,7 +498,7 @@ Môi trường cho ứng dụng dùng venv riêng (`.venv`, cài bằng `pip ins
 - **Cách viết (D-18):** viết kiểu "gập sách": đọc Điều, gập văn bản lại, rồi viết câu như khi hỏi bạn hoặc phòng đào tạo. Được dùng thuật ngữ thông dụng (học phần, tín chỉ, điểm trung bình tích lũy…), không chép nguyên câu hay mệnh đề từ văn bản. Câu ngoài phạm vi là câu mà cả hai văn bản đều không trả lời (ví dụ ký túc xá, căn tin).
   - Lý do: quy tắc cũ "không chép quá 3 từ liên tiếp" cấm cả thuật ngữ sinh viên vẫn dùng, làm câu bất lợi cho BM25 ngay từ cách xây dựng. Cách viết mới vẫn có thể cho câu ít trùng từ hơn câu thật, nên báo E2 theo mức trùng từ và báo riêng nhóm `form` nếu có.
 - **Loại trùng:** trước khi chốt, loại câu trùng hoặc gần trùng giữa hai người viết và ghi số câu đã loại.
-- **Gán nhãn:** người viết ghi `gold_article_ids`, và `gold_clause_ids` khi xác định được Khoản. Người kia kiểm tra độc lập. Ghi tỉ lệ đồng ý trước khi thảo luận và lưu log bất đồng.
+- **Gán nhãn:** người viết ghi `gold_article_ids` và `gold_clause_ids` khi xác định được Khoản. Với số Khoản lặp, đối chiếu nguyên văn để chọn [mã Khoản theo thứ tự xuất hiện](../../data/d2/README.md#mã-điều-và-khoản). Người kia kiểm tra độc lập. Ghi tỉ lệ đồng ý trước khi thảo luận và lưu log bất đồng.
 - **Hai phiên bản:**
   - Gold gồm mọi Điều, ở bất kỳ phiên bản nào, có nội dung trả lời câu hỏi; câu được tính đúng nếu khớp bất kỳ gold nào (§6.3).
   - Không viết câu hỏi mà đáp án phụ thuộc vào việc khóa nào áp dụng phiên bản nào.
@@ -504,28 +526,31 @@ Môi trường cho ứng dụng dùng venv riêng (`.venv`, cài bằng `pip ins
 
 - **Hit@k** (k = 1, 3, 5, 10): tỉ lệ câu hỏi có Điều đúng trong top-k. Với 1 gold, Hit@k = Recall@k.
 - **MRR@10:** trung bình 1/rank của Điều đúng đầu tiên, tính 0 nếu rank > 10.
-- **Mức Khoản (chỉ D2, trên câu có `gold_clause_ids`):** Khoản tốt nhất của Điều đứng đầu có thuộc gold không (Clause@1). Metric này chặt, vì gắn với Điều đứng đầu, và bù cho việc corpus D2 nhỏ.
+- **Mức Khoản (chỉ D2, trên câu có `gold_clause_ids`):** Clause@1 là tỷ lệ câu mà `clause_id` của chunk trích dẫn thuộc gold. Dùng chunk của Điều đứng đầu trước khi gộp chủ đề. Báo kèm số câu có nhãn Khoản.
 - **Hai mức cho D2:** luôn báo cả hai, không báo mức theo chủ đề một mình.
   - **Theo Điều (chặt):** như D1, không gộp. Một Điều chỉ đúng khi nằm trong gold.
   - **Theo chủ đề (khớp giao diện, dễ hơn):** các Điều được gộp thành chủ đề theo [`data/d2/article_map.tsv`](../../data/d2/article_map.tsv) (26 chủ đề cho 51 Điều; đã duyệt 24/11, D-18). Trước khi cắt top-k, các Điều cùng chủ đề chỉ tính một lần; câu hỏi tính là đúng khi chủ đề của một gold nằm trong top-k.
   - **Vì sao mức chủ đề dễ hơn:** sau khi gộp, top-k chứa nhiều chủ đề khác nhau hơn, nên Hit@k và MRR@10 chỉ có thể tăng hoặc giữ nguyên. Kể cả Hit@1 cũng dễ hơn khi chỉ một phiên bản trả lời được câu hỏi. Ví dụ T18: bản 2026 thêm chuyển ngành, nên câu hỏi về chuyển ngành chỉ có gold là Điều 21 bản 2026; nếu Điều 20 bản 2021 đứng đầu thì mức chủ đề tính đúng, mức Điều tính sai.
   - **Gộp trong cùng một phiên bản (giữ theo D-18):** T02 (Điều 2 và 3 bản 2021), T09 (Điều 12 và 13 bản 2026), T16 (Điều 17 và 18 bản 2021). Đã đối chiếu nội dung: một bản tách thành hai Điều nội dung mà bản kia gộp trong một Điều. Ví dụ Điều 10 bản 2021 gồm cả xét giao và đánh giá khóa luận, bản 2026 tách thành Điều 12 và 13.
-  - **Mức ngẫu nhiên:** với g Điều gold, xáo đều 51 Điều cho Hit@k kỳ vọng bằng 1 − C(51−g, k)/C(51, k). Để tính mốc chủ đề của cùng hệ thống, gộp mỗi hoán vị Điều theo đúng quy tắc trên rồi tính Hit@k. Ví dụ, chủ đề chứa 3 Điều có xác suất đứng đầu là 3/51. Công thức k/26 cho một chủ đề gold chỉ áp dụng nếu xáo đều trực tiếp 26 chủ đề.
-  - Runs lưu ở mức Điều (§5.4); `metrics.py` tính mức chủ đề từ runs và `article_map.tsv`.
+  - **Mức ngẫu nhiên:** với g Điều gold, xáo đều 51 Điều cho Hit@k kỳ vọng bằng 1 − C(51−g, k)/C(51, k). Để tính mốc chủ đề của cùng hệ thống, dùng 1.000 hoán vị Điều với seed 42, gộp từng hoán vị rồi tính chỉ số. Ví dụ, chủ đề chứa 3 Điều có xác suất đứng đầu là 3/51. Công thức k/26 cho một chủ đề gold chỉ áp dụng nếu xáo đều trực tiếp 26 chủ đề.
+  - Runs lưu ở mức Điều (§5.4). E2 cần tính bảng chỉ số mức chủ đề từ runs và `article_map.tsv`.
 - **Ý nghĩa thống kê:** lấy mẫu có hoàn lại 1.000 lần trên các câu trong phạm vi (seed 42), giữ cặp kết quả của mỗi câu. Báo 95% CI của ΔMRR@10 và ΔHit@1 bằng phân vị 2,5% và 97,5% của các chênh lệch trung bình, nội suy tuyến tính.
 - **Mẫu số của E3:** độ bao phủ là số câu được đánh dấu tin cậy chia cho toàn bộ câu. Hit@1 của mỗi nhóm chỉ tính trên câu trong phạm vi của nhóm đó. False-confidence là số câu ngoài phạm vi được đánh dấu tin cậy chia cho toàn bộ câu ngoài phạm vi. Kết quả kèm số câu và dùng `None` (JSON `null`) khi mẫu số bằng 0.
+- **Đường cong risk–coverage:** mỗi điểm dùng một giá trị `top1_dense_cos` đã quan sát và tính độ bao phủ theo quy tắc `cosine >= ngưỡng`. Risk là tỷ lệ sai ở hạng 1 trong các câu trong phạm vi được đánh dấu tin cậy. D2 có cả đường theo Điều và theo chủ đề. Các câu bằng điểm được tính cùng nhau. Risk không xác định khi chưa có câu trong phạm vi được chấp nhận. Điểm đánh dấu dùng θ đã chọn trên D1-dev.
 - **Latency:** p50/p95 mỗi truy vấn trên CPU, tách riêng thời gian tách từ, encode và search; thời gian build index.
 
 ### 6.4 Thí nghiệm thiết yếu
 
-Gói D1-dev lưu xếp hạng của ba phương pháp trên 224 câu và lệnh kiểm chứng. Hybrid dùng λ = 0,5 để kiểm tra đầu ra. Bước chọn cấu hình thuộc E1 và E3. Corpus HCMUS đang chờ bản nguồn 2026 đúng checksum để kiểm tra đủ 51 Điều. Bản nháp câu hỏi của Minh sẽ được đối chiếu với nguồn 2026 và duyệt chéo trước khi chạy E2. [Lệnh và kết quả kiểm tra](../../experiments/external_dataset/README.md#bàn-giao-cho-huy)
+Lệnh kiểm chứng gói D1-dev đã xác nhận SHA-256, thứ tự xếp hạng và chỉ số của ba phương pháp trên 224 câu. Lượt chọn cấu hình E1 và E3 đã dùng điểm của toàn bộ corpus trên D1-dev. [Lệnh chọn cấu hình và kết quả](../../experiments/external_dataset/README.md#chốt-cấu-hình-bằng-d1-dev)
+
+[Corpus HCMUS](../../data/d2/README.md#file) đã được xuất và đối chiếu với hai nguồn trên máy Huy. Kiểm tra demo trên corpus này và chốt nhãn chính thức theo §6.2 là các việc tiếp theo của Phase 3. Đánh giá D2 bắt đầu sau khi chốt nhãn.
 
 | ID | Mục đích | Thiết lập | Đầu ra |
 |---|---|---|---|
 | E0 | Kiểm tra cài đặt | Chạy BM25 trên D1-dev và đối chiếu cách tính hạng bằng ví dụ tính tay. Số ViRE ở §6.1 là tham khảo trên toàn bộ dữ liệu. Chỉ mở D1-test sau khi cố định tiền xử lý và cấu hình | Ghi chú kiểm tra |
 | E1 | Chất lượng truy hồi trên dataset mới | `bm25`, `dense`, `hybrid` (+ `phobert-raw`) trên D1-test. λ chọn trên D1-dev (lưới 0..1, bước 0,1, tối ưu MRR@10) | Bảng + CI cho `hybrid`−`bm25`, `dense`−`phobert-raw` |
-| E2 | Bối cảnh thực tế và câu hỏi diễn đạt khác văn bản | Như E1 trên D2-in-scope (kết quả chính) và trên D1-test (bằng chứng phụ), cấu hình giữ nguyên. Chia câu hỏi theo mức trùng từ vựng với Điều gold (Jaccard token, ba nhóm thấp/vừa/cao) và báo metric từng nhóm kèm số câu mỗi nhóm. D2 báo cả mức theo Điều và theo chủ đề, thêm Clause@1, và báo riêng nhóm `origin: form` nếu có (§6.3) | Bảng + phân tích theo nhóm |
-| E3 | Đánh giá cảnh báo độ tin cậy | θ chọn trên D1-dev: θ lớn nhất sao cho coverage ≥ 80% [Proposed, chốt khi có dữ liệu dev]. Trên D1-test và D2: coverage, Hit@1 trong nhóm "tin cậy" và nhóm "không tin cậy", tỉ lệ câu ngoài phạm vi của D2 bị đánh dấu tin cậy (false-confidence). Hạn chế phải nêu trong báo cáo: θ chọn trên corpus và kiểu câu hỏi của D1 (UIT) rồi dùng nguyên cho HCMUS, không chỉnh trên D2 | Bảng + biểu đồ risk–coverage |
+| E2 | Bối cảnh thực tế và câu hỏi diễn đạt khác văn bản | Ba phương pháp trên D2-in-scope (kết quả chính) và D1-test (bằng chứng phụ) với cấu hình cố định. Chia nhóm thấp/vừa/cao theo Jaccard tập token Pyvi, tại phân vị 1/3 và 2/3. Ở D2 lấy Jaccard lớn nhất với các Điều gold, giữ các câu đồng điểm trong cùng nhóm và báo số câu kể cả nhóm rỗng. Báo cả mức Điều và chủ đề, Clause@1 và nhóm `origin: form` nếu có (§6.3) | Bảng + phân tích theo nhóm |
+| E3 | Đánh giá cảnh báo độ tin cậy | Chọn θ lớn nhất sao cho coverage ≥ 80% trên D1-dev với trọng số Hybrid đã chốt. Trên D1-test và D2: coverage, Hit@1 trong nhóm "tin cậy" và nhóm "không tin cậy", tỉ lệ câu ngoài phạm vi của D2 bị đánh dấu tin cậy (false-confidence). Hạn chế phải nêu trong báo cáo: θ chọn trên corpus và kiểu câu hỏi của D1 (UIT) rồi giữ nguyên khi áp dụng cho HCMUS | Bảng + biểu đồ risk–coverage |
 | E4 | Chi phí sử dụng | Latency p50/p95 trên CPU cho `bm25`/`dense`/`hybrid`; ghi cấu hình máy | Bảng |
 | E5 | Phân tích lỗi | 20–30 câu sai của `hybrid` trên D1-test và D2, phân loại: tách từ, Điều dài bị cắt, số/ngày tháng, viết tắt (vd. ĐTTX, KLTN), câu hỏi cần nhiều Điều, khác biệt diễn đạt | Bảng phân loại + ví dụ |
 
@@ -562,12 +587,13 @@ Chỉ điền khi đã có file kết quả.
 | R4 | [x] 24/11 | Chạy lại sau khi ổn định phép tính ở nhiệt độ thấp. 689/689 test đạt. Lệch tối đa ở float64 là 8,7e-15 so với vòng lặp Eq. 4/8 và 1,4e-9 so với `cl_forward`. Ở float32 lệch tối đa 9,5e-7 | [Kết quả, seed và cấu hình](../../experiments/reproduction/results/R4-2026-11-24/metrics.json) |
 | R4 | [x] 23/11 | 689/689 test pass. float64: lệch tối đa 8,4e-15 so với vòng lặp Eq. 4/8; so với `cl_forward` 6,0e-15 (w biểu diễn đúng trong float32) và 1,4e-9 (w = log 0,5, log 2; nguyên nhân: `cl_forward` dựng ma trận trọng số bằng float32, dựng bằng float64 thì còn 7,1e-15). Gradient khớp < 1e-6 trên một batch (N=8, d=32, τ=0,05, w ∈ {0, log 2}). float32: 3,7e-6, ngưỡng riêng 5e-5 | `experiments/reproduction/results/R4/`, `tests/test_infonce.py` |
 | Dense D1-dev (Phase 2) | [x] | 224 câu, Hit@1 46,43%, Hit@3 65,63%, MRR@10 58,28% | [Kết quả và cấu hình](../../experiments/external_dataset/results/D1-dev/metrics.json) |
-| E0 | [ ] | — | `experiments/external_dataset/results/E0/` |
-| E1 | [ ] | — | `experiments/external_dataset/results/E1/` |
-| E2 | [ ] | — | `experiments/application/results/E2/` |
-| E3 | [ ] | — | `experiments/external_dataset/results/E3/` |
+| Chọn cấu hình D1-dev | [x] 25/11 | λ = 0,6 đạt Hit@1 69,64%, Hit@3 85,27%, MRR@10 0,782898. Ngưỡng 0,6201629042625427 giữ 180/224 câu tin cậy (80,36%) | [Cấu hình](../../experiments/external_dataset/results/D1-dev-tuning/handoff.md) · [Kết quả quét](../../experiments/external_dataset/results/D1-dev-tuning/summary.json) |
+| E0 | Đã kiểm 25/11 | Chỉ số BM25 trên 224 câu D1-dev tính lại khớp, điểm từng chunk và top 20 đoạn nguồn của câu 9542 khớp tính toán độc lập | [Kiểm chứng BM25](../../experiments/external_dataset/results/E0/d1-dev.md) |
+| E1 | Đã chạy ba phương pháp 25/11 | Hybrid đạt MRR@10 0,810780. Chênh lệch Hybrid − BM25 là +0,018988 (95% CI [+0,008363, +0,029811]) và +2,11 điểm phần trăm Hit@1 (95% CI [+0,39, +3,82]). Đối chứng PhoBERT thô là phần khuyến nghị | [Kết quả D1-test](../../experiments/external_dataset/results/E1/d1-test.md) |
+| E2 | Có kết quả D1-test 25/11 | Ba nhóm Jaccard có 253 câu mỗi nhóm. Ở nhóm thấp, Hybrid tăng MRR@10 thêm 0,042031 so với BM25 (95% CI 0,018749 đến 0,065467). Còn phần D2 | [Bảng chỉ số và khoảng tin cậy](../../experiments/application/results/E2/d1-test.md) |
+| E3 | Có kết quả D1-test 25/11 | Ngưỡng đã chốt cho độ bao phủ 81,42% (618/759) và risk 23,95% (148/618). Risk tại độ bao phủ 100% là 27,54% (209/759). Còn đánh giá D2 | [Biểu đồ](../../experiments/external_dataset/results/E3/d1-test-risk-coverage.png) · [Dữ liệu đường cong](../../experiments/external_dataset/results/E3/d1-test.json) · [Chỉ số cảnh báo](../../experiments/external_dataset/results/E1/d1-test.md#cảnh-báo-của-hybrid) |
 | E4 | [ ] | — | `experiments/application/results/E4/` |
-| E5 | [ ] | — | `experiments/application/results/E5/` |
+| E5 | Có phân tích D1-test 25/11 | Hybrid trượt Hit@1 ở 209/759 câu, 123 trong số đó có đoạn chuẩn hạng 2–3. Đã đối chiếu nội dung 20 câu và chọn ví dụ. Còn phần D2 và kiểm chéo | [Phân tích D1-test](../../experiments/application/results/E5/d1-test.md) |
 
 ---
 
@@ -640,11 +666,11 @@ Tính từ 23/11, còn 18 ngày đến 11/12/2026. Phase 3 xong trước **06/12
 | D-03 | Hybrid λ-fusion trên điểm min-max theo Điều; λ chọn trên D1-dev | Chốt |
 | D-04 | Chunk theo Khoản (≤ 256 token, chia cửa sổ nếu dài); xếp hạng và đánh giá theo Điều (MaxP) | Chốt |
 | D-05 | Không dùng LLM sinh câu trả lời; chỉ hiển thị đoạn văn bản có trong corpus + nguồn (QĐ 3087 là bản chép từ scan, ghi rõ khi hiển thị) | Chốt |
-| D-06 | Confidence = cosine SimCSE của chunk tốt nhất trong top-1; θ từ D1-dev; chỉ cảnh báo | Chốt; quy tắc chọn θ chốt khi có dev |
+| D-06 | Confidence là cosine SimCSE của chunk đã chọn trong Điều đứng đầu. Dùng θ từ D1-dev để cảnh báo | Chốt quy tắc đo. Giá trị θ ở D-22 |
 | D-07 | D1 = ViRHE4QA (ViRE @ `60ea715`) là dataset mới chính; D2 chỉ test | Chốt (D2 khôi phục theo D-17) |
 | D-08 | Tái hiện = R1 (bắt buộc) + R4; R2, R3 khuyến nghị; train SimCSE là tùy chọn | Chốt |
 | D-09 | Gradio, chạy local; không server, database hay auth | Chốt |
-| D-10 | FAISS `IndexFlatIP`, fallback numpy | Chốt |
+| D-10 | FAISS `IndexFlatIP`, fallback NumPy | Bị thay bởi D-24 (25/11) |
 | D-11 | Fine-tuning (O1) chỉ sau MVP; không nhắm bonus | Chốt |
 | D-12 | Môi trường tái hiện: venv Python 3.11 + `experiments/reproduction/requirements-r1.txt` (numpy 1.23.5, scipy 1.10.1, scikit-learn 1.2.2, torch 2.5.1 CPU, transformers 4.46.3); chạy qua `experiments/reproduction/run_r1.py` | Chốt |
 | D-13 | Dataset nộp bằng link: D1 = permalink ViRE @ `60ea715`; D2 = Google Drive public | Chốt (giảng viên cho phép); nội dung link D2 theo D-18 |
@@ -656,13 +682,18 @@ Tính từ 23/11, còn 18 ngày đến 11/12/2026. Phase 3 xong trước **06/12
 | D-19 | Dùng ngay định dạng ở [§5.4](#54-interface--định-dạng-dữ-liệu). Mỗi người viết Related Work theo phần phụ trách trong [PLAN.md](../PLAN.md#phase-1--nghiên-cứu-paper) | Áp dụng từ 24/11 |
 | D-20 | E0 dùng D1-dev. Bổ sung cho D-19: D2 lưu đủ thứ hạng theo Điều để tính đúng MRR@10 sau khi gộp chủ đề (§6.3). D1 lưu top-20 | Chốt 24/11 khi rà soát |
 | D-21 | Bổ sung D-06 và D-19: cố định cách chọn đoạn trích khi hai phương pháp chọn hai chunk khác nhau và cách xử lý đồng điểm ở [§5.2](#52-vai-trò-từng-thành-phần-proposed). Căn cứ Clause@1 và cảnh báo dùng cùng một đoạn | 24/11, trước khi có xếp hạng D1/D2 |
+| D-22 | Cố định trọng số Hybrid tối ưu MRR@10 và ngưỡng lớn nhất giữ coverage ≥ 80% trên D1-dev. Nếu MRR@10 bằng nhau trong lưới, chọn trọng số BM25 nhỏ hơn. Giá trị và lệnh chạy nằm trong [cấu hình D1-dev](../../experiments/external_dataset/results/D1-dev-tuning/handoff.md) | Chốt 25/11, trước khi đánh giá D1-test và D2 |
+| D-23 | E2 trên D1-test dùng Jaccard của tập token Pyvi giữa câu hỏi và toàn đoạn chuẩn. Hai mốc phân nhóm lấy theo phân vị 1/3 và 2/3 của Jaccard. [Quy tắc phân nhóm và kết quả](../../experiments/application/results/E2/d1-test.md#cách-chia-nhóm) | Áp dụng cho lượt D1-test ngày 25/11 |
+| D-24 | Truy hồi dense và demo dùng tích vô hướng NumPy trên toàn bộ vector chuẩn hóa L2. Đặc tả theo mã và kết quả đã chạy | Ghi nhận 25/11. Thay D-10 cho ứng dụng |
+| D-25 | D2 phân biệt các Khoản lặp số bằng thứ tự xuất hiện trong nguồn. Với nhiều Điều gold, E2 dùng Jaccard cao nhất và để các câu đồng điểm cùng nhóm. E3 dùng riêng tỷ lệ sai ở hạng 1 theo Điều và theo chủ đề | Chốt quy tắc triển khai 25/11, trước khi chấm D2 |
 
 **Vấn đề còn mở**
 
 | ID | Câu hỏi | Ai giải quyết |
 |---|---|---|
-| Q5 | pyvi và faiss-cpu có cài được trên môi trường của nhóm không? | Minh (trước 25/11) |
 | Q6 | Ý nghĩa cột `label` trong D1 | Minh (không chặn tiến độ) |
+
+Q5 đã có cấu hình thực chạy với Pyvi và NumPy trong [kết quả D1-dev](../../experiments/external_dataset/results/D1-dev-tuning/summary.json) (D-24).
 
 Q7 đã có nguồn chính thức (24/11). Chia sẻ [PDF của Trường](https://www.hcmus.edu.vn/wp-content/uploads/2026/10/QD3087_QD-Quy-che-dao-tao-2026.pdf). Bản ChatGPT chép từ scan vẫn dùng cho corpus trong bài nộp.
 
@@ -712,5 +743,5 @@ Q7 đã có nguồn chính thức (24/11). Chia sẻ [PDF của Trường](https
 - ViRE benchmark (chứa ViRHE4QA_v2, EduCoQA) — <https://github.com/longstnguyen/ViRE/tree/60ea7155134eaa426ab1d0a82d2bbbf327d1b470>
 - R2GQA / ViRHE4QA — <https://arxiv.org/abs/2409.02840>
 - EduCoQA (HF) — <https://huggingface.co/datasets/longstnguyen/vire-educoqa>
-- Thư viện: rank_bm25 <https://github.com/dorianbrown/rank_bm25> · faiss <https://github.com/facebookresearch/faiss> · pyvi <https://github.com/trungtv/pyvi> · Gradio <https://www.gradio.app/>
+- Thư viện: rank_bm25 <https://github.com/dorianbrown/rank_bm25> · NumPy <https://numpy.org/> · pyvi <https://github.com/trungtv/pyvi> · Gradio <https://www.gradio.app/>
 - Mẫu IEEE Conference (`conference_101719.tex`, IEEEtran V1.8b) — <https://www.overleaf.com/latex/templates/ieee-conference-template/grfzhhncsfqn>. Build trên máy, không qua Overleaf: [docs/report/](../report/README.md).

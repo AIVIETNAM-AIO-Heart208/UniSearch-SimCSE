@@ -44,7 +44,7 @@
   "runs": {
     "bm25": {
       "path": "runs/bm25.jsonl",
-      "sha256": "84cba4cb4b761174472cb7d8efa4ae878e1712f47ffc8e584aaa9af3ad05e0be",
+      "sha256": "e9d0a76e5f33c1a0b3b5ecc6a4e358ff4c9c8c3113d004cc8d7bb75f74b76fab",
       "metrics": {
         "hit_at_1": 0.6651785714285714,
         "hit_at_3": 0.8080357142857143,
@@ -53,7 +53,7 @@
     },
     "dense": {
       "path": "../D1-dev/runs/dense.jsonl",
-      "sha256": "092bcb227fc7447db08312388470a6693d83b4090c55d49eeb42b245ba85ad2f",
+      "sha256": "6e07e3fd5a1c8f171a7968f0a9558217332fe943a08d6dd940dd06dfbc28568b",
       "metrics": {
         "hit_at_1": 0.4642857142857143,
         "hit_at_3": 0.65625,
@@ -62,7 +62,7 @@
     },
     "hybrid": {
       "path": "runs/hybrid.jsonl",
-      "sha256": "b4be11e7dcc90bfff071c50b43864820b60b501337373245b0da1844ce57dc6b",
+      "sha256": "14f6f32e00074460b618e4ae8304ffd5ca220e2f0997826ffa808ef41c0ce658",
       "metrics": {
         "hit_at_1": 0.6651785714285714,
         "hit_at_3": 0.8616071428571429,

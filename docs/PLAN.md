@@ -28,7 +28,7 @@
 - [x] **Minh** — Chuẩn bị ViRHE4QA (D1): xuất corpus, câu hỏi và mã đoạn đúng. Chia **câu hỏi** theo nhóm đoạn nguồn để cùng một đoạn không xuất hiện làm đáp án ở cả dev và test. Giữ chung corpus tra cứu. *Đã xác minh 224 câu dev, 759 câu test và 297 context sau khi bỏ 17 dòng trùng.* [Thống kê split](../experiments/external_dataset/results/D1-dev/metrics.json)
   - Không dùng cột `split` gốc: cách chia này bị rò rỉ, cùng một đoạn có câu hỏi ở cả train và test.
   - **Bắt buộc:** nhóm đoạn "Điều 6. Báo cáo tiến độ thực hiện KLTN" (chứa câu index 9542, 4 câu hỏi) phải vào D1-dev, vì câu 9542 đã dùng làm ví dụ trong Introduction.
-- [x] **Minh** — Mã hóa câu hỏi và các đoạn bằng SimCSE-VN, xếp hạng theo cosine và gộp về mã Điều/đoạn nguồn. Kiểm tra Hit@1, Hit@3, MRR@10 bằng ví dụ tính tay. Đã lưu lệnh chạy, top 20 theo từng câu và bảng điểm D1-dev. Bảng D1-test làm ở E1 sau khi chốt tiền xử lý, λ và θ. [Hướng dẫn và kết quả](../experiments/external_dataset/README.md)
+- [x] **Minh** — Mã hóa câu hỏi và các đoạn bằng SimCSE-VN, xếp hạng theo cosine và gộp về mã Điều/đoạn nguồn. Kiểm tra Hit@1, Hit@3, MRR@10 bằng ví dụ tính tay. Đã lưu lệnh chạy, top 20 theo từng câu và bảng điểm D1-dev. [Hướng dẫn và kết quả](../experiments/external_dataset/README.md)
 
 ## Phase 3 – Xây dựng ứng dụng
 
@@ -36,20 +36,28 @@
 
 - [x] **Huy** — Duyệt bảng đối ứng Điều 2021 ↔ 2026 ([`data/d2/article_map.tsv`](../data/d2/article_map.tsv), gồm ba chủ đề gộp hai Điều cùng phiên bản T02/T09/T16) và quy tắc viết câu D2. *Xong 24/11 (D-18): đã đối chiếu nội dung, giữ T02/T09/T16; câu D2 viết kiểu gập sách; bản 2026 hiển thị trước.*
 - [x] **Huy** — Rà toàn văn bản chép QĐ 3087 tìm lỗi OCR còn sót, sửa có ghi nhật ký và cập nhật sha256 trong `documents.yaml`. *Xong 24/11: lượt 2 sửa thêm 7 lỗi dấu (vd. "đơn vi" → "đơn vị"); sau đó đối chiếu các đoạn sai với PDF đã ký. Xem [cách tạo bản dùng để lập chỉ mục](../data/d2/README.md#file).*
-- [ ] **Minh** — Dựng corpus của ứng dụng từ hai quy chế đào tạo HCMUS trong [`data/d2/`](../data/d2/README.md): QĐ 1175/2021 (24 Điều) và QĐ 3087/2026 (27 Điều). Chữ QĐ 1175 có trong `data/d2/`; bản chép QĐ 3087 nằm trên máy, chạy `python data/d2/prepare_2026.py` với bản nhóm đã chia sẻ.
+- [x] **Minh** — Dựng corpus của ứng dụng từ hai quy chế đào tạo HCMUS trong [`data/d2/`](../data/d2/README.md): QĐ 1175/2021 (24 Điều) và QĐ 3087/2026 (27 Điều). Chữ QĐ 1175 có trong `data/d2/`; bản chép QĐ 3087 nằm trên máy, chạy `python data/d2/prepare_2026.py` với bản nhóm đã chia sẻ.
   - Tách Điều/Khoản, kiểm tra số Điều (24 và 27) và kiểm tra mỗi chunk khớp đúng văn bản trong `data/raw/d2/`.
   - Gắn metadata từ `documents.yaml`: văn bản, số hiệu, ngày ban hành, phạm vi áp dụng.
-  - Đã kiểm chứng nguồn 2021 và chia chunk bằng tokenizer thật. Cần bản `_verified.md` hoặc `_clean.md` đúng SHA-256 để kiểm chứng nguồn 2026.
+  - Đã xuất và kiểm file corpus hai phiên bản trên máy Huy ngày 25/11. [Cách tạo lại corpus](../data/d2/README.md#file). Việc chạy demo được theo dõi ở mục riêng phía dưới.
   - Khi minh họa hạn chế của Ctrl+F bằng câu 9542 trong Introduction, chạy trên các đoạn quy chế của D1.
 - [x] **Huy** — Kiểm thử khoảng tin cậy 95% cho chênh lệch giữa hai phương pháp và phép đo cảnh báo bằng ví dụ tính tay. *Xong 24/11, giao diện ở [PROJECT.md §5.4](application/PROJECT.md#54-interface--định-dạng-dữ-liệu).*
-- [ ] **Huy** — Khi có xếp hạng SimCSE-VN từ Phase 2, chuẩn bị bảng so sánh trên D1-dev.
+- [x] **Huy** — Kiểm chứng phép xếp hạng BM25 trên D1-dev (E0). Tính lại điểm từng chunk cho câu 9542 và đối chiếu thứ tự của 20 đoạn đầu với gói bàn giao. [Ghi chú E0](../experiments/external_dataset/results/E0/d1-dev.md)
+- [x] **Huy** — Chuẩn bị bảng so sánh trên D1-dev từ điểm của BM25, SimCSE-VN và Hybrid. [Bảng so sánh](../experiments/external_dataset/results/D1-dev-tuning/handoff.md#kết-quả-trên-224-câu-d1-dev)
 - [ ] **Minh** — Thêm BM25 và Hybrid vào phần truy hồi tiếng Việt. Giao cho Huy lệnh chạy ba phương pháp trên D1 và trên corpus HCMUS (D2), cho phép đổi trọng số Hybrid. Runs theo định dạng [PROJECT.md §5.4](application/PROJECT.md#54-interface--định-dạng-dữ-liệu), gồm Khoản tốt nhất và cosine của Khoản tốt nhất trong Điều đứng đầu. Dựng giao diện Gradio song song với việc Huy chọn cấu hình.
-  - Gói D1-dev đã có run BM25, Hybrid, tham chiếu dense Phase 2 và lệnh tính lại điểm. Đã kiểm thử CLI, đường BM25 riêng và giao diện Gradio. Corpus HCMUS đầy đủ đang chờ nguồn 2026. [Lệnh bàn giao](../experiments/external_dataset/README.md#bàn-giao-cho-huy)
+  - Đã kiểm chứng gói D1-dev trên 224 câu. Cả ba bảng xếp hạng khớp SHA-256, mã câu, thứ tự xếp hạng và chỉ số tính lại. Còn kiểm tra demo Gradio với corpus HCMUS hai phiên bản và checkpoint thật. [Lệnh bàn giao](../experiments/external_dataset/README.md#bàn-giao-cho-huy)
 - [ ] **Cả hai viết, kiểm tra chéo câu của nhau; Minh tổng hợp file** — Viết bộ test D2 trên hai quy chế đào tạo HCMUS: mỗi người 40–50 câu trong phạm vi và 10 câu ngoài phạm vi. Bắt đầu ngay, không chờ Phase 2. Nếu kịp, Huy thu thêm khoảng 20 câu thật qua Google Form ẩn danh (`origin: form`). Chốt nhãn trước 02/12 và trước khi xem dự đoán trên D2. Quy tắc viết và gán nhãn (gồm cách ghi gold khi hai phiên bản cùng trả lời): [PROJECT.md §6.2](application/PROJECT.md#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu).
+  - Huy xác nhận đã tự soạn phần của mình, gồm 45 câu trong phạm vi và 10 câu ngoài phạm vi. Bản câu hỏi gửi Minh gán nhãn độc lập đã được kiểm nguyên văn.
   - Bản nháp của Minh có 41 câu trong phạm vi và 10 câu ngoài phạm vi do trợ lý soạn. Nhãn tạm dựa trên nguồn 2021. Cần đối chiếu nguồn 2026 trước khi Minh duyệt và Huy kiểm tra độc lập.
-- [ ] **Huy** — Chọn trọng số Hybrid và ngưỡng cảnh báo trên D1-dev, gửi cấu hình cố định cho Minh. So sánh ba phương pháp trên D1-test và D2 đã chốt nhãn; với D2 báo cả mức theo Điều và theo chủ đề. Báo riêng hiệu quả với câu ít trùng từ và tỷ lệ câu ngoài phạm vi bị gắn mức tin cậy cao.
+- [x] **Huy** — Chọn trọng số Hybrid và ngưỡng cảnh báo trên D1-dev. [Cấu hình đã chốt](../experiments/external_dataset/results/D1-dev-tuning/handoff.md)
+- [x] **Huy** — Chạy BM25, SimCSE-VN và Hybrid trên D1-test với cấu hình chốt từ dev. Xuất bảng truy hồi, khoảng tin cậy Hybrid so với BM25 và số liệu cảnh báo ở ngưỡng cố định. [Kết quả D1-test](../experiments/external_dataset/results/E1/d1-test.md)
+- [x] **Huy** — So sánh ba phương pháp theo mức trùng từ trên D1-test. Báo số câu, chỉ số và khoảng tin cậy ghép cặp trong từng nhóm. [Kết quả E2 trên D1-test](../experiments/application/results/E2/d1-test.md)
+- [x] **Huy** — Vẽ đường cong risk–coverage của Hybrid trên D1-test và đánh dấu ngưỡng cảnh báo đã chốt. [Biểu đồ E3 trên D1-test](../experiments/external_dataset/results/E3/d1-test-risk-coverage.png)
+- [x] **Huy** — Chuẩn bị mã Khoản ổn định và bộ chấm ba bảng xếp hạng D2 cho E2 và E3. Kiểm tra bằng nhãn và xếp hạng giả. [Cách chấm D2](../experiments/application/README.md#chấm-d2-test)
+- [ ] **Huy** — Gửi cấu hình cho Minh. So sánh ba phương pháp trên D2 đã chốt nhãn, báo cả mức theo Điều và theo chủ đề. Báo kết quả theo mức trùng từ, đường cong risk–coverage và tỷ lệ câu ngoài phạm vi bị gắn mức tin cậy cao trên D2.
 - [ ] **Minh** — Áp dụng cấu hình cố định vào demo CPU: hiển thị top 3 kết quả (các Điều cùng chủ đề gộp làm một, bản 2026 đứng trước), Khoản trích dẫn, tên văn bản, số hiệu, ngày ban hành, phạm vi áp dụng (ghi "bản chép từ bản scan" với QĐ 3087), cảnh báo và kết quả BM25 để đối chiếu. Lưu độ trễ p50/p95 của ba phương pháp.
-- [ ] **Huy tổng hợp, Minh đối chiếu văn bản** — Phân loại 20–30 truy vấn sai trên D1-test và D2. Chọn ví dụ cho thấy khi nào Hybrid hữu ích, khi nào xếp sai Điều và hướng cải thiện.
+- [x] **Huy** — Đối chiếu 20 câu Hybrid trượt Hit@1 trên D1-test và chọn ví dụ cho E5. [Bảng phân loại và ví dụ](../experiments/application/results/E5/d1-test.md)
+- [ ] **Huy tổng hợp, Minh đối chiếu văn bản** — Kiểm chéo các ví dụ E5, bổ sung trường hợp D2 vào bộ 20–30 truy vấn và nêu hướng cải thiện dựa trên các lỗi đã đối chiếu.
 
 ## Phase 4 – Hoàn thiện và nộp bài
 

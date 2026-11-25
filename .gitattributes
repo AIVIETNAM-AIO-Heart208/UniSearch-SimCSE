@@ -3,3 +3,7 @@ data/d2/*.txt -text
 
 # Preserve the bytes used by the D1-dev handoff manifest.
 experiments/external_dataset/results/**/runs/*.jsonl text eol=lf
+
+# Downstream result manifests record the SHA-256 of these exact files.
+experiments/external_dataset/results/D1-dev-tuning/summary.json -text
+experiments/external_dataset/results/E1/d1-test.json -text

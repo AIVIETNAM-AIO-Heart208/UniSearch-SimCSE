@@ -8,10 +8,11 @@ Từ gốc repo, dùng [môi trường và checkpoint D1](../experiments/externa
 
 ```powershell
 & $d1Python -m pip install -e ".[retrieval,demo]"
-& $d1Python apps/app.py --model-path outputs/d1-model --corpus data/processed/d2/corpus.jsonl
+& $d1Python apps/app.py --model-path outputs/d1-model --corpus data/processed/d2/corpus.jsonl `
+  --weight '0.6' --threshold '0.6201629042625427'
 ```
 
-Mở địa chỉ cục bộ Gradio in ra. Khi chưa truyền trọng số, tab tra cứu dùng dense SimCSE-VN. Truyền `--weight` và `--threshold` sau khi nhóm chốt cấu hình bằng D1-dev. Giao diện báo trạng thái khi chưa cấu hình ngưỡng.
+Mở địa chỉ cục bộ Gradio in ra. Hai tham số lấy từ [cấu hình đã chốt bằng D1-dev](../experiments/external_dataset/results/D1-dev-tuning/handoff.md). Khi chưa truyền trọng số, tab tra cứu dùng dense SimCSE-VN. Giao diện báo trạng thái khi chưa cấu hình ngưỡng.
 
 Kiểm thử giao diện bằng corpus giả lập và endpoint Gradio cục bộ.
 

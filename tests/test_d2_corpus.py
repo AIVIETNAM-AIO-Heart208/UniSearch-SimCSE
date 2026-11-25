@@ -8,6 +8,7 @@ import pytest
 import yaml
 
 from data.d2 import prepare_2026
+from simcse_lab.retrieval.hcmus import prepare_corpus
 
 
 def test_corpus_manifest_identifies_both_sources_and_their_index_inputs():
@@ -36,6 +37,18 @@ def test_topic_map_covers_each_regulation_article_once():
                 for n in range(1, last + 1)}
     assert len(articles) == len(expected) and set(articles) == expected
     assert len({r["topic_id"] for r in rows}) == 26
+
+
+def test_repeated_clause_numbers_have_distinct_source_ids():
+    root = Path(__file__).resolve().parents[1]
+    chunks = prepare_corpus(root, lambda text: len(text.split()), {"hcmus-qcdt-2021"})
+    article = "hcmus-qcdt-2021:dieu-8"
+    repeated = [row for row in chunks if row["article_id"] == article and row["clause"] == 3]
+    assert len({row["clause_id"] for row in repeated}) == 2
+    assert list(dict.fromkeys(row["clause_id"] for row in repeated)) == [
+        f"{article}:khoan-3:1", f"{article}:khoan-3:2",
+    ]
+    assert len({row["char_start"] for row in repeated}) >= 2
 
 
 def test_corrections_are_reproducible_and_preserve_existing_data(tmp_path, monkeypatch):

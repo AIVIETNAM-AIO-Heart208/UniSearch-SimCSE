@@ -49,32 +49,43 @@ students in later years. A semantically similar passage can therefore
 be ranked highly even when its eligibility rule does not apply. We can test this
 by retrieving labelled passages for Vietnamese questions.
 
-\subsection{SimCSE-VN Retrieval on D1-dev}
+\subsection{Retrieval on D1-dev}
 \label{sec:d1-dev-results}
-We evaluated SimCSE-VN on the 224 development questions described in
+% Query count and retrieval results: experiments/external_dataset/results/D1-dev-tuning/summary.json.
+We compared BM25, SimCSE-VN and Hybrid on the 224 development questions described in
 Section~\ref{sec:d1-setup}. Hit@$k$ is the proportion of questions whose
 reference passage appears in the first $k$ results. MRR@10 is the mean
 reciprocal rank of the reference passage, with a contribution of zero when
 that passage is outside the first ten results.
+% Manual BM25 verification: experiments/external_dataset/results/E0/d1-dev.md.
+For query~9542, the independently recomputed BM25 scores reproduced the
+saved first twenty passages, with the reference passage at rank two.
 
-% Recomputed from experiments/external_dataset/results/D1-dev/runs/dense.jsonl
-% and data/processed/d1/queries.jsonl. See experiments/external_dataset/results/D1-dev/metrics.json.
+% Development scores: experiments/external_dataset/results/D1-dev-tuning/summary.json.
 \begin{table}[htbp]
-\caption{SimCSE-VN retrieval on D1-dev (224 questions)}
+\caption{Retrieval on D1-dev (224 questions)}
 \label{tab:d1-dev-dense}
 \centering\footnotesize
-\begin{tabular}{@{}lrr@{}}
+\begin{tabular}{@{}lrrr@{}}
 \hline
-Hit@1 (\%) & Hit@3 (\%) & MRR@10 ($0$--$1$) \\
+Method & Hit@1 (\%) & Hit@3 (\%) & MRR@10 \\
 \hline
-46.43 & 65.625 & 0.5828 \\
+BM25 & 66.52 & 80.80 & 0.7497 \\
+SimCSE-VN & 46.43 & 65.63 & 0.5828 \\
+Hybrid ($\lambda=0.6$) & 69.64 & 85.27 & 0.7829 \\
 \hline
 \end{tabular}
 \end{table}
 
-For query 1034, which asks whether a decision to amend a diploma or
-certificate records the changes and their reasons, Article~21 ranked
-first. Its highest-scoring chunk, Clause~1, explicitly lists both the
+% Selected weight, threshold and coverage: experiments/external_dataset/results/D1-dev-tuning/summary.json.
+The sweep selected $\lambda=0.6$. The threshold $\theta=0.6201629042625427$
+marked 180 of 224 development questions (80.36\%) as confident. These
+development scores describe the split used for selection.
+
+% Dense case examples: experiments/external_dataset/results/D1-dev/runs/dense.jsonl.
+In the SimCSE-VN run, Article~21 ranked first for query 1034, which asks
+whether a decision to amend a diploma or certificate records the changes
+and their reasons. Its highest-scoring chunk, Clause~1, explicitly lists both the
 changes and their reasons among the required contents of the decision.
 For query 1185, which asks whether a university may refuse to issue a copy
 of a diploma, the system ranked a clause on dismissal from a combined
@@ -82,13 +93,117 @@ bachelor's--master's programme first. The labelled passage, Article~27 on
 procedures for issuing copies from the original register, was outside the
 top 20.
 
-For 147 of the 224 D1-dev questions, a student would see the labelled
-passage among the first three suggestions (Table~\ref{tab:d1-dev-dense}).
+% Dense Hit@3: experiments/external_dataset/results/D1-dev/metrics.json.
+SimCSE-VN returned the labelled passage among its first three suggestions
+for 147 of the 224 D1-dev questions (Table~\ref{tab:d1-dev-dense}).
 Hit@3 here measures passage retrieval on D1-dev. The English STS results use
 Spearman's $\rho$ to measure rank agreement with human similarity
 judgments across sentence pairs.
 
-\TODO{Report retrieval scores and paired confidence intervals on D1-test and
-D2, including lexical-overlap groups and article-, topic- and clause-level
-results on D2. Report warning coverage, out-of-scope errors and the limits of
-transferring a threshold from D1. Analyse representative failures.}
+\subsection{Retrieval on D1-test}
+\label{sec:d1-test-results}
+% Test size, chunk count and frozen configuration: experiments/external_dataset/results/E1/d1-test.json.
+We evaluated the fixed configuration on the 759 held-out questions.
+All three methods searched the same 955 chunks from 297 passages.
+Table~\ref{tab:d1-test} reports passage-level retrieval.
+
+% Test rankings and metrics: experiments/external_dataset/results/E1/d1-test.json.
+\begin{table}[htbp]
+\caption{Retrieval on D1-test (759 questions). Hit rates are percentages.}
+\label{tab:d1-test}
+\centering\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrrrr@{}}
+\hline
+Method & Hit@1 & Hit@3 & Hit@5 & Hit@10 & MRR@10 \\
+\hline
+BM25 & 70.36 & 86.82 & 91.30 & 94.73 & 0.791792 \\
+SimCSE-VN & 45.98 & 67.06 & 77.08 & 85.77 & 0.588163 \\
+Hybrid & 72.46 & 88.67 & 92.62 & 95.78 & 0.810780 \\
+\hline
+\end{tabular}
+\end{table}
+
+% Paired intervals and resampling settings: experiments/external_dataset/results/E1/d1-test.json.
+Hybrid improved on BM25 by 2.11 percentage points in Hit@1 (95\% CI
+$[0.39, 3.82]$) and by 0.018988 in MRR@10 (95\% CI $[0.008363, 0.029811]$).
+We estimated both intervals from the 2.5th and 97.5th percentiles
+of 1,000 bootstrap differences in means, using paired question-level
+resampling with replacement and seed 42.
+
+% Coverage and group Hit@1: experiments/external_dataset/results/E1/d1-test.json.
+At the fixed threshold selected on D1-dev, Hybrid marked 618 of 759
+questions as confident (81.42\% coverage). Hit@1 was 76.05\% on those
+questions and 56.74\% on the 141 questions with a warning. All D1-test
+questions have reference passages, so the out-of-scope false-confidence
+rate is undefined on this split. The threshold was calibrated on
+ViRHE4QA passages and questions. Its coverage and false-confidence rate
+on HCMUS questions remain to be measured.
+
+% Coverage, risk and counts: experiments/external_dataset/results/E3/d1-test.json.
+% Differences and warning counts are derived from operating_point and full_coverage.
+At the fixed threshold in Figure~\ref{fig:d1-risk-coverage}, Hybrid marked
+618 of 759 D1-test queries as confident (81.42\% coverage). The top-ranked
+passage was incorrect for 148 of those queries (23.95\% risk), compared with
+209 of all 759 queries at full coverage (27.54\%). With the ranking fixed,
+the threshold trades 18.58 percentage points of coverage for a decrease
+of 3.59 percentage points in the observed top-1 error rate among confident
+results. The 141 warned queries accounted for 61 of the 209 top-1 errors.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\columnwidth]{d1-test-risk-coverage.pdf}
+\caption{Risk and coverage across observed top-result cosine cutoffs on
+D1-test. The dot marks the warning threshold selected on D1-dev.}
+\label{fig:d1-risk-coverage}
+\end{figure}
+
+\paragraph{Lexical overlap}
+% Grouping, counts, metrics and intervals: experiments/application/results/E2/d1-test.json.
+We measured the Jaccard overlap between the set of lowercased Pyvi word
+tokens in each question and the set in its full labelled passage, excluding
+punctuation-only tokens. The one-third and two-thirds quantiles of overlap
+define the three D1-test groups in Table~\ref{tab:d1-overlap}.
+
+% Group sizes and MRR@10 values: experiments/application/results/E2/d1-test.json.
+\begin{table}[htbp]
+\caption{D1-test MRR@10 by lexical overlap.}
+\label{tab:d1-overlap}
+\centering\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrrr@{}}
+\hline
+Overlap & $n$ & BM25 & SimCSE-VN & Hybrid \\
+\hline
+Low & 253 & 0.655681 & 0.497274 & 0.697712 \\
+Medium & 253 & 0.826705 & 0.565683 & 0.830439 \\
+High & 253 & 0.892989 & 0.701531 & 0.904188 \\
+\hline
+\end{tabular}
+\end{table}
+
+% Paired intervals and distinct-token counts: experiments/application/results/E2/d1-test.json.
+In the low-overlap group, Hybrid gained 4.74 percentage points in Hit@1
+(95\% CI $[0.79, 8.70]$) and 0.042031 in MRR@10
+(95\% CI $[0.018749, 0.065467]$) over BM25. Both intervals include zero
+in each of the other groups. Across questions, the median number of
+distinct tokens in the reference passage was 129 in the low-overlap
+group and 55 in the high-overlap group. A longer labelled passage can
+lower the Jaccard score by increasing the size of the union.
+
+\paragraph{Error analysis}
+% Counts, ranks and source excerpts: experiments/application/results/E5/d1-test.md.
+Hybrid missed the labelled passage at rank one for 209 of 759 questions.
+For 123 of those questions, the labelled passage was second or third.
+We examined a purposive sample of 20 misses across rank ranges and baseline
+outcomes. For query 8682 on the IELTS exemption threshold, Hybrid returned
+placement-test scores. For query 5272,
+Hybrid ranked the provision granting access to edit exam marks first.
+BM25 and SimCSE-VN placed that provision third and fourth, respectively.
+For query 4251, the reference passage directs readers from Article~10 to
+Article~6 for the maximum duration. Hybrid returned the cited provision
+in Article~6 first. The passage-ID metric counts this match as a miss.
+
+\TODO{Report lexical-overlap groups on D2 and its article-, topic- and clause-level
+results, paired intervals, warning coverage and out-of-scope errors.
+Analyse representative D2 failures.}

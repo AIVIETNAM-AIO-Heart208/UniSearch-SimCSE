@@ -1,0 +1,181 @@
+{
+  "split": "D1-dev",
+  "queries": 224,
+  "contexts": 297,
+  "chunks": 955,
+  "dataset": {
+    "source": "https://github.com/longstnguyen/ViRE/blob/60ea7155134eaa426ab1d0a82d2bbbf327d1b470/data/ViRHE4QA_v2.csv",
+    "sha256": "23fb969985150599d3ad0b5229d039b8541ed335fbc29dcfa0b0d733ccaa5682",
+    "split_seed": 42,
+    "dev_gold_contexts": 59,
+    "forced_dev_qids": [
+      "9512",
+      "9538",
+      "9539",
+      "9542"
+    ]
+  },
+  "checkpoint": {
+    "model": "VoVanPhuc/sup-SimCSE-VietNamese-phobert-base",
+    "revision": "608779b86741a8acd8c8d38132974ff04086b138",
+    "snapshot_sha256": {
+      "model.safetensors": "2559811f500b42fa23b8fe313d94a9503299aff1f0e0f58fdd4824571cb4423c",
+      "config.json": "4bc82a39c36f328f3fbcbfd83c26d00621b396ac7e9ff1a38cfa7c70d88fa608",
+      "vocab.txt": "dffd7543c401fb6567253ae7c3313004532c33d062525250049c616544bad777",
+      "bpe.codes": "9dfe53fb8abbddd3387da99641c36e00bee757a3679aad9cf0a7cdc4b30f6ef8",
+      "tokenizer_config.json": "f80601760ebdd7737e988a60bb3c14bca12a6786c06e84c99bd2f3329ad80fa0",
+      "special_tokens_map.json": "7638f5bbbe86ef6d604ef28ad3647dc690d6d117c81c0d63e885416be8da1150",
+      "added_tokens.json": "895678a80ea84920b4240c0616a1b0b086368c7ca3cbacb80996a2b30b4f2b67"
+    }
+  },
+  "run": {
+    "git_commit": "6ed517602e9913cf151a9dd00a81b475bfd11d74",
+    "runner_sha256": "de96bd4bcecf84e26dbf7acf513f332bf1083f86e7908fe71bc97115ee7f93e8",
+    "arguments": {
+      "input": "data/raw/virhe4qa/ViRHE4QA_v2.csv",
+      "model_path": "outputs/d1-model",
+      "output": "outputs/d1-dev-tuning"
+    },
+    "device": "cpu",
+    "threads": 4,
+    "batch_size": 16,
+    "torch_seed": 42,
+    "max_tokens": 256,
+    "overlap_words": 24,
+    "pooling": "pooler_output",
+    "cosine": "NumPy dot product of unit-normalized float32 vectors",
+    "bm25": {
+      "k1": 1.5,
+      "b": 0.75,
+      "epsilon": 0.25
+    },
+    "platform": "Windows-11-10.0.26300-SP0",
+    "python": "3.14.0",
+    "torch": "2.9.1+cpu",
+    "packages": {
+      "numpy": "2.3.4",
+      "transformers": "4.57.3",
+      "pyvi": "0.1.1",
+      "scikit-learn": "1.8.0",
+      "sklearn-crfsuite": "0.5.0",
+      "python-crfsuite": "0.9.12",
+      "rank-bm25": "0.2.2",
+      "safetensors": "0.7.0"
+    },
+    "elapsed_seconds": 166.71048729999166
+  },
+  "selection": {
+    "maximize": "MRR@10",
+    "weight_tie_break": "smaller BM25 weight",
+    "min_coverage": 0.8
+  },
+  "trials": [
+    {
+      "weight": 0.0,
+      "hit_at_1": 0.4642857142857143,
+      "hit_at_3": 0.65625,
+      "mrr_at_10": 0.5828355300453515
+    },
+    {
+      "weight": 0.1,
+      "hit_at_1": 0.5357142857142857,
+      "hit_at_3": 0.7321428571428571,
+      "mrr_at_10": 0.6544075963718822
+    },
+    {
+      "weight": 0.2,
+      "hit_at_1": 0.5892857142857143,
+      "hit_at_3": 0.8080357142857143,
+      "mrr_at_10": 0.7076991213151927
+    },
+    {
+      "weight": 0.3,
+      "hit_at_1": 0.6339285714285714,
+      "hit_at_3": 0.8214285714285714,
+      "mrr_at_10": 0.7390235260770975
+    },
+    {
+      "weight": 0.4,
+      "hit_at_1": 0.6607142857142857,
+      "hit_at_3": 0.8348214285714286,
+      "mrr_at_10": 0.7593307114512472
+    },
+    {
+      "weight": 0.5,
+      "hit_at_1": 0.6651785714285714,
+      "hit_at_3": 0.8616071428571429,
+      "mrr_at_10": 0.7687889739229025
+    },
+    {
+      "weight": 0.6,
+      "hit_at_1": 0.6964285714285714,
+      "hit_at_3": 0.8526785714285714,
+      "mrr_at_10": 0.7828975340136054
+    },
+    {
+      "weight": 0.7,
+      "hit_at_1": 0.6785714285714286,
+      "hit_at_3": 0.84375,
+      "mrr_at_10": 0.7696109693877551
+    },
+    {
+      "weight": 0.8,
+      "hit_at_1": 0.6785714285714286,
+      "hit_at_3": 0.8348214285714286,
+      "mrr_at_10": 0.7658198696145124
+    },
+    {
+      "weight": 0.9,
+      "hit_at_1": 0.6651785714285714,
+      "hit_at_3": 0.8214285714285714,
+      "mrr_at_10": 0.7544625141723357
+    },
+    {
+      "weight": 1.0,
+      "hit_at_1": 0.6651785714285714,
+      "hit_at_3": 0.8080357142857143,
+      "mrr_at_10": 0.7496758078231293
+    }
+  ],
+  "selected": {
+    "weight": 0.6,
+    "hit_at_1": 0.6964285714285714,
+    "hit_at_3": 0.8526785714285714,
+    "mrr_at_10": 0.7828975340136054,
+    "threshold": 0.6201629042625427
+  },
+  "warning_metrics": {
+    "threshold": 0.6201629042625427,
+    "n_queries": 224,
+    "groups": {
+      "confident": {
+        "n": 180,
+        "n_in_scope": 180,
+        "hit_at_1": {
+          "article": 0.7222222222222222
+        }
+      },
+      "warned": {
+        "n": 44,
+        "n_in_scope": 44,
+        "hit_at_1": {
+          "article": 0.5909090909090909
+        }
+      }
+    },
+    "coverage": 0.8035714285714286,
+    "n_out_of_scope": 0,
+    "n_confident_out_of_scope": 0,
+    "false_confidence": null
+  },
+  "artifacts": {
+    "scores": {
+      "path": "outputs/d1-dev-tuning/scores.npz",
+      "sha256": "8c5130c7209b605aaa575379e8c066477087e199b10d324548c42da67f6baa3f"
+    },
+    "selected": {
+      "path": "outputs/d1-dev-tuning/selected.jsonl",
+      "sha256": "6c02ca8504f29a919e7d767d0ef35dde7606d6b5f2fe1da7711cef3031e55e9c"
+    }
+  }
+}

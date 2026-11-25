@@ -59,7 +59,7 @@ The independent loss experiment used Python 3.14.0 and PyTorch 2.9.1+cpu.
 \label{sec:d1-setup}
 We used the public ViRHE4QA subset~\cite{do2024r2gqaretrieverreadergeneratorquestionanswering}
 distributed with ViRE~\cite{nguyen-quan-2026-works}.
-% Counts and split provenance: data/processed/d1/split.json.
+% Counts and split provenance: outputs/d1-test/inputs/split.json.
 After removing 17 exact duplicate questions from 1,000 rows, we retained
 983 questions, each linked to one reference passage. We split the questions
 by reference passage with seed 42. D1-dev contains 224 questions linked to
@@ -79,8 +79,14 @@ before computing exact cosine similarities with NumPy. Under MaxP, each
 passage received the highest cosine score among its chunks, and we retained
 the 20 highest-ranked distinct passages for each question.
 
+% Selection grid and coverage target: experiments/external_dataset/results/D1-dev-tuning/summary.json.
+We selected the BM25 weight on D1-dev by maximising MRR@10 over
+weights from 0.0 to 1.0 in increments of 0.1. For the selected
+Hybrid ranking, we chose the largest observed cosine threshold retaining
+at least 80\% of its queries as confident. Both settings are fixed for
+the subsequent test evaluations.
+
 \TODO{For D2, document question
 origin, lexical-overlap bias, labelling across both editions and annotator
 agreement. Identify the cleaned ChatGPT transcription. Specify article-
-and topic-level baselines, clause-level evaluation, retrieval metrics and
-the settings selected on D1-dev.}
+and topic-level baselines, clause-level evaluation and retrieval metrics.}
