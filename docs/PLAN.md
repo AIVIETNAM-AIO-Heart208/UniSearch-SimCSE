@@ -58,6 +58,7 @@
 - [x] **Minh** — Áp dụng cấu hình cố định vào demo CPU: hiển thị top 3 kết quả (các Điều cùng chủ đề gộp làm một, bản 2026 đứng trước), Khoản trích dẫn, tên văn bản, số hiệu, ngày ban hành, phạm vi áp dụng (ghi "bản chép từ bản scan" với QĐ 3087), cảnh báo và kết quả BM25 để đối chiếu. Đã lưu [kết quả E4 và mẫu đo](../experiments/application/results/E4/cpu-latency.md).
 - [x] **Huy** — Đối chiếu 20 câu Hybrid trượt Hit@1 trên D1-test và chọn ví dụ cho E5. [Bảng phân loại và ví dụ](../experiments/application/results/E5/d1-test.md)
 - [ ] **Huy tổng hợp, Minh đối chiếu văn bản** — Kiểm chéo các ví dụ E5, bổ sung trường hợp D2 vào bộ 20–30 truy vấn và nêu hướng cải thiện dựa trên các lỗi đã đối chiếu.
+  - Minh đã kiểm chéo văn bản 20/20 câu lỗi và 2 ví dụ xếp đúng trên D1-test. Còn đối chiếu ba run gốc để xác minh thứ hạng, rồi bổ sung ví dụ D2 sau khi chốt nhãn. [Kết quả kiểm chéo](../experiments/application/results/E5/d1-test.md)
 
 ## Phase 4 – Hoàn thiện và nộp bài
 
