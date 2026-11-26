@@ -2,6 +2,7 @@
 
 - [Checklist theo yêu cầu Lab 03 và phân công Huy – Minh](PLAN.md)
 - [Tổng quan ứng dụng](application/README.md) và [thiết kế chi tiết](application/PROJECT.md)
+- [Checklist rà soát workspace và phép kiểm](reviews/workspace.md)
 
 ## Báo cáo và video
 

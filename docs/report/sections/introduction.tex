@@ -80,7 +80,8 @@ built are listed separately in Section~\ref{sec:app}. This report
 hard negatives, its link to alignment, uniformity and anisotropy, and the
 execution flow of the official code at commit \texttt{235f89e}
 (Section~\ref{sec:method});
-% Numbers below: experiments/reproduction/results/R{1,2,3}/metrics.json ("Avg.").
+% Measured and paper averages: experiments/reproduction/results/R1/metrics.json,
+% experiments/reproduction/results/R2/metrics.json, experiments/reproduction/results/R3/metrics.json.
 \item reproduces the main STS results with the official evaluation script and
 released checkpoints. The averages we obtain are 81.58 for supervised SimCSE,
 76.25 for unsupervised SimCSE and 56.70 for BERT-base with first--last
@@ -107,20 +108,34 @@ application, and flags low-confidence results instead of generating an answer
 % is named (data/raw/virhe4qa/checks/outputs_2026-11-23.txt). The R2GQA abstract
 % does not name the source university, so the attribution below rests on the
 % article text.
-\item defines an evaluation protocol on two datasets that the paper
-does not use. The first is the public ViRHE4QA
+% D1-test query count and split: experiments/external_dataset/results/E1/d1-test.json.
+\item evaluates retrieval on two test sets. D1-test contains 759 held-out
+questions from the public ViRHE4QA
 subset~\cite{do2024r2gqaretrieverreadergeneratorquestionanswering,nguyen-quan-2026-works},
-evaluated on its own corpus with a development/test split grouped by source
-article. Judging by their wording, its articles are regulations of the
+with the development/test split grouped by source passage. Judging by their
+wording, its articles are regulations of the
 University of Information Technology (UIT), VNU-HCM, the only university that
-they name. The second is a planned test set of student-style questions
-about our university's two regulations, including questions that the
-regulations do not answer. The protocol calls for paired bootstrap confidence
-intervals. \TODO{Report the main retrieval finding once E1--E3 are complete.}
+they name.
+% D2-test query counts and frozen settings: experiments/application/results/D2/summary.json.
+D2-test contains 106 manually labelled student-style questions for retrieval
+from both editions of our university's regulations, including 20 outside
+their scope.
+Both tests use the fusion weight and warning threshold selected on D1-dev.
 \end{itemize}
 
+% D1-test MRR@10 difference and paired interval: experiments/external_dataset/results/E1/d1-test.json.
+Relative to BM25, Hybrid improves mean reciprocal rank at ten (MRR@10)
+by 0.0190 on D1-test (paired 95\% bootstrap confidence interval
+$[0.0084, 0.0298]$).
+% D2-test article and topic differences and paired intervals: experiments/application/results/D2/summary.json.
+On the in-scope D2-test questions, the gains are 0.0354 by article
+($[0.0058, 0.0717]$) and 0.0303 by topic ($[0.0029, 0.0651]$).
+The paired intervals for gains in the rank-one hit rate reach zero at both
+D2 levels.
+
 Section~\ref{sec:related} reviews related work. Section~\ref{sec:method}
-describes SimCSE and our retrieval pipeline, and Section~\ref{sec:setup} gives
-the datasets, metrics and protocols. Section~\ref{sec:results} reports the
-reproduction results. The retrieval experiments and application evaluation
-are pending.
+describes the model and retrieval pipeline. Section~\ref{sec:setup} gives the
+datasets, metrics and protocols. Section~\ref{sec:results} reports the
+reproduction and retrieval results, including warning behaviour and error
+analysis. Section~\ref{sec:app} presents the application and its measured
+retrieval latency.

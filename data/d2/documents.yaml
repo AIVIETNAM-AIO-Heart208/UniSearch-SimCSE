@@ -1,4 +1,4 @@
-# D2 corpus: undergraduate training regulations of the University of Science (HCMUS), VNU-HCM.
+# D2 labels and corpus sources for the undergraduate training regulations of HCMUS, VNU-HCM.
 # Decisions D-17 and D-18 (docs/application/PROJECT.md §8.3). The 2021 text is public and tracked in data/d2/;
 # the 2021 PDF and the 2026 transcription stay in data/raw/d2/ (git-ignored).
 # Only the regulation articles go into the corpus. The 2026 file also contains the signing decision
@@ -6,6 +6,11 @@
 # The 2021 PDF contains the regulation only, without its signing decision.
 # The corpus preparation command verifies these source hashes. See data/d2/README.md under "File".
 # Generated corpus clause IDs are documented in data/d2/README.md under "Mã Điều và Khoản".
+
+test_queries:
+  file: data/d2/queries_d2.jsonl
+  frozen_on: 2026-11-26
+  sha256: afe5f0f868123b690c275dc411ecd338c238fead8b36baccdedbad33edf231b3
 
 documents:
   - doc_id: hcmus-qcdt-2021

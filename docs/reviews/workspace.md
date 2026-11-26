@@ -1,0 +1,30 @@
+Viết cho: Huy và Minh, trước khi quay video và đóng gói Lab 03.
+
+# Checklist rà soát ngày 26/11/2026
+
+## Lỗi và cách xác nhận
+
+- [x] **Cao · E1 không bàn giao được cho E2 và E3.** Cả hai lệnh dừng ở `KeyError: 'verification'` với `summary.json` do E1 sinh ra. E1 nay xuất đường dẫn và SHA-256 đầu vào, tính cả Hit@5 và Hit@10, rồi công bố thư mục khi hoàn tất. Hai bộ phân tích cũng đọc được lượt cũ bằng cách kiểm file câu hỏi với checksum của split đã xác minh. [E1](../../experiments/external_dataset/evaluate_d1_test.py) · [E2](../../experiments/application/analyze_d1_overlap.py) · [E3](../../experiments/external_dataset/plot_d1_risk_coverage.py)
+- [x] **Cao · Bảng đối ứng D2 thay đổi byte khi checkout.** Bản đã chấm dùng CRLF, còn blob Git cũ dùng LF. Git nay giữ nguyên byte gốc. Test đối chiếu SHA-256 của bảng, nhãn và cấu hình với manifest đã công bố. [Quy tắc Git](../../.gitattributes) · [Manifest D2](../../experiments/application/results/D2/summary.json) · [Test](../../tests/test_d2_evaluation.py)
+- [x] **Trung bình · Lệnh chấm D2 thiếu danh sách cảnh báo sai.** Trước khi sửa, kết quả chạy lại có đúng tổng số nhưng thiếu ba mã câu mà bảng công bố đã bổ sung. Bộ chấm nay ghi mã câu, Điều hạng đầu và cosine vào cả JSON và Markdown. Đối chiếu cả ba mã với [E5 D2](../../experiments/application/results/E5/d2-test.md). [Bộ chấm](../../src/simcse_lab/evaluation/d2.py)
+- [x] **Trung bình · Chạy lại E4 có thể ghi đè mẫu đo.** Lệnh cũ mở lại file đích để ghi, và lưu cả HTML có trích đoạn quy chế. Lệnh mới yêu cầu các đích riêng còn trống, chạy xong kiểm tra giao diện mới ghi kết quả. Phiếu kiểm demo chỉ lưu câu hỏi, cảnh báo và số chủ đề của hai tab. [Benchmark](../../experiments/application/benchmark_cpu.py) · [Test giữ tệp cũ](../../tests/test_retrieval_app.py)
+- [x] **Trung bình · Lệnh chạy và phụ thuộc chưa khớp.** Gọi CLI truy hồi bằng `python -m` lỗi import, bộ test nhập NumPy ngay lúc thu thập, và lệnh vẽ E3 cần Matplotlib. Đã sửa import cho cả hai cách gọi, khai báo phần phụ thuộc và trỏ các lệnh về cùng môi trường. [Cài đặt](../../README.md#chạy-từ-bản-clone) · [CLI](../../experiments/external_dataset/run_retrieval.py)
+- [x] **Trung bình · Báo cáo còn hai đoạn hướng dẫn nháp.** Đã viết phần ứng dụng từ mã và kết quả E4, ghi đóng góp từ việc đã hoàn thành, bổ sung ghi công bản chép trong giao diện và cân cột tài liệu tham khảo. Build trả mã lỗi khi có cảnh báo hoặc dòng tràn lề. [Application](../report/sections/application.tex) · [Team Contributions](../report/sections/contributions.tex) · [Cách build](../report/README.md)
+- [x] **Trung bình · README mô tả không chính xác độ khớp của R1.** Log và README của tác giả đều ghi trung bình 81,58. Bảng 5 trong bài báo ghi 81,57. Đã ghi rõ mức chênh 0,01 điểm và giữ riêng đối chiếu với từng nguồn. [Số liệu R1](../../experiments/reproduction/results/R1/metrics.json) · [Tổng quan](../../README.md#tái-hiện-kết-quả-simcse)
+- [x] **Thấp · Kiểm Markdown bỏ sót bài mới.** Một file Markdown mới có liên kết hỏng từng cho kết quả không lỗi trước khi stage. Bộ kiểm nay duyệt cả file mới có thể đưa lên Git. [Bộ kiểm Markdown](../../tools/check_docs.py)
+- [x] **Thấp · Vị trí file và trạng thái trong tài liệu gây nhầm.** Đã chuyển phiếu phản hồi của Minh vào thư mục bàn giao riêng, giữ nguyên checksum. Đã đưa cache và sản phẩm build cũ ra khỏi workspace, bỏ file giữ chỗ và bản sao hình D2 trùng byte. PDF dùng [hình D2 trong kết quả](../../experiments/application/results/D2/risk-coverage.png). README, đặc tả và [kế hoạch](../PLAN.md#phase-4--hoàn-thiện-và-nộp-bài) cùng chỉ đến lệnh đang dùng và các việc còn mở.
+
+## Đối chiếu kết quả
+
+- **SimCSE.** So bảng STS cuối trong ba log R1–R3 với file số liệu và các dòng của báo cáo. Các test InfoNCE đối chiếu phép tính và gradient với hàm tham chiếu. [Kết quả tái hiện](../../experiments/reproduction/README.md) · [Test đối chiếu báo cáo](../../tests/test_reproduction.py)
+- **D1.** Dựng lại split từ CSV đúng checksum và kiểm ba run D1-dev. Chạy E1 từ CSV và checkpoint ghim trên CPU. Đối chiếu SHA-256 cả ba xếp hạng test, khoảng tin cậy, cảnh báo, các nhóm E2 và đường cong E3 với bản đã công bố. [Manifest E1](../../experiments/external_dataset/results/E1/d1-test.json) · [E2](../../experiments/application/results/E2/d1-test.json) · [E3](../../experiments/external_dataset/results/E3/d1-test.json)
+- **D2, E4 và E5.** Chấm lại 106 câu với cấu hình D1-dev, đối chiếu chỉ số theo Điều, chủ đề, Khoản, khoảng tin cậy và đường cong cảnh báo. Tính lại các phân vị E4 từ mẫu độ trễ gốc. Kiểm thứ hạng các ca được chọn trong E5 bằng xếp hạng đã lưu. [D2](../../experiments/application/results/D2/summary.json) · [Mẫu E4](../../experiments/application/results/E4/latency.json) · [E5 D1](../../experiments/application/results/E5/d1-test.md) · [E5 D2](../../experiments/application/results/E5/d2-test.md)
+
+## Kiểm từ bản checkout
+
+- `python -X utf8 tools/check_docs.py` đã kiểm tài liệu công khai trong bản checkout và cả hai tệp trạng thái, hướng dẫn cục bộ trong workspace. Tệp Markdown mới có liên kết hỏng trả mã lỗi trước khi stage.
+- Đã kiểm SHA-256 của bảng đối ứng ở cả hai chế độ `core.autocrlf=true` và `false` trên Windows. Đã build wheel và dùng checkpoint ghim với `prepare-hcmus --only-2021` để dựng phần corpus công khai.
+- `python -m pytest tests -q -rs -p no:cacheprovider` trên máy Huy đạt 771 test, bỏ qua một test HTTP vì môi trường thiếu Gradio. Đã gọi hàm xử lý giao diện bằng checkpoint và corpus đầy đủ, đối chiếu hai tab và cảnh báo cho `d2-minh-review-008` và `d2-huy-review-016`. Bằng chứng endpoint từ lượt thử của Minh đi kèm [E4](../../experiments/application/results/E4/cpu-latency.md).
+- `powershell -ExecutionPolicy Bypass -File docs\report\build.ps1` tạo PDF 11 trang với 0 cảnh báo, 0 ghi chú nháp ở cả workspace và checkout sạch. Một tham chiếu hỏng trong bản thử riêng làm lệnh build trả mã lỗi.
+
+Độ trễ E4 đo phần truy hồi trên cấu hình đã ghi. Việc thử giao diện với sinh viên, video và kiểm gói nộp thuộc những phạm vi riêng. [Phạm vi và giới hạn của kết quả](../report/sections/conclusion.tex) · [Kế hoạch nộp](../PLAN.md#phase-4--hoàn-thiện-và-nộp-bài)

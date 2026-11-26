@@ -1,9 +1,49 @@
 % Owner: Huy (Phase 4).
 \section{Conclusion}
 \label{sec:conclusion}
-% Coverage and top-1 error rates: experiments/external_dataset/results/E3/d1-test.json.
-On D1-test, the fixed Hybrid warning threshold yielded 81.42\% coverage
-with a top-1 error rate of 23.95\% among queries marked confident,
-compared with 27.54\% at full coverage.
 
-\TODO{Summarise the findings, limitations and future work after the retrieval evaluation.}
+% Measured and paper averages: experiments/reproduction/results/R1/metrics.json,
+% experiments/reproduction/results/R2/metrics.json, experiments/reproduction/results/R3/metrics.json.
+Using the released checkpoints and evaluation code, we reproduced the
+published mean English sentence similarity scores within 0.01 points
+on the reported Spearman scale.
+% Loss verification: experiments/reproduction/results/R4-2026-11-24/metrics.json.
+Our independent implementation of the contrastive loss agreed with the
+official computation within $1.4\times10^{-9}$ in double precision on
+the tested cases.
+
+% D1-test MRR@10: experiments/external_dataset/results/E1/d1-test.json.
+For Vietnamese regulation retrieval, Hybrid achieved an MRR@10 of 0.8108
+on D1-test, compared with 0.7918 for BM25.
+% D2-test article/topic MRR@10 and rank-one intervals: experiments/application/results/D2/summary.json.
+On in-scope D2-test questions, Hybrid achieved 0.8750 by article and
+0.8895 by topic, compared with 0.8396 and 0.8592 for BM25, respectively.
+The paired confidence intervals for gains in rank-one accuracy on D2
+included zero at both levels.
+
+% D1 case evidence (4251 and 1543): experiments/application/results/E5/d1-test.md.
+On D1, scoring by passage ID counted a direct answer about maximum study
+duration as a miss because the label identified the passage that cites
+the answer. For a question about the institution's name on a certificate,
+Hybrid retrieved the labelled passage and selected its clause about the
+signatory. The institution's name appears in a different clause.
+% D2 topic case (d2-minh-review-019): experiments/application/results/E5/d2-test.md.
+On D2, topic-level scoring credited a special graduation case for a
+question about general eligibility.
+
+% D1-test coverage and rank-one error rates: experiments/external_dataset/results/E3/d1-test.json.
+With the warning threshold fixed on D1-dev, Hybrid marked 81.42\% of
+D1-test queries as confident. Among these, the top-ranked passage differed
+from the label in 23.95\% of cases, compared with 27.54\% at full coverage.
+% D2-test coverage and out-of-scope counts: experiments/application/results/D2/summary.json.
+The same threshold marked 66.98\% of D2-test queries as confident,
+including 3 of the 20 questions outside the regulations' scope.
+% D2 warning case (d2-huy-review-029): experiments/application/results/E5/d2-test.md.
+For a question about certification for discounted bus travel, Hybrid
+marked the result confident and returned an excerpt about course-waiver
+documents. The D2 estimates reflect a small, curated set of student-style
+questions.
+
+Future work can use independently collected student queries to test whether
+following explicit cross-references improves evidence selection and how
+checking excerpts for answers affects warning risk and coverage.

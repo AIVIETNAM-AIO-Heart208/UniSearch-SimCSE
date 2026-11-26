@@ -74,6 +74,10 @@ def _table(report: dict) -> str:
     for name, group in warning["groups"].items():
         lines.append(f"| {name} | {group['n']} | {group['n_in_scope']} | "
                      f"{_value(group['hit_at_1']['article'])} | {_value(group['hit_at_1']['topic'])} |")
+    if warning["false_confident_queries"]:
+        lines += ["", "| Out-of-scope query marked confident | Top article | Cosine |", "|---|---|---:|"]
+        for row in warning["false_confident_queries"]:
+            lines.append(f"| `{row['qid']}` | `{row['top_article_id']}` | {row['cosine']:.6f} |")
     lines += ["", "See [summary.json](summary.json) for the group cutoffs, risk-coverage points and input hashes."]
     if report["overall"]["n"]:
         lines += ["", "[Risk-coverage figure](risk-coverage.png)"]

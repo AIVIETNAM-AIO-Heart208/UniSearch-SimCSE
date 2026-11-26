@@ -176,6 +176,11 @@ def evaluate_d2(
     eligible = [q for q in queries if q["in_scope"]]
     cutoffs, groups = _overlap_groups(eligible, articles, tokenize)
     fixed = warning_metrics(queries, runs["hybrid"], threshold=threshold, article_to_topic=topics)
+    fixed["false_confident_queries"] = [
+        {"qid": qid, "top_article_id": row["ranked"][0][0], "cosine": _cosine(row)}
+        for qid, row in aligned["hybrid"].items()
+        if not manifest[qid]["in_scope"] and _cosine(row) >= threshold
+    ]
     points = [_risk_point(warning_metrics(queries, runs["hybrid"], threshold=value, article_to_topic=topics))
               for value in sorted({_cosine(row) for row in runs["hybrid"]}, reverse=True)]
     return {

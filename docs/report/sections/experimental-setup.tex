@@ -86,7 +86,36 @@ Hybrid ranking, we chose the largest observed cosine threshold retaining
 at least 80\% of its queries as confident. Both settings are fixed for
 the subsequent test evaluations.
 
-\TODO{For D2, document question
-origin, lexical-overlap bias, labelling across both editions and annotator
-agreement. Identify the cleaned ChatGPT transcription. Specify article-
-and topic-level baselines, clause-level evaluation and retrieval metrics.}
+\subsection{D2 evaluation on university regulations}
+\label{sec:d2-setup}
+D2 contains 106 student-style questions, of which 86 are answerable from
+at least one edition and 20 are out of scope. % data/d2/queries_d2.jsonl
+Huy wrote 55 questions and Minh reviewed 51 questions drafted by an AI
+assistant. % data/d2/README.md
+Writing questions with prior knowledge of the regulations may yield a
+different distribution of lexical overlap from naturally occurring
+student queries. Paraphrasing may reduce overlap and disadvantage BM25.
+The corpus uses text extracted from the 2021 PDF and a ChatGPT
+transcription of the 2026 scan that the team cleaned and verified
+against the signed PDF. % data/d2/documents.yaml
+
+The team compared two independently prepared sets of article and clause
+labels with AI assistance in drafting. Each set includes the provisions
+from either edition that its review found to answer the question.
+Before adjudication, exact-set agreement was 95/106 at article level and
+88/106 at clause level, including out-of-scope questions with empty label
+sets. % data/d2/README.md
+The team resolved the disagreements and fixed the labels before viewing
+any D2 rankings. % data/d2/README.md and data/d2/documents.yaml
+
+We compare BM25, SimCSE-VN and Hybrid on the in-scope questions using
+Hit@$k$ for $k\in\{1,3,5,10\}$ and MRR@10. % src/simcse_lab/evaluation/d2.py
+At article level a match requires an article in the reference labels.
+At topic level we group articles with the predefined topic map before
+applying the rank cutoff. A uniformly shuffled article ranking provides
+a chance baseline at both levels with the same topic grouping. Clause@1
+checks the clause of the highest-ranked article's selected excerpt on
+questions with clause labels. % src/simcse_lab/evaluation/d2.py
+The warning evaluation uses all questions for coverage and the
+out-of-scope questions for the false-confidence rate. The fusion
+weight and warning threshold are fixed on D1-dev.

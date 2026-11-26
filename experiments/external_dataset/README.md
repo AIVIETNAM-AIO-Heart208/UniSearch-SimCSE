@@ -4,10 +4,10 @@ D1 dùng 1.000 dòng từ [ViRHE4QA_v2.csv trong ViRE](https://github.com/longst
 
 ## Chạy từ thư mục gốc bằng PowerShell
 
-Cấu hình đã chạy là Windows, Python 3.13.9, PyTorch 2.14.1+cu126 ở chế độ CPU, Transformers 5.15.1 và NumPy 2.5.5. Chạy lệnh tạo môi trường với Python 3.13.
+Cấu hình D1-dev ban đầu của Minh là Windows, Python 3.13.9, PyTorch 2.14.1+cu126 ở chế độ CPU, Transformers 5.15.1 và NumPy 2.5.5. Các lệnh dưới dùng Python 3.13. Khi tái lập lượt test của Huy, dùng các phiên bản đã ghi cho [D1-test](results/E1/d1-test.json) và [D2-test](../application/results/D2/summary.json), rồi đối chiếu SHA-256 của từng run.
 
 ```powershell
-python -m venv .venv
+py -3.13 -m venv .venv
 $d1Python = '.\.venv\Scripts\python.exe'
 & $d1Python -m pip install -e . 'torch==2.14.1' 'transformers==5.15.1' 'numpy==2.5.5' 'pyvi==0.1.1' 'scikit-learn==1.9.1' 'sklearn-crfsuite==0.5.0' 'python-crfsuite==0.9.12'
 New-Item -ItemType Directory -Force data/raw/d1 | Out-Null
@@ -31,7 +31,7 @@ Sau khi chuẩn bị `data/processed/d1/` bằng `prepare_virhe4qa.py`, chạy t
 
 ```powershell
 $env:PYTHONPATH = 'src'
-python experiments/external_dataset/run_retrieval.py verify-d1-dev --manifest experiments/external_dataset/results/D1-dev-retrieval-check/manifest.json
+& $d1Python -m experiments.external_dataset.run_retrieval verify-d1-dev --manifest experiments/external_dataset/results/D1-dev-retrieval-check/manifest.json
 ```
 
 ## Truy hồi Phase 3
@@ -39,7 +39,7 @@ python experiments/external_dataset/run_retrieval.py verify-d1-dev --manifest ex
 Dùng môi trường D1 ở trên và cài thêm các phần phụ thuộc truy hồi. Các lệnh chạy từ gốc repo. Mỗi lần chạy dùng một thư mục đầu ra mới.
 
 ```powershell
-& $d1Python -m pip install -e ".[retrieval]"
+& $d1Python -m pip install -e ".[retrieval,evaluation]"
 & $d1Python experiments/external_dataset/run_retrieval.py run --corpus d1 --chunks data/processed/d1/dense/corpus.jsonl --queries data/processed/d1/queries.jsonl --split dev --methods bm25 dense hybrid --weight 0.5 --model-path outputs/d1-model --output outputs/d1-dev-check
 ```
 
@@ -83,7 +83,7 @@ $env:HF_HUB_OFFLINE = '1'
 & $d1Python -m experiments.external_dataset.evaluate_d1_test --input data/raw/d1/ViRHE4QA_v2.csv --model-path outputs/d1-model --output outputs/d1-test-rerun
 ```
 
-Script lấy trọng số và ngưỡng từ [kết quả D1-dev](results/D1-dev-tuning/summary.json). Script dựng lại chunk và chia tập từ CSV, lưu corpus cùng các câu test vào `inputs/`, rồi lưu top 20 đoạn nguồn mỗi câu vào `retrieval/runs/`. `summary.json` ở thư mục đầu ra ghi Hit@1, Hit@3, MRR@10, khoảng tin cậy và độ bao phủ tại ngưỡng cố định. Bảng kết quả kèm Hit@5 và Hit@10 tính từ cùng các bảng xếp hạng.
+Script lấy trọng số và ngưỡng từ [kết quả D1-dev](results/D1-dev-tuning/summary.json). Script dựng lại chunk và chia tập từ CSV, lưu corpus cùng các câu test vào `inputs/`, rồi lưu top 20 đoạn nguồn mỗi câu vào `retrieval/runs/`. Sau khi kiểm xong, lệnh xuất `summary.json` với Hit@1/3/5/10, MRR@10, khoảng tin cậy, độ bao phủ và SHA-256 của các đầu vào. Truyền file này cho E2 và E3 bằng `--e1-summary`.
 
 ### Biểu đồ risk–coverage D1-test
 
@@ -93,7 +93,7 @@ Chạy từ gốc repo bằng môi trường Python có Matplotlib. Lượt tạ
 
 ```powershell
 $env:PYTHONPATH = 'src'
-python -m experiments.external_dataset.plot_d1_risk_coverage --output outputs/d1-test-risk-coverage-rerun
+& $d1Python -m experiments.external_dataset.plot_d1_risk_coverage --e1-summary outputs/d1-test-rerun/summary.json --output outputs/d1-test-risk-coverage-rerun
 ```
 
 ### Lệnh chuẩn bị HCMUS và đánh giá D2
@@ -104,7 +104,7 @@ Khi đã có bản `_clean.md` đúng SHA-256, chạy `python data/d2/prepare_20
 & $d1Python experiments/external_dataset/run_retrieval.py prepare-hcmus --model-path outputs/d1-model --output data/processed/d2
 ```
 
-Nếu `data/processed/d2/corpus.jsonl` đã được tạo từ đúng hai nguồn và checkpoint đã ghim, dùng lại file đó. D2 dùng nhãn đã thống nhất, áp dụng trọng số trong [cấu hình D1-dev](results/D1-dev-tuning/handoff.md) và lưu toàn bộ 51 Điều.
+Nếu `data/processed/d2/corpus.jsonl` đã được tạo từ đúng hai nguồn và checkpoint đã ghim, dùng lại file đó. D2 dùng [nhãn đã chốt](../../data/d2/queries_d2.jsonl), áp dụng trọng số trong [cấu hình D1-dev](results/D1-dev-tuning/handoff.md) và lưu toàn bộ 51 Điều.
 
 ```powershell
 $hybridWeight = '0.6'
@@ -112,6 +112,8 @@ $hybridWeight = '0.6'
 ```
 
 `summary.json` của lượt truy hồi HCMUS lưu SHA-256 của file corpus, nhãn và từng bảng xếp hạng. Dùng [lệnh chấm D2-test](../application/README.md#chấm-d2-test) để tính chỉ số theo Điều, chủ đề và Khoản, phân nhóm E2 và đánh giá cảnh báo E3 từ các file vừa lưu.
+
+[Kết quả D2 đã kiểm chứng](../application/results/D2/d2-test.md) dùng cấu hình D1-dev. [Bản ghi chạy](../application/results/D2/summary.json) lưu lệnh, môi trường và checksum của ba bảng xếp hạng.
 
 ## Đầu ra và giao thức
 

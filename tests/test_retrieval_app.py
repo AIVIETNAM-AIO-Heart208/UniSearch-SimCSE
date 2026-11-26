@@ -1,3 +1,4 @@
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -6,6 +7,19 @@ import pytest
 from apps.app import answer, create_demo
 from simcse_lab.retrieval.hcmus import prepare_corpus, regulation_articles
 from simcse_lab.retrieval.search import RetrievalIndex
+
+
+@pytest.mark.parametrize("existing", ["latency.json", "demo-check.json"])
+def test_benchmark_preserves_previous_outputs(existing, tmp_path, monkeypatch):
+    from experiments.application import benchmark_cpu
+
+    path = tmp_path / existing
+    path.write_bytes(b"previous run")
+    monkeypatch.setattr(sys, "argv", ["benchmark_cpu", "--demo", "--output", str(tmp_path / "latency.json")])
+    with pytest.raises(SystemExit) as error:
+        benchmark_cpu.main()
+    assert error.value.code == 2
+    assert path.read_bytes() == b"previous run"
 
 
 class FixtureEncoder:
@@ -65,6 +79,7 @@ def test_app_group_order_plain_text_and_warning():
     assert rendered.count("<section ") == 2
     assert rendered.index("Điều 3") < rendered.index("Điều 1")
     assert "Điều 4" in rendered and "bản chép từ bản scan" in rendered
+    assert "do ChatGPT chép, nhóm đã hiệu đính" in rendered
     assert "&lt;fixture&gt;" in baseline
     index.vectors = index.vectors.copy()
     index.vectors[:, 0] = 0

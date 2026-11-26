@@ -3,8 +3,8 @@
 Đồ án Lab 03 – Machine Learning, **Nhóm 14**, **Option 1: Practical Application**.
 Ứng dụng tìm đúng **Điều/Khoản** trong quy chế đào tạo của Trường ĐH Khoa học Tự nhiên – ĐHQG-HCM cho câu hỏi tự nhiên của sinh viên, hiển thị đoạn văn bản kèm tên văn bản, số hiệu và phạm vi áp dụng.
 
-> **Trạng thái:** đã tái hiện R1–R4, có demo Gradio, [chốt cấu hình bằng D1-dev](../../experiments/external_dataset/results/D1-dev-tuning/handoff.md) và [đánh giá ba phương pháp trên D1-test](../../experiments/external_dataset/results/E1/d1-test.md). [Bộ chấm D2](../../experiments/application/README.md#chấm-d2-test) đã qua kiểm tra với dữ liệu giả. Nhóm còn kiểm tra demo hai quy chế, chốt nhãn và đánh giá D2 chính thức.
-> Trạng thái chi tiết và việc tiếp theo: xem [PROJECT.md – Current Status](PROJECT.md#1-current-status).
+> **Trạng thái:** đã tái hiện R1–R4, [chốt cấu hình trên D1-dev](../../experiments/external_dataset/results/D1-dev-tuning/handoff.md), chấm [D1-test](../../experiments/external_dataset/results/E1/d1-test.md) và [D2-test](../../experiments/application/results/D2/d2-test.md). Minh đã kiểm demo và [đo độ trễ CPU](../../experiments/application/results/E4/cpu-latency.md). [Báo cáo IEEE](../report/README.md) đã có phần ứng dụng và đóng góp thành viên. [Checklist rà soát](../reviews/workspace.md).
+> Đã kiểm chéo và đưa ví dụ của [E5 D1-test](../../experiments/application/results/E5/d1-test.md) và [E5 D2-test](../../experiments/application/results/E5/d2-test.md) vào báo cáo. Xem [trạng thái và việc tiếp theo](PROJECT.md#1-current-status).
 
 ## Thành viên
 
@@ -23,14 +23,14 @@ Sinh viên hỏi bằng lời thường, còn quy chế viết bằng thuật ng
 - Corpus gồm hai phiên bản Quy chế đào tạo: QĐ 1175/2021 và QĐ 3087/2026. Điều 27 của quy chế 2026 ghi: quy chế áp dụng cho các khóa tuyển từ năm học 2026–2027; đối với các khóa tuyển sinh từ năm 2025 trở về trước, Trường lựa chọn áp dụng quy định mới có lợi hơn cho người học. Vì vậy ứng dụng giữ cả hai bản và ghi rõ phạm vi áp dụng; trong mỗi kết quả, bản 2026 hiển thị trước vì là bản mới nhất.
 - Bản 2026 là bản ChatGPT chép từ bản scan và nhóm đã hiệu đính theo PDF chính thức. Ứng dụng ghi rõ nguồn bản chép khi hiển thị. [Hướng dẫn tạo corpus](../../data/d2/README.md#file)
 - Khi độ tin cậy thấp, ứng dụng cảnh báo để người dùng tự đối chiếu.
-- Nhóm dùng BM25 làm mốc so sánh trên D1-test và D2. Bảng D1-test có khoảng tin cậy cho chênh lệch giữa Hybrid và BM25.
+- Nhóm dùng BM25 làm mốc so sánh trên D1-test và D2. Trên 86 câu D2 có đáp án, MRR@10 theo Điều của Hybrid là 0,8750 và của BM25 là 0,8396. [Chỉ số và khoảng tin cậy D2](../../experiments/application/results/D2/d2-test.md)
 
 ## Giải pháp
 
 - **Encoder câu tiếng Việt huấn luyện theo SimCSE:** checkpoint cộng đồng `VoVanPhuc/sup-SimCSE-VietNamese-phobert-base`, dựa trên PhoBERT, cần tách từ bằng `pyvi`.
 - **Truy hồi lai (hybrid):** BM25 cho khớp từ khóa, kết hợp SimCSE cho khớp ngữ nghĩa và câu hỏi diễn đạt khác văn bản.
 - **Chunking theo cấu trúc văn bản:** chia theo Điều/Khoản, giữ metadata văn bản và phiên bản để trích dẫn chính xác.
-- **Cảnh báo độ tin cậy thấp:** chọn ngưỡng trên D1-dev, sau đó đánh giá trên D1-test và D2. Ngưỡng này không phải xác suất đúng. [Biểu đồ risk–coverage trên D1-test](../../experiments/external_dataset/results/E3/d1-test-risk-coverage.png)
+- **Cảnh báo độ tin cậy thấp:** chọn ngưỡng trên D1-dev, sau đó đánh giá trên D1-test và D2. Trên D2, ngưỡng đánh dấu 71/106 câu tin cậy, gồm 3/20 câu ngoài phạm vi. [Biểu đồ D1-test](../../experiments/external_dataset/results/E3/d1-test-risk-coverage.png) · [Biểu đồ D2-test](../../experiments/application/results/D2/risk-coverage.png)
 - **Không dùng LLM sinh câu trả lời:** ứng dụng chỉ hiển thị đoạn văn bản có trong corpus kèm nguồn.
 
 Phần tái hiện bài báo dùng mã nguồn chính thức [princeton-nlp/SimCSE](https://github.com/princeton-nlp/SimCSE) tại commit `235f89e0244b23673b69fbbc4a1cd9868c5a5c24`.

@@ -12,14 +12,14 @@ import subprocess
 from hashlib import sha256
 from importlib.metadata import version
 from pathlib import Path
-from statistics import fmean, median, quantiles
+from statistics import median, quantiles
 
+from experiments.external_dataset.evaluate_d1_test import PUBLISHED_E1, saved_test_queries
 from simcse_lab.evaluation.metrics import evaluate_d1
-from simcse_lab.evaluation.stats import first_relevant_rank, paired_bootstrap
+from simcse_lab.evaluation.stats import paired_bootstrap
 from simcse_lab.retrieval.preprocess import segment
 
 
-E1_SUMMARY = Path("experiments/external_dataset/results/E1/d1-test.json")
 METHODS = ("bm25", "dense", "hybrid")
 BOOTSTRAP_RESAMPLES = 1000
 BOOTSTRAP_SEED = 42
@@ -66,16 +66,8 @@ def _evaluate_groups(groups: dict[str, list[dict]], run_rows: dict[str, list[dic
     results = {}
     for group, queries in groups.items():
         group_runs = {method: [run[q["qid"]] for q in queries] for method, run in runs.items()}
-        metrics = {method: evaluate_d1(queries, rows) for method, rows in group_runs.items()}
-        for method, rows in group_runs.items():
-            ranks = [
-                first_relevant_rank((hit[0] for hit in row["ranked"]), set(query["gold_article_ids"]), 10)
-                for query, row in zip(queries, rows, strict=True)
-            ]
-            metrics[method].update({
-                f"hit_at_{k}": fmean(rank is not None and rank <= k for rank in ranks)
-                for k in (5, 10)
-            })
+        metrics = {method: evaluate_d1(queries, rows, hit_cutoffs=(1, 3, 5, 10))
+                   for method, rows in group_runs.items()}
         interval = paired_bootstrap(
             queries, group_runs["bm25"], group_runs["hybrid"],
             n_resamples=BOOTSTRAP_RESAMPLES, seed=BOOTSTRAP_SEED,
@@ -86,7 +78,7 @@ def _evaluate_groups(groups: dict[str, list[dict]], run_rows: dict[str, list[dic
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--e1-summary", type=Path, default=E1_SUMMARY)
+    parser.add_argument("--e1-summary", type=Path, default=PUBLISHED_E1)
     parser.add_argument("--input", type=Path, help="Pinned CSV, defaults to the path in the E1 summary")
     parser.add_argument("--output", type=Path, required=True, help="New result JSON file")
     args = parser.parse_args()
@@ -97,7 +89,7 @@ def main() -> None:
     e1 = json.loads(e1_bytes)
     if e1["split"] != "D1-test":
         raise ValueError("Expected a saved D1-test run")
-    query_record = e1["verification"]["inputs"]["queries.jsonl"]
+    query_record = saved_test_queries(args.e1_summary, e1)
     queries = _rows(query_record)
     if (len({query["qid"] for query in queries}) != len(queries) or len(queries) != e1["queries"]
             or any((q["source"], q["split"], q["in_scope"]) != ("virhe4qa", "test", True) for q in queries)):

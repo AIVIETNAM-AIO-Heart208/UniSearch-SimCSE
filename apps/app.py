@@ -38,6 +38,8 @@ def render_groups(groups):
             source = f"{chunk['title']} · {chunk['so_hieu']} · {chunk['ngay_ban_hanh']}"
             if not chunk["nguyen_van"]:
                 source += " · bản chép từ bản scan"
+                if chunk["doc_id"] == "hcmus-qcdt-2026":
+                    source += " do ChatGPT chép, nhóm đã hiệu đính"
             reference = source_link(chunk.get("source_url", ""), "Văn bản nguồn")
             amendments = "".join(
                 f'<p><strong>Sửa đổi theo QĐ {escape(change["so_hieu"])}</strong> '

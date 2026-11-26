@@ -1,4 +1,46 @@
 % Owner: Minh (Phase 3). Lab items 3.4.1--3.4.4; docs/application/PROJECT.md §2 and §5.
 \section{Application}
 \label{sec:app}
-\TODO{Describe the student workflow, limitations of keyword lookup and FAQs, implementation, interface, latency percentiles, and the components reused or built by the team.}
+\subsection{Finding the Applicable Regulation}
+A student enters a Vietnamese question and opens a result to read the
+relevant passage. A keyword search in a PDF requires the student to
+anticipate the regulation's wording and to choose an edition. A list of
+frequently asked questions covers only the questions its authors include.
+The interface instead presents source passages that the student can
+check against the regulation. We evaluated lexical retrieval with BM25.
+Student task completion and FAQ coverage remain unmeasured.
+
+The interface presents up to three topics in retrieval order, with the
+newer edition first within each topic. % apps/app.py (group_results); data/d2/article_map.tsv
+Each entry gives the article, numbered clause when available, excerpt,
+decision number, date, applicability and source link. For example, a
+student can compare the editions and check the rules for their admission
+cohort before relying on an excerpt. The newer regulation is indexed
+from a ChatGPT transcription of the scan that the team corrected.
+The BM25 tab lets the student compare the passages returned by keyword
+matching for the same question. A low cosine for the passage selected
+in the top-ranked article prompts the student to check the source or
+contact the academic office.
+
+We reused PyVi for word segmentation, the released Vietnamese encoder
+through Transformers, \texttt{rank-bm25} for lexical scoring and Gradio
+for the local interface. The team implemented source-aligned chunking,
+article ranking and score fusion, cross-edition grouping, the warning
+rule and the display of excerpts and amendment notices.
+% Implementation: src/simcse_lab/retrieval/, src/simcse_lab/model/encoders.py, apps/app.py.
+
+\subsection{CPU Retrieval Latency}
+We measured retrieval on Windows using an AMD Ryzen 7 7735HS and
+PyTorch 2.14.1+cu126 in CPU mode with four threads. % experiments/application/results/E4/cpu-latency.md and latency.json
+The HCMUS index contained 273 chunks from 51 articles. % experiments/application/results/E4/latency.json
+We used the pinned SimCSE-VN checkpoint and a BM25 fusion weight of 0.6. % experiments/application/results/E4/latency.json
+For each method, we warmed up each of six queries outside the D2
+evaluation set once, then timed ten runs per query. % experiments/application/results/E4/cpu-latency.md
+We cleared the encoder's token cache before each sample and stopped the
+timer after article ranking.
+These timings exclude index construction, HTTP transport and rendering.
+
+The median and 95th-percentile retrieval times were
+0.79 and 1.07~ms for BM25, % experiments/application/results/E4/latency.json
+29.39 and 36.03~ms for SimCSE-VN, % experiments/application/results/E4/latency.json
+and 30.31 and 34.88~ms for hybrid retrieval. % experiments/application/results/E4/latency.json

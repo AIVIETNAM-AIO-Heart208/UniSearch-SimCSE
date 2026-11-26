@@ -1,10 +1,22 @@
 """Check D2 scoring with hand-labelled synthetic data and saved rankings."""
 
+import hashlib
+import json
+from pathlib import Path
+
 import pytest
 
 from simcse_lab.evaluation.d2 import evaluate_d2
 from simcse_lab.retrieval.hcmus import chunk_clause_id, regulation_clauses
 from simcse_lab.retrieval.ingest import article_chunks
+
+
+def test_published_d2_inputs_survive_a_clean_checkout():
+    root = Path(__file__).resolve().parents[1]
+    summary = json.loads((root / "experiments/application/results/D2/summary.json").read_bytes())
+    for key in ("config", "topic_map", "queries"):
+        record = summary["inputs"][key]
+        assert hashlib.sha256((root / record["path"]).read_bytes()).hexdigest() == record["sha256"], key
 
 
 @pytest.fixture
@@ -58,6 +70,7 @@ def test_d2_levels_intervals_and_tied_risk_points(dataset):
     assert [point["accepted"] for point in result["risk_coverage"]] == [1, 3]
     assert result["operating_point"]["risk"] == {"article": 0.5, "topic": 0.0}
     assert result["warnings"]["false_confidence"] == 1.0
+    assert result["warnings"]["false_confident_queries"] == [{"qid": "3", "top_article_id": "b", "cosine": 0.9}]
 
 
 def test_d2_rejects_ambiguous_clause_labels_and_mismatched_chunks(dataset):
@@ -80,3 +93,4 @@ def test_d2_empty_in_scope_groups_have_undefined_accuracy(dataset):
     assert result["overall"]["metrics"]["hybrid"]["article"]["hit_at_1"] is None
     assert result["operating_point"]["accepted"] == 0
     assert result["warnings"]["false_confidence"] == 0.0
+    assert result["warnings"]["false_confident_queries"] == []

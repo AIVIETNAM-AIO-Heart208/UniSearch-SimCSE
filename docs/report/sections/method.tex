@@ -404,7 +404,8 @@ absolute score levels, and the two methods may rank different articles first.
 We therefore use the cosine for the warning.
 % Selected threshold and coverage rule: experiments/external_dataset/results/D1-dev-tuning/summary.json.
 We selected $\theta=0.6201629042625427$ on D1-dev to retain at least 80\% coverage.
-We evaluated that operating point on D1-test. The D2 evaluation uses the same
-threshold to measure how well it transfers to our university's regulations,
-including for questions outside their scope. The system displays excerpts
-directly from the indexed regulation texts.
+We evaluated that operating point on D1-test and D2-test. D2 includes
+questions outside the scope of the university regulations, which let us
+measure how often the fixed threshold marks those results confident
+(Section~\ref{sec:d2-results}). The system displays excerpts directly
+from the indexed regulation texts.

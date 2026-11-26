@@ -7,7 +7,10 @@ import subprocess
 from hashlib import sha256
 from pathlib import Path
 
-from run_dense_dev import read_rows, write_rows
+if __package__:
+    from .run_dense_dev import read_rows, write_rows
+else:
+    from run_dense_dev import read_rows, write_rows
 from simcse_lab.evaluation.metrics import evaluate_d1
 from simcse_lab.model.encoders import REVISION, SimCSEEncoder, verify_snapshot
 from simcse_lab.retrieval.search import RetrievalIndex

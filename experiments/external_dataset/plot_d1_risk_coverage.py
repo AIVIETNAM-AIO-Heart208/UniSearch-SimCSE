@@ -16,10 +16,10 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib.figure import Figure
 from matplotlib.ticker import PercentFormatter
 
+from experiments.external_dataset.evaluate_d1_test import PUBLISHED_E1, saved_test_queries
 from simcse_lab.evaluation.stats import _cosine, warning_metrics
 
 
-E1_SUMMARY = Path("experiments/external_dataset/results/E1/d1-test.json")
 FIGURE_NAME = "d1-test-risk-coverage"
 
 
@@ -84,7 +84,7 @@ def _figure(points: list[tuple[float, int, int]], fixed: dict, size: int) -> Fig
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--e1-summary", type=Path, default=E1_SUMMARY)
+    parser.add_argument("--e1-summary", type=Path, default=PUBLISHED_E1)
     parser.add_argument("--output", type=Path, required=True, help="New directory for the results")
     parser.add_argument("--pdf", type=Path, help="Path for the vector figure, defaults to the output directory")
     args = parser.parse_args()
@@ -101,7 +101,7 @@ def main() -> None:
     threshold = frozen["threshold"]
     source = {
         "e1_summary": {"path": args.e1_summary.as_posix(), "sha256": sha256(e1_bytes).hexdigest()},
-        "queries": e1["verification"]["inputs"]["queries.jsonl"],
+        "queries": saved_test_queries(args.e1_summary, e1),
         "hybrid_ranking": e1["rankings"]["hybrid"],
     }
     queries = _read_rows(source["queries"])

@@ -10,7 +10,7 @@ Cần MiKTeX hoặc TeX Live có gói `IEEEtran` và `vntex`. Chạy từ thư m
 powershell -ExecutionPolicy Bypass -File docs\report\build.ps1     # thêm -Clean để build lại từ đầu
 ```
 
-PDF nằm ở `docs/report/build/main.pdf`. Thư mục `build/` không được commit. Script in số cảnh báo LaTeX và số ghi chú `\TODO` còn lại.
+PDF nằm ở `docs/report/build/main.pdf`. Thư mục `build/` không được commit. Script trả mã lỗi khi còn cảnh báo LaTeX/BibTeX hoặc dòng tràn lề và in số ghi chú `\TODO` còn lại.
 
 Trên Linux hoặc macOS, chạy trong `docs/report/`:
 
@@ -39,5 +39,5 @@ Mỗi mục là một file trong `sections/`, nên hai người sửa song song 
 - **Ngôn ngữ.** Báo cáo viết bằng tiếng Anh (chốt 23/11). Tiếng Việt chỉ dùng cho tên riêng, trích nguyên văn Điều/Khoản và câu hỏi ví dụ. Preamble có `\usepackage[T5]{fontenc}`, nên gõ dấu trực tiếp trong file UTF-8 mà font vẫn là Times như mẫu.
 - **Số liệu.** Chỉ lấy từ file kết quả trong `experiments/*/results/` và ghi đường dẫn file trong comment cạnh bảng.
 - **Trích dẫn.** Xuất BibTeX từ nguồn gốc (ACL Anthology, DBLP, trang nhà xuất bản), dán vào `references.bib` và ghi URL nguồn phía trên entry. Mẫu gõ tay danh mục tham khảo, còn nhóm dùng `IEEEtran.bst` để ra cùng định dạng mà dễ quản lý hơn.
-- **Hình.** Đặt trong `figures/` rồi gọi `\includegraphics{tên-file}`.
+- **Hình.** Giữ nguyên cấu trúc repo khi build. Hình vector D1 ở `figures/`. Báo cáo đọc trực tiếp [hình D2](../../experiments/application/results/D2/risk-coverage.png) từ thư mục kết quả đã chấm.
 - **Ghi chú nháp.** `\TODO{...}` hiện chữ đỏ trong PDF. Chỉ nộp khi script báo `TODO notes left: 0`.

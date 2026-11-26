@@ -29,3 +29,4 @@ Write-Output "PDF: $(Join-Path $PSScriptRoot 'build\main.pdf')"
 Write-Output "LaTeX/BibTeX warnings and overfull boxes: $(@($warnings).Count)"
 $warnings | Select-Object -First 20 | ForEach-Object { Write-Output "  $_" }
 Write-Output "TODO notes left: $(@($todos).Count) (all must be removed before submission)"
+if (@($warnings).Count -gt 0) { exit 1 }

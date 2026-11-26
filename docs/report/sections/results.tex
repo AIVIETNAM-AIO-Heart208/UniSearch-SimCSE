@@ -28,11 +28,13 @@ BERT-base, first--last average & 53.87 & 56.70 & 56.70 \\ % experiments/reproduc
 \end{tabular}
 \end{table}
 
+% Differences of reproduced means: experiments/reproduction/results/R1/metrics.json,
+% experiments/reproduction/results/R2/metrics.json, experiments/reproduction/results/R3/metrics.json.
 The BERT-base baseline measures how well pretrained
 BERT ranks sentence pairs when its first and last layers are averaged.
 Unsupervised SimCSE improved the seven-task mean by 19.55 points over
 this baseline using contrastive training on unlabeled sentences and a
-different pooling procedure. Supervised SimCSE gained a further 5.32
+different pooling procedure. Supervised SimCSE gained a further 5.33
 points. This comparison changes both the training corpus (Wikipedia
 versus SNLI and MNLI) and the construction of training pairs, so it
 cannot isolate the effect of labels alone.
@@ -136,9 +138,8 @@ At the fixed threshold selected on D1-dev, Hybrid marked 618 of 759
 questions as confident (81.42\% coverage). Hit@1 was 76.05\% on those
 questions and 56.74\% on the 141 questions with a warning. All D1-test
 questions have reference passages, so the out-of-scope false-confidence
-rate is undefined on this split. The threshold was calibrated on
-ViRHE4QA passages and questions. Its coverage and false-confidence rate
-on HCMUS questions remain to be measured.
+rate is undefined on this split. Section~\ref{sec:d2-results} reports
+the fixed threshold's coverage and false-confidence rate on HCMUS.
 
 % Coverage, risk and counts: experiments/external_dataset/results/E3/d1-test.json.
 % Differences and warning counts are derived from operating_point and full_coverage.
@@ -192,18 +193,131 @@ group and 55 in the high-overlap group. A longer labelled passage can
 lower the Jaccard score by increasing the size of the union.
 
 \paragraph{Error analysis}
-% Counts, ranks and source excerpts: experiments/application/results/E5/d1-test.md.
+% Counts, verified ranks and selected chunks: experiments/application/results/E5/d1-test.md.
 Hybrid missed the labelled passage at rank one for 209 of 759 questions.
 For 123 of those questions, the labelled passage was second or third.
 We examined a purposive sample of 20 misses across rank ranges and baseline
-outcomes. For query 8682 on the IELTS exemption threshold, Hybrid returned
+outcomes and checked these and two correct results against the three saved
+rankings. For query 8682 on the IELTS exemption threshold, Hybrid returned
 placement-test scores. For query 5272,
 Hybrid ranked the provision granting access to edit exam marks first.
 BM25 and SimCSE-VN placed that provision third and fourth, respectively.
 For query 4251, the reference passage directs readers from Article~10 to
-Article~6 for the maximum duration. Hybrid returned the cited provision
-in Article~6 first. The passage-ID metric counts this match as a miss.
+Article~6 for the maximum duration. All three methods ranked the cited
+provision in Article~6 first. The passage-ID metric counts these as misses.
 
-\TODO{Report lexical-overlap groups on D2 and its article-, topic- and clause-level
-results, paired intervals, warning coverage and out-of-scope errors.
-Analyse representative D2 failures.}
+% Chunk selection audit: experiments/application/results/E5/d1-test.md.
+Across the reviewed cases and methods, 14 of 52 top-20 matches to the
+labelled passage selected a different chunk from the one cited as evidence
+in the manual review. For query 1543, Hybrid ranked the labelled passage
+second and selected the clause on the signatory. The name of the institution
+is listed in another clause of the same passage.
+
+\subsection{Retrieval and warnings on D2-test}
+\label{sec:d2-results}
+% Counts, settings and overall metrics: experiments/application/results/D2/summary.json.
+Table~\ref{tab:d2-overall} compares the three methods and a random
+ranking on the 86 in-scope questions. We applied the settings selected
+on D1-dev to the 51-article HCMUS corpus. Clause@1 measures whether
+the excerpt from the first-ranked article matches any reference clause.
+
+% Overall article, topic and clause metrics: experiments/application/results/D2/summary.json.
+\begin{table}[htbp]
+\caption{D2-test retrieval. Hit@1 and Clause@1 are percentages.}
+\label{tab:d2-overall}
+\centering\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrrrr@{}}
+\hline
+& \multicolumn{2}{c}{Article} & \multicolumn{2}{c}{Topic} & Clause \\
+Method & Hit@1 & MRR@10 & Hit@1 & MRR@10 & @1 \\
+\hline
+Random & 3.92 & 0.1083 & 5.08 & 0.1435 & -- \\
+BM25 & 73.26 & 0.8396 & 75.58 & 0.8592 & 65.12 \\
+SimCSE-VN & 62.79 & 0.7562 & 65.12 & 0.7924 & 52.33 \\
+Hybrid & 79.07 & 0.8750 & 80.23 & 0.8895 & 68.60 \\
+\hline
+\end{tabular}
+\end{table}
+
+% Paired question-level bootstrap, counts and intervals: experiments/application/results/D2/summary.json.
+Hybrid's MRR@10 gain over BM25 was 0.0354 at article level
+(95\% CI $[0.0058, 0.0717]$) and 0.0303 at topic level
+(95\% CI $[0.0029, 0.0651]$). The Hit@1 gains were
+5.81 and 4.65 percentage points respectively, with both
+95\% intervals reaching zero. These intervals use 1,000 paired
+question-level resamples with seed 42 and describe the comparison
+on this curated set.
+
+\paragraph{Lexical overlap}
+% Jaccard cutoffs, group sizes, metrics and intervals: experiments/application/results/D2/summary.json.
+For each question we took the maximum Jaccard overlap with any of its
+reference articles. We split the sorted values at the one-third and
+two-thirds quantiles and kept ties in the same group. Hybrid's
+article-level MRR@10 was higher across the low, medium and high overlap
+groups in Table~\ref{tab:d2-overlap}. All three paired MRR@10 intervals
+for Hybrid versus BM25 included zero at both article and topic level.
+
+% Group sizes and article MRR@10: experiments/application/results/D2/summary.json.
+\begin{table}[htbp]
+\caption{D2-test article MRR@10 by lexical overlap.}
+\label{tab:d2-overlap}
+\centering\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrrr@{}}
+\hline
+Overlap & $n$ & BM25 & SimCSE-VN & Hybrid \\
+\hline
+Low & 29 & 0.7931 & 0.7075 & 0.8276 \\
+Medium & 28 & 0.8021 & 0.7854 & 0.8482 \\
+High & 29 & 0.9224 & 0.7768 & 0.9483 \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Warning behaviour}
+% Fixed-point and full-coverage counts and rates: experiments/application/results/D2/summary.json.
+At the fixed D1-dev threshold, Hybrid marked 71 of 106 queries as
+confident (66.98\% coverage). Those include 68 in-scope queries,
+with 12 top-result errors by article (17.65\%) and 11 by topic
+(16.18\%). At full coverage the corresponding risks were
+20.93\% and 19.77\% over 86 in-scope queries.
+% Out-of-scope errors: experiments/application/results/D2/summary.json.
+The threshold warned on 17 of 20 out-of-scope queries and marked the
+other three as confident (15.00\% false confidence). Figure~\ref{fig:d2-risk-coverage}
+shows how the observed in-scope risk varies with overall coverage.
+
+% Figure: experiments/application/results/D2/risk-coverage.png.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\columnwidth]{../../experiments/application/results/D2/risk-coverage.png}
+\caption{D2-test top-result error among confident in-scope queries
+versus coverage over all queries. The marked points use the fixed
+D1-dev threshold.}
+\label{fig:d2-risk-coverage}
+\end{figure}
+
+\paragraph{Error analysis}
+% Counts, selection, ranks and regulation pages: experiments/application/results/E5/d2-test.md.
+Hybrid missed at rank one for 18 of 86 in-scope questions by article
+and 17 by topic. The first labelled article was ranked second to fourth
+in all 18 cases. We checked five purposively selected misses and all
+three out-of-scope queries marked confident against the frozen labels
+and the corresponding pages of both regulations.
+
+% Case IDs and source excerpts: experiments/application/results/E5/d2-test.md.
+For \path{d2-minh-review-019}, BM25 and Hybrid placed a special case
+for students past the maximum study period ahead of the general
+graduation requirements. Both provisions belong to the same topic.
+For \path{d2-huy-review-047}, all three methods ranked the provision
+on absence from an exam first. It refers readers to the article on
+exam deferral. The clause specifying the five-working-day deadline
+appeared at rank three for Hybrid.
+
+% Out-of-scope labels, cosine scores and matches: experiments/application/results/E5/d2-test.md.
+The three confident out-of-scope queries asked for a career fair date,
+proof of eligibility for discounted bus travel, and current tuition per
+credit. Hybrid returned a graduation notice, documentation for a
+course waiver, and rules on passing courses and earning credits,
+respectively. The excerpts shared words or subject matter with the
+queries and lacked the requested information.

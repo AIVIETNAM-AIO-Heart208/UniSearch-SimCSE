@@ -1,6 +1,6 @@
 # D2: bộ test quy chế đào tạo của Trường ĐH KHTN (HCMUS)
 
-D2 là bộ câu hỏi kiểu sinh viên do nhóm tự viết về quy chế đào tạo của trường mình, **chỉ dùng để test**. Quyết định: D-17 trong [PROJECT.md §8.3](../../docs/application/PROJECT.md#83-decision-log). Quy tắc gán nhãn: [PROJECT.md §6.2](../../docs/application/PROJECT.md#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu).
+D2 là bộ câu hỏi kiểu sinh viên do nhóm xây dựng về quy chế đào tạo của trường mình và **chỉ dùng để test**. Quyết định D-17 nằm trong [PROJECT.md §8.3](../../docs/application/PROJECT.md#83-decision-log). Quy tắc gán nhãn nằm trong [PROJECT.md §6.2](../../docs/application/PROJECT.md#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu).
 
 D2 bù ba chỗ D1 (ViRHE4QA) không có:
 - Câu hỏi diễn đạt khác văn bản. Câu hỏi D1 được viết từ chính văn bản, nên trùng từ nhiều.
@@ -27,7 +27,7 @@ QĐ 91/QĐ-KHTN ngày 18/01/2023 sửa bảng xếp loại ở điểm b khoản
 
 ## Đối ứng 2021 ↔ 2026
 
-[article_map.tsv](article_map.tsv) gộp 51 Điều thành 26 chủ đề. **Đã duyệt ngày 24/11 (D-18)** sau khi đối chiếu nội dung các cặp có tiêu đề khác nhau.
+[article_map.tsv](article_map.tsv) gộp 51 Điều thành 26 chủ đề. **Đã duyệt ngày 24/11 (D-18)** sau khi đối chiếu nội dung các cặp có tiêu đề khác nhau. Git giữ nguyên byte CRLF của bảng để SHA-256 trong [kết quả D2](../../experiments/application/results/D2/summary.json) kiểm được trên cả Windows và Linux.
 - 22 chủ đề có ở cả hai bản; 4 Điều chỉ có ở bản 2026 (Điều 2, 9, 24, 26).
 - Bảng được dựng từ tiêu đề Điều; ba cặp khó (Điều 4, 5, 24 của bản 2021) đã đối chiếu thêm nội dung. Script dựng bảng (`build_article_map.py`, kiểm mỗi Điều xuất hiện đúng một lần) ở `data/raw/d2/verification/scripts/`.
 - T02, T09, T16 gộp hai Điều của **cùng một** phiên bản (một bản tách thành hai Điều nội dung mà bản kia gộp trong một Điều). Đã đối chiếu nội dung và giữ (D-18).
@@ -48,7 +48,7 @@ QĐ 91/QĐ-KHTN ngày 18/01/2023 sửa bảng xếp loại ở điểm b khoản
 | [prepare_2026.py](prepare_2026.py) | Tạo bản hiệu đính và kiểm SHA-256 đầu vào, đầu ra | Có |
 | `data/raw/d2/Quy_che_dao_tao_2026_QD3087_corrections.md` | Nhật ký 165 chỗ sửa (hai lượt) | Không |
 | `data/raw/d2/verification/` | Đầu vào, script và kết quả kiểm chứng bản chép 2026 và bảng đối ứng | Không |
-| `data/d2/queries_d2.jsonl` | Câu hỏi và nhãn do nhóm viết (chưa có, Phase 3) | Có |
+| [queries_d2.jsonl](queries_d2.jsonl) | Bộ câu hỏi và nhãn D2 đã chốt để đánh giá | Có |
 
 Chữ QĐ 1175 có trong Git. QĐ 3087 đã có [PDF chính thức của Trường](https://www.hcmus.edu.vn/wp-content/uploads/2026/10/QD3087_QD-Quy-che-dao-tao-2026.pdf). Khi chia sẻ, dẫn tới PDF này. Bản ChatGPT chép từ scan và nhóm làm sạch dùng để lập chỉ mục, nộp kèm trong `[Group14].zip` theo D-18.
 
@@ -56,17 +56,18 @@ Từ gốc repo, chạy `python data/d2/prepare_2026.py` khi đã có bản `_cl
 
 Dùng [lệnh `prepare-hcmus`](../../experiments/external_dataset/README.md#lệnh-chuẩn-bị-hcmus-và-đánh-giá-d2) để tạo `data/processed/d2/corpus.jsonl` từ hai nguồn đã kiểm SHA-256 và checkpoint đã ghim. Git bỏ qua file corpus đã xử lý.
 
-## Câu hỏi (Phase 3, chốt nhãn trước 02/12)
+## Câu hỏi và nhãn D2 đã chốt
 
-- [Bản nháp cho Minh](queries_draft.jsonl) có 41 câu trong phạm vi và 10 câu dự kiến ngoài phạm vi, do trợ lý soạn để Minh duyệt. `origin: team` chỉ nguồn bản nháp nội bộ. Gold hiện dựa trên quy chế 2021. Khi có nguồn 2026, đối chiếu tất cả câu với cả hai bản, bổ sung gold và ghi chú khác biệt giữa hai bản, xác minh các câu ngoài phạm vi rồi chuyển câu hỏi không kèm gold cho Huy kiểm tra độc lập. Dùng file đã hợp nhất và chốt nhãn cho E2.
-- [Bản gán nhãn độc lập](queries_blind.jsonl) có đủ 51 câu, trộn với seed 42 và dùng ID rà soát mới. Huy dùng riêng file này khi gán nhãn. Khi đối chiếu, ghép hai bản bằng toàn văn câu hỏi.
-- **Số lượng:** 80–100 câu trong phạm vi và khoảng 20 câu ngoài phạm vi. Huy và Minh mỗi người viết 40–50 câu trong phạm vi và 10 câu ngoài phạm vi.
-- **Định dạng:** mỗi dòng của `queries_d2.jsonl` theo [PROJECT §5.4](../../docs/application/PROJECT.md#54-interface--định-dạng-dữ-liệu), với `split: "test"`, `source: "d2"` và `origin: "team"` hoặc `"form"` (câu thu qua Google Form). Ghi mã Điều và mã Khoản theo nguồn như dưới đây.
-- **Cách viết và thiên lệch đã biết (D-18):** viết kiểu gập sách, được dùng thuật ngữ thông dụng, không chép nguyên câu hay mệnh đề. Người viết đã đọc văn bản nên câu vẫn có thể ít trùng từ hơn câu hỏi thật, bất lợi cho BM25. Báo cáo phải nêu điều này; nếu có câu từ Google Form thì báo riêng nhóm `origin: "form"`.
-- Quy tắc viết, gán nhãn và chống rò rỉ: PROJECT.md §6.2.
+- **Bộ đánh giá** gồm 106 câu, với 86 câu có đáp án trong ít nhất một quy chế và 20 câu ngoài phạm vi. Ngày chốt và SHA-256 của [queries_d2.jsonl](queries_d2.jsonl) nằm ở mục `test_queries` trong [documents.yaml](documents.yaml). Nhóm chốt nhãn trước khi xem dự đoán trên D2.
+- **Nguồn câu hỏi** gồm 55 câu Huy tự soạn (45 trong phạm vi, 10 ngoài phạm vi) và 51 câu Minh duyệt từ [bản nháp do trợ lý soạn](queries_draft.jsonl) (41 trong phạm vi, 10 ngoài phạm vi). [Bản dành cho lượt gán nhãn độc lập của Huy](queries_blind.jsonl) trộn 51 câu với seed 42 và dùng mã rà soát. Khi đối chiếu hai lượt, nhóm ghép theo nguyên văn câu hỏi và giữ mã rà soát trong tệp đã chốt để tra lại phiếu.
+- **Trước khi thảo luận**, hai lượt nhãn độc lập có trợ lý hỗ trợ soạn bản nháp và thống nhất phạm vi 106/106 câu. Hai tập nhãn trùng hoàn toàn ở 95/106 câu theo Điều (89,6%) và 88/106 câu theo Khoản (83,0%), tính cả câu ngoài phạm vi có tập nhãn rỗng. Trong 86 câu có đáp án, các tỷ lệ tương ứng là 75/86 (87,2%) và 68/86 (79,1%). Phiếu đối chiếu nội bộ lưu 18 điểm khác nhau, gồm một mã Khoản lặp và 17 phương án nội dung đã được Huy và Minh thống nhất.
+- **Rà trùng** dùng nguyên văn đã chuẩn hóa Unicode, chữ hoa/thường và khoảng trắng, rồi đọc các câu cùng chủ đề để đối chiếu thông tin được hỏi. Loại 0 câu. Ví dụ, `d2-minh-review-016` hỏi điều kiện chuyển trường và `d2-huy-review-051` hỏi thứ tự xin phép chuyển trường.
+- **Định dạng** theo [PROJECT §5.4](../../docs/application/PROJECT.md#54-interface--định-dạng-dữ-liệu). Mọi dòng có `split: "test"`, `source: "d2"` và `origin: "team"`. Cả 86 câu trong phạm vi có mã Điều và Khoản hợp lệ. Câu ngoài phạm vi có hai danh sách nhãn rỗng.
+- **Cách viết và thiên lệch (D-18).** Câu hỏi dùng cách diễn đạt của sinh viên và có thể dùng thuật ngữ phổ biến. Do được soạn sau khi đã biết nội dung quy chế, mức trùng từ với văn bản có thể thấp hơn câu hỏi tự nhiên, gây bất lợi cho BM25.
 
 ### Mã Điều và Khoản
 
 - `gold_article_ids` dùng mã như `hcmus-qcdt-2026:dieu-15`. `gold_clause_ids` dùng mã như `hcmus-qcdt-2026:dieu-15:khoan-1` khi xác định được Khoản trả lời trong Điều gold.
 - Điều 8 bản 2021 có hai mục cùng ghi Khoản 3. Chọn `hcmus-qcdt-2021:dieu-8:khoan-3:1` cho mục xuất hiện trước hoặc `hcmus-qcdt-2021:dieu-8:khoan-3:2` cho mục xuất hiện sau, theo nội dung trả lời trong văn bản. Corpus giữ `clause: 3` ở cả hai mục và giữ offset để đối chiếu nguyên văn.
+- Với `d2-minh-review-003`, nhãn dùng mục Khoản 3 xuất hiện trước ở bản 2021 và Khoản 3 Điều 8 ở bản 2026. Với `d2-huy-review-049`, Khoản 3 Điều 19 bản 2026 lấy khối lượng học phần phải học lại chia cho khối lượng học tập chuẩn.
 - Corpus HCMUS xuất `clause_id` cho mỗi chunk. Các cửa sổ của một Khoản có chung mã, còn phần đầu Điều không có số Khoản dùng `null`. [Bộ chấm D2](../../experiments/application/README.md#chấm-d2-test) có thể tra mã từ offset đối với corpus cũ và kiểm mã trong nhãn chính thức trước khi tính Clause@1.

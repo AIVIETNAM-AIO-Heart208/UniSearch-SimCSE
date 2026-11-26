@@ -21,7 +21,7 @@
 
 *Mục 3.3 · Hai thí nghiệm độc lập, mỗi người tự chạy được từ dữ liệu đến kết quả.*
 
-- [x] **Huy** — Chạy checkpoint supervised SimCSE gốc trên 7 tác vụ STS. Lưu môi trường, commit, checkpoint, cấu hình, lệnh chạy và bảng Spearman đối chiếu với số công bố. *Xong 23/11: TB 81,58, khớp README; chạy thêm unsup (76,25) và BERT thô (56,70), đều khớp paper. Xem [experiments/reproduction/](../experiments/reproduction/README.md).*
+- [x] **Huy** — Chạy checkpoint supervised SimCSE gốc trên 7 tác vụ STS. Lưu môi trường, commit, checkpoint, cấu hình, lệnh chạy và bảng Spearman. R1 đạt 81,58, cao hơn trung bình của bài báo 0,01 điểm. R2 và R3 đạt đúng trung bình công bố 76,25 và 56,70. [Bảng đối chiếu](../experiments/reproduction/README.md)
 - [x] **Huy** — Giải thích luồng nạp dữ liệu, huấn luyện và suy luận. Tự cài InfoNCE, kiểm thử cả trường hợp có hard negative. *Xong 23/11:*
   - *Phần giải thích luồng code mới là bản nháp, ở §Execution Flow của `docs/report/sections/method.tex`.*
   - *InfoNCE (R4): 689 test pass, ở float64 lệch ≤ 1,4e-9 so với `cl_forward`. Xem [experiments/reproduction/](../experiments/reproduction/README.md).*
@@ -46,24 +46,26 @@
 - [x] **Huy** — Chuẩn bị bảng so sánh trên D1-dev từ điểm của BM25, SimCSE-VN và Hybrid. [Bảng so sánh](../experiments/external_dataset/results/D1-dev-tuning/handoff.md#kết-quả-trên-224-câu-d1-dev)
 - [x] **Minh** — Thêm BM25 và Hybrid vào phần truy hồi tiếng Việt. Giao cho Huy lệnh chạy ba phương pháp trên D1 và trên corpus HCMUS (D2), cho phép đổi trọng số Hybrid. Runs theo định dạng [PROJECT.md §5.4](application/PROJECT.md#54-interface--định-dạng-dữ-liệu), gồm Khoản tốt nhất và cosine của Khoản tốt nhất trong Điều đứng đầu. Dựng giao diện Gradio song song với việc Huy chọn cấu hình.
   - Đã kiểm chứng gói D1-dev trên 224 câu. Cả ba bảng xếp hạng khớp SHA-256, mã câu, thứ tự xếp hạng và chỉ số tính lại. Đã kiểm demo trên 51 Điều với checkpoint thật. [Lệnh bàn giao](../experiments/external_dataset/README.md#bàn-giao-cho-huy)
-- [ ] **Cả hai viết, kiểm tra chéo câu của nhau; Minh tổng hợp file** — Viết bộ test D2 trên hai quy chế đào tạo HCMUS: mỗi người 40–50 câu trong phạm vi và 10 câu ngoài phạm vi. Bắt đầu ngay, không chờ Phase 2. Nếu kịp, Huy thu thêm khoảng 20 câu thật qua Google Form ẩn danh (`origin: form`). Chốt nhãn trước 02/12 và trước khi xem dự đoán trên D2. Quy tắc viết và gán nhãn (gồm cách ghi gold khi hai phiên bản cùng trả lời): [PROJECT.md §6.2](application/PROJECT.md#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu).
-  - Huy xác nhận đã tự soạn phần của mình, gồm 45 câu trong phạm vi và 10 câu ngoài phạm vi. Bản câu hỏi gửi Minh gán nhãn độc lập đã được kiểm nguyên văn.
-  - Bản nháp của Minh có 41 câu trong phạm vi và 10 câu ngoài phạm vi do trợ lý soạn. Phía Minh đã chuẩn bị nhãn cho cả 106 câu theo hai quy chế. Hai thành viên còn đối chiếu lượt nhãn độc lập, tính tỷ lệ đồng ý và chốt bất đồng.
-- [x] **Huy** — Chọn trọng số Hybrid và ngưỡng cảnh báo trên D1-dev. [Cấu hình đã chốt](../experiments/external_dataset/results/D1-dev-tuning/handoff.md)
+- [x] **Huy và Minh** — Chuẩn bị câu hỏi, gán nhãn độc lập và duyệt các điểm khác nhau trên hai quy chế đào tạo HCMUS. Minh gửi phiếu tổng hợp đề xuất. Huy xác nhận toàn bộ phương án, giao Codex rà câu gần trùng và xuất [tệp nhãn D2](../data/d2/queries_d2.jsonl). Nhóm chốt nhãn ngày 26/11, trước hạn 02/12 và trước khi xem dự đoán. Xem [nguồn câu hỏi và kết quả đối chiếu](../data/d2/README.md#câu-hỏi-và-nhãn-d2-đã-chốt).
+- [x] **Huy** — Chọn trọng số Hybrid và ngưỡng cảnh báo trên D1-dev. [Phiếu cấu hình cho Minh](../experiments/external_dataset/results/D1-dev-tuning/handoff.md). Minh đã dùng cấu hình này cho demo và E4.
 - [x] **Huy** — Chạy BM25, SimCSE-VN và Hybrid trên D1-test với cấu hình chốt từ dev. Xuất bảng truy hồi, khoảng tin cậy Hybrid so với BM25 và số liệu cảnh báo ở ngưỡng cố định. [Kết quả D1-test](../experiments/external_dataset/results/E1/d1-test.md)
 - [x] **Huy** — So sánh ba phương pháp theo mức trùng từ trên D1-test. Báo số câu, chỉ số và khoảng tin cậy ghép cặp trong từng nhóm. [Kết quả E2 trên D1-test](../experiments/application/results/E2/d1-test.md)
 - [x] **Huy** — Vẽ đường cong risk–coverage của Hybrid trên D1-test và đánh dấu ngưỡng cảnh báo đã chốt. [Biểu đồ E3 trên D1-test](../experiments/external_dataset/results/E3/d1-test-risk-coverage.png)
 - [x] **Huy** — Chuẩn bị mã Khoản ổn định và bộ chấm ba bảng xếp hạng D2 cho E2 và E3. Kiểm tra bằng nhãn và xếp hạng giả. [Cách chấm D2](../experiments/application/README.md#chấm-d2-test)
-- [ ] **Huy** — Gửi cấu hình cho Minh. So sánh ba phương pháp trên D2 đã chốt nhãn, báo cả mức theo Điều và theo chủ đề. Báo kết quả theo mức trùng từ, đường cong risk–coverage và tỷ lệ câu ngoài phạm vi bị gắn mức tin cậy cao trên D2.
+- [x] **Huy** — So sánh BM25, SimCSE-VN và Hybrid trên D2 đã chốt nhãn. Codex đã chạy ngày 26/11 bằng cấu hình D1-dev và xuất chỉ số E2 theo Điều, chủ đề, Khoản và mức trùng từ, cùng chỉ số cảnh báo E3. [Bảng E2 và E3](../experiments/application/results/D2/d2-test.md) · [Biểu đồ risk–coverage](../experiments/application/results/D2/risk-coverage.png)
 - [x] **Minh** — Áp dụng cấu hình cố định vào demo CPU: hiển thị top 3 kết quả (các Điều cùng chủ đề gộp làm một, bản 2026 đứng trước), Khoản trích dẫn, tên văn bản, số hiệu, ngày ban hành, phạm vi áp dụng (ghi "bản chép từ bản scan" với QĐ 3087), cảnh báo và kết quả BM25 để đối chiếu. Đã lưu [kết quả E4 và mẫu đo](../experiments/application/results/E4/cpu-latency.md).
 - [x] **Huy** — Đối chiếu 20 câu Hybrid trượt Hit@1 trên D1-test và chọn ví dụ cho E5. [Bảng phân loại và ví dụ](../experiments/application/results/E5/d1-test.md)
-- [ ] **Huy tổng hợp, Minh đối chiếu văn bản** — Kiểm chéo các ví dụ E5, bổ sung trường hợp D2 vào bộ 20–30 truy vấn và nêu hướng cải thiện dựa trên các lỗi đã đối chiếu.
-  - Minh đã kiểm chéo văn bản 20/20 câu lỗi và 2 ví dụ xếp đúng trên D1-test. Còn đối chiếu ba run gốc để xác minh thứ hạng, rồi bổ sung ví dụ D2 sau khi chốt nhãn. [Kết quả kiểm chéo](../experiments/application/results/E5/d1-test.md)
+- [x] **Huy** — Hoàn thành E5 trên D2-test. Đối chiếu xếp hạng và nguyên văn quy chế cho toàn bộ 3 câu ngoài phạm vi bị đánh dấu tin cậy và 5 ca trượt hạng 1 theo Điều. Nêu hướng cải thiện từ các ca đã đọc. [Bảng E5 D2-test](../experiments/application/results/E5/d2-test.md)
+- [x] **Huy tổng hợp, Minh đối chiếu** — Hoàn tất kiểm chéo E5 trên D1-test ngày 26/11. Minh đã kiểm chéo nội dung và Codex đã xác minh thứ hạng của 20 ca lỗi và 2 ca xếp đúng từ ba bảng xếp hạng gốc. [Kết quả kiểm chéo D1-test](../experiments/application/results/E5/d1-test.md#kiểm-chéo-thứ-hạng-và-nội-dung)
 
 ## Phase 4 – Hoàn thiện và nộp bài
 
 *Mục 4 · Huy tổng hợp báo cáo trong lúc Minh hoàn thiện bản chạy và video.*
 
-- [ ] **Huy** — Dùng bảng số liệu đã chốt để viết phương pháp, kết quả và thảo luận theo mẫu IEEE. Ghép phần ứng dụng của Minh rồi xuất PDF. *Khung LaTeX và lệnh build đã có ở [docs/report/](report/README.md) từ 23/11.*
-- [ ] **Minh** — Bàn giao phần viết về ứng dụng, đối chứng và đóng góp của nhóm (có thể viết thẳng vào `docs/report/sections/application.tex` và `contributions.tex`). Hoàn thiện README với các lệnh cài đặt, dựng chỉ mục và chạy demo. Quay video tối đa 30 phút trên cấu hình đã đánh giá.
-- [ ] **Huy kiểm tra, Minh đóng gói** — Huy chạy lại theo README từ bản clone sạch. Khi PDF, video và mã nguồn đã sẵn sàng, Minh kiểm tra link và tạo `[Group14].zip`; một đại diện nộp lên Moodle.
+- [x] **Huy** — Tổng hợp báo cáo theo mẫu IEEE và xuất PDF từ [mã nguồn báo cáo](report/README.md).
+  - [x] Hoàn thành [Abstract](report/sections/abstract.tex) và đoạn cuối [Introduction](report/sections/introduction.tex) ngày 26/11 từ kết quả tái hiện, D1-test và D2-test.
+  - [x] Hoàn thành [Conclusion](report/sections/conclusion.tex) ngày 26/11 từ kết quả đã kiểm và các giới hạn ghi nhận trong E5.
+- [x] **Minh phụ trách ứng dụng, Huy tổng hợp** — Hoàn tất [Application](report/sections/application.tex), [Team Contributions](report/sections/contributions.tex) và [hướng dẫn dựng corpus, chạy demo](../apps/README.md) từ các đầu ra đã bàn giao.
+- [x] **Huy** — Rà mã, dữ liệu, báo cáo, đường dẫn và khả năng tái lập. Xem [checklist lỗi và phép kiểm](reviews/workspace.md).
+- [ ] **Minh** — Quay video tối đa 30 phút trên cấu hình đã đánh giá.
+- [ ] **Huy kiểm tra, Minh đóng gói** — Khi có video, Minh tạo `[Group14].zip` với PDF, mã nguồn, hướng dẫn và dữ liệu được phép bàn giao. Huy mở lại gói và kiểm các liên kết, rồi một đại diện nộp lên Moodle.

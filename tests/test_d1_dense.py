@@ -1,16 +1,42 @@
 import json
+import subprocess
+import sys
 from hashlib import sha256
 from pathlib import Path
 
 import pytest
 
 from data.prepare_virhe4qa import prepare, source_record
+from experiments.external_dataset.evaluate_d1_test import PUBLISHED_E1, saved_test_queries
 from experiments.external_dataset.run_dense_dev import write_rows
 from simcse_lab.evaluation.metrics import query_metrics
 from simcse_lab.evaluation.stats import _rr_at_10
 from simcse_lab.retrieval.ingest import article_chunks
 from simcse_lab.retrieval.preprocess import normalize
 from simcse_lab.retrieval.search import maxp
+
+
+def test_legacy_and_current_e1_queries_use_verified_hashes(tmp_path):
+    published = json.loads(PUBLISHED_E1.read_bytes())
+    record = published["verification"]["inputs"]["queries.jsonl"]
+    assert saved_test_queries(PUBLISHED_E1, published) == record
+    old = {"dataset": published["dataset"]}
+    assert saved_test_queries(tmp_path / "summary.json", old) == {
+        "path": (tmp_path / "inputs/queries.jsonl").as_posix(), "sha256": record["sha256"],
+    }
+    with pytest.raises(ValueError, match="dataset differs"):
+        saved_test_queries(tmp_path / "summary.json", {"dataset": {}})
+
+
+@pytest.mark.parametrize("entry", [
+    ["-m", "experiments.external_dataset.run_retrieval"],
+    ["experiments/external_dataset/run_retrieval.py"],
+])
+def test_retrieval_cli_entry_points(entry, monkeypatch):
+    root = Path(__file__).resolve().parents[1]
+    monkeypatch.setenv("PYTHONPATH", str(root / "src"))
+    result = subprocess.run([sys.executable, *entry, "--help"], cwd=root, check=True, capture_output=True)
+    assert b"verify-d1-dev" in result.stdout
 
 
 def test_run_jsonl_uses_lf(tmp_path: Path) -> None:

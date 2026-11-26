@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 import platform
+from contextlib import ExitStack
 from pathlib import Path
 from time import perf_counter
 from unittest.mock import patch
@@ -83,7 +84,9 @@ def check_demo(index):
                     card.index("3087") < card.index("1175")
                     for card in html.split("<section") if "3087" in card and "1175" in card
                 )
-            rows.append({"question": question, "warning": warning, "hybrid_html": results, "bm25_html": baseline})
+            rows.append({"question": question, "warning": warning,
+                         "hybrid_topics": results.count('<section aria-label='),
+                         "bm25_topics": baseline.count('<section aria-label=')})
         assert any(row["warning"] for row in rows)
         return rows
     finally:
@@ -97,6 +100,9 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--demo", action="store_true")
     args = parser.parse_args()
+    demo_path = args.output.with_name("demo-check.json")
+    if args.output.exists() or (args.demo and (demo_path.exists() or args.output == demo_path)):
+        parser.error("Choose new, distinct output files for the measurements and demo check")
     data = args.corpus.read_bytes()
     chunks = [json.loads(line) for line in data.splitlines() if line.strip()]
     size = (len({c["article_id"] for c in chunks}), len({c["topic_id"] for c in chunks}))
@@ -131,13 +137,17 @@ def main():
         "articles": size[0], "topics": size[1], "chunks": len(chunks), "weight": WEIGHT, "threshold": THRESHOLD,
         "build_ms": build_ms, "percentiles_p50_p95_ms": percentiles, "samples": samples,
     }
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    artifacts = {args.output: result}
     if args.demo:
-        demo = check_demo(index)
-        args.output.with_name("demo-check.json").write_text(
-            json.dumps(demo, ensure_ascii=False, indent=2) + "\n", encoding="utf-8",
-        )
+        artifacts[demo_path] = check_demo(index)
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    with ExitStack() as rollback:
+        for path, content in artifacts.items():
+            with path.open("x", encoding="utf-8") as stream:
+                rollback.callback(path.unlink)
+                json.dump(content, stream, ensure_ascii=False, indent=2, allow_nan=False)
+                stream.write("\n")
+        rollback.pop_all()
 
 
 if __name__ == "__main__":

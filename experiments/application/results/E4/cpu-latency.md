@@ -19,4 +19,4 @@ $env:PYTHONPATH = 'src'
 python -m experiments.application.benchmark_cpu --demo --output outputs/e4-cpu/latency.json
 ```
 
-Lệnh ghi mẫu đo thô, checksum corpus và bảng phân vị vào `outputs/e4-cpu/latency.json`, cùng phản hồi kiểm tra Gradio trong `outputs/e4-cpu/demo-check.json`.
+Mỗi lượt dùng đích mới. `latency.json` lưu mẫu đo, checksum corpus và phân vị. Khi thêm `--demo`, `demo-check.json` lưu câu hỏi, cảnh báo và số chủ đề hiển thị trong hai tab sau khi kiểm các đoạn trích trên giao diện.

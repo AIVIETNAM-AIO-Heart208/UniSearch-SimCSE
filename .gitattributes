@@ -1,8 +1,13 @@
 # Keep regulation texts byte-exact so their sha256 in data/d2/documents.yaml matches on every OS
 data/d2/*.txt -text
+# D2 hashed the original CRLF bytes. A trailing tab encodes an empty note column.
+data/d2/article_map.tsv -text whitespace=cr-at-eol,-blank-at-eol
 
 # Preserve the bytes used by the D1-dev handoff manifest.
 experiments/external_dataset/results/**/runs/*.jsonl text eol=lf
+
+# Preserve the SHA-256 of the frozen D2 labels on every OS.
+data/d2/queries_d2.jsonl text eol=lf
 
 # Downstream result manifests record the SHA-256 of these exact files.
 experiments/external_dataset/results/D1-dev-tuning/summary.json -text

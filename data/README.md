@@ -11,7 +11,7 @@ Hai đường dẫn trên được tạo khi chuẩn bị dữ liệu và đư�
 
 [Lượt đánh giá D1-test](../experiments/external_dataset/README.md#đánh-giá-d1-test) đã lưu 955 chunk, câu hỏi test và thống kê split trong `outputs/d1-test/inputs/` trên máy Huy.
 
-**D2** (bộ test quy chế đào tạo HCMUS do nhóm tự xây dựng): mô tả, metadata văn bản và bảng đối ứng Điều ở [`d2/`](d2/README.md). Thư mục `d2/` có trong Git, gồm cả chữ QĐ 1175 (văn bản công khai). PDF 2021 và bản chép QĐ 3087 nằm ở `raw/d2/`, không có trong Git (D-18).
+**D2** là bộ test quy chế đào tạo HCMUS do nhóm xây dựng. Dùng [tệp nhãn đã chốt](d2/queries_d2.jsonl) để đánh giá D2 và xem nguồn câu hỏi cùng quy trình gán nhãn trong [README của D2](d2/README.md#câu-hỏi-và-nhãn-d2-đã-chốt). Thư mục `d2/` có trong Git, gồm cả chữ QĐ 1175 (văn bản công khai). PDF 2021 và bản ChatGPT chép QĐ 3087 từ scan nằm ở `raw/d2/`, không có trong Git (D-18).
 
 Nguồn chính thức của QĐ 3087 và văn bản sửa đổi bảng xếp loại của QĐ 1175 được ghi trong [metadata nguồn](d2/documents.yaml). Cách tạo đúng bản chép 2026 dùng để lập chỉ mục từ bản nhóm đã chia sẻ nằm ở [hướng dẫn D2](d2/README.md#file).
 
