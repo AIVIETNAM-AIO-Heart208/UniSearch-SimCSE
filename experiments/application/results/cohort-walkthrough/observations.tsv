@@ -1,0 +1,7 @@
+﻿Mã lượt	Mẫu	Tình huống	Giây đến lần gửi đầu	Lần chỉ căn cứ đầu đúng (1/0)	Đạt trong 180 giây (1/0)	Giây đến căn cứ đúng	Kết thúc	Điều/Khoản đã chỉ	Quan sát hoặc lời sinh viên
+MP-01	B	K24	0.0324	1	1	0.3504	đạt	Quy chế 2026 · Điều 27 · Khoản 2	Mô phỏng Chrome · chọn khóa sau gửi · 4 thao tác
+MP-02	A	Tra chung	0.0579	1	1	0.1040	đạt	Quy chế 2026 · Điều 10 · Khoản 3	Mô phỏng Chrome · chọn khóa trước gửi · 4 thao tác
+MP-03	A	K26	0.0619	1	1	0.0951	đạt	Quy chế 2026 · Điều 27 · Khoản 1	Mô phỏng Chrome · chọn khóa trước gửi · 4 thao tác
+MP-04	A	K24	0.0532	1	1	0.0863	đạt	Quy chế 2026 · Điều 27 · Khoản 2	Mô phỏng Chrome · chọn khóa trước gửi · 4 thao tác
+MP-05	B	Tra chung	0.0256	1	1	0.0703	đạt	Quy chế 2026 · Điều 10 · Khoản 3	Mô phỏng Chrome · không hỏi khóa · 2 thao tác
+MP-06	B	K26	0.0256	1	1	0.0940	đạt	Quy chế 2026 · Điều 27 · Khoản 1	Mô phỏng Chrome · chọn khóa sau gửi · 4 thao tác

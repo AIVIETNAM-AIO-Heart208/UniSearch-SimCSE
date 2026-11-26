@@ -1,0 +1,685 @@
+{
+  "split": "hcmus-development/open-pilot",
+  "control": "experiments/application/results/clause-scope-pilot",
+  "config": {
+    "weight": 0.6,
+    "threshold": 0.6201629042625427,
+    "model_revision": "608779b86741a8acd8c8d38132974ff04086b138"
+  },
+  "input_sha256": {
+    "config": "f8f90b47af945fff0ff468f60e135b60f9495eadc32657bdb1a76009a09a17f2",
+    "corpus": "c0597378bbc9699dbdc6ee073857b796a9e118ff70e59523e5d2a41f09b9e1e1",
+    "topic_map": "01857aaaa856251511dc9737724431a5682d1281ebc1b8afd92a86ed01b26fa1",
+    "pilot": "3ffd896f4fa645c84cbf1a85e3c016672cea4e1d34d5062a8c25d820b0525fd0",
+    "predictions": "3ee15eb1ddf71c39da58410b599a20b03184cafb6610c1eadf4eb4e2c4438c48"
+  },
+  "control_summary_sha256": "da176eac6d475087219ca62315c3f0d4bb4e0b90bbdf2c15059fedaae6a1611a",
+  "python": "3.14.0",
+  "source_sha256": {
+    "compare_edition_display.py": "931679a51fd4b341e873b0466ca14d2b48d646738652780309fb569cefe47727",
+    "compare_clause_scope.py": "93c7c4b63e5768ed472c33e1481b912c431c10687842e1a638bb56250a9e6975",
+    "app.py": "fa78cb894c5c4193202208d972488e4f83d8c6bb97897f1e34c4acb7644adc66",
+    "search.css": "b904cf32680eb1c370e168797d8cafbf279efe3376feb881036ce3b849ca0c2a",
+    "regulation_excerpts.py": "ee248dd73ea131982bcb9c5fb8109d44bb701377b7f1a72ae298f72e86e23e4f",
+    "search.py": "d8022223793f1000cb1b8bef5288643adf49b9b68be9ddd651a05f5d83fd8203"
+  },
+  "overall": {
+    "questions": 16,
+    "in_scope": 8,
+    "current_visible": [
+      "pilot-09",
+      "pilot-11",
+      "pilot-15"
+    ],
+    "requested_visible": [
+      "pilot-01",
+      "pilot-05",
+      "pilot-09",
+      "pilot-11",
+      "pilot-15"
+    ],
+    "gained": [
+      "pilot-01",
+      "pilot-05"
+    ],
+    "lost": [],
+    "changed_html": [
+      "pilot-01",
+      "pilot-03",
+      "pilot-05"
+    ]
+  },
+  "slices": {
+    "edition_2021": {
+      "questions": 3,
+      "in_scope": 3,
+      "current_visible": [],
+      "requested_visible": [
+        "pilot-01",
+        "pilot-05"
+      ],
+      "gained": [
+        "pilot-01",
+        "pilot-05"
+      ],
+      "lost": [],
+      "changed_html": [
+        "pilot-01",
+        "pilot-03",
+        "pilot-05"
+      ]
+    },
+    "edition_2026": {
+      "questions": 4,
+      "in_scope": 4,
+      "current_visible": [
+        "pilot-09",
+        "pilot-11"
+      ],
+      "requested_visible": [
+        "pilot-09",
+        "pilot-11"
+      ],
+      "gained": [],
+      "lost": [],
+      "changed_html": []
+    },
+    "academic_year_only": {
+      "questions": 2,
+      "in_scope": 0,
+      "current_visible": [],
+      "requested_visible": [],
+      "gained": [],
+      "lost": [],
+      "changed_html": []
+    },
+    "no_year": {
+      "questions": 7,
+      "in_scope": 1,
+      "current_visible": [
+        "pilot-15"
+      ],
+      "requested_visible": [
+        "pilot-15"
+      ],
+      "gained": [],
+      "lost": [],
+      "changed_html": []
+    }
+  },
+  "cases": [
+    {
+      "qid": "pilot-01",
+      "question": "Em đang đọc quy chế năm 2021. Nếu cả môn dồn vào vài buổi thì một ngày thầy được xếp nhiều nhất mấy giờ cho riêng môn đó?",
+      "scope": "in",
+      "requested_edition": "2021",
+      "accepted": true,
+      "cosine": 0.6374363899230957,
+      "top_article": "hcmus-qcdt-2021:dieu-6",
+      "top_chunk": "hcmus-qcdt-2021:dieu-6:0006",
+      "clause_hit": true,
+      "editions_in_first_topic": [
+        "hcmus-qcdt-2026",
+        "hcmus-qcdt-2021"
+      ],
+      "ranking_sha256": "288600d0e17fbdcbd421999d0ced12c88f94c59e3eaed1d5632ef025903c9849",
+      "views": {
+        "current": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-6:0003",
+          "primary_clause": "hcmus-qcdt-2026:dieu-6:khoan-3",
+          "evidence_path": [
+            "other_edition"
+          ],
+          "visible_evidence": false,
+          "html": "html/pilot-01-current.html",
+          "sha256": "9954a1188b08472653d1e9c3997bd64ffa907f759589dd2c83054a091d84c92a"
+        },
+        "requested": {
+          "primary_chunk": "hcmus-qcdt-2021:dieu-6:0006",
+          "primary_clause": "hcmus-qcdt-2021:dieu-6:khoan-6",
+          "evidence_path": [],
+          "visible_evidence": true,
+          "html": "html/pilot-01-requested.html",
+          "sha256": "3dc74c4301fb3f1206518ce1bf6a998d2884e3aa56df0a84f0b359675d818c3b"
+        }
+      },
+      "slice": "edition_2021"
+    },
+    {
+      "qid": "pilot-02",
+      "question": "Em gửi đơn xin phúc tra bằng thư bảo đảm thì ghi mã bưu chính nào trên phong bì?",
+      "scope": "near_out",
+      "requested_edition": null,
+      "accepted": false,
+      "cosine": 0.5375868678092957,
+      "top_article": "hcmus-qcdt-2021:dieu-13",
+      "top_chunk": "hcmus-qcdt-2021:dieu-13:0001",
+      "clause_hit": null,
+      "editions_in_first_topic": [
+        "hcmus-qcdt-2026",
+        "hcmus-qcdt-2021"
+      ],
+      "ranking_sha256": "4dc62baafa2289036842eb93ac7f20d274ded9563ebdfea848db4cfd47c1a176",
+      "views": {
+        "current": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-18:0004",
+          "primary_clause": "hcmus-qcdt-2026:dieu-18:khoan-4",
+          "evidence_path": null,
+          "visible_evidence": null,
+          "html": "html/pilot-02-current.html",
+          "sha256": "06f227b605c504a9b197a98aaf227141144add7bce76f16d9b797e9242570a23"
+        },
+        "requested": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-18:0004",
+          "primary_clause": "hcmus-qcdt-2026:dieu-18:khoan-4",
+          "evidence_path": null,
+          "visible_evidence": null,
+          "html": "html/pilot-02-requested.html",
+          "sha256": "06f227b605c504a9b197a98aaf227141144add7bce76f16d9b797e9242570a23"
+        }
+      },
+      "slice": "no_year"
+    },
+    {
+      "qid": "pilot-03",
+      "question": "Theo bản năm 2021, ai quyết định công khai đến mức nào ý kiến góp ý của tụi em về lớp học?",
+      "scope": "in",
+      "requested_edition": "2021",
+      "accepted": false,
+      "cosine": 0.5830727815628052,
+      "top_article": "hcmus-qcdt-2021:dieu-8",
+      "top_chunk": "hcmus-qcdt-2021:dieu-8:0004",
+      "clause_hit": true,
+      "editions_in_first_topic": [
+        "hcmus-qcdt-2026",
+        "hcmus-qcdt-2021"
+      ],
+      "ranking_sha256": "da0c96c33398cf159ea22cbbd6ccfdeb7f8e6e90531e8b3967745261e68116ac",
+      "views": {
+        "current": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-8:0001",
+          "primary_clause": "hcmus-qcdt-2026:dieu-8:khoan-1",
+          "evidence_path": [
+            "open_topic",
+            "other_edition"
+          ],
+          "visible_evidence": false,
+          "html": "html/pilot-03-current.html",
+          "sha256": "7732eaced4ac5b4859b676c5fe6b90eda03dcff2923137ff30c3815fd46c1342"
+        },
+        "requested": {
+          "primary_chunk": "hcmus-qcdt-2021:dieu-8:0004",
+          "primary_clause": "hcmus-qcdt-2021:dieu-8:khoan-3:2",
+          "evidence_path": [
+            "open_topic"
+          ],
+          "visible_evidence": false,
+          "html": "html/pilot-03-requested.html",
+          "sha256": "87293c685619b5c873ee04bd2e62b8e61b21ae576eabd4d639b7dc082d8edfe3"
+        }
+      },
+      "slice": "edition_2021"
+    },
+    {
+      "qid": "pilot-04",
+      "question": "Em cần bản dịch bảng điểm sang tiếng Đức để nộp hồ sơ du học. Trường thu bao nhiêu đồng mỗi trang dịch?",
+      "scope": "near_out",
+      "requested_edition": null,
+      "accepted": false,
+      "cosine": 0.34363001585006714,
+      "top_article": "hcmus-qcdt-2026:dieu-14",
+      "top_chunk": "hcmus-qcdt-2026:dieu-14:0003",
+      "clause_hit": null,
+      "editions_in_first_topic": [
+        "hcmus-qcdt-2026",
+        "hcmus-qcdt-2021"
+      ],
+      "ranking_sha256": "c955824e2c39794bd80e2e645a978c3b0ad6bbf8cf6bc5c56fce7bf6aef35060",
+      "views": {
+        "current": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-14:0003",
+          "primary_clause": "hcmus-qcdt-2026:dieu-14:khoan-3",
+          "evidence_path": null,
+          "visible_evidence": null,
+          "html": "html/pilot-04-current.html",
+          "sha256": "467b0af7b9226e04fe3efb43f000175588107a1150c1d6d139c8fcddbf59394f"
+        },
+        "requested": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-14:0003",
+          "primary_clause": "hcmus-qcdt-2026:dieu-14:khoan-3",
+          "evidence_path": null,
+          "visible_evidence": null,
+          "html": "html/pilot-04-requested.html",
+          "sha256": "467b0af7b9226e04fe3efb43f000175588107a1150c1d6d139c8fcddbf59394f"
+        }
+      },
+      "slice": "no_year"
+    },
+    {
+      "qid": "pilot-05",
+      "question": "Em xem lại quy chế 2021 để chuẩn bị nhận bằng. Giấy phát kèm có ghi kết quả riêng của từng môn em đã học không?",
+      "scope": "in",
+      "requested_edition": "2021",
+      "accepted": true,
+      "cosine": 0.6776198744773865,
+      "top_article": "hcmus-qcdt-2021:dieu-18",
+      "top_chunk": "hcmus-qcdt-2021:dieu-18:0004",
+      "clause_hit": true,
+      "editions_in_first_topic": [
+        "hcmus-qcdt-2026",
+        "hcmus-qcdt-2021",
+        "hcmus-qcdt-2021"
+      ],
+      "ranking_sha256": "9b2d551938ad5835786a10ef843001df4a70a0960c8f67ae52aaf55b5e5ea0ec",
+      "views": {
+        "current": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-19:0005",
+          "primary_clause": "hcmus-qcdt-2026:dieu-19:khoan-5",
+          "evidence_path": [
+            "other_edition"
+          ],
+          "visible_evidence": false,
+          "html": "html/pilot-05-current.html",
+          "sha256": "5e890b620555ad5282bf1607cb03e9e28f5db2f3d465949af3757be5fd93f9ec"
+        },
+        "requested": {
+          "primary_chunk": "hcmus-qcdt-2021:dieu-18:0004",
+          "primary_clause": "hcmus-qcdt-2021:dieu-18:khoan-4",
+          "evidence_path": [],
+          "visible_evidence": true,
+          "html": "html/pilot-05-requested.html",
+          "sha256": "d53e665d80d224e373b7053fdc80047d0cce3c6f9fca44dff14cf232f3874e16"
+        }
+      },
+      "slice": "edition_2021"
+    },
+    {
+      "qid": "pilot-06",
+      "question": "Lúc đăng ký học kỳ 2 năm học 2025–2026 bên Toán – Tin, em đã học xong môn tiên quyết nhưng điểm chưa lên hệ thống. Khoa cho em đăng ký bù vào đợt nào?",
+      "scope": "near_out",
+      "requested_edition": null,
+      "accepted": true,
+      "cosine": 0.6928125023841858,
+      "top_article": "hcmus-qcdt-2021:dieu-18",
+      "top_chunk": "hcmus-qcdt-2021:dieu-18:0005",
+      "clause_hit": null,
+      "editions_in_first_topic": [
+        "hcmus-qcdt-2026",
+        "hcmus-qcdt-2021",
+        "hcmus-qcdt-2021"
+      ],
+      "ranking_sha256": "852fb05b887f5111eeed2cd8aebc96c508fca0deae50b520642eb4093e120578",
+      "views": {
+        "current": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-19:0003",
+          "primary_clause": "hcmus-qcdt-2026:dieu-19:khoan-3",
+          "evidence_path": null,
+          "visible_evidence": null,
+          "html": "html/pilot-06-current.html",
+          "sha256": "d2f1684a41d6f669bf649ce3b8d877eaea2dd95d2bcbe88a6cdef6e576f464ed"
+        },
+        "requested": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-19:0003",
+          "primary_clause": "hcmus-qcdt-2026:dieu-19:khoan-3",
+          "evidence_path": null,
+          "visible_evidence": null,
+          "html": "html/pilot-06-requested.html",
+          "sha256": "d2f1684a41d6f669bf649ce3b8d877eaea2dd95d2bcbe88a6cdef6e576f464ed"
+        }
+      },
+      "slice": "academic_year_only"
+    },
+    {
+      "qid": "pilot-07",
+      "question": "Theo quy chế 2026, trường có quản lý cả thông tin việc làm của cựu sinh viên sau khi họ ra trường không?",
+      "scope": "in",
+      "requested_edition": "2026",
+      "accepted": false,
+      "cosine": 0.5440471172332764,
+      "top_article": "hcmus-qcdt-2026:dieu-9",
+      "top_chunk": "hcmus-qcdt-2026:dieu-9:0002",
+      "clause_hit": true,
+      "editions_in_first_topic": [
+        "hcmus-qcdt-2026"
+      ],
+      "ranking_sha256": "e1ea39677b08cada3e431bf6a22e6e0ec91c253e411c0c085f6f0c45a81a0e68",
+      "views": {
+        "current": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-9:0002",
+          "primary_clause": "hcmus-qcdt-2026:dieu-9:khoan-2",
+          "evidence_path": [
+            "open_topic"
+          ],
+          "visible_evidence": false,
+          "html": "html/pilot-07-current.html",
+          "sha256": "a3b06c89ab2a4e5d63e66c0ab9dd8f1aab5a1d5fdb4276cd2ea82e5b82d30e8b"
+        },
+        "requested": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-9:0002",
+          "primary_clause": "hcmus-qcdt-2026:dieu-9:khoan-2",
+          "evidence_path": [
+            "open_topic"
+          ],
+          "visible_evidence": false,
+          "html": "html/pilot-07-requested.html",
+          "sha256": "a3b06c89ab2a4e5d63e66c0ab9dd8f1aab5a1d5fdb4276cd2ea82e5b82d30e8b"
+        }
+      },
+      "slice": "edition_2026"
+    },
+    {
+      "qid": "pilot-08",
+      "question": "Lớp em cần ở Khoa Toán – Tin đã kín chỗ khi đăng ký cho học kỳ 2 năm 2025–2026. Trong đợt đó Khoa có xem xét mở thêm lớp không?",
+      "scope": "near_out",
+      "requested_edition": null,
+      "accepted": false,
+      "cosine": 0.5547733306884766,
+      "top_article": "hcmus-qcdt-2026:dieu-6",
+      "top_chunk": "hcmus-qcdt-2026:dieu-6:0001",
+      "clause_hit": null,
+      "editions_in_first_topic": [
+        "hcmus-qcdt-2026",
+        "hcmus-qcdt-2021"
+      ],
+      "ranking_sha256": "90d707a2a84c420d5c27ab40665b6dcf1986f3201161bd522ee3d3b20f985f3d",
+      "views": {
+        "current": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-6:0001",
+          "primary_clause": "hcmus-qcdt-2026:dieu-6:khoan-1",
+          "evidence_path": null,
+          "visible_evidence": null,
+          "html": "html/pilot-08-current.html",
+          "sha256": "1e645d0bfbc3574ca1512e3ad318b31f097d0ff7bf572f03da9b4114050a884d"
+        },
+        "requested": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-6:0001",
+          "primary_clause": "hcmus-qcdt-2026:dieu-6:khoan-1",
+          "evidence_path": null,
+          "visible_evidence": null,
+          "html": "html/pilot-08-requested.html",
+          "sha256": "1e645d0bfbc3574ca1512e3ad318b31f097d0ff7bf572f03da9b4114050a884d"
+        }
+      },
+      "slice": "academic_year_only"
+    },
+    {
+      "qid": "pilot-09",
+      "question": "Em đang học chương trình tích hợp và tính chuyển ra. Theo quy chế 2026, em có được cung cấp đầy đủ thông tin về điều kiện chuyển ra không?",
+      "scope": "in",
+      "requested_edition": "2026",
+      "accepted": true,
+      "cosine": 0.6340631246566772,
+      "top_article": "hcmus-qcdt-2026:dieu-24",
+      "top_chunk": "hcmus-qcdt-2026:dieu-24:0002",
+      "clause_hit": true,
+      "editions_in_first_topic": [
+        "hcmus-qcdt-2026"
+      ],
+      "ranking_sha256": "60270dde9c15064e82f1cd5a3119e783288efdf3247d72c94e91a5393365148c",
+      "views": {
+        "current": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-24:0002",
+          "primary_clause": "hcmus-qcdt-2026:dieu-24:khoan-2",
+          "evidence_path": [],
+          "visible_evidence": true,
+          "html": "html/pilot-09-current.html",
+          "sha256": "30c9b37910fad14329d3d602ace2d687a81a4f26efbff583182a47c2b003c064"
+        },
+        "requested": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-24:0002",
+          "primary_clause": "hcmus-qcdt-2026:dieu-24:khoan-2",
+          "evidence_path": [],
+          "visible_evidence": true,
+          "html": "html/pilot-09-requested.html",
+          "sha256": "30c9b37910fad14329d3d602ace2d687a81a4f26efbff583182a47c2b003c064"
+        }
+      },
+      "slice": "edition_2026"
+    },
+    {
+      "qid": "pilot-10",
+      "question": "Để rau húng trong tủ lạnh vài ngày thì em nên bọc lá như thế nào cho đỡ héo?",
+      "scope": "far_out",
+      "requested_edition": null,
+      "accepted": false,
+      "cosine": 0.2038329690694809,
+      "top_article": "hcmus-qcdt-2026:dieu-14",
+      "top_chunk": "hcmus-qcdt-2026:dieu-14:0005",
+      "clause_hit": null,
+      "editions_in_first_topic": [
+        "hcmus-qcdt-2026",
+        "hcmus-qcdt-2021"
+      ],
+      "ranking_sha256": "07576606e7e45e0d039e8dcc0db76fa7163dac80b3686943c8fe156a99fa444a",
+      "views": {
+        "current": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-14:0005",
+          "primary_clause": "hcmus-qcdt-2026:dieu-14:khoan-5",
+          "evidence_path": null,
+          "visible_evidence": null,
+          "html": "html/pilot-10-current.html",
+          "sha256": "3ff735a70dd53438339019d475d55135357165f2961c4557178a85ee92675b09"
+        },
+        "requested": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-14:0005",
+          "primary_clause": "hcmus-qcdt-2026:dieu-14:khoan-5",
+          "evidence_path": null,
+          "visible_evidence": null,
+          "html": "html/pilot-10-requested.html",
+          "sha256": "3ff735a70dd53438339019d475d55135357165f2961c4557178a85ee92675b09"
+        }
+      },
+      "slice": "no_year"
+    },
+    {
+      "qid": "pilot-11",
+      "question": "Em muốn tra quy định bảo quản bài thi. Trong quy chế 2026, phòng nào phụ trách văn bản về việc này?",
+      "scope": "in",
+      "requested_edition": "2026",
+      "accepted": true,
+      "cosine": 0.6312568783760071,
+      "top_article": "hcmus-qcdt-2026:dieu-10",
+      "top_chunk": "hcmus-qcdt-2026:dieu-10:0004",
+      "clause_hit": true,
+      "editions_in_first_topic": [
+        "hcmus-qcdt-2026",
+        "hcmus-qcdt-2021"
+      ],
+      "ranking_sha256": "fc65bd3a939d3727243caeb258894cbd0cec4880fc4d9abc54ca1aab547f0ad8",
+      "views": {
+        "current": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-10:0004",
+          "primary_clause": "hcmus-qcdt-2026:dieu-10:khoan-4",
+          "evidence_path": [],
+          "visible_evidence": true,
+          "html": "html/pilot-11-current.html",
+          "sha256": "8b5ccd744938a8bc2d173a427e67865f985d6f347d46a0b4ffbd3fc03cf79fcf"
+        },
+        "requested": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-10:0004",
+          "primary_clause": "hcmus-qcdt-2026:dieu-10:khoan-4",
+          "evidence_path": [],
+          "visible_evidence": true,
+          "html": "html/pilot-11-requested.html",
+          "sha256": "8b5ccd744938a8bc2d173a427e67865f985d6f347d46a0b4ffbd3fc03cf79fcf"
+        }
+      },
+      "slice": "edition_2026"
+    },
+    {
+      "qid": "pilot-12",
+      "question": "Nếu theo chuyên ngành CNTT tổng thể của Khoa, em có được tự do ghép các môn bên phần mềm và an ninh mạng theo ý mình không?",
+      "scope": "near_out",
+      "requested_edition": null,
+      "accepted": false,
+      "cosine": 0.5025822520256042,
+      "top_article": "hcmus-qcdt-2026:dieu-3",
+      "top_chunk": "hcmus-qcdt-2026:dieu-3:0003",
+      "clause_hit": null,
+      "editions_in_first_topic": [
+        "hcmus-qcdt-2026",
+        "hcmus-qcdt-2021",
+        "hcmus-qcdt-2021"
+      ],
+      "ranking_sha256": "1508ad166166423a8afaab84b0c80231db281f4e8b9b044ae56e677abf0210a3",
+      "views": {
+        "current": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-3:0003",
+          "primary_clause": "hcmus-qcdt-2026:dieu-3:khoan-3",
+          "evidence_path": null,
+          "visible_evidence": null,
+          "html": "html/pilot-12-current.html",
+          "sha256": "67798c4f0bc39ffbd61c511e604c081887bbca2125ef82894369c9fee4bfa220"
+        },
+        "requested": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-3:0003",
+          "primary_clause": "hcmus-qcdt-2026:dieu-3:khoan-3",
+          "evidence_path": null,
+          "visible_evidence": null,
+          "html": "html/pilot-12-requested.html",
+          "sha256": "67798c4f0bc39ffbd61c511e604c081887bbca2125ef82894369c9fee4bfa220"
+        }
+      },
+      "slice": "no_year"
+    },
+    {
+      "qid": "pilot-13",
+      "question": "Quy chế 2026 có yêu cầu trường dùng góp ý của nơi tuyển dụng bọn em để cải tiến chương trình học không?",
+      "scope": "in",
+      "requested_edition": "2026",
+      "accepted": false,
+      "cosine": 0.5159600973129272,
+      "top_article": "hcmus-qcdt-2021:dieu-8",
+      "top_chunk": "hcmus-qcdt-2021:dieu-8:0001",
+      "clause_hit": false,
+      "editions_in_first_topic": [
+        "hcmus-qcdt-2026",
+        "hcmus-qcdt-2021"
+      ],
+      "ranking_sha256": "cc5f130373be427dd1ef55104856a843b5ffa69515bcfa74128dd2610944353b",
+      "views": {
+        "current": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-8:0001",
+          "primary_clause": "hcmus-qcdt-2026:dieu-8:khoan-1",
+          "evidence_path": null,
+          "visible_evidence": false,
+          "html": "html/pilot-13-current.html",
+          "sha256": "2b9e6edd188ed5a8f2065b5ed5ff6bd2189e601c57e71d317bbf962862a92244"
+        },
+        "requested": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-8:0001",
+          "primary_clause": "hcmus-qcdt-2026:dieu-8:khoan-1",
+          "evidence_path": null,
+          "visible_evidence": false,
+          "html": "html/pilot-13-requested.html",
+          "sha256": "2b9e6edd188ed5a8f2065b5ed5ff6bd2189e601c57e71d317bbf962862a92244"
+        }
+      },
+      "slice": "edition_2026"
+    },
+    {
+      "qid": "pilot-14",
+      "question": "Em chuẩn bị báo cáo seminar, cần đặt mượn micro không dây của trường. Em gọi số nội bộ nào?",
+      "scope": "near_out",
+      "requested_edition": null,
+      "accepted": false,
+      "cosine": 0.425991415977478,
+      "top_article": "hcmus-qcdt-2021:dieu-11",
+      "top_chunk": "hcmus-qcdt-2021:dieu-11:0003",
+      "clause_hit": null,
+      "editions_in_first_topic": [
+        "hcmus-qcdt-2026",
+        "hcmus-qcdt-2021"
+      ],
+      "ranking_sha256": "267395290494e9eacdf540024ebd7113f7f61fb65856c8922019fdcfcb049cc2",
+      "views": {
+        "current": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-11:0002",
+          "primary_clause": "hcmus-qcdt-2026:dieu-11:khoan-2",
+          "evidence_path": null,
+          "visible_evidence": null,
+          "html": "html/pilot-14-current.html",
+          "sha256": "fc0325f7e3b0adc2e1393f964d763a01d05d8443dbef83de214b121d7faff4f5"
+        },
+        "requested": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-11:0002",
+          "primary_clause": "hcmus-qcdt-2026:dieu-11:khoan-2",
+          "evidence_path": null,
+          "visible_evidence": null,
+          "html": "html/pilot-14-requested.html",
+          "sha256": "fc0325f7e3b0adc2e1393f964d763a01d05d8443dbef83de214b121d7faff4f5"
+        }
+      },
+      "slice": "no_year"
+    },
+    {
+      "qid": "pilot-15",
+      "question": "Em học một môn thực hành. Khi chốt điểm môn đó, điểm chuyên cần của em có được tính là một phần riêng không?",
+      "scope": "in",
+      "requested_edition": null,
+      "accepted": true,
+      "cosine": 0.776390790939331,
+      "top_article": "hcmus-qcdt-2026:dieu-10",
+      "top_chunk": "hcmus-qcdt-2026:dieu-10:0003",
+      "clause_hit": true,
+      "editions_in_first_topic": [
+        "hcmus-qcdt-2026",
+        "hcmus-qcdt-2021"
+      ],
+      "ranking_sha256": "c5261c19c3d926b584e2947465655781be439c52f87baf68f3d45216a94ad2d6",
+      "views": {
+        "current": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-10:0003",
+          "primary_clause": "hcmus-qcdt-2026:dieu-10:khoan-3",
+          "evidence_path": [],
+          "visible_evidence": true,
+          "html": "html/pilot-15-current.html",
+          "sha256": "b3b42f0799b8360a08a7f0a875f3986ee23c810a0edf6574718a5e8d3973978e"
+        },
+        "requested": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-10:0003",
+          "primary_clause": "hcmus-qcdt-2026:dieu-10:khoan-3",
+          "evidence_path": [],
+          "visible_evidence": true,
+          "html": "html/pilot-15-requested.html",
+          "sha256": "b3b42f0799b8360a08a7f0a875f3986ee23c810a0edf6574718a5e8d3973978e"
+        }
+      },
+      "slice": "no_year"
+    },
+    {
+      "qid": "pilot-16",
+      "question": "Em gửi bưu thiếp từ Việt Nam sang Nhật thì phải dán tem quốc tế mệnh giá bao nhiêu?",
+      "scope": "far_out",
+      "requested_edition": null,
+      "accepted": false,
+      "cosine": 0.22574815154075623,
+      "top_article": "hcmus-qcdt-2026:dieu-2",
+      "top_chunk": "hcmus-qcdt-2026:dieu-2:0006",
+      "clause_hit": null,
+      "editions_in_first_topic": [
+        "hcmus-qcdt-2026"
+      ],
+      "ranking_sha256": "9c597ad2987b77176de675e817e534b6d54eb27ca7c702f94396c468c53caf1d",
+      "views": {
+        "current": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-2:0006",
+          "primary_clause": "hcmus-qcdt-2026:dieu-2:khoan-6",
+          "evidence_path": null,
+          "visible_evidence": null,
+          "html": "html/pilot-16-current.html",
+          "sha256": "282c5a54740e8801b3df6eaf60e9d697020da32d2e31df7aec2cea909d4d1b7b"
+        },
+        "requested": {
+          "primary_chunk": "hcmus-qcdt-2026:dieu-2:0006",
+          "primary_clause": "hcmus-qcdt-2026:dieu-2:khoan-6",
+          "evidence_path": null,
+          "visible_evidence": null,
+          "html": "html/pilot-16-requested.html",
+          "sha256": "282c5a54740e8801b3df6eaf60e9d697020da32d2e31df7aec2cea909d4d1b7b"
+        }
+      },
+      "slice": "no_year"
+    }
+  ]
+}

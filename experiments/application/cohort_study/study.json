@@ -1,0 +1,26 @@
+{
+  "personal_question": "Quy chế đào tạo nào áp dụng cho khóa tuyển sinh của em?",
+  "scenarios": [
+    {
+      "id": "k24",
+      "title": "Quy chế áp dụng cho khóa của bạn",
+      "context": "Bạn nhập học đại học tại HCMUS năm 2024. Có hai bản quy chế đào tạo và bạn muốn giải thích cho một bạn cùng khóa bản nào áp dụng cho mình.",
+      "question_id": "personal",
+      "task": "Mở đoạn quy định về phạm vi áp dụng đối với khóa tuyển sinh năm 2024."
+    },
+    {
+      "id": "k26",
+      "title": "Quy chế áp dụng cho khóa của bạn",
+      "context": "Bạn nhập học đại học tại HCMUS năm 2026. Có hai bản quy chế đào tạo và bạn muốn giải thích cho một bạn cùng khóa bản nào áp dụng cho mình.",
+      "question_id": "personal",
+      "task": "Mở đoạn quy định về phạm vi áp dụng đối với khóa tuyển sinh năm 2026."
+    },
+    {
+      "id": "chung",
+      "title": "Tra cứu giúp một người bạn",
+      "context": "Bạn nhập học đại học tại HCMUS năm 2024. Một người bạn gửi câu hỏi dưới đây. Bạn chưa biết người đó nhập học năm nào.",
+      "question_id": "pilot-15",
+      "task": "Mở đoạn liệt kê các thành phần điểm của học phần thực hành và tìm mục điểm chuyên cần."
+    }
+  ]
+}

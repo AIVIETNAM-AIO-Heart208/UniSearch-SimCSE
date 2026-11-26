@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Tra cứu quy chế đào tạo · HCMUS</title>
+  <link rel="stylesheet" href="assets/search.css">
+  <link rel="stylesheet" href="assets/study.css">
+  <script defer src="assets/questions.js"></script>
+  <script defer src="assets/study.js"></script>
+</head>
+<body class="gradio-container" data-entry="@@ENTRY@@">
+  <main id="regulations">
+    <header class="search-header">
+      <p>Trường Đại học Khoa học tự nhiên, ĐHQG-HCM</p>
+      <h1>Tra cứu quy chế đào tạo</h1>
+    </header>
+    <noscript>Để dùng bản tra cứu ngoại tuyến, hãy bật JavaScript trong trình duyệt.</noscript>
+    <section id="workspace" class="sheet" hidden>
+      <div class="session-bar" id="session-bar" hidden>
+        <span id="session-cohort"></span>
+        <button type="button" id="change-cohort" class="text-action" hidden>Đổi khóa</button>
+      </div>
+      <form id="search-form">
+        <label for="query">Câu hỏi của bạn</label>
+        <p id="input-help" class="hint">Nhập câu trên phiếu hoặc chọn một câu trong danh sách.</p>
+        <div class="fields">
+          <textarea id="query" name="query" rows="2" autocomplete="off" required aria-describedby="input-help"></textarea>
+          <button class="primary" type="submit">Tra cứu</button>
+        </div>
+      </form>
+      <p id="no-match" class="form-message" role="status" hidden>Câu này chưa có trong bộ thử. Bạn có thể chọn một câu bên dưới.</p>
+      <details id="question-list">
+        <summary>Chọn từ danh sách câu hỏi</summary>
+        <ul id="question-options"></ul>
+      </details>
+    </section>
+    <section id="cohort-panel" class="sheet" aria-labelledby="cohort-heading" hidden>
+      <h2 id="cohort-heading">Khóa tuyển sinh của bạn</h2>
+      <p class="hint" id="cohort-help"></p>
+      <form id="cohort-form">
+        <label for="admission">Năm nhập học</label>
+        <div class="fields">
+          <select id="admission" required aria-describedby="cohort-help">
+            <option value="">Chọn năm nhập học</option>
+            <option value="2026">2026 (K26)</option>
+            <option value="2025">2025 (K25)</option>
+            <option value="2024">2024 (K24)</option>
+            <option value="2023">2023 (K23)</option>
+            <option value="2022">2022 (K22)</option>
+            <option value="2021">2021 (K21)</option>
+            <option value="earlier">Trước năm 2021</option>
+          </select>
+          <button id="confirm-cohort" class="primary">Tiếp tục</button>
+        </div>
+      </form>
+      <button id="cohort-alternative" class="text-action" type="button" hidden></button>
+    </section>
+    <section id="results" aria-labelledby="result-heading" hidden>
+      <h2 id="result-heading" tabindex="-1">Kết quả tra cứu</h2>
+      <div id="search-status" role="status"><p></p></div>
+      <div id="result-content"></div>
+    </section>
+    <button id="restart" class="text-action restart" type="button" hidden>Bắt đầu lượt mới</button>
+  </main>
+  <template id="scope-result">
+    <article class="sheet scope-answer">
+      <h3></h3>
+      <div data-clause="1">
+        <h4>Quy chế 2026 · Điều 27 · Khoản 1</h4>
+        <blockquote>Quy định này áp dụng cho các khóa tuyển từ năm học 2026-2027.</blockquote>
+      </div>
+      <div data-clause="2">
+        <h4>Quy chế 2026 · Điều 27 · Khoản 2</h4>
+        <blockquote>Đối với các khóa tuyển sinh từ năm 2025 trở về trước, Trường lựa chọn áp dụng quy định mới có lợi hơn cho người học trong hoạt động đào tạo và phải bảo đảm điều kiện chất lượng và trách nhiệm giải trình.</blockquote>
+      </div>
+      <p class="source-line"><a href="van-ban/quy-che-2026.pdf#page=21" target="_blank" rel="noopener">Mở Điều 27 trong QĐ 3087/QĐ-KHTN (PDF, trang 21)</a></p>
+    </article>
+  </template>
+</body>
+</html>
