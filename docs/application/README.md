@@ -1,10 +1,14 @@
 # Trợ lý tra cứu quy chế học vụ tiếng Việt (SimCSE)
 
 Đồ án Lab 03 – Machine Learning, **Nhóm 14**, **Option 1: Practical Application**.
-Ứng dụng tìm đúng **Điều/Khoản** trong quy chế đào tạo của Trường ĐH Khoa học Tự nhiên – ĐHQG-HCM cho câu hỏi tự nhiên của sinh viên, hiển thị đoạn văn bản kèm tên văn bản, số hiệu và phạm vi áp dụng.
+Ứng dụng tìm các **Điều/Khoản gần với câu hỏi của sinh viên** trong hai quy chế đào tạo của Trường ĐH Khoa học Tự nhiên – ĐHQG-HCM. Sinh viên đọc trích đoạn, kiểm tra phạm vi theo khóa và mở văn bản gốc để đối chiếu.
 
-> **Trạng thái:** đã tái hiện R1–R4, [chốt cấu hình trên D1-dev](../../experiments/external_dataset/results/D1-dev-tuning/handoff.md), chấm [D1-test](../../experiments/external_dataset/results/E1/d1-test.md) và [D2-test](../../experiments/application/results/D2/d2-test.md). Minh đã kiểm demo và [đo độ trễ CPU](../../experiments/application/results/E4/cpu-latency.md). [Báo cáo IEEE](../report/README.md) đã có phần ứng dụng và đóng góp thành viên. [Checklist rà soát](../reviews/workspace.md).
+> **Trạng thái:** đã tái hiện R1–R4, [chốt cấu hình trên D1-dev](../../experiments/external_dataset/results/D1-dev-tuning/handoff.md), chấm [D1-test](../../experiments/external_dataset/results/E1/d1-test.md) và [D2-test](../../experiments/application/results/D2/d2-test.md). Minh đã kiểm demo và [đo độ trễ CPU](../../experiments/application/results/E4/cpu-latency.md). Đã đối chiếu trích đoạn với nguồn, thử đổi câu, mất kết nối và BM25 trên [giao diện tra cứu](../reviews/workspace.md#trải-nghiệm-sinh-viên-và-tài-liệu). [Báo cáo IEEE](../report/README.md)
+> Đã chạy ba bản thử và bản hiện tại trên [16 câu phát triển](../../experiments/application/results/clause-scope-pilot/comparison.md). Demo tiếp tục dùng Hybrid đã công bố.
+> Trong [phép thử hiển thị ngoại tuyến](../../experiments/application/results/edition-display-pilot/comparison.md), khi thẻ đầu ưu tiên đúng phiên bản sinh viên yêu cầu, có thêm hai câu hiển thị ngay căn cứ đủ trả lời.
+> Đã chạy sáu lượt mô phỏng và sửa liên kết PDF cho nhiệm vụ tra cứu chung. [Kết quả hai mẫu chọn khóa](../../experiments/application/results/cohort-walkthrough/comparison.md) · [Gói mô phỏng](../../experiments/application/README.md#mô-phỏng-hai-cách-chọn-khóa)
 > Đã kiểm chéo và đưa ví dụ của [E5 D1-test](../../experiments/application/results/E5/d1-test.md) và [E5 D2-test](../../experiments/application/results/E5/d2-test.md) vào báo cáo. [Bộ D2 công khai dùng trong bài nộp](../../data/d2/README.md#bộ-d2-công-khai) đã tải được ẩn danh. Xem [trạng thái và việc tiếp theo](PROJECT.md#1-current-status).
+> Hồ sơ đã có PDF và mã nguồn. Minh quay video chính thức từ bộ tư liệu đã bàn giao. [Nội dung và cách mở](../README.md#báo-cáo-và-video)
 
 ## Thành viên
 
@@ -21,7 +25,7 @@ Sinh viên hỏi bằng lời thường, còn quy chế viết bằng thuật ng
 
 **Mục tiêu:** trả về 3 Điều/Khoản liên quan nhất, kèm trích đoạn, tên văn bản, số hiệu, ngày ban hành và phạm vi áp dụng.
 - Corpus gồm hai phiên bản Quy chế đào tạo: QĐ 1175/2021 và QĐ 3087/2026. Điều 27 của quy chế 2026 ghi: quy chế áp dụng cho các khóa tuyển từ năm học 2026–2027; đối với các khóa tuyển sinh từ năm 2025 trở về trước, Trường lựa chọn áp dụng quy định mới có lợi hơn cho người học. Vì vậy ứng dụng giữ cả hai bản và ghi rõ phạm vi áp dụng; trong mỗi kết quả, bản 2026 hiển thị trước vì là bản mới nhất.
-- Bản 2026 là bản ChatGPT chép từ bản scan và nhóm đã hiệu đính theo PDF chính thức. Ứng dụng ghi rõ nguồn bản chép khi hiển thị. [Hướng dẫn tạo corpus](../../data/d2/README.md#file)
+- Bản 2026 là bản ChatGPT chép từ bản scan và nhóm đã hiệu đính theo PDF chính thức. Sinh viên mở số hiệu dưới trích đoạn để đọc PDF của Trường. [Cách đọc kết quả](../../apps/README.md#trích-đoạn-trên-giao-diện) · [Nguồn dữ liệu](../../data/d2/README.md#file)
 - Khi độ tin cậy thấp, ứng dụng cảnh báo để người dùng tự đối chiếu.
 - Nhóm dùng BM25 làm mốc so sánh trên D1-test và D2. Trên 86 câu D2 có đáp án, MRR@10 theo Điều của Hybrid là 0,8750 và của BM25 là 0,8396. [Chỉ số và khoảng tin cậy D2](../../experiments/application/results/D2/d2-test.md)
 
@@ -43,7 +47,7 @@ Quy chế đào tạo HCMUS (QĐ 1175/2021, QĐ 3087/2026) + data/d2/documents.y
                                     ├─► BM25 index
                                     └─► SimCSE-VN embeddings (NumPy cosine)
 Câu hỏi ─► Chuẩn hóa + tách từ ─► BM25 + SimCSE ─► Kết hợp điểm ─► Xếp hạng theo Điều
-   └─► Giao diện Gradio: top-3 Điều/Khoản · trích đoạn · văn bản/số hiệu/phạm vi áp dụng · cảnh báo tin cậy
+   └─► Giao diện Gradio: tối đa 3 chủ đề · Điều/Khoản và trích đoạn theo phiên bản · phạm vi áp dụng
 ```
 
 Chi tiết xem [PROJECT.md §5](PROJECT.md#5-application-architecture--implementation).
@@ -85,6 +89,8 @@ Xem [hướng dẫn chạy demo Gradio](../../apps/README.md) để chuẩn bị
 | STS 2012–2016, STS-B, SICK-R | Tái hiện kết quả bài báo | Script của repo SimCSE |
 
 Điều kiện sử dụng từng bộ dữ liệu xem [PROJECT.md §6](PROJECT.md#6-datasets--experimental-evaluation).
+
+Điều kiện để thay bản truy hồi được ghi trong [thiết kế so sánh trên dữ liệu xác nhận độc lập](../../experiments/application/clause-scope-comparison.md#điều-kiện-thay-bản-hiện-tại).
 
 ## Tài liệu dự án
 

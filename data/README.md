@@ -16,3 +16,5 @@ Hai đường dẫn trên được tạo khi chuẩn bị dữ liệu và đư�
 Để tải bộ đánh giá dùng trong bài nộp, xem [thư mục Drive và SHA-256 của gói D2](d2/README.md#bộ-d2-công-khai). Nguồn chính thức của QĐ 3087 và văn bản sửa đổi bảng xếp loại của QĐ 1175 được ghi trong [metadata nguồn](d2/documents.yaml). Cách tạo đúng bản chép 2026 dùng để lập chỉ mục từ bản nhóm đã chia sẻ nằm ở [hướng dẫn D2](d2/README.md#file).
 
 File [corpus HCMUS đã xử lý](d2/README.md#file) giữ [mã Điều/Khoản và offset nguồn](d2/README.md#mã-điều-và-khoản) để kiểm chứng trích dẫn và chấm D2 theo Khoản, kể cả khi văn bản lặp số Khoản.
+
+**Dữ liệu phát triển HCMUS.** [Bộ thử chọn Khoản và xác định phạm vi](development/clause-scope-pilot.jsonl) có 16 câu kèm nhãn do Codex điền và vị trí đã đọc trong PDF gốc. Cách đọc các trường căn cứ, thu câu độc lập và giữ kín bộ dùng để quyết định thay phiên bản nằm trong [thiết kế so sánh](../experiments/application/clause-scope-comparison.md#dữ-liệu-phát-triển-và-nhãn-giữ-kín).

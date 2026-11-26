@@ -321,3 +321,31 @@ credit. Hybrid returned a graduation notice, documentation for a
 course waiver, and rules on passing courses and earning credits,
 respectively. The excerpts shared words or subject matter with the
 queries and lacked the requested information.
+
+\paragraph{Open development pilot}
+% Pilot, operating point and counts: experiments/application/results/clause-scope-pilot/summary.json.
+On a separate 16-query, source-checked development set labelled by Codex,
+we kept the published weight and warning threshold fixed. Reranking
+excerpts within each article preserved all eight in-scope top-clause
+outcomes (seven correct). Requiring BM25, dense and Hybrid to agree
+on the leading topic still accepted the same one of six near-scope
+queries and warned on both unrelated queries.
+% Paired coverage and visible evidence: experiments/application/results/clause-scope-pilot/summary.json.
+Compared with the control, the combined variant accepted two of eight
+in-scope queries instead of five and showed sufficient evidence by
+default for two instead of three. We retained the published Hybrid.
+% Edition display, same frozen predictions: experiments/application/results/edition-display-pilot/summary.json.
+In a display-only replay, opening the explicitly requested edition
+raised immediately visible, sufficient evidence from three to five of
+eight answerable queries. Both gains were requests for the 2021
+regulations. The seven queries without a year and the two mentioning
+only an academic year produced identical views under both policies.
+
+% Automated tasks, actions and PDF targets: experiments/application/results/cohort-walkthrough/{observations.tsv,pdf-pages.tsv}.
+An offline browser completed the three scripted cohort tasks in each
+of two prototypes. The first displayed passage supported the answer
+in all six runs. For the general lookup, asking for the cohort only
+when needed took two form actions, compared with four when cohort
+selection was mandatory. Correcting the source links increased the
+number of runs that opened the cited PDF page from four to six.
+Student reading time and abandonment remain unmeasured.

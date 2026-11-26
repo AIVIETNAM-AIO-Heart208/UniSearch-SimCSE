@@ -38,11 +38,7 @@ Kết quả lấy từ tài liệu bên ngoài **không phải** kết quả c�
 
 **Repo GitHub:** <https://github.com/AIVIETNAM-AIO-Heart208/UniSearch-SimCSE>. Minh tạo ngày 23/11.
 
-**Bản clone trên laptop Huy:** `D:\TAI_LIEU_HCMUS_K24\Năm 3 - Kì 1\Nhập môn học máy\Project-ML_Lab\Lab03\UniSearch-SimCSE`. Script, log và kết quả R1–R4 đã có trên nhánh `main` của nhóm trong `experiments/reproduction/`. R4 có thêm `src/simcse_lab/model/infonce.py` và `tests/`. R1–R3: [commit `622dc22`](https://github.com/AIVIETNAM-AIO-Heart208/UniSearch-SimCSE/commit/622dc223cd3ef43aeffab5d0ff1da230d8a3b641).
-
-Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của lần chạy R1–R3; xóa được khi không cần nữa.
-
-**Giai đoạn hiện tại:** Phase 1 đã hoàn tất và hai thành viên đã đọc chéo theo [docs/PLAN.md](../PLAN.md). Phase 2 đã có R1–R4, split ViRHE4QA và xếp hạng SimCSE-VN trên D1-dev. Xếp hạng dev dùng cho so sánh và chọn cấu hình ở Phase 3.
+**Giai đoạn hiện tại.** Nhóm đã hoàn tất tái hiện R1–R4, chọn cấu hình trên D1-dev và đánh giá trên D1-test, D2-test. Phase 4 đã có báo cáo PDF, hồ sơ mã nguồn và tư liệu để Minh quay video. Gói nộp cuối sẽ dùng bản ghi của Minh. [Danh sách việc và người phụ trách](../PLAN.md#phase-4--hoàn-thiện-và-nộp-bài)
 
 **Đã hoàn thành**
 
@@ -92,12 +88,21 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
 - [x] **Demo và E4 (26/11):** Minh đã kiểm demo trên corpus hai phiên bản và đo độ trễ truy hồi trên CPU. [Cấu hình và kết quả E4](../../experiments/application/results/E4/cpu-latency.md)
 - [x] **Báo cáo IEEE (26/11)** Đã hoàn thành [các mục của báo cáo](../report/README.md), gồm ứng dụng, đóng góp của từng thành viên và giới hạn rút ra từ E5. [Checklist rà soát và tái lập](../reviews/workspace.md).
 - [x] **Công bố D2 (26/11).** Đã tải ẩn danh bộ D2 từ thư mục Drive dành cho bài nộp và đối chiếu SHA-256. [Đường dẫn và nội dung gói](../../data/d2/README.md#bộ-d2-công-khai)
+- [x] **Tư liệu quay và hồ sơ chờ video (26/11).** Đã bàn giao slide chỉnh sửa được, PDF xem nhanh và ảnh gốc cho các cảnh demo. Hồ sơ đóng gói sẵn gồm mã nguồn, corpus và báo cáo. [Nội dung và cách kiểm ZIP](../README.md#báo-cáo-và-video)
+- [x] **Hiển thị trích đoạn (26/11).** Đã đối chiếu công thức, bảng, thông tin sửa đổi và phạm vi áp dụng. Đã thử sửa câu, gửi lại sau lỗi mạng và tra cứu khi chỉ một phần các chủ đề có tín hiệu từ khóa. [Checklist giao diện](../reviews/workspace.md#kiểm-tra-giao-diện-tra-cứu)
+- [x] **Đối chứng tiếp nối E5 (26/11).** Đã chạy bốn bản trên 16 câu phát triển do Codex điền nhãn cho Huy và Minh. [Kết quả và từng lỗi](../../experiments/application/results/clause-scope-pilot/comparison.md) · [Thiết kế và tiêu chí](../../experiments/application/clause-scope-comparison.md)
+- [x] **Mở phiên bản được hỏi (26/11).** Đã thử ngoại tuyến trên cùng xếp hạng Hybrid và kiểm đủ 32 trang ở trạng thái mặc định. [Kết quả và nhận xét về khóa tuyển sinh](../../experiments/application/results/edition-display-pilot/comparison.md)
+- [x] **Hai mẫu chọn khóa ngoại tuyến (26/11).** Hai mẫu dùng chung câu hỏi và căn cứ cho ba tình huống K24, K26 và tra cứu chung. [Gói mô phỏng](../../experiments/application/README.md#mô-phỏng-hai-cách-chọn-khóa)
+- [x] **Chạy thử hai mẫu (26/11).** Chrome đã thực hiện sáu lượt mô phỏng từ gói bàn giao. Đã sửa đích PDF cho căn cứ thực hành trong cả hai bản quy chế. [Phiếu và đối chiếu trước/sau](../../experiments/application/results/cohort-walkthrough/comparison.md)
 
 **Đã hoàn tất các mục Phase 3.** Nhóm có CLI truy hồi, [demo Gradio](../../apps/README.md) và kết quả E0–E5.
 
 **Việc ưu tiên tiếp theo**
 
-1. Quay video và kiểm gói nộp theo [checklist Phase 4](../PLAN.md#phase-4--hoàn-thiện-và-nộp-bài).
+1. Minh quay video chính thức từ [tư liệu đã chuẩn bị](../README.md#báo-cáo-và-video).
+2. Khi có bản ghi, Codex kiểm video và đóng gói theo [checklist Phase 4](../PLAN.md#phase-4--hoàn-thiện-và-nộp-bài).
+
+Bản hiện tại tiếp tục phục vụ. Phép thử trên bộ mở đã chỉ ra một trường hợp cả ba cách tìm đồng ý về chủ đề sai. Việc xét thay phiên bản cần bằng chứng trên bộ xác nhận độc lập đã khóa nhãn. [Quy trình xác nhận](../../experiments/application/clause-scope-comparison.md#dữ-liệu-phát-triển-và-nhãn-giữ-kín)
 
 ---
 
@@ -141,18 +146,18 @@ Truy hồi lai **BM25 + SimCSE-VN** trên corpus quy chế đào tạo của Tr�
 
 1. Corpus của ứng dụng gồm 2 văn bản trong [`data/d2/documents.yaml`](../../data/d2/documents.yaml): QĐ 1175/2021 (24 Điều) và QĐ 3087/2026 (27 Điều).
    - Tách Điều/Khoản và lưu metadata: văn bản, số hiệu, ngày ban hành, hiệu lực, phạm vi áp dụng.
-   - Bản 2026 là bản chép từ scan đã làm sạch, không phải nguyên văn.
+   - Bản 2026 do ChatGPT chép từ scan, nhóm hiệu đính theo PDF chính thức. [Hồ sơ nguồn](../../data/d2/README.md#file)
    - Khi đánh giá D1, dùng corpus 297 đoạn của D1; corpus này không có metadata văn bản.
 2. Ba phương pháp truy hồi chạy trên cùng pipeline: BM25, SimCSE-VN (dense) và Hybrid.
 3. Giao diện Gradio gồm:
    - ô nhập câu hỏi;
-   - top-3 Điều/Khoản, trích đoạn, tên văn bản, số hiệu và phạm vi áp dụng;
+   - tối đa ba chủ đề, mỗi chủ đề kèm Điều/Khoản theo phiên bản, trích đoạn, tên văn bản, số hiệu và phạm vi áp dụng;
    - nhãn "Độ tin cậy thấp" khi cần;
-   - chế độ so sánh song song với BM25.
+   - tab BM25 để so sánh kết quả theo từ khóa cho cùng câu hỏi.
 4. Đánh giá định lượng trên D1 và D2 ([§6](#6-datasets--experimental-evaluation)) và đo latency trên CPU.
 5. Tái hiện R1 ([§4.5](#45-kế-hoạch-tái-hiện-kết-quả-paper)) và tự cài lại InfoNCE kèm kiểm thử.
 
-**Nâng cao (tùy chọn, chỉ làm sau khi MVP xong):** O1 domain-adaptive fine-tuning, O2 user study nhỏ, O3–O5 ablation ([§6.6](#66-thí-nghiệm-tùy-chọn)).
+**Thí nghiệm nâng cao** gồm O1 tinh chỉnh theo miền và O3–O5 tách ảnh hưởng từng thành phần. [Điều kiện thực hiện](#66-thí-nghiệm-tùy-chọn)
 
 **Ngoài phạm vi:** văn bản khác ngoài hai quy chế đào tạo trên, tự xác định phiên bản nào áp dụng cho từng khóa (ứng dụng chỉ hiển thị phạm vi áp dụng ghi trong văn bản), sinh câu trả lời bằng LLM, hội thoại nhiều lượt, OCR tự động trong ứng dụng (bản chép QĐ 3087 được chuẩn bị một lần, ngoài ứng dụng), so sánh khác biệt giữa các phiên bản văn bản, đăng nhập, database server, triển khai cloud, Option 2.
 
@@ -199,9 +204,9 @@ Mục Bonus Model Improvement (+10) **không áp dụng** cho nhóm: giảng vi�
 | 3.4.2 | Khảo sát giải pháp hiện có và hạn chế | B | [§2.3](#23-giải-pháp-hiện-có-và-hạn-chế) | Báo cáo | Minh / 3 |
 | 3.4.3 | Ứng dụng chạy được: input thực, chạy model, hiển thị output thật | B | Gradio app ([§5](#5-application-architecture--implementation)) | Video demo | Minh / 3 |
 | 3.4.4 | Cải thiện ≥1 chiều so với giải pháp hiện có; tách bạch phần mới và phần tái sử dụng | B | [§2.6](#26-đóng-góp-riêng-của-nhóm), E1–E3 | Bảng so sánh với BM25; bảng đóng góp | Cả hai / 3 |
-| 3.4.5 | Bằng chứng: metrics, response time, task success, phản hồi có cấu trúc | B | E1–E4 bắt buộc; O2 user study tùy chọn | `results/` | Huy (so sánh), Minh (latency) / 3 |
+| 3.4.5 | Bằng chứng theo đề gồm chỉ số, thời gian đáp ứng, mức hoàn thành tác vụ hoặc phản hồi có cấu trúc | B | Chỉ số E1–E4, độ trễ truy hồi và kết quả chạy tác vụ trong trình duyệt | `results/` | Huy (so sánh), Minh (độ trễ) / 3 |
 | 3.4.6 | Thảo luận: tính hữu ích, hạn chế, khi nào thất bại, hướng phát triển | B | E5 phân tích lỗi; [§8.1](#81-rủi-ro-và-dự-phòng) | Báo cáo §Discussion | Huy / 3–4 |
-| 4 | Nộp `[Group14].zip` (theo mẫu `[Group01].zip` của đề): code/GitHub + README; video ≤ 30 phút; báo cáo PDF mẫu IEEE | B | [§8.4](#84-definition-of-done) | Bản nộp | Huy (báo cáo), Minh (video, zip) / 4 |
+| 4 | Nộp `[Group14].zip` theo mẫu của đề, gồm code/GitHub, README, video ≤ 30 phút và báo cáo PDF mẫu IEEE | B | [§8.4](#84-definition-of-done) | Bản nộp | Huy (báo cáo), Minh (video), Codex (kiểm và đóng gói) / 4 |
 | 4 | Link dataset/code phải truy cập được (nếu không, **trừ 50%**). Dataset được nộp bằng link (giảng viên cho phép) | B | Kiểm tra link ở chế độ ẩn danh trước khi nộp | Checklist DoD | Minh / 4 |
 
 **Ánh xạ rubric:** 40 điểm Paper Understanding ← [§4](#4-simcse-research-foundation) và vấn đáp. 20 điểm Implementation & Evaluation ← R1, InfoNCE, pipeline, metrics. 40 điểm Experimental Analysis & Discussion ← E1–E5, CI, phân tích lỗi, thảo luận.
@@ -343,9 +348,9 @@ Câu hỏi → preprocess (cùng hàm) → điểm BM25 và cosine cho mọi chu
   → Hybrid: s = λ·BM25_norm + (1−λ)·Dense_norm   (λ chọn trên D1-dev)
   → xếp hạng Điều (D1 lưu top-20, D2 lưu đủ 51 Điều)
   → corpus HCMUS: gộp các Điều cùng chủ đề theo data/d2/article_map.tsv thành một kết quả, bản 2026 đứng trước
-  → top-3 kết quả (kèm Khoản / chunk tốt nhất)
+  → tối đa 3 chủ đề (kèm Điều/Khoản và trích đoạn theo phiên bản)
   → Confidence: cosine SimCSE của chunk tốt nhất trong Điều đứng đầu < θ  ⇒  cảnh báo "Độ tin cậy thấp"
-  → UI: Điều/Khoản · trích đoạn · văn bản · số hiệu · ngày ban hành · phạm vi áp dụng · điểm · [so sánh BM25]
+  → UI: Điều/Khoản · trích đoạn · văn bản · số hiệu · ngày ban hành · phạm vi áp dụng · so sánh BM25
 ```
 
 ### 5.2 Vai trò từng thành phần [Proposed]
@@ -371,13 +376,14 @@ Min-max theo từng câu hỏi làm mất thang điểm tuyệt đối. Nếu m�
 - **Corpus D1 (chỉ để đánh giá):** D1 chỉ có nội dung từng đoạn, không ghi Điều thuộc văn bản nào, số hiệu, ngày ban hành hay phiên bản. Repo ViRE @ `60ea715` cũng không có file ánh xạ đoạn về văn bản gốc (đã kiểm tra 23/11). Chunk của D1 chỉ giữ mã đoạn, số và tên Điều; không suy đoán các thông tin còn lại.
 - **Index:** mỗi chunk giữ `doc_id` (D1: `virhe4qa`), `article_id`, `article`, `article_title`, `clause`, offset ký tự để trích đúng đoạn.
 - **Hiển thị (corpus HCMUS):**
-  - Dạng: "Điều 15, Khoản 1 – Quy chế đào tạo trình độ đại học (QĐ 3087/QĐ-KHTN, 29/9/2026; áp dụng cho khóa tuyển từ năm học 2026–2027, xem Điều 27 với khóa trước đó)".
-  - Kèm dòng nhắc "Kết quả để tham khảo, hãy đối chiếu văn bản gốc".
-  - Với QĐ 3087, ghi thêm "bản chép từ bản scan", vì đây là bản ChatGPT chép và nhóm làm sạch, không phải nguyên văn.
+  - Mỗi kết quả ghi năm quy chế, Điều, Khoản nếu có và tên Điều. Số hiệu dưới trích đoạn mở văn bản gốc. Ngày ban hành nằm cạnh liên kết. Đường dẫn sửa đổi đi cùng Điều liên quan.
+  - [Trích đoạn trên cả hai tab](../../apps/README.md#trích-đoạn-trên-giao-diện) dùng phần văn bản mà bộ truy hồi chọn. Khi ranh giới cắt qua đoạn văn, bảng hay công thức, giao diện lấy đủ phần đó theo vị trí ký tự trong cùng Khoản.
+  - Mục **Áp dụng theo khóa tuyển sinh** ghi tên và hiệu lực mỗi văn bản một lần trong mỗi danh sách kết quả. Nguồn của bản ChatGPT chép từ scan và phần hiệu đính của nhóm nằm ở [hồ sơ dữ liệu](../../data/d2/README.md#file).
   - Ứng dụng không tự xác định phiên bản nào áp dụng cho một khóa cụ thể: nó hiển thị kết quả của cả hai phiên bản, kèm phạm vi áp dụng ghi trong văn bản.
   - Các Điều cùng chủ đề (theo `data/d2/article_map.tsv`, mỗi chủ đề có 1–3 Điều) hiển thị thành **một** kết quả, kèm các phiên bản có trong chủ đề đó.
   - Trong mỗi kết quả, **bản 2026 hiển thị trước** vì là bản mới nhất (D-18); mọi chủ đề đều có Điều của bản 2026. Bản 2021 hiển thị phụ, ghi rõ áp dụng cho khóa tuyển từ năm học 2021–2022 đến 2025, trừ quy định mới có lợi hơn (Điều 27 bản 2026).
-- **Độ tin cậy thấp:** vẫn hiển thị top-3 và gợi ý đối chiếu văn bản hoặc liên hệ phòng đào tạo. Thông báo chung cho hai tab ghi rõ Hybrid hoặc SimCSE-VN theo phương pháp đã chọn ở tab tra cứu. Ngưỡng θ được chọn và đánh giá theo E3 ([§6.4](#64-thí-nghiệm-thiết-yếu)).
+- **Độ tin cậy thấp:** tab tra cứu thu gọn các chủ đề. Cảnh báo ngay trên tab ghi phương pháp, phiên bản và Điều/Khoản xếp đầu, kèm gợi ý đối chiếu văn bản hoặc liên hệ Phòng Đào tạo. Ngưỡng θ được chọn và đánh giá theo E3 ([§6.4](#64-thí-nghiệm-thiết-yếu)).
+- **Tab từ khóa:** chỉ chủ đề có ít nhất một Điều nhận điểm BM25 khác 0 mới được hiển thị, tối đa ba chủ đề, gồm cả bản đối chiếu trong cùng chủ đề. Khi không có tín hiệu, tab hướng dẫn đổi từ khóa. Quy tắc hiển thị này cũng áp dụng cho tab chính nếu chạy với λ = 1. Các bảng xếp hạng dùng để chấm D1/D2 vẫn bao gồm các Điều theo quy tắc của thí nghiệm.
 
 ### 5.4 Interface & định dạng dữ liệu
 
@@ -402,6 +408,8 @@ CLI truy hồi nhận corpus, split và danh sách phương pháp. Endpoint Grad
 
 Xem [cách xác định mã khi số Khoản lặp](../../data/d2/README.md#mã-điều-và-khoản). Bộ chấm hỗ trợ corpus cũ bằng cách tra Khoản từ offset trong nguồn đã kiểm SHA-256.
 
+Phiếu phát triển HCMUS có thêm vị trí từng đoạn đã đối chiếu với PDF và ghi chú cho thông tin đến từ bên ngoài hai quy chế. [Định dạng và phạm vi sử dụng của phiếu](../../experiments/application/clause-scope-comparison.md#dữ-liệu-phát-triển-và-nhãn-giữ-kín)
+
 | Module (vị trí trong repo) | Input → Output | Owner | Tái sử dụng / Mới |
 |---|---|---|---|
 | `data/prepare_virhe4qa.py` | CSV ViRE → corpus/queries D1 + group split | Minh | Mới |
@@ -417,9 +425,13 @@ Xem [cách xác định mã khi số Khoản lặp](../../data/d2/README.md#mã-
 | `experiments/application/` | So sánh trên D1-test và D2, phân tích lỗi (Huy); đo latency (Minh) → `results/` | Huy, Minh | Mới |
 | [`experiments/application/analyze_d1_overlap.py`](../../experiments/application/analyze_d1_overlap.py) | CSV và kết quả E1 đã lưu → mã câu, Hit@k, MRR@10 và CI theo mức Jaccard trên D1-test | Huy | Đã có |
 | [`experiments/application/evaluate_d2.py`](../../experiments/application/evaluate_d2.py) | Nhãn D2 đã chốt, corpus và ba xếp hạng đã lưu → E2 theo Điều, chủ đề và Khoản, CI theo cặp và biểu đồ E3. [Lệnh](../../experiments/application/README.md#chấm-d2-test) | Huy | [Đã chấm D2-test](../../experiments/application/results/D2/d2-test.md) |
+| [`experiments/application/compare_clause_scope.py`](../../experiments/application/compare_clause_scope.py) | 16 câu phát triển và cấu hình đóng băng. Xuất điểm thô, thứ tự Điều, Khoản, cảnh báo và HTML của bốn bản. [Lệnh](../../experiments/application/README.md#so-sánh-trước-khi-thay-bản-truy-hồi) | Huy | [Đã chạy](../../experiments/application/results/clause-scope-pilot/summary.json) |
+| [`experiments/application/compare_edition_display.py`](../../experiments/application/compare_edition_display.py) | Phát lại điểm của A để so hai cách hiển thị phiên bản. Xuất HTML từng cặp, đường dẫn mở căn cứ và số câu thấy ngay theo nhóm năm. [Lệnh](../../experiments/application/README.md#thử-mở-phiên-bản-được-hỏi) | Huy | [Đã chạy ngoại tuyến](../../experiments/application/results/edition-display-pilot/summary.json) |
+| [Bộ dựng mẫu chọn khóa](../../experiments/application/cohort_study/build.py) | Hai trang HTML dùng chung câu hỏi và nguồn cục bộ. ZIP có hướng dẫn mở và ba tình huống. [Chạy sáu tổ hợp](../../experiments/application/README.md#chạy-sáu-lượt-mô-phỏng) để xuất kết quả, nhật ký và ảnh | Codex | [Lệnh dựng và kiểm](../../experiments/application/README.md#mô-phỏng-hai-cách-chọn-khóa) |
+| [Đóng gói và đối chiếu](../../tools/package_submission.py) | `prepare` đóng gói mã, corpus và PDF. `verify --prepared` kiểm hồ sơ này. `build --video` thêm bản ghi của Minh, có thể kèm phụ đề cùng bản. `verify` kiểm gói cuối theo SHA-256 | Codex | [Hướng dẫn bàn giao](../README.md#báo-cáo-và-video) |
 | `experiments/reproduction/` | Chạy R1–R4 vào `outputs/reproduction/`. Kết quả đã công bố ở [§6.7](#67-bảng-theo-dõi-kết-quả) | Huy | Code gốc + mới |
 | `src/simcse_lab/model/infonce.py` + `tests/test_infonce.py` | R4: InfoNCE tự cài + test khớp `cl_forward` | Huy | Mới |
-| `apps/app.py` | Gradio UI gọi `search` | Minh | Mới (dùng Gradio) |
+| [app.py](../../apps/app.py), [search.js](../../apps/search.js), [search.css](../../apps/search.css) và [regulation_excerpts.py](../../src/simcse_lab/regulation_excerpts.py) | Gradio gọi bộ truy hồi, nhóm kết quả, quản lý trạng thái câu đang hỏi và trình bày trích đoạn theo cấu trúc văn bản | Minh | [Giao diện](../../apps/README.md) |
 
 Ba hàm của `stats.py` nhận các bản ghi JSONL đã giải mã. Mỗi lần gọi dùng một tập dữ liệu và một split. Lọc câu hỏi và từng bảng xếp hạng theo cùng tập `qid` khi đánh giá một nhóm con.
 
@@ -438,19 +450,23 @@ Các đường dẫn công khai và thư mục làm việc cục bộ của dự
 ├── src/simcse_lab/
 │   ├── model/                        # encoders.py, infonce.py ✓
 │   ├── retrieval/                    # hcmus.py, ingest.py, preprocess.py, search.py
+│   ├── regulation_excerpts.py         # trình bày trích đoạn của hai quy chế
 │   └── evaluation/                   # metrics.py (D1), d2.py, stats.py
 ├── experiments/
 │   ├── reproduction/                 # ✓ run_r1.py, run_r1.bat, requirements-r1.txt, results/R1–R3; run_r4.py, results/R4
 │   │   └── SimCSE/                   # code gốc @ 235f89e (gitignore; script tự tải nếu thiếu)
 │   ├── external_dataset/             # D1, cấu hình chốt trong results/D1-dev-tuning/summary.json
 │   └── application/                  # D2, so sánh theo mức trùng từ, cảnh báo, latency, lỗi (E2–E5) → results/
-├── apps/app.py                       # Gradio
+├── apps/                             # app.py, search.css, search.js
+├── tools/                            # kiểm Markdown, kiểm giao diện, đóng và kiểm gói nộp riêng
 ├── tests/                            # chunker, chuẩn hóa, metrics, infonce (✓ test_infonce.py, infonce_reference.py, test_worked_example.py, conftest.py)
 ├── docs/                             # PLAN.md, application/, report/, reviews/
 └── .venv-repro/ · .cache/            # venv tái hiện, cache HuggingFace (gitignore)
 ```
 
 Môi trường truy hồi và demo dùng venv riêng. Xem [lệnh cài và kiểm chứng D1](../../experiments/external_dataset/README.md) và [lệnh khởi động Gradio](../../apps/README.md).
+
+Trong cả hai ZIP, `source/` chứa mã và corpus đã kiểm. Bảng SHA-256 và PDF báo cáo nằm ở gốc gói. Gói nộp cuối có thêm video của Minh. [Lệnh đóng gói và kiểm từng tệp](../README.md#báo-cáo-và-video)
 
 **Stack bản bàn giao:** Python, PyTorch, Transformers, pyvi, rank_bm25, NumPy, PyYAML, Gradio và pytest. Phiên bản môi trường tái lập D1 có trong hướng dẫn D1.
 
@@ -570,10 +586,11 @@ Chỉ làm khi MVP xong và còn thời gian.
 | ID | Nội dung | Điều kiện làm |
 |---|---|---|
 | O1 | Domain-adaptive SimCSE: (a) unsup SimCSE tiếp tục trên câu của corpus quy chế; hoặc (b) supervised với cặp (câu hỏi, Điều đúng) + hard negative do BM25 khai thác, cần thêm D1-train theo group split. So với `dense` trên cùng test, 3 seed | Chỉ khi E1–E5 xong trước 06/12; dừng mọi việc tùy chọn sau 08/12 |
-| O2 | User study nhỏ: 5–8 sinh viên, 4–6 nhiệm vụ tra cứu, within-subject (Ctrl+F trên PDF và ứng dụng, đảo thứ tự). Đo task success, thời gian, 3–5 câu Likert | Khi có thời gian; báo cáo là nghiên cứu nhỏ, không khái quát hóa |
 | O3 | R5 mini dropout ablation | Có GPU rảnh |
 | O4 | pyvi vs VnCoreNLP (RDRSegmenter); RRF vs λ-fusion; có/không tiền tố tiêu đề Điều trong chunk | Rẻ, nếu E5 chỉ ra vấn đề liên quan |
 | O5 | Encoder đa ngôn ngữ làm trần tham chiếu (vd. `intfloat/multilingual-e5-base`) | Chỉ để thảo luận; không bắt buộc thắng |
+
+**Phép so sánh tiếp nối E5.** Bốn bản dùng chung cấu hình D1-dev và điểm thô trên bộ phát triển mở. Bảng dưới ghi kết quả. [Quy trình và tiêu chí xác nhận](../../experiments/application/clause-scope-comparison.md)
 
 ### 6.7 Bảng theo dõi kết quả
 
@@ -594,9 +611,13 @@ Chỉ điền khi đã có file kết quả.
 | E2 D2-test | 26/11 | Trên 86 câu, MRR@10 theo Điều của Hybrid là 0,8750 và BM25 là 0,8396. Chênh lệch 0,0354 (95% CI 0,0058 đến 0,0717). Hybrid đạt MRR@10 theo chủ đề 0,8895 và Clause@1 68,60% | [Bảng theo Điều, chủ đề, Khoản và mức trùng từ](../../experiments/application/results/D2/d2-test.md) |
 | E3 D1-test | 25/11 | Ngưỡng đã chốt cho độ bao phủ 81,42% (618/759) và risk 23,95% (148/618). Risk tại độ bao phủ 100% là 27,54% (209/759) | [Biểu đồ](../../experiments/external_dataset/results/E3/d1-test-risk-coverage.png) · [Dữ liệu đường cong](../../experiments/external_dataset/results/E3/d1-test.json) · [Chỉ số cảnh báo](../../experiments/external_dataset/results/E1/d1-test.md#cảnh-báo-của-hybrid) |
 | E3 D2-test | 26/11 | Cùng ngưỡng D1-dev, độ bao phủ 66,98% (71/106), risk theo Điều 17,65% (12/68) và theo chủ đề 16,18% (11/68). Có 3/20 câu ngoài phạm vi được đánh dấu tin cậy (15,00%) | [Chỉ số cảnh báo và mã câu](../../experiments/application/results/D2/d2-test.md#hybrid-warnings) · [Biểu đồ](../../experiments/application/results/D2/risk-coverage.png) |
+| Kiểm giao diện | 26/11 | So hai phiên bản giao diện trên 10 câu với cấu hình demo cố định. Tab chính giữ cùng các căn cứ, tab từ khóa bỏ ba chủ đề không có tín hiệu ở câu chứa chuỗi lạ | [Đầu ra trước và sau](../../experiments/application/results/ui-review/search-behavior.json) · [Checklist trải nghiệm](../reviews/workspace.md#trải-nghiệm-sinh-viên-và-tài-liệu) |
 | E4 | Hoàn tất 26/11 | Độ trễ truy hồi CPU của ba phương pháp, 60 mẫu mỗi phương pháp | [Bảng E4](../../experiments/application/results/E4/cpu-latency.md) |
 | E5 D1-test | Hoàn tất 26/11 | Hybrid trượt Hit@1 ở 209/759 câu, 123 trong số đó có đoạn chuẩn hạng 2–3. Đối chiếu 20 ca lỗi và 2 ca xếp đúng, khớp 66/66 ô thứ hạng với ba tệp gốc | [Phân tích D1-test](../../experiments/application/results/E5/d1-test.md) |
 | E5 D2-test | Hoàn tất 26/11 | Hybrid trượt hạng 1 ở 18/86 câu theo Điều và 17/86 theo chủ đề. Đã đọc 5 ca trượt hạng 1 theo Điều và cả 3 ca ngoài phạm vi bị đánh dấu tin cậy | [Phân tích D2-test](../../experiments/application/results/E5/d2-test.md) |
+| Bộ phát triển mở HCMUS | 26/11, ngoài D1/D2-test | Cả bốn bản đúng Khoản 7/8, tự tin sai 1/6 câu gần và 0/2 câu ngoài lĩnh vực. K+G so với A giảm độ bao phủ từ 5/8 xuống 2/8, số căn cứ nhìn thấy ngay từ 3/8 xuống 2/8 | [Từng câu và kết luận](../../experiments/application/results/clause-scope-pilot/comparison.md) |
+| Cách mở phiên bản | 26/11, cùng bộ phát triển mở | Căn cứ đúng xuất hiện ngay ở 3/8 câu có đáp án của A và 5/8 câu khi ưu tiên năm được hỏi. Hai câu được lợi đều yêu cầu quy chế 2021 | [Kết quả theo nhóm năm](../../experiments/application/results/edition-display-pilot/comparison.md) |
+| Thời điểm hỏi khóa | 26/11, diễn tập ngoại tuyến | Hai mẫu cùng hiện đúng căn cứ trong ba nhiệm vụ. Tra chung mất 4 thao tác ở A, 2 ở B. Liên kết mở đúng trang PDF tăng từ 4/6 lên 6/6 sau sửa | [Phiếu từng lượt và phạm vi mô phỏng](../../experiments/application/results/cohort-walkthrough/comparison.md) |
 
 ---
 
@@ -612,14 +633,14 @@ Phân công chi tiết và checklist nằm ở **[docs/PLAN.md](../PLAN.md)**, n
 
 ### 7.2 Lịch theo PLAN.md
 
-Tính từ 23/11, còn 18 ngày đến 11/12/2026. Phase 3 xong trước **06/12**. Từ 07/12 đến 10/12 viết báo cáo và quay video. Nộp sớm trong ngày **11/12, trước 20:00**.
+Các mốc dưới đây là hạn kế hoạch. Nhóm đặt mục tiêu nộp trước **20:00 ngày 11/12/2026**; hạn chính thức là **23:59** cùng ngày. [Tiến độ thực tế](../PLAN.md#phase-4--hoàn-thiện-và-nộp-bài)
 
 | Phase (PLAN.md) | Hạn | Đầu ra chính | Phụ thuộc |
 |---|---|---|---|
 | 1 – Nghiên cứu paper | 27/11 | Hai phần viết đã đọc chéo. Huy: bài toán và phương pháp; Minh: dữ liệu, baseline, metric, kết quả, hạn chế | — |
 | 2 – Triển khai và tái hiện | 30/11 | **Huy:** R1 ✓ (thêm R2, R3 ✓), R4 InfoNCE + test ✓, giải thích luồng code. **Minh:** D1 + group split ✓, SimCSE-VN dense trên D1-dev ✓ (Hit@1/3, MRR@10, top-20). Bảng D1-test thuộc E1 sau khi chốt cấu hình | D1 có sẵn |
 | 3 – Xây dựng ứng dụng | 06/12 | **Minh:** corpus HCMUS từ `data/d2/` (tách Điều/Khoản, metadata), BM25 + Hybrid, Gradio, latency. **Huy:** bảng so sánh + CI, chọn λ/θ trên D1-dev, so sánh trên D1-test và D2 (chung và theo mức trùng từ), phân tích lỗi. **Cả hai:** đã [chốt nhãn D2](../../data/d2/README.md#câu-hỏi-và-nhãn-d2-đã-chốt) trước hạn 02/12 | Phase 2; việc chuẩn bị câu D2 chỉ cần bảng đối ứng đã duyệt |
-| 4 – Hoàn thiện và nộp | 10/12; nộp 11/12 | **Huy:** PDF IEEE, chạy lại từ clone sạch. **Minh:** README, video, `[Group14].zip`, kiểm tra link | Phase 3 |
+| 4 – Hoàn thiện và nộp | 10/12, nộp 11/12 | Báo cáo IEEE, video Minh quay, kiểm và đóng gói. [Phân công hiện tại](../PLAN.md#phase-4--hoàn-thiện-và-nộp-bài) | Phase 3 |
 | Tùy chọn O1–O5 | dừng 08/12 | Chỉ làm nếu Phase 3 xong trước 06/12 | Phase 3 |
 
 **Ràng buộc thứ tự**
@@ -642,7 +663,7 @@ Tính từ 23/11, còn 18 ngày đến 11/12/2026. Phase 3 xong trước **06/12
 | Không có GPU / hết quota | Thấp với MVP | MVP và R1 chạy CPU; GPU chỉ cần cho O1, O3 (Kaggle/Colab) |
 | SimCSE-VN truy hồi kém, hybrid không thắng BM25 | Cao | Kết quả âm vẫn hợp lệ: phân tích theo mức trùng từ vựng (E2) và lỗi (E5); đóng góp vẫn gồm trích dẫn, phiên bản, cảnh báo được đánh giá; cân nhắc O1 |
 | License D1 không rõ hoặc repo ViRE bị gỡ | Trung bình | Link nộp là permalink theo commit (không đổi được nội dung); lưu bản sao riêng để chạy lại; dự phòng EduCoQA; D2 vẫn là dataset mới của nhóm |
-| Bản chép QĐ 3087/2026 (ChatGPT chép từ scan) khác bản gốc | Trung bình | Sau hai lượt sửa OCR vẫn phát hiện sai ngưỡng buộc thôi học và quy định về hội đồng. Chuẩn bị bản hiệu đính theo [hướng dẫn D2](../../data/d2/README.md#file), đối chiếu các căn cứ dùng cho nhãn với PDF đã ký và ghi nguồn bản chép trong ứng dụng |
+| Bản chép QĐ 3087/2026 (ChatGPT chép từ scan) khác bản gốc | Trung bình | Sau hai lượt sửa OCR vẫn phát hiện sai ngưỡng buộc thôi học và quy định về hội đồng. Chuẩn bị bản hiệu đính theo [hướng dẫn D2](../../data/d2/README.md#file), đối chiếu căn cứ dùng cho nhãn với PDF đã ký và cho mở bản chính thức ngay tại trích đoạn |
 | Người đọc nhầm bản ChatGPT chép QĐ 3087 với bản gốc | Trung bình | Chia sẻ liên kết PDF chính thức của Trường trong metadata D2. Bản chép dùng cho lập chỉ mục và nộp trong `[Group14].zip` theo D-18 |
 | Corpus D2 nhỏ (51 Điều, 26 chủ đề) làm Hit@3 cao với mọi phương pháp | Trung bình | Báo cả mức theo Điều (chặt) và theo chủ đề, kèm Clause@1 và mức ngẫu nhiên (§6.3); trong báo cáo nêu rõ quy mô corpus và việc mức chủ đề dễ hơn mức Điều |
 | Câu D2 do nhóm viết thiên lệch: người viết đã đọc văn bản nên câu có thể ít trùng từ hơn câu hỏi thật, bất lợi cho BM25 | Trung bình | Viết kiểu gập sách (D-18); nêu rõ trong báo cáo; báo E2 theo mức trùng từ cả trên D2; nếu có câu từ Google Form (`origin: form`) thì báo riêng nhóm này |
@@ -654,7 +675,7 @@ Tính từ 23/11, còn 18 ngày đến 11/12/2026. Phase 3 xong trước **06/12
 ### 8.2 Các nội dung đã điều chỉnh so với Research
 
 - **D1 truy cập được ngay:** bản con ViRHE4QA có sẵn trong repo ViRE, không cần chờ xin bộ đầy đủ.
-- **Thu gọn khối lượng:** D2 giảm từ 150–300 câu xuống 80–100 câu + 20 câu ngoài phạm vi, rồi bỏ ngày 23/11 (D-16) và khôi phục cùng ngày với corpus quy chế đào tạo HCMUS (D-17). Cohen's κ, user study và fine-tuning chuyển sang tùy chọn. Baseline bắt buộc chỉ còn BM25 / SimCSE-VN / Hybrid.
+- **Thu gọn khối lượng:** D2 giảm từ 150–300 câu xuống 80–100 câu + 20 câu ngoài phạm vi, rồi bỏ ngày 23/11 (D-16) và khôi phục cùng ngày với corpus quy chế đào tạo HCMUS (D-17). Cohen's κ và fine-tuning chuyển sang tùy chọn. D-33 chốt phần kiểm giao diện bằng mô phỏng ngoại tuyến. Baseline bắt buộc chỉ còn BM25 / SimCSE-VN / Hybrid.
 - **Sửa thông tin code:** tại commit cố định không có `--mlp_only_train` (Research mô tả theo bản fork hoặc `main`). Thêm các khác biệt eval_steps 125/250 và 81,58/81,57.
 - **Số liệu R2GQA:** chỉ giữ những số đã đối chiếu được. Một số con số Research nêu (vd. ViSimCSE P@1 43,24, ensemble 72,13) chưa xác minh nên **không dùng**.
 - **Confidence:** dùng cosine tuyệt đối, không dùng điểm fused đã min-max. Dạng cảnh báo thay vì từ chối cứng.
@@ -668,7 +689,7 @@ Tính từ 23/11, còn 18 ngày đến 11/12/2026. Phase 3 xong trước **06/12
 | D-02 | Encoder: `VoVanPhuc/sup-SimCSE-VietNamese-phobert-base` + pyvi + `pooler_output`, max_len 256 | Chốt cho MVP |
 | D-03 | Hybrid λ-fusion trên điểm min-max theo Điều; λ chọn trên D1-dev | Chốt |
 | D-04 | Chunk theo Khoản (≤ 256 token, chia cửa sổ nếu dài); xếp hạng và đánh giá theo Điều (MaxP) | Chốt |
-| D-05 | Không dùng LLM sinh câu trả lời; chỉ hiển thị đoạn văn bản có trong corpus + nguồn (QĐ 3087 là bản chép từ scan, ghi rõ khi hiển thị) | Chốt |
+| D-05 | Trả về đoạn văn có trong corpus kèm nguồn, không dùng LLM sinh câu trả lời. Ban đầu ghi công bản chép ngay trong kết quả | Phần ghi công khi hiển thị bị thay bởi D-27 |
 | D-06 | Confidence là cosine SimCSE của chunk đã chọn trong Điều đứng đầu. Dùng θ từ D1-dev để cảnh báo | Chốt quy tắc đo. Giá trị θ ở D-22 |
 | D-07 | D1 = ViRHE4QA (ViRE @ `60ea715`) là dataset mới chính; D2 chỉ test | Chốt (D2 khôi phục theo D-17) |
 | D-08 | Tái hiện = R1 (bắt buộc) + R4; R2, R3 khuyến nghị; train SimCSE là tùy chọn | Chốt |
@@ -690,12 +711,15 @@ Tính từ 23/11, còn 18 ngày đến 11/12/2026. Phase 3 xong trước **06/12
 | D-24 | Truy hồi dense và demo dùng tích vô hướng NumPy trên toàn bộ vector chuẩn hóa L2. Đặc tả theo mã và kết quả đã chạy | Ghi nhận 25/11. Thay D-10 cho ứng dụng |
 | D-25 | D2 phân biệt các Khoản lặp số bằng thứ tự xuất hiện trong nguồn. Với nhiều Điều gold, E2 dùng Jaccard cao nhất và để các câu đồng điểm cùng nhóm. E3 dùng riêng tỷ lệ sai ở hạng 1 theo Điều và theo chủ đề | Chốt quy tắc triển khai 25/11, trước khi chấm D2 |
 | D-26 | Dùng [bộ nhãn D2 đã thống nhất](../../data/d2/README.md#câu-hỏi-và-nhãn-d2-đã-chốt) cho lượt đánh giá chính thức. Mã SHA-256 nhận diện bản này nằm trong [metadata](../../data/d2/documents.yaml) | Chốt 26/11, Huy xác nhận phiếu phản hồi của Minh trước khi chạy đánh giá |
+| D-27 | Trong kết quả tra cứu, dành chỗ cho trích đoạn, căn cứ áp dụng và liên kết PDF chính thức. Ghi công bản ChatGPT chép từ scan và phần hiệu đính của nhóm trong hồ sơ dữ liệu, hướng dẫn demo và báo cáo | 26/11, theo yêu cầu của Huy về đầu ra cho sinh viên. Thay phần hiển thị ghi công ở D-05 |
+| D-28 | Giao diện chỉ hiện kết quả cho câu đang hỏi. Tab từ khóa hiển thị các chủ đề có tín hiệu BM25, cảnh báo cosine nằm ở tab tra cứu. Ghi rõ bảng gốc năm 2021 đã sửa đổi ngay tại bảng | 26/11, sau khi thử hành trình sinh viên. Bổ sung D-06 và D-27 cho phần hiển thị. [Checklist](../reviews/workspace.md#trải-nghiệm-sinh-viên-và-tài-liệu) |
+| D-29 | Mọi đề xuất thay bản vì lỗi chọn Khoản và tự tin sai phạm vi phải so với Hybrid đã công bố trên một bộ phát triển HCMUS mới có phần xác nhận giữ kín. [Thiết kế so sánh và tiêu chí thay bản](../../experiments/application/clause-scope-comparison.md) | 26/11, thiết kế thử nghiệm. Bản đang phục vụ vẫn dùng D-06, D-21 và D-22 |
+| D-30 | Tiếp tục dùng Hybrid hiện tại sau phép thử bộ mở. K+G còn giữ nguyên ca tự tin sai và thu gọn thêm ba kết quả có đáp án. [Đối chiếu ghép cặp](../../experiments/application/results/clause-scope-pilot/comparison.md) | 26/11, áp dụng D-29 trên dữ liệu phát triển. Giai đoạn xác nhận giữ kín chưa chạy |
+| D-31 | Thử ưu tiên phiên bản sinh viên yêu cầu ở lớp hiển thị, dùng lại xếp hạng và cảnh báo của D-30. Thời điểm hỏi khóa được thử riêng ở D-32. [Bằng chứng ngoại tuyến](../../experiments/application/results/edition-display-pilot/comparison.md) | 26/11, thí nghiệm phát triển. Bản demo tiếp tục dùng D-18 |
+| D-32 | So thời điểm hỏi khóa bằng hai mẫu có chung dữ liệu và căn cứ cho K24, K26 và tra cứu chung. [Thiết kế và bộ thử](../../experiments/application/README.md#mô-phỏng-hai-cách-chọn-khóa) | 26/11, [đã chạy sáu lượt mô phỏng](../../experiments/application/results/cohort-walkthrough/comparison.md). Phần dự kiến quan sát sinh viên bị thay bởi D-33 |
+| D-33 | Kết thúc phép so chọn khóa ở kết quả Chrome ngoại tuyến và bỏ việc thu phản hồi sinh viên. Minh quay video chính thức từ slide và ảnh đã bàn giao. Codex kiểm và đóng gói khi có bản ghi | 26/11, theo quyết định của Huy. [Hồ sơ video](../README.md#báo-cáo-và-video) |
 
-**Vấn đề còn mở**
-
-| ID | Câu hỏi | Ai giải quyết |
-|---|---|---|
-| Q6 | Ý nghĩa cột `label` trong D1 | Minh (không chặn tiến độ) |
+**Giới hạn dữ liệu.** Ý nghĩa của cột `label` trong D1 vẫn chưa được xác minh. Các phép chấm dùng đoạn nguồn chuẩn đi kèm từng câu hỏi. [Mô tả bộ dữ liệu](#61-datasets)
 
 Q5 đã có cấu hình thực chạy với Pyvi và NumPy trong [kết quả D1-dev](../../experiments/external_dataset/results/D1-dev-tuning/summary.json) (D-24).
 
@@ -712,7 +736,7 @@ Q7 đã có nguồn chính thức (24/11). Chia sẻ [PDF của Trường](https
 - Seed được ghi lại.
 
 **Ứng dụng**
-- Nhận câu hỏi tiếng Việt tự do; trả về top-3 Điều/Khoản với trích đoạn, tên văn bản, số hiệu, ngày ban hành và phạm vi áp dụng.
+- Nhận câu hỏi tiếng Việt tự do và hiển thị tối đa ba chủ đề, kèm Điều/Khoản, trích đoạn, tên văn bản, số hiệu, ngày ban hành và phạm vi áp dụng.
 - Có nhãn cảnh báo, chế độ so sánh BM25 và dòng nhắc tham khảo.
 - Chạy trên CPU; latency đã đo.
 
@@ -727,11 +751,7 @@ Q7 đã có nguồn chính thức (24/11). Chia sẻ [PDF của Trường](https
 - Phủ 6 mục phân tích của đề (3.2).
 - Có bảng tách bạch phần tái sử dụng và phần mới (§2.6); có hạn chế và điều kiện thất bại.
 
-**Video** (≤ 30 phút; phân bổ gợi ý)
-- Paper và phương pháp: ~8 phút.
-- Code và tái hiện: ~7 phút.
-- Thí nghiệm và phân tích: ~8 phút.
-- Demo ứng dụng, so sánh với tìm kiếm từ khóa: ~6 phút.
+**Video** dài tối đa 30 phút theo đề. Tư liệu cho Minh gồm phần phương pháp, luồng truy hồi, kết quả tái hiện, thao tác thật trên Hybrid và BM25, đánh giá D1/D2 và một trường hợp cảnh báo bỏ sót. [Slide và ảnh dùng khi quay](../README.md#báo-cáo-và-video)
 
 **Nộp bài** (trước 23:59 ngày 11/12/2026, mục tiêu trước 20:00)
 - `[Group14].zip` gồm code hoặc link GitHub, video, PDF.

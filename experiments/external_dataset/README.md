@@ -98,7 +98,7 @@ $env:PYTHONPATH = 'src'
 
 ### Lệnh chuẩn bị HCMUS và đánh giá D2
 
-Khi đã có bản `_clean.md` đúng SHA-256, chạy `python data/d2/prepare_2026.py` để tạo bản verified. Nếu bản verified đã có đúng SHA-256, chạy thẳng lệnh chuẩn bị corpus. Có thể thêm `--only-2021` để kiểm tra nguồn 2021 bằng một thư mục đầu ra riêng. Đích corpus phải nằm trong repo, được Git bỏ qua và chưa được theo dõi.
+Khi đã có bản `_clean.md` đúng SHA-256, chạy `python data/d2/prepare_2026.py` để tạo bản verified. Nếu bản verified đã có đúng SHA-256, chạy thẳng lệnh chuẩn bị corpus. Có thể thêm `--only-2021` để kiểm tra nguồn 2021 bằng một thư mục đầu ra riêng. Trong Git, đích phải là thư mục mới bên trong repo, được Git bỏ qua và chưa được theo dõi. Trong mã nguồn giải nén, dùng một thư mục con mới dưới `data/processed/` hoặc `outputs/`. Ví dụ, `--output data/processed/rebuilt` cho phép đối chiếu với corpus đi kèm.
 
 ```powershell
 & $d1Python experiments/external_dataset/run_retrieval.py prepare-hcmus --model-path outputs/d1-model --output data/processed/d2

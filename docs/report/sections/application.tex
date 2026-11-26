@@ -12,15 +12,17 @@ Student task completion and FAQ coverage remain unmeasured.
 
 The interface presents up to three topics in retrieval order, with the
 newer edition first within each topic. % apps/app.py (group_results); data/d2/article_map.tsv
-Each entry gives the article, numbered clause when available, excerpt,
-decision number, date, applicability and source link. For example, a
-student can compare the editions and check the rules for their admission
-cohort before relying on an excerpt. The newer regulation is indexed
+Each entry identifies the article and numbered clause when available.
+The excerpt includes a link to the decision and its issue date. The
+student can open the earlier edition for comparison or check cohort
+applicability above the results. The newer regulation is indexed
 from a ChatGPT transcription of the scan that the team corrected.
-The BM25 tab lets the student compare the passages returned by keyword
-matching for the same question. A low cosine for the passage selected
-in the top-ranked article prompts the student to check the source or
-contact the academic office.
+The BM25 tab displays topics with lexical evidence for the same question
+and asks for different keywords when all article scores are zero. A low cosine for the passage selected
+in the top-ranked article keeps the topics collapsed in the main tab
+and prompts the student to check the source or contact the academic office.
+A ten-query interface check preserved the main tab's citations and removed
+the keyword results for an unmatched string. % experiments/application/results/ui-review/search-behavior.json
 
 We reused PyVi for word segmentation, the released Vietnamese encoder
 through Transformers, \texttt{rank-bm25} for lexical scoring and Gradio

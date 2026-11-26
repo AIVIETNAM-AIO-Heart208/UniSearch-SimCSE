@@ -53,20 +53,31 @@
 - [x] **Huy** — Vẽ đường cong risk–coverage của Hybrid trên D1-test và đánh dấu ngưỡng cảnh báo đã chốt. [Biểu đồ E3 trên D1-test](../experiments/external_dataset/results/E3/d1-test-risk-coverage.png)
 - [x] **Huy** — Chuẩn bị mã Khoản ổn định và bộ chấm ba bảng xếp hạng D2 cho E2 và E3. Kiểm tra bằng nhãn và xếp hạng giả. [Cách chấm D2](../experiments/application/README.md#chấm-d2-test)
 - [x] **Huy** — So sánh BM25, SimCSE-VN và Hybrid trên D2 đã chốt nhãn. Codex đã chạy ngày 26/11 bằng cấu hình D1-dev và xuất chỉ số E2 theo Điều, chủ đề, Khoản và mức trùng từ, cùng chỉ số cảnh báo E3. [Bảng E2 và E3](../experiments/application/results/D2/d2-test.md) · [Biểu đồ risk–coverage](../experiments/application/results/D2/risk-coverage.png)
-- [x] **Minh** — Áp dụng cấu hình cố định vào demo CPU: hiển thị top 3 kết quả (các Điều cùng chủ đề gộp làm một, bản 2026 đứng trước), Khoản trích dẫn, tên văn bản, số hiệu, ngày ban hành, phạm vi áp dụng (ghi "bản chép từ bản scan" với QĐ 3087), cảnh báo và kết quả BM25 để đối chiếu. Đã lưu [kết quả E4 và mẫu đo](../experiments/application/results/E4/cpu-latency.md).
+- [x] **Minh** — Áp dụng cấu hình cố định vào demo CPU. Các Điều cùng chủ đề gộp vào một trong ba kết quả, bản 2026 đứng trước. Demo có Khoản trích dẫn, tên văn bản, số hiệu, ngày ban hành, phạm vi áp dụng, cảnh báo và kết quả BM25 để đối chiếu. Đã lưu [kết quả E4 và mẫu đo](../experiments/application/results/E4/cpu-latency.md).
 - [x] **Huy** — Đối chiếu 20 câu Hybrid trượt Hit@1 trên D1-test và chọn ví dụ cho E5. [Bảng phân loại và ví dụ](../experiments/application/results/E5/d1-test.md)
 - [x] **Huy** — Hoàn thành E5 trên D2-test. Đối chiếu xếp hạng và nguyên văn quy chế cho toàn bộ 3 câu ngoài phạm vi bị đánh dấu tin cậy và 5 ca trượt hạng 1 theo Điều. Nêu hướng cải thiện từ các ca đã đọc. [Bảng E5 D2-test](../experiments/application/results/E5/d2-test.md)
 - [x] **Huy tổng hợp, Minh đối chiếu** — Hoàn tất kiểm chéo E5 trên D1-test ngày 26/11. Minh đã kiểm chéo nội dung và Codex đã xác minh thứ hạng của 20 ca lỗi và 2 ca xếp đúng từ ba bảng xếp hạng gốc. [Kết quả kiểm chéo D1-test](../experiments/application/results/E5/d1-test.md#kiểm-chéo-thứ-hạng-và-nội-dung)
 
 ## Phase 4 – Hoàn thiện và nộp bài
 
-*Mục 4 · Huy tổng hợp báo cáo trong lúc Minh hoàn thiện bản chạy và video.*
+*Mục 4 · Huy phụ trách báo cáo, Minh quay video. Codex thực hiện các phép kiểm và đóng gói.*
 
 - [x] **Huy** — Tổng hợp báo cáo theo mẫu IEEE và xuất PDF từ [mã nguồn báo cáo](report/README.md).
   - [x] Hoàn thành [Abstract](report/sections/abstract.tex) và đoạn cuối [Introduction](report/sections/introduction.tex) ngày 26/11 từ kết quả tái hiện, D1-test và D2-test.
   - [x] Hoàn thành [Conclusion](report/sections/conclusion.tex) ngày 26/11 từ kết quả đã kiểm và các giới hạn ghi nhận trong E5.
 - [x] **Minh phụ trách ứng dụng, Huy tổng hợp** — Hoàn tất [Application](report/sections/application.tex), [Team Contributions](report/sections/contributions.tex) và [hướng dẫn dựng corpus, chạy demo](../apps/README.md) từ các đầu ra đã bàn giao.
 - [x] **Huy** — Rà mã, dữ liệu, báo cáo, đường dẫn và khả năng tái lập. Xem [checklist lỗi và phép kiểm](reviews/workspace.md).
+- [x] **Huy** — Rà lại cách đọc kết quả trước khi quay video. Đối chiếu bảng, công thức, ngắt trang với PDF và thử cả hai tab trên màn hình rộng và hẹp. [Checklist giao diện](reviews/workspace.md#kiểm-tra-giao-diện-tra-cứu)
+- [x] **Huy** — Kiểm hành trình tra cứu khi sửa câu, mất kết nối hoặc thiếu từ khóa. Đối chiếu tên tệp và mô tả giao diện với bản đang chạy. [Kết quả rà soát](reviews/workspace.md#trải-nghiệm-sinh-viên-và-tài-liệu)
 - [x] **Huy** — Công bố bộ D2 theo D-18 trong thư mục Drive riêng. Ngày 26/11 đã tải thử ẩn danh và kiểm SHA-256. [Link dùng trong bài nộp](../data/d2/README.md#bộ-d2-công-khai)
-- [ ] **Minh** — Quay video tối đa 30 phút trên cấu hình đã đánh giá.
-- [ ] **Huy kiểm tra, Minh đóng gói** — Khi có video, Minh tạo `[Group14].zip` với PDF, mã nguồn, hướng dẫn và dữ liệu được phép bàn giao. Huy mở lại gói và kiểm các liên kết, rồi một đại diện nộp lên Moodle.
+- [x] **Codex** đã chuẩn bị slide có ghi chú, bản PDF xem trước và ảnh gốc để Minh quay video, đồng thời kiểm đường dẫn tải từ Drive. [Nội dung tư liệu](README.md#báo-cáo-và-video)
+- [x] **Codex** đã dựng PDF, chạy kiểm thử và chuẩn bị hồ sơ mã nguồn cùng dữ liệu trong `Ho-so-cho-video.zip`. [Lệnh đối chiếu](README.md#báo-cáo-và-video)
+- [ ] **Minh** quay video trình diễn ứng dụng trên cấu hình đã đánh giá, tối đa 30 phút.
+- [ ] **Codex** thêm bản ghi của Minh, kiểm gói cuối `[Group14].zip`. Theo quy cách môn học, một đại diện nhóm nộp Moodle trước 23:59 ngày 11/12/2026.
+
+## Kiểm thử ngoại tuyến đã hoàn thành
+
+- [x] **Huy phụ trách so sánh.** Codex đã điền [16 câu phát triển cho Huy và Minh](../data/development/clause-scope-pilot.jsonl), chạy bốn bản và đối chiếu từng lỗi trên giao diện. [Kết quả trên bộ mở](../experiments/application/results/clause-scope-pilot/comparison.md) · [Thiết kế cho lần xác nhận độc lập](../experiments/application/clause-scope-comparison.md)
+- [x] **Huy phụ trách thử cách mở phiên bản.** Codex đã phát lại bản Hybrid, so câu có năm văn bản, câu chỉ nêu năm học và câu không nêu năm, rồi kiểm các căn cứ nhìn thấy trong Chrome ngoại tuyến. [Kết quả và đề xuất về chọn khóa](../experiments/application/results/edition-display-pilot/comparison.md)
+- [x] **Codex** dựng hai mẫu dùng chung câu hỏi, ba tình huống và căn cứ tham chiếu. [Gói mô phỏng ngoại tuyến](../experiments/application/README.md#mô-phỏng-hai-cách-chọn-khóa)
+- [x] **Chạy thử cho Huy và Minh.** Codex đã điền phiếu cho đủ sáu tổ hợp mô phỏng, kiểm từng căn cứ và sửa liên kết tới trang PDF ở nhiệm vụ tra chung. [Kết quả từng lượt](../experiments/application/results/cohort-walkthrough/comparison.md)

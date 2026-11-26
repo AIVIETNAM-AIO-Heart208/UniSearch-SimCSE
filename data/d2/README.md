@@ -2,6 +2,8 @@
 
 D2 là bộ câu hỏi kiểu sinh viên do nhóm xây dựng về quy chế đào tạo của trường mình và **chỉ dùng để test**. Quyết định D-17 nằm trong [PROJECT.md §8.3](../../docs/application/PROJECT.md#83-decision-log). Quy tắc gán nhãn nằm trong [PROJECT.md §6.2](../../docs/application/PROJECT.md#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu).
 
+Việc thử cải tiến cách chọn Khoản và cảnh báo dùng một đợt câu hỏi HCMUS riêng. [Dữ liệu phát triển và cách loại trùng với D2](../../experiments/application/clause-scope-comparison.md#dữ-liệu-phát-triển-và-nhãn-giữ-kín)
+
 D2 bù ba chỗ D1 (ViRHE4QA) không có:
 - Câu hỏi diễn đạt khác văn bản. Câu hỏi D1 được viết từ chính văn bản, nên trùng từ nhiều.
 - Câu hỏi ngoài phạm vi, để đo cảnh báo độ tin cậy.
@@ -44,6 +46,8 @@ QĐ 91/QĐ-KHTN ngày 18/01/2023 sửa bảng xếp loại ở điểm b khoản
   - Khi đánh giá, D2 báo hai mức. **Theo Điều** là mức chặt, không gộp. **Theo chủ đề** khớp với giao diện nhưng dễ hơn: Điều của phiên bản kia hoặc Điều cùng chủ đề cũng được tính đúng. Luôn báo cả hai mức, không báo mức theo chủ đề một mình.
 
 ## File
+
+Sau khi giải nén hồ sơ chờ video hoặc gói nộp, các đường dẫn dưới đây tính từ thư mục `source/`. Cả hai gói chứa bản chép hiệu đính dùng để lập chỉ mục và corpus đủ hai quy chế. [Nội dung gói và cách kiểm SHA-256](../../docs/README.md#báo-cáo-và-video)
 
 | File | Nội dung | Trong Git? |
 |---|---|---|
