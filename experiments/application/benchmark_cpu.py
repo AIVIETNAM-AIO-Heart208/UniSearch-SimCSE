@@ -78,11 +78,12 @@ def check_demo(index):
             results, baseline, warning = client.predict(question, api_name="/search")
             for html in (results, baseline):
                 assert html.count('<section aria-label=') == 3
-                assert 'Khoản' in html and 'bản chép từ bản scan' in html
+                assert 'Khoản' in html and 'Áp dụng theo khóa tuyển sinh' in html
+                assert 'ChatGPT' not in html and 'Điểm xếp hạng' not in html
                 assert '3087' in html and '2026' in html
                 assert all(
                     card.index("3087") < card.index("1175")
-                    for card in html.split("<section") if "3087" in card and "1175" in card
+                    for card in html.split("<section")[1:] if "3087" in card and "1175" in card
                 )
             rows.append({"question": question, "warning": warning,
                          "hybrid_topics": results.count('<section aria-label='),

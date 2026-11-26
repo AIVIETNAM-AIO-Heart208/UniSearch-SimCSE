@@ -1,0 +1,302 @@
+{
+  "date": "2026-11-26",
+  "scope": "Student interface regression check. Citations identify the displayed primary edition, article and optional clause of each topic. These queries are not a labelled relevance evaluation.",
+  "configuration": {
+    "application": "apps/app.py",
+    "corpus_sha256": "c0597378bbc9699dbdc6ee073857b796a9e118ff70e59523e5d2a41f09b9e1e1",
+    "settings_source": "experiments/external_dataset/results/D1-dev-tuning/summary.json",
+    "bm25_weight": 0.6,
+    "warning_threshold": 0.6201629042625427,
+    "gradio": "5.49.1",
+    "torch_threads": 4
+  },
+  "comparison": "Both versions used the same cached checkpoint and corpus. Each request used the local /search endpoint. Empty bm25 means that the tab displayed a keyword suggestion with zero topic cards.",
+  "queries": [
+    {
+      "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+      "before": {
+        "main": [
+          "2026.10.5",
+          "2026.13.4",
+          "2026.5.4"
+        ],
+        "bm25": [
+          "2026.10.5",
+          "2026.13.4",
+          "2026.5.4"
+        ],
+        "main_warning": ""
+      },
+      "after": {
+        "main": [
+          "2026.10.5",
+          "2026.13.4",
+          "2026.5.4"
+        ],
+        "bm25": [
+          "2026.10.5",
+          "2026.13.4",
+          "2026.5.4"
+        ],
+        "main_warning": ""
+      }
+    },
+    {
+      "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+      "before": {
+        "main": [
+          "2026.21.2",
+          "2026.16.4",
+          "2026.20.3"
+        ],
+        "bm25": [
+          "2026.16.4",
+          "2026.21.2",
+          "2026.20.2"
+        ],
+        "main_warning": ""
+      },
+      "after": {
+        "main": [
+          "2026.21.2",
+          "2026.16.4",
+          "2026.20.3"
+        ],
+        "bm25": [
+          "2026.16.4",
+          "2026.21.2",
+          "2026.20.2"
+        ],
+        "main_warning": ""
+      }
+    },
+    {
+      "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+      "before": {
+        "main": [
+          "2026.20.4",
+          "2026.17.4",
+          "2026.19.4"
+        ],
+        "bm25": [
+          "2026.17.4",
+          "2026.20.4",
+          "2026.19.4"
+        ],
+        "main_warning": "Độ tin cậy thấp đối với trích đoạn hạng đầu của Hybrid (Quy chế 2026, Điều 20 · Khoản 4). Hãy đối chiếu văn bản gốc hoặc hỏi Phòng Đào tạo."
+      },
+      "after": {
+        "main": [
+          "2026.20.4",
+          "2026.17.4",
+          "2026.19.4"
+        ],
+        "bm25": [
+          "2026.17.4",
+          "2026.20.4",
+          "2026.19.4"
+        ],
+        "main_warning": "Độ tin cậy thấp đối với trích đoạn hạng đầu của Hybrid (Quy chế 2026, Điều 20 · Khoản 4). Hãy đối chiếu văn bản gốc hoặc hỏi Phòng Đào tạo."
+      }
+    },
+    {
+      "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+      "before": {
+        "main": [
+          "2026.3.5",
+          "2026.23.3",
+          "2026.6.1"
+        ],
+        "bm25": [
+          "2026.3.5",
+          "2026.23.2",
+          "2026.6.1"
+        ],
+        "main_warning": ""
+      },
+      "after": {
+        "main": [
+          "2026.3.5",
+          "2026.23.3",
+          "2026.6.1"
+        ],
+        "bm25": [
+          "2026.3.5",
+          "2026.23.2",
+          "2026.6.1"
+        ],
+        "main_warning": ""
+      }
+    },
+    {
+      "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+      "before": {
+        "main": [
+          "2026.7.6",
+          "2026.23",
+          "2026.6.1"
+        ],
+        "bm25": [
+          "2026.7.6",
+          "2026.23",
+          "2026.6.1"
+        ],
+        "main_warning": ""
+      },
+      "after": {
+        "main": [
+          "2026.7.6",
+          "2026.23",
+          "2026.6.1"
+        ],
+        "bm25": [
+          "2026.7.6",
+          "2026.23",
+          "2026.6.1"
+        ],
+        "main_warning": ""
+      }
+    },
+    {
+      "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+      "before": {
+        "main": [
+          "2026.6.2",
+          "2026.5.1",
+          "2026.11.3"
+        ],
+        "bm25": [
+          "2026.6",
+          "2026.17.2",
+          "2026.5.1"
+        ],
+        "main_warning": "Độ tin cậy thấp đối với trích đoạn hạng đầu của Hybrid (Quy chế 2021, Điều 6 · Khoản 6). Hãy đối chiếu văn bản gốc hoặc hỏi Phòng Đào tạo."
+      },
+      "after": {
+        "main": [
+          "2026.6.2",
+          "2026.5.1",
+          "2026.11.3"
+        ],
+        "bm25": [
+          "2026.6",
+          "2026.17.2",
+          "2026.5.1"
+        ],
+        "main_warning": "Độ tin cậy thấp đối với trích đoạn hạng đầu của Hybrid (Quy chế 2021, Điều 6 · Khoản 6). Hãy đối chiếu văn bản gốc hoặc hỏi Phòng Đào tạo."
+      }
+    },
+    {
+      "question": "Điểm trung bình tích lũy được tính như thế nào và xếp loại ra sao?",
+      "before": {
+        "main": [
+          "2026.16.3",
+          "2026.11.1",
+          "2026.13.4"
+        ],
+        "bm25": [
+          "2026.16.3",
+          "2026.18.3",
+          "2026.13.4"
+        ],
+        "main_warning": ""
+      },
+      "after": {
+        "main": [
+          "2026.16.3",
+          "2026.11.1",
+          "2026.13.4"
+        ],
+        "bm25": [
+          "2026.16.3",
+          "2026.18.3",
+          "2026.13.4"
+        ],
+        "main_warning": ""
+      }
+    },
+    {
+      "question": "Trường có giảm học phí cho sinh viên đạt học bổng không?",
+      "before": {
+        "main": [
+          "2026.15.2",
+          "2026.14.4",
+          "2026.18.3"
+        ],
+        "bm25": [
+          "2026.15.2",
+          "2026.14.4",
+          "2026.17.4"
+        ],
+        "main_warning": ""
+      },
+      "after": {
+        "main": [
+          "2026.15.2",
+          "2026.14.4",
+          "2026.18.3"
+        ],
+        "bm25": [
+          "2026.15.2",
+          "2026.14.4",
+          "2026.17.4"
+        ],
+        "main_warning": ""
+      }
+    },
+    {
+      "question": "Một học kỳ trao đổi ở trường đối tác có được tính vào chương trình đang học không?",
+      "before": {
+        "main": [
+          "2026.7.3",
+          "2026.19.1",
+          "2026.14.4"
+        ],
+        "bm25": [
+          "2026.14.4",
+          "2026.19.1",
+          "2026.20.2"
+        ],
+        "main_warning": ""
+      },
+      "after": {
+        "main": [
+          "2026.7.3",
+          "2026.19.1",
+          "2026.14.4"
+        ],
+        "bm25": [
+          "2026.14.4",
+          "2026.19.1",
+          "2026.20.2"
+        ],
+        "main_warning": ""
+      }
+    },
+    {
+      "question": "jjjqzxvqqqzz",
+      "before": {
+        "main": [
+          "2026.25.2",
+          "2026.13.5",
+          "2026.26"
+        ],
+        "bm25": [
+          "2026.1",
+          "2026.12",
+          "2026.11"
+        ],
+        "main_warning": "Độ tin cậy thấp đối với trích đoạn hạng đầu của Hybrid (Quy chế 2026, Điều 25 · Khoản 2). Hãy đối chiếu văn bản gốc hoặc hỏi Phòng Đào tạo."
+      },
+      "after": {
+        "main": [
+          "2026.25.2",
+          "2026.13.5",
+          "2026.26"
+        ],
+        "bm25": [],
+        "main_warning": "Độ tin cậy thấp đối với trích đoạn hạng đầu của Hybrid (Quy chế 2026, Điều 25 · Khoản 2). Hãy đối chiếu văn bản gốc hoặc hỏi Phòng Đào tạo."
+      }
+    }
+  ]
+}
