@@ -84,7 +84,8 @@ def test_app_group_order_plain_text_and_warning():
     index.vectors = index.vectors.copy()
     index.vectors[:, 0] = 0
     results, _, status = answer(index, "fixture", weight=0.5, threshold=0.8)
-    assert results and "Độ tin cậy thấp" in status
+    assert results and "Độ tin cậy thấp đối với trích đoạn hạng đầu của Hybrid" in status
+    assert "trích đoạn hạng đầu của SimCSE-VN" in answer(index, "fixture", threshold=0.8)[2]
 
 
 def test_regulation_ignores_signing_decision_and_preserves_offsets():

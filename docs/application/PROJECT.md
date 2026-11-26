@@ -376,7 +376,7 @@ Min-max theo từng câu hỏi làm mất thang điểm tuyệt đối. Nếu m�
   - Ứng dụng không tự xác định phiên bản nào áp dụng cho một khóa cụ thể: nó hiển thị kết quả của cả hai phiên bản, kèm phạm vi áp dụng ghi trong văn bản.
   - Các Điều cùng chủ đề (theo `data/d2/article_map.tsv`, mỗi chủ đề có 1–3 Điều) hiển thị thành **một** kết quả, kèm các phiên bản có trong chủ đề đó.
   - Trong mỗi kết quả, **bản 2026 hiển thị trước** vì là bản mới nhất (D-18); mọi chủ đề đều có Điều của bản 2026. Bản 2021 hiển thị phụ, ghi rõ áp dụng cho khóa tuyển từ năm học 2021–2022 đến 2025, trừ quy định mới có lợi hơn (Điều 27 bản 2026).
-- **Độ tin cậy thấp:** vẫn hiển thị top-3, gắn nhãn cảnh báo và gợi ý liên hệ phòng đào tạo. MVP **không từ chối cứng**. Ngưỡng θ được chọn và đánh giá theo E3 ([§6.4](#64-thí-nghiệm-thiết-yếu)).
+- **Độ tin cậy thấp:** vẫn hiển thị top-3 và gợi ý đối chiếu văn bản hoặc liên hệ phòng đào tạo. Thông báo chung cho hai tab ghi rõ Hybrid hoặc SimCSE-VN theo phương pháp đã chọn ở tab tra cứu. Ngưỡng θ được chọn và đánh giá theo E3 ([§6.4](#64-thí-nghiệm-thiết-yếu)).
 
 ### 5.4 Interface & định dạng dữ liệu
 

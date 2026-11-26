@@ -75,7 +75,9 @@ def answer(index, question, weight=None, threshold=None):
     if threshold is None:
         status += " Chưa cấu hình ngưỡng cảnh báo."
     elif cosine < threshold:
-        status += " Độ tin cậy thấp. Hãy đối chiếu văn bản hoặc liên hệ phòng đào tạo."
+        method = "SimCSE-VN" if weight is None else "Hybrid"
+        status += (f" Độ tin cậy thấp đối với trích đoạn hạng đầu của {method}. "
+                   "Hãy đối chiếu văn bản hoặc liên hệ phòng đào tạo.")
     return render_groups(group_results(index, ranked)), render_groups(group_results(index, baseline)), status.strip()
 
 

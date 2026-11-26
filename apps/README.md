@@ -4,19 +4,23 @@ Demo Gradio dùng chung bộ truy hồi với CLI. Giao diện hiển thị tố
 
 Tạo lại corpus để nạp tiêu đề đầy đủ, trạng thái thay thế và liên kết sửa đổi QĐ 91/2023 của Điều 15 bản 2021.
 
-Từ gốc repo, dùng [môi trường và checkpoint D1](../experiments/external_dataset/README.md) rồi chuẩn bị corpus HCMUS đủ hai phiên bản theo hướng dẫn bên đó.
+Từ gốc repo, chuẩn bị [checkpoint D1 và corpus HCMUS đủ hai phiên bản](../experiments/external_dataset/README.md#lệnh-chuẩn-bị-hcmus-và-đánh-giá-d2). Nếu đã có môi trường demo, đặt `$d1Python` thành đường dẫn Python của môi trường đó. Để tạo môi trường riêng trên Windows, dùng Python 3.11. Trên máy Huy, pip với Python 3.14 không tìm được bộ wheel tương thích cho Gradio 5.49.1 và `pydantic-core`.
 
 ```powershell
-& $d1Python -m pip install -e ".[retrieval,demo]"
+py -3.11 -m venv outputs/demo-venv
+$d1Python = '.\outputs\demo-venv\Scripts\python.exe'
+```
+
+Cài các phần phụ thuộc vào môi trường vừa chọn rồi mở địa chỉ cục bộ mà Gradio in ra.
+
+```powershell
+& $d1Python -m pip install -e ".[test,retrieval,demo]"
 & $d1Python apps/app.py --model-path outputs/d1-model --corpus data/processed/d2/corpus.jsonl `
   --weight '0.6' --threshold '0.6201629042625427'
 ```
 
-Mở địa chỉ cục bộ Gradio in ra. Hai tham số lấy từ [cấu hình đã chốt bằng D1-dev](../experiments/external_dataset/results/D1-dev-tuning/handoff.md). Khi chưa truyền trọng số, tab tra cứu dùng dense SimCSE-VN. Giao diện báo trạng thái khi chưa cấu hình ngưỡng.
-
-Kiểm thử giao diện bằng corpus giả lập và endpoint Gradio cục bộ.
+Hai tham số lấy từ [cấu hình đã chốt trên D1-dev](../experiments/external_dataset/results/D1-dev-tuning/handoff.md). Khi bỏ trọng số, tab tra cứu dùng dense SimCSE-VN. Khi bỏ ngưỡng, giao diện báo chưa cấu hình cảnh báo. Thông báo trên cả hai tab ghi tên phương pháp có trích đoạn hạng đầu được chấm độ tin cậy. Để kiểm thử giao diện bằng corpus giả lập và endpoint Gradio cục bộ, chạy:
 
 ```powershell
-& $d1Python -m pip install -e ".[test]"
 & $d1Python -m pytest -q tests/test_retrieval_app.py
 ```
