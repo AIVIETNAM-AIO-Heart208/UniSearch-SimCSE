@@ -91,6 +91,7 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
 - [x] **E5 trên D2-test (26/11):** đối chiếu thứ hạng, nhãn và văn bản gốc của các ca sai được chọn, gồm toàn bộ câu ngoài phạm vi bị đánh dấu tin cậy. [Bảng E5 D2-test](../../experiments/application/results/E5/d2-test.md)
 - [x] **Demo và E4 (26/11):** Minh đã kiểm demo trên corpus hai phiên bản và đo độ trễ truy hồi trên CPU. [Cấu hình và kết quả E4](../../experiments/application/results/E4/cpu-latency.md)
 - [x] **Báo cáo IEEE (26/11)** Đã hoàn thành [các mục của báo cáo](../report/README.md), gồm ứng dụng, đóng góp của từng thành viên và giới hạn rút ra từ E5. [Checklist rà soát và tái lập](../reviews/workspace.md).
+- [x] **Công bố D2 (26/11).** Đã tải ẩn danh bộ D2 từ thư mục Drive dành cho bài nộp và đối chiếu SHA-256. [Đường dẫn và nội dung gói](../../data/d2/README.md#bộ-d2-công-khai)
 
 **Đã hoàn tất các mục Phase 3.** Nhóm có CLI truy hồi, [demo Gradio](../../apps/README.md) và kết quả E0–E5.
 
@@ -462,7 +463,7 @@ Môi trường truy hồi và demo dùng venv riêng. Xem [lệnh cài và kiể
 | ID | Dataset | Vai trò | Thông tin | Truy cập / License |
 |---|---|---|---|---|
 | **D1** | ViRHE4QA, bản con trong ViRE: `data/ViRHE4QA_v2.csv` @ ViRE commit `60ea7155134eaa426ab1d0a82d2bbbf327d1b470` (sha256 `23fb9699…aa5682`) | **Dataset mới chính** (bắt buộc); đánh giá trên corpus riêng của D1 | [Confirmed, đã đọc file] 1.000 câu hỏi, 297 context khác nhau (287 bắt đầu bằng "Điều"). Mỗi câu hỏi có đúng 1 context gold. Cột: `split, index, context, question, extractive answer, abstractive answer, label`. Theo nội dung, đây là quy định của Trường ĐH CNTT – ĐHQG-HCM: 77/297 context nêu tên trường, không context nào nêu trường khác. Tóm tắt bài R2GQA không nêu tên trường, nên đây là suy ra từ nội dung (kiểm tra 23/11). Không có thông tin văn bản gốc, số hiệu hay phiên bản của từng Điều. Context dài: trung vị 173 từ, p90 495, tối đa 1.249 → cần chunk. Ý nghĩa cột `label` (0/1, 500/500) chưa rõ [Unverified] và không dùng | Tải trực tiếp từ GitHub. ViRE: code MIT, dataset bên thứ ba giữ license gốc. Bài gốc R2GQA ghi dữ liệu cung cấp "on reasonable request" → license [Unverified]. Chỉ dùng đánh giá học thuật, trích dẫn cả hai. **Nộp bằng link permalink** tới file ở commit trên (giảng viên cho phép nộp dataset bằng link) |
-| **D2** | Câu hỏi nhóm xây dựng trên quy chế đào tạo HCMUS, QĐ 1175/2021 và QĐ 3087/2026 ([`data/d2/`](../../data/d2/README.md), D-17) | Test trong bối cảnh thực tế (**chỉ test**) | [Bộ nhãn đã chốt và số câu](../../data/d2/README.md#câu-hỏi-và-nhãn-d2-đã-chốt). Corpus 51 Điều (24 + 27). QĐ 1175 trích nguyên văn từ PDF có chữ. ChatGPT chép QĐ 3087 từ scan và nhóm làm sạch | Trường đã công bố PDF của cả hai quyết định. QĐ 91/2023 sửa bảng xếp loại trong bản 2021, xem [metadata D2](../../data/d2/documents.yaml). Bộ đánh giá có `origin: team` và không chứa dữ liệu cá nhân. Gói chia sẻ công khai gồm câu hỏi, nhãn, metadata và chữ QĐ 1175. Bản ChatGPT chép QĐ 3087 chỉ nộp trong `[Group14].zip` (D-18) |
+| **D2** | Câu hỏi nhóm xây dựng trên quy chế đào tạo HCMUS, QĐ 1175/2021 và QĐ 3087/2026 ([`data/d2/`](../../data/d2/README.md), D-17) | Test trong bối cảnh thực tế (**chỉ test**) | [Bộ nhãn đã chốt và số câu](../../data/d2/README.md#câu-hỏi-và-nhãn-d2-đã-chốt). Corpus 51 Điều (24 + 27). QĐ 1175 trích nguyên văn từ PDF có chữ. ChatGPT chép QĐ 3087 từ scan và nhóm làm sạch | Trường đã công bố PDF của cả hai quyết định. QĐ 91/2023 sửa bảng xếp loại trong bản 2021, xem [metadata D2](../../data/d2/documents.yaml). Bộ đánh giá có `origin: team` và không chứa dữ liệu cá nhân. [Gói D2 công khai trên Drive](../../data/d2/README.md#bộ-d2-công-khai) ghi rõ các tệp được chia sẻ. Bản ChatGPT chép QĐ 3087 chỉ nộp trong `[Group14].zip` (D-18) |
 | R-STS | STS12–16, STS-B, SICK-R | Tái hiện R1–R3 | Theo script repo | `senteval.tar` (HF `princeton-nlp/datasets-for-simcse`) |
 | D1-full | ViRHE4QA đầy đủ (9.758 cặp QA, 294 điều) | Tùy chọn | [Confirmed theo arXiv:2409.02840] | Xin tác giả; dự án **không phụ thuộc** vào bộ này |
 | Dự phòng | EduCoQA (`data/EduCoQA.csv` trong ViRE; 511 câu hỏi / 262 đoạn, tư vấn tuyển sinh HCMUT) | Chỉ dùng nếu D1 không dùng được | [Confirmed] | CC BY-NC 4.0; bản trên HF cần đăng nhập |
@@ -735,7 +736,7 @@ Q7 đã có nguồn chính thức (24/11). Chia sẻ [PDF của Trường](https
 **Nộp bài** (trước 23:59 ngày 11/12/2026, mục tiêu trước 20:00)
 - `[Group14].zip` gồm code hoặc link GitHub, video, PDF.
 - Link dataset (D1 permalink ViRE, D2 Google Drive) và link code đã kiểm tra ở chế độ ẩn danh.
-- D2 public trên Google Drive (giữ ≥ 2 năm), nội dung theo D-18; `[Group14].zip` có kèm bản chép QĐ 3087.
+- Giữ [thư mục D2 công khai trên Drive](../../data/d2/README.md#bộ-d2-công-khai) truy cập được ít nhất 2 năm. Kèm bản ChatGPT chép QĐ 3087 từ scan, đã được nhóm hiệu đính, trong `[Group14].zip` theo D-18.
 
 ### 8.5 References
 

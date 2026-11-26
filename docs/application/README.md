@@ -4,7 +4,7 @@
 Ứng dụng tìm đúng **Điều/Khoản** trong quy chế đào tạo của Trường ĐH Khoa học Tự nhiên – ĐHQG-HCM cho câu hỏi tự nhiên của sinh viên, hiển thị đoạn văn bản kèm tên văn bản, số hiệu và phạm vi áp dụng.
 
 > **Trạng thái:** đã tái hiện R1–R4, [chốt cấu hình trên D1-dev](../../experiments/external_dataset/results/D1-dev-tuning/handoff.md), chấm [D1-test](../../experiments/external_dataset/results/E1/d1-test.md) và [D2-test](../../experiments/application/results/D2/d2-test.md). Minh đã kiểm demo và [đo độ trễ CPU](../../experiments/application/results/E4/cpu-latency.md). [Báo cáo IEEE](../report/README.md) đã có phần ứng dụng và đóng góp thành viên. [Checklist rà soát](../reviews/workspace.md).
-> Đã kiểm chéo và đưa ví dụ của [E5 D1-test](../../experiments/application/results/E5/d1-test.md) và [E5 D2-test](../../experiments/application/results/E5/d2-test.md) vào báo cáo. Xem [trạng thái và việc tiếp theo](PROJECT.md#1-current-status).
+> Đã kiểm chéo và đưa ví dụ của [E5 D1-test](../../experiments/application/results/E5/d1-test.md) và [E5 D2-test](../../experiments/application/results/E5/d2-test.md) vào báo cáo. [Bộ D2 công khai dùng trong bài nộp](../../data/d2/README.md#bộ-d2-công-khai) đã tải được ẩn danh. Xem [trạng thái và việc tiếp theo](PROJECT.md#1-current-status).
 
 ## Thành viên
 

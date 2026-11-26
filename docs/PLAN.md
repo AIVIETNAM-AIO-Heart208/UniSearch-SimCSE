@@ -67,5 +67,6 @@
   - [x] Hoàn thành [Conclusion](report/sections/conclusion.tex) ngày 26/11 từ kết quả đã kiểm và các giới hạn ghi nhận trong E5.
 - [x] **Minh phụ trách ứng dụng, Huy tổng hợp** — Hoàn tất [Application](report/sections/application.tex), [Team Contributions](report/sections/contributions.tex) và [hướng dẫn dựng corpus, chạy demo](../apps/README.md) từ các đầu ra đã bàn giao.
 - [x] **Huy** — Rà mã, dữ liệu, báo cáo, đường dẫn và khả năng tái lập. Xem [checklist lỗi và phép kiểm](reviews/workspace.md).
+- [x] **Huy** — Công bố bộ D2 theo D-18 trong thư mục Drive riêng. Ngày 26/11 đã tải thử ẩn danh và kiểm SHA-256. [Link dùng trong bài nộp](../data/d2/README.md#bộ-d2-công-khai)
 - [ ] **Minh** — Quay video tối đa 30 phút trên cấu hình đã đánh giá.
 - [ ] **Huy kiểm tra, Minh đóng gói** — Khi có video, Minh tạo `[Group14].zip` với PDF, mã nguồn, hướng dẫn và dữ liệu được phép bàn giao. Huy mở lại gói và kiểm các liên kết, rồi một đại diện nộp lên Moodle.

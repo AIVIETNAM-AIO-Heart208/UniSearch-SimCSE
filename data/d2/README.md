@@ -7,6 +7,14 @@ D2 bù ba chỗ D1 (ViRHE4QA) không có:
 - Câu hỏi ngoài phạm vi, để đo cảnh báo độ tin cậy.
 - Văn bản thật của trường mình, có số hiệu, ngày ban hành và hiệu lực, để ứng dụng hiển thị đúng phiên bản.
 
+## Bộ D2 công khai
+
+Đường dẫn dành cho giảng viên trong bài nộp là [thư mục D2 công khai của Nhóm 14 trên Google Drive](https://drive.google.com/drive/folders/1ZYuuuSYIx_ofhoVaXpz-S7e1TYIJkI5d).
+
+Thư mục có một tệp `HCMUS-D2-Group14-2026-11-26.zip`. Bốn tệp dữ liệu gồm câu hỏi và nhãn đã chốt (`queries_d2.jsonl`), bảng đối ứng Điều–chủ đề (`article_map.tsv`), metadata nguồn (`documents.yaml`) và chữ QĐ 1175 (`Quy_che_dao_tao_2021_QD1175.txt`). Chúng giữ nguyên byte từ [phiên bản dùng để đóng gói](https://github.com/AIVIETNAM-AIO-Heart208/UniSearch-SimCSE/tree/bf0ba9537d9762e50c67d1cc98ba3af401764183/data/d2).
+
+Ngày 26/11/2026, nhóm đã mở thư mục và tải ZIP khi chưa đăng nhập. SHA-256 của tệp tải về là `0681d80829eea1895912074999315b92e05d5796b407d5c5099dcffd6bb3b653`. Sau khi giải nén, chạy `sha256sum -c SHA256SUMS.txt` trong Git Bash từ thư mục chứa bảng mã để kiểm bốn tệp dữ liệu và hướng dẫn đọc.
+
 ## Corpus: 2 văn bản, 51 Điều
 
 | doc_id | Văn bản | Số Điều | Văn bản dùng làm corpus |

@@ -13,6 +13,6 @@ Hai đường dẫn trên được tạo khi chuẩn bị dữ liệu và đư�
 
 **D2** là bộ test quy chế đào tạo HCMUS do nhóm xây dựng. Dùng [tệp nhãn đã chốt](d2/queries_d2.jsonl) để đánh giá D2 và xem nguồn câu hỏi cùng quy trình gán nhãn trong [README của D2](d2/README.md#câu-hỏi-và-nhãn-d2-đã-chốt). Thư mục `d2/` có trong Git, gồm cả chữ QĐ 1175 (văn bản công khai). PDF 2021 và bản ChatGPT chép QĐ 3087 từ scan nằm ở `raw/d2/`, không có trong Git (D-18).
 
-Nguồn chính thức của QĐ 3087 và văn bản sửa đổi bảng xếp loại của QĐ 1175 được ghi trong [metadata nguồn](d2/documents.yaml). Cách tạo đúng bản chép 2026 dùng để lập chỉ mục từ bản nhóm đã chia sẻ nằm ở [hướng dẫn D2](d2/README.md#file).
+Để tải bộ đánh giá dùng trong bài nộp, xem [thư mục Drive và SHA-256 của gói D2](d2/README.md#bộ-d2-công-khai). Nguồn chính thức của QĐ 3087 và văn bản sửa đổi bảng xếp loại của QĐ 1175 được ghi trong [metadata nguồn](d2/documents.yaml). Cách tạo đúng bản chép 2026 dùng để lập chỉ mục từ bản nhóm đã chia sẻ nằm ở [hướng dẫn D2](d2/README.md#file).
 
 File [corpus HCMUS đã xử lý](d2/README.md#file) giữ [mã Điều/Khoản và offset nguồn](d2/README.md#mã-điều-và-khoản) để kiểm chứng trích dẫn và chấm D2 theo Khoản, kể cả khi văn bản lặp số Khoản.
