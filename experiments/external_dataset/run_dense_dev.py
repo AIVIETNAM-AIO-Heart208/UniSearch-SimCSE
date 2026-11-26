@@ -10,6 +10,7 @@ from pathlib import Path
 
 from simcse_lab.evaluation.metrics import evaluate_d1
 from simcse_lab.model.encoders import MAX_LENGTH, MODEL_ID, REVISION, SimCSEEncoder, verify_snapshot
+from simcse_lab.provenance import base_commit
 from simcse_lab.retrieval.ingest import article_chunks
 from simcse_lab.retrieval.search import maxp
 
@@ -115,7 +116,7 @@ def main():
             "packages": {name: version(name) for name in
                          ("torch", "transformers", "numpy", "pyvi", "scikit-learn", "sklearn-crfsuite")},
         },
-        "base_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
+        "base_commit": base_commit(),
         "command": subprocess.list2cmdline([sys.executable, *sys.argv]),
     }
     (args.output / "metrics.json").write_text(

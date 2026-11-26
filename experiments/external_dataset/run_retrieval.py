@@ -25,6 +25,13 @@ def checked_corpus_output(root, output):
         relative_file = corpus_file.relative_to(root).as_posix()
     except ValueError as exc:
         raise ValueError("HCMUS output must be inside the repository") from exc
+    if not any((parent / ".git").exists() for parent in (root, *root.parents)):
+        # The source distribution has no Git metadata. Only write generated data
+        # within the same two project output trees used by the documented commands.
+        if (not relative_dir.startswith(("data/processed/", "outputs/"))
+                or relative_file != relative_dir + "/corpus.jsonl"):
+            raise ValueError("Use a Git-ignored output directory under data/processed/ or outputs/")
+        return destination
     git = ["git", "-C", str(root)]
     tracked = subprocess.check_output([*git, "ls-files", "-z", "--", f":(literal){relative_dir}"])
     for relative in (relative_dir + "/", relative_file):

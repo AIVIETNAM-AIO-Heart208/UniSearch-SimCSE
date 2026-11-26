@@ -5,7 +5,6 @@ from __future__ import annotations
 import argparse
 import json
 import platform
-import subprocess
 import tempfile
 from hashlib import sha256
 from importlib.metadata import version
@@ -13,6 +12,7 @@ from pathlib import Path
 
 from experiments.application.analyze_d1_overlap import _word_set
 from simcse_lab.evaluation.d2 import LEVELS, METHODS, evaluate_d2
+from simcse_lab.provenance import base_commit
 from simcse_lab.retrieval.hcmus import load_article_map, load_regulations, regulation_articles
 
 
@@ -160,7 +160,7 @@ def main() -> None:
     report["inputs"] = {name: {"path": path.as_posix(), "sha256": sha256(blobs[name]).hexdigest()}
                         for name, path in paths.items()}
     report["regulations"] = sources
-    report["run"] = {"git_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
+    report["run"] = {"git_commit": base_commit(),
                      "python": platform.python_version(), "platform": platform.platform(), "device": "cpu",
                      "script_sha256": sha256(Path(__file__).read_bytes()).hexdigest(),
                      "retrieval_hashes_verified": verified,

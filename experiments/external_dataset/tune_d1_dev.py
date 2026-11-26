@@ -5,7 +5,6 @@ import csv
 import io
 import json
 import platform
-import subprocess
 from hashlib import sha256
 from importlib.metadata import version
 from pathlib import Path
@@ -16,6 +15,7 @@ from experiments.external_dataset.run_dense_dev import read_rows, write_rows
 from simcse_lab.evaluation.metrics import evaluate_d1
 from simcse_lab.evaluation.stats import select_threshold, warning_metrics
 from simcse_lab.model.encoders import MAX_LENGTH, MODEL_ID, REVISION, SimCSEEncoder, verify_snapshot
+from simcse_lab.provenance import base_commit
 from simcse_lab.retrieval.ingest import article_chunks
 from simcse_lab.retrieval.search import RetrievalIndex
 
@@ -123,7 +123,7 @@ def main() -> None:
                     "dev_gold_contexts": split["dev"]["gold_contexts"], "forced_dev_qids": split["forced_dev_qids"]},
         "checkpoint": {"model": MODEL_ID, "revision": REVISION, "snapshot_sha256": snapshot},
         "run": {
-            "git_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
+            "git_commit": base_commit(),
             "runner_sha256": sha256(Path(__file__).read_bytes()).hexdigest(),
             "arguments": {"input": args.input.as_posix(), "model_path": args.model_path.as_posix(),
                           "output": args.output.as_posix()},

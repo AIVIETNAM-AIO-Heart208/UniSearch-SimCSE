@@ -8,7 +8,6 @@ import io
 import json
 import math
 import platform
-import subprocess
 from hashlib import sha256
 from importlib.metadata import version
 from pathlib import Path
@@ -17,6 +16,7 @@ from statistics import median, quantiles
 from experiments.external_dataset.evaluate_d1_test import PUBLISHED_E1, saved_test_queries
 from simcse_lab.evaluation.metrics import evaluate_d1
 from simcse_lab.evaluation.stats import paired_bootstrap
+from simcse_lab.provenance import base_commit
 from simcse_lab.retrieval.preprocess import segment
 
 
@@ -159,7 +159,7 @@ def main() -> None:
             **{name: version(name) for name in ("pyvi", "scikit-learn", "sklearn-crfsuite", "python-crfsuite")},
         },
         "run": {
-            "git_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
+            "git_commit": base_commit(),
             "runner_sha256": sha256(Path(__file__).read_bytes()).hexdigest(),
             "arguments": {
                 "e1_summary": args.e1_summary.as_posix(), "input": csv_path.as_posix(),

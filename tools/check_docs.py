@@ -1,7 +1,7 @@
 """Check the repo's Markdown docs: relative links, heading anchors, table columns and tabs.
 
 Usage (from the repo root):  python -X utf8 tools/check_docs.py [extra.md ...]
-Checks tracked and untracked non-ignored *.md files plus local STATUS.md / AGENTS.md when present.
+Checks project Markdown in a Git checkout or an extracted source distribution.
 Exit code 1 if any problem is found.
 """
 import os
@@ -9,6 +9,7 @@ import re
 import subprocess
 import sys
 import unicodedata
+from pathlib import Path
 from urllib.parse import unquote
 
 
@@ -78,9 +79,19 @@ def check(path: str) -> list[str]:
 
 
 def main() -> int:
-    candidates = subprocess.check_output(["git", "ls-files", "-z", "--cached", "--others",
-                                          "--exclude-standard", "--", "*.md"])
-    files = [os.fsdecode(name) for name in candidates.split(b"\0") if name and os.path.isfile(os.fsdecode(name))]
+    if Path(".git").exists():
+        candidates = subprocess.check_output(["git", "ls-files", "-z", "--cached", "--others",
+                                              "--exclude-standard", "--", "*.md"])
+        files = [os.fsdecode(name) for name in candidates.split(b"\0") if name and os.path.isfile(os.fsdecode(name))]
+    else:
+        files = []
+        generated = {Path(p) for p in ("outputs", "checkpoints", "data/raw", "data/processed",
+                                        "docs/report/build", "experiments/reproduction/SimCSE")}
+        for directory, children, names in os.walk("."):
+            folder = Path(directory)
+            children[:] = [c for c in children if not c.startswith(".") and not c.endswith(".egg-info")
+                           and c not in {"__pycache__", "build", "dist"} and folder / c not in generated]
+            files.extend(str(folder / n) for n in sorted(names) if n.endswith(".md"))
     files += [f for f in ("STATUS.md", "AGENTS.md") if os.path.exists(f)] + sys.argv[1:]
     files = list(dict.fromkeys(files))
     problems = [p for f in files for p in check(f)]

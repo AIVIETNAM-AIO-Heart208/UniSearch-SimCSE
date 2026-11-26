@@ -18,6 +18,7 @@ from experiments.external_dataset.run_dense_dev import read_rows, write_rows
 from simcse_lab.evaluation.metrics import evaluate_d1
 from simcse_lab.evaluation.stats import paired_bootstrap, warning_metrics
 from simcse_lab.model.encoders import MAX_LENGTH, MODEL_ID, REVISION, SimCSEEncoder, verify_snapshot
+from simcse_lab.provenance import base_commit
 from simcse_lab.retrieval.ingest import article_chunks
 
 
@@ -116,7 +117,7 @@ def _evaluate(args: argparse.Namespace, staging: Path) -> None:
         "frozen": {"path": FROZEN_CONFIG.as_posix(), "sha256": sha256(config_bytes).hexdigest(),
                    "weight": weight, "threshold": threshold},
         "run": {
-            "git_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
+            "git_commit": base_commit(),
             "runner_sha256": sha256(Path(__file__).read_bytes()).hexdigest(),
             "retrieval_sha256": sha256(RETRIEVAL_SCRIPT.read_bytes()).hexdigest(),
             "input": args.input.as_posix(), "retrieval_arguments": retrieval_args(args.output),

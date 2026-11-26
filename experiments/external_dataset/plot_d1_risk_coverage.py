@@ -6,7 +6,6 @@ import argparse
 import json
 import math
 import platform
-import subprocess
 from hashlib import sha256
 from itertools import groupby
 from pathlib import Path
@@ -17,6 +16,7 @@ from matplotlib.figure import Figure
 from matplotlib.ticker import PercentFormatter
 
 from experiments.external_dataset.evaluate_d1_test import PUBLISHED_E1, saved_test_queries
+from simcse_lab.provenance import base_commit
 from simcse_lab.evaluation.stats import _cosine, warning_metrics
 
 
@@ -134,7 +134,7 @@ def main() -> None:
         "full_coverage": {"accepted": size, "errors": full_errors, "coverage": 1.0, "risk": full_errors / size},
         "curve_columns": ["threshold", "accepted", "errors"], "curve": points,
         "run": {
-            "git_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
+            "git_commit": base_commit(),
             "script_sha256": sha256(Path(__file__).read_bytes()).hexdigest(),
             "python": platform.python_version(), "matplotlib": matplotlib.__version__,
             "platform": platform.platform(), "device": "cpu",
