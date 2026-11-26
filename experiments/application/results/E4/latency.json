@@ -1,0 +1,1519 @@
+{
+  "platform": "Windows-11-10.0.26100-SP0",
+  "cpu": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+  "logical_cpus": 16,
+  "torch": "2.14.1+cu126",
+  "torch_threads": 4,
+  "checkpoint": "608779b86741a8acd8c8d38132974ff04086b138",
+  "corpus_sha256": "c0597378bbc9699dbdc6ee073857b796a9e118ff70e59523e5d2a41f09b9e1e1",
+  "articles": 51,
+  "topics": 26,
+  "chunks": 273,
+  "weight": 0.6,
+  "threshold": 0.6201629042625427,
+  "build_ms": 40514.22879999973,
+  "percentiles_p50_p95_ms": {
+    "bm25": {
+      "total_ms": [
+        0.7929000003059627,
+        1.071994999756498
+      ],
+      "segment_ms": [
+        0.18774999989545904,
+        0.2764900000784109
+      ],
+      "encode_ms": [
+        0.0,
+        0.0
+      ],
+      "search_ms": [
+        0.5896999996366503,
+        0.8131749994390701
+      ]
+    },
+    "dense": {
+      "total_ms": [
+        29.387750000296364,
+        36.03281499945297
+      ],
+      "segment_ms": [
+        0.17799999977796688,
+        0.2593450000404118
+      ],
+      "encode_ms": [
+        28.912949999721604,
+        35.46945499974754
+      ],
+      "search_ms": [
+        0.24764999989201897,
+        0.314135000189708
+      ]
+    },
+    "hybrid": {
+      "total_ms": [
+        30.314350000480772,
+        34.87671500024589
+      ],
+      "segment_ms": [
+        0.5507999994733837,
+        0.6588799992641724
+      ],
+      "encode_ms": [
+        28.68694999961008,
+        32.95972999935656
+      ],
+      "search_ms": [
+        1.1424499998611282,
+        1.5348200003700183
+      ]
+    }
+  },
+  "samples": {
+    "bm25": [
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 1,
+        "total_ms": 0.7947000003696303,
+        "segment_ms": 0.19250000059400918,
+        "encode_ms": 0.0,
+        "search_ms": 0.6021999997756211
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 1,
+        "total_ms": 0.8582999998907326,
+        "segment_ms": 0.18049999926006421,
+        "encode_ms": 0.0,
+        "search_ms": 0.6778000006306684
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 1,
+        "total_ms": 1.3136000006852555,
+        "segment_ms": 0.3326999994897051,
+        "encode_ms": 0.0,
+        "search_ms": 0.9809000011955504
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 1,
+        "total_ms": 0.793100000009872,
+        "segment_ms": 0.2071999997497187,
+        "encode_ms": 0.0,
+        "search_ms": 0.5859000002601533
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 1,
+        "total_ms": 0.8404999998674612,
+        "segment_ms": 0.21360000027925707,
+        "encode_ms": 0.0,
+        "search_ms": 0.6268999995882041
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 1,
+        "total_ms": 0.5966999997326639,
+        "segment_ms": 0.14400000054592965,
+        "encode_ms": 0.0,
+        "search_ms": 0.4526999991867342
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 2,
+        "total_ms": 0.7813000001988257,
+        "segment_ms": 0.1824000000851811,
+        "encode_ms": 0.0,
+        "search_ms": 0.5989000001136446
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 2,
+        "total_ms": 0.8186999993995414,
+        "segment_ms": 0.21319999996194383,
+        "encode_ms": 0.0,
+        "search_ms": 0.6054999994375976
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 2,
+        "total_ms": 0.985200000286568,
+        "segment_ms": 0.27580000005400507,
+        "encode_ms": 0.0,
+        "search_ms": 0.7094000002325629
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 2,
+        "total_ms": 0.6708999999318621,
+        "segment_ms": 0.18030000046564965,
+        "encode_ms": 0.0,
+        "search_ms": 0.49059999946621247
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 2,
+        "total_ms": 0.7447000007232418,
+        "segment_ms": 0.19049999991693767,
+        "encode_ms": 0.0,
+        "search_ms": 0.5542000008063042
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 2,
+        "total_ms": 0.5023000003347988,
+        "segment_ms": 0.12740000056510326,
+        "encode_ms": 0.0,
+        "search_ms": 0.37489999976969557
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 3,
+        "total_ms": 0.6784999995943508,
+        "segment_ms": 0.16589999995630933,
+        "encode_ms": 0.0,
+        "search_ms": 0.5125999996380415
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 3,
+        "total_ms": 0.8083000002443441,
+        "segment_ms": 0.18709999949351186,
+        "encode_ms": 0.0,
+        "search_ms": 0.6212000007508323
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 3,
+        "total_ms": 0.8807000003798748,
+        "segment_ms": 0.2518999999665539,
+        "encode_ms": 0.0,
+        "search_ms": 0.628800000413321
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 3,
+        "total_ms": 0.7076000001688953,
+        "segment_ms": 0.18080000063491752,
+        "encode_ms": 0.0,
+        "search_ms": 0.5267999995339778
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 3,
+        "total_ms": 0.786599999628379,
+        "segment_ms": 0.19609999981184956,
+        "encode_ms": 0.0,
+        "search_ms": 0.5904999998165295
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 3,
+        "total_ms": 0.5000000001018634,
+        "segment_ms": 0.12729999980365392,
+        "encode_ms": 0.0,
+        "search_ms": 0.3727000002982095
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 4,
+        "total_ms": 1.0362000002714922,
+        "segment_ms": 0.26669999988371274,
+        "encode_ms": 0.0,
+        "search_ms": 0.7695000003877794
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 4,
+        "total_ms": 0.8810999997876934,
+        "segment_ms": 0.18840000029740622,
+        "encode_ms": 0.0,
+        "search_ms": 0.6926999994902872
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 4,
+        "total_ms": 0.9081999996851664,
+        "segment_ms": 0.23179999971034704,
+        "encode_ms": 0.0,
+        "search_ms": 0.6763999999748194
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 4,
+        "total_ms": 0.7593999998789513,
+        "segment_ms": 0.19329999940964626,
+        "encode_ms": 0.0,
+        "search_ms": 0.5661000004693051
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 4,
+        "total_ms": 1.009900000099151,
+        "segment_ms": 0.2217999999629683,
+        "encode_ms": 0.0,
+        "search_ms": 0.7881000001361826
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 4,
+        "total_ms": 0.570299999708368,
+        "segment_ms": 0.1339999998890562,
+        "encode_ms": 0.0,
+        "search_ms": 0.4362999998193118
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 5,
+        "total_ms": 0.7163000000218744,
+        "segment_ms": 0.1795999996829778,
+        "encode_ms": 0.0,
+        "search_ms": 0.5367000003388966
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 5,
+        "total_ms": 0.7625999996889732,
+        "segment_ms": 0.173700000232202,
+        "encode_ms": 0.0,
+        "search_ms": 0.5888999994567712
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 5,
+        "total_ms": 0.8860000007189228,
+        "segment_ms": 0.2480000002833549,
+        "encode_ms": 0.0,
+        "search_ms": 0.6380000004355679
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 5,
+        "total_ms": 0.6746999997631065,
+        "segment_ms": 0.1795999996829778,
+        "encode_ms": 0.0,
+        "search_ms": 0.49510000008012867
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 5,
+        "total_ms": 0.7369999993898091,
+        "segment_ms": 0.19150000025547342,
+        "encode_ms": 0.0,
+        "search_ms": 0.5454999991343357
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 5,
+        "total_ms": 0.8014000004550326,
+        "segment_ms": 0.12440000045899069,
+        "encode_ms": 0.0,
+        "search_ms": 0.6769999999960419
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 6,
+        "total_ms": 0.6951000004846719,
+        "segment_ms": 0.16520000008313218,
+        "encode_ms": 0.0,
+        "search_ms": 0.5299000004015397
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 6,
+        "total_ms": 0.7589999995616381,
+        "segment_ms": 0.17050000042218016,
+        "encode_ms": 0.0,
+        "search_ms": 0.5884999991394579
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 6,
+        "total_ms": 1.2469000002965913,
+        "segment_ms": 0.3195999997842591,
+        "encode_ms": 0.0,
+        "search_ms": 0.9273000005123322
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 6,
+        "total_ms": 0.6656000005023088,
+        "segment_ms": 0.17869999919639667,
+        "encode_ms": 0.0,
+        "search_ms": 0.48690000130591216
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 6,
+        "total_ms": 1.1498000003484776,
+        "segment_ms": 0.28960000054212287,
+        "encode_ms": 0.0,
+        "search_ms": 0.8601999998063548
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 6,
+        "total_ms": 0.5454000001918757,
+        "segment_ms": 0.12299999980314169,
+        "encode_ms": 0.0,
+        "search_ms": 0.42240000038873404
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 7,
+        "total_ms": 1.0143999998035724,
+        "segment_ms": 0.24899999971239595,
+        "encode_ms": 0.0,
+        "search_ms": 0.7654000000911765
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 7,
+        "total_ms": 0.8657999997012666,
+        "segment_ms": 0.18089999957737746,
+        "encode_ms": 0.0,
+        "search_ms": 0.6849000001238892
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 7,
+        "total_ms": 0.9527000001980923,
+        "segment_ms": 0.246300000071642,
+        "encode_ms": 0.0,
+        "search_ms": 0.7064000001264503
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 7,
+        "total_ms": 0.7930000001579174,
+        "segment_ms": 0.2119999999194988,
+        "encode_ms": 0.0,
+        "search_ms": 0.5810000002384186
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 7,
+        "total_ms": 0.8406999995713704,
+        "segment_ms": 0.21259999994072132,
+        "encode_ms": 0.0,
+        "search_ms": 0.6280999996306491
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 7,
+        "total_ms": 0.585700000556244,
+        "segment_ms": 0.15579999944748124,
+        "encode_ms": 0.0,
+        "search_ms": 0.4299000011087628
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 8,
+        "total_ms": 0.7685999999011983,
+        "segment_ms": 0.1830000001064036,
+        "encode_ms": 0.0,
+        "search_ms": 0.5855999997947947
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 8,
+        "total_ms": 0.8110999997370527,
+        "segment_ms": 0.1815999994505546,
+        "encode_ms": 0.0,
+        "search_ms": 0.6295000002864981
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 8,
+        "total_ms": 0.7928000004540081,
+        "segment_ms": 0.21160000051168026,
+        "encode_ms": 0.0,
+        "search_ms": 0.5811999999423278
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 8,
+        "total_ms": 0.6688999992547906,
+        "segment_ms": 0.18060000002151355,
+        "encode_ms": 0.0,
+        "search_ms": 0.48829999923327705
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 8,
+        "total_ms": 0.8708999994269107,
+        "segment_ms": 0.25649999952293,
+        "encode_ms": 0.0,
+        "search_ms": 0.6143999999039806
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 8,
+        "total_ms": 0.5348999993657344,
+        "segment_ms": 0.1283999999941443,
+        "encode_ms": 0.0,
+        "search_ms": 0.4064999993715901
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 9,
+        "total_ms": 0.6733999998687068,
+        "segment_ms": 0.16680000044289045,
+        "encode_ms": 0.0,
+        "search_ms": 0.5065999994258163
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 9,
+        "total_ms": 0.7516999994550133,
+        "segment_ms": 0.17039999966073083,
+        "encode_ms": 0.0,
+        "search_ms": 0.5812999997942825
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 9,
+        "total_ms": 0.807600000371167,
+        "segment_ms": 0.21349999951780774,
+        "encode_ms": 0.0,
+        "search_ms": 0.5941000008533592
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 9,
+        "total_ms": 0.6893999998283107,
+        "segment_ms": 0.1809999994293321,
+        "encode_ms": 0.0,
+        "search_ms": 0.5084000003989786
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 9,
+        "total_ms": 0.8923999994294718,
+        "segment_ms": 0.20649999987654155,
+        "encode_ms": 0.0,
+        "search_ms": 0.6858999995529302
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 9,
+        "total_ms": 0.5658999998559011,
+        "segment_ms": 0.15910000001895241,
+        "encode_ms": 0.0,
+        "search_ms": 0.4067999998369487
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 10,
+        "total_ms": 1.0678999997253413,
+        "segment_ms": 0.25720000030560186,
+        "encode_ms": 0.0,
+        "search_ms": 0.8106999994197395
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 10,
+        "total_ms": 0.8872999997038278,
+        "segment_ms": 0.18530000033933902,
+        "encode_ms": 0.0,
+        "search_ms": 0.7019999993644888
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 10,
+        "total_ms": 0.9407000006831368,
+        "segment_ms": 0.23849999979574932,
+        "encode_ms": 0.0,
+        "search_ms": 0.7022000008873874
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 10,
+        "total_ms": 0.7621000004292,
+        "segment_ms": 0.19410000004427275,
+        "encode_ms": 0.0,
+        "search_ms": 0.5680000003849273
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 10,
+        "total_ms": 0.8756999995966908,
+        "segment_ms": 0.21560000004683388,
+        "encode_ms": 0.0,
+        "search_ms": 0.6600999995498569
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 10,
+        "total_ms": 0.5629000006592833,
+        "segment_ms": 0.1346000008197734,
+        "encode_ms": 0.0,
+        "search_ms": 0.42829999983950984
+      }
+    ],
+    "dense": [
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 1,
+        "total_ms": 28.495700000348734,
+        "segment_ms": 0.16709999999875436,
+        "encode_ms": 28.074699999706354,
+        "search_ms": 0.2539000006436254
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 1,
+        "total_ms": 29.89739999975427,
+        "segment_ms": 0.15910000001895241,
+        "encode_ms": 29.49019999960001,
+        "search_ms": 0.24810000013530953
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 1,
+        "total_ms": 33.416700000088895,
+        "segment_ms": 0.29719999929511687,
+        "encode_ms": 32.87810000074387,
+        "search_ms": 0.24140000004990725
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 1,
+        "total_ms": 28.130400000009104,
+        "segment_ms": 0.17219999972439837,
+        "encode_ms": 27.717899999515794,
+        "search_ms": 0.24030000076891156
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 1,
+        "total_ms": 30.34910000042146,
+        "segment_ms": 0.1863999996203347,
+        "encode_ms": 29.917200000454613,
+        "search_ms": 0.2455000003465102
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 1,
+        "total_ms": 28.31510000032722,
+        "segment_ms": 0.12260000039532315,
+        "encode_ms": 27.912499999729334,
+        "search_ms": 0.28000000020256266
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 2,
+        "total_ms": 30.41060000032303,
+        "segment_ms": 0.20880000010947697,
+        "encode_ms": 29.954999999972642,
+        "search_ms": 0.24680000024090987
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 2,
+        "total_ms": 30.35089999957563,
+        "segment_ms": 0.215099999877566,
+        "encode_ms": 29.888500000197382,
+        "search_ms": 0.24729999950068304
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 2,
+        "total_ms": 33.617499999309075,
+        "segment_ms": 0.24149999990186188,
+        "encode_ms": 33.11519999988377,
+        "search_ms": 0.26079999952344224
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 2,
+        "total_ms": 28.772200000275916,
+        "segment_ms": 0.19729999985429458,
+        "encode_ms": 28.319900000497,
+        "search_ms": 0.2549999999246211
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 2,
+        "total_ms": 30.60009999990143,
+        "segment_ms": 0.2038000002357876,
+        "encode_ms": 30.15179999965767,
+        "search_ms": 0.24450000000797445
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 2,
+        "total_ms": 26.998499999535852,
+        "segment_ms": 0.13480000052368268,
+        "encode_ms": 26.63019999909011,
+        "search_ms": 0.23349999992205994
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 3,
+        "total_ms": 29.019999999945867,
+        "segment_ms": 0.15459999940503621,
+        "encode_ms": 28.621100000236765,
+        "search_ms": 0.24430000030406518
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 3,
+        "total_ms": 28.198999999403895,
+        "segment_ms": 0.16040000082284678,
+        "encode_ms": 27.777999998761516,
+        "search_ms": 0.26059999981953297
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 3,
+        "total_ms": 33.547600000019884,
+        "segment_ms": 0.21219999962340808,
+        "encode_ms": 33.088500001213106,
+        "search_ms": 0.2468999991833698
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 3,
+        "total_ms": 28.04290000040055,
+        "segment_ms": 0.1700000002529123,
+        "encode_ms": 27.628200000435754,
+        "search_ms": 0.24469999971188372
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 3,
+        "total_ms": 31.652800000301795,
+        "segment_ms": 0.18730000010691583,
+        "encode_ms": 31.20859999944514,
+        "search_ms": 0.25690000074973796
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 3,
+        "total_ms": 26.770399999804795,
+        "segment_ms": 0.11769999946409371,
+        "encode_ms": 26.403200000459037,
+        "search_ms": 0.24949999988166383
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 4,
+        "total_ms": 28.946800000085204,
+        "segment_ms": 0.17250000018975697,
+        "encode_ms": 28.536100000565057,
+        "search_ms": 0.2381999993303907
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 4,
+        "total_ms": 28.565900000103284,
+        "segment_ms": 0.1703000007182709,
+        "encode_ms": 28.157199999441218,
+        "search_ms": 0.23839999994379468
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 4,
+        "total_ms": 32.93290000056004,
+        "segment_ms": 0.20140000015089754,
+        "encode_ms": 32.47150000061083,
+        "search_ms": 0.25999999979831045
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 4,
+        "total_ms": 36.08819999953994,
+        "segment_ms": 0.17729999945004238,
+        "encode_ms": 35.65669999989041,
+        "search_ms": 0.2542000001994893
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 4,
+        "total_ms": 30.021300000043993,
+        "segment_ms": 0.2128000005541253,
+        "encode_ms": 29.56409999933385,
+        "search_ms": 0.24440000015601981
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 4,
+        "total_ms": 27.385599999433907,
+        "segment_ms": 0.11489999997138511,
+        "encode_ms": 27.0143999996435,
+        "search_ms": 0.25629999981902074
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 5,
+        "total_ms": 29.482600000847015,
+        "segment_ms": 0.22740000076737488,
+        "encode_ms": 28.999399999520392,
+        "search_ms": 0.25580000055924756
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 5,
+        "total_ms": 29.402099999970233,
+        "segment_ms": 0.17870000010589138,
+        "encode_ms": 28.891499999190273,
+        "search_ms": 0.331900000674068
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 5,
+        "total_ms": 33.10090000013588,
+        "segment_ms": 0.25860000005195616,
+        "encode_ms": 32.59820000039326,
+        "search_ms": 0.2440999996906612
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 5,
+        "total_ms": 34.0384000000995,
+        "segment_ms": 0.20630000017263228,
+        "encode_ms": 33.57419999974809,
+        "search_ms": 0.257900000178779
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 5,
+        "total_ms": 30.075799999394803,
+        "segment_ms": 0.20320000021456508,
+        "encode_ms": 29.632099999616912,
+        "search_ms": 0.24049999956332613
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 5,
+        "total_ms": 27.14689999993425,
+        "segment_ms": 0.12789999982487643,
+        "encode_ms": 26.768900000206486,
+        "search_ms": 0.25009999990288634
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 6,
+        "total_ms": 28.15340000051947,
+        "segment_ms": 0.1650000003792229,
+        "encode_ms": 27.74500000032276,
+        "search_ms": 0.24339999981748406
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 6,
+        "total_ms": 28.59740000076272,
+        "segment_ms": 0.1554000000396627,
+        "encode_ms": 28.191700000206765,
+        "search_ms": 0.2503000005162903
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 6,
+        "total_ms": 32.86930000012944,
+        "segment_ms": 0.3108000000793254,
+        "encode_ms": 32.31439999944996,
+        "search_ms": 0.2441000006001559
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 6,
+        "total_ms": 28.10310000040772,
+        "segment_ms": 0.16760000016802223,
+        "encode_ms": 27.68740000010439,
+        "search_ms": 0.24810000013530953
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 6,
+        "total_ms": 38.0990000003294,
+        "segment_ms": 0.27349999982106965,
+        "encode_ms": 37.58639999978186,
+        "search_ms": 0.23910000072646653
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 6,
+        "total_ms": 25.93350000006467,
+        "segment_ms": 0.1298000006499933,
+        "encode_ms": 25.56819999972504,
+        "search_ms": 0.23549999968963675
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 7,
+        "total_ms": 28.23999999964144,
+        "segment_ms": 0.17070000012608944,
+        "encode_ms": 27.777299999797833,
+        "search_ms": 0.2919999997175182
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 7,
+        "total_ms": 28.569699999934528,
+        "segment_ms": 0.15900000016699778,
+        "encode_ms": 28.176199999506935,
+        "search_ms": 0.2345000002605957
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 7,
+        "total_ms": 40.47999999966123,
+        "segment_ms": 0.20539999968605116,
+        "encode_ms": 40.02680000030523,
+        "search_ms": 0.24779999966995092
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 7,
+        "total_ms": 31.66030000011233,
+        "segment_ms": 0.1702999998087762,
+        "encode_ms": 31.176800000139337,
+        "search_ms": 0.31320000016421545
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 7,
+        "total_ms": 30.295099999420927,
+        "segment_ms": 0.18660000023373868,
+        "encode_ms": 29.86999999939144,
+        "search_ms": 0.23849999979574932
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 7,
+        "total_ms": 26.44830000008369,
+        "segment_ms": 0.11470000026747584,
+        "encode_ms": 26.07019999959448,
+        "search_ms": 0.26340000022173626
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 8,
+        "total_ms": 31.405400000039663,
+        "segment_ms": 0.21850000030099181,
+        "encode_ms": 30.935699999645294,
+        "search_ms": 0.25120000009337673
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 8,
+        "total_ms": 36.02989999944839,
+        "segment_ms": 0.1832999996622675,
+        "encode_ms": 35.45959999974002,
+        "search_ms": 0.38700000004610047
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 8,
+        "total_ms": 32.476999999744294,
+        "segment_ms": 0.23380000038741855,
+        "encode_ms": 32.00399999968795,
+        "search_ms": 0.23919999966892647
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 8,
+        "total_ms": 27.990800000225136,
+        "segment_ms": 0.18929999987449264,
+        "encode_ms": 27.549000000362867,
+        "search_ms": 0.2524999999877764
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 8,
+        "total_ms": 29.71449999949982,
+        "segment_ms": 0.21090000063850312,
+        "encode_ms": 29.253899999275745,
+        "search_ms": 0.2496999995855731
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 8,
+        "total_ms": 26.353799999924377,
+        "segment_ms": 0.1644000003580004,
+        "encode_ms": 25.947899999664514,
+        "search_ms": 0.24149999990186188
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 9,
+        "total_ms": 27.94169999924634,
+        "segment_ms": 0.15619999976479448,
+        "encode_ms": 27.54689999983384,
+        "search_ms": 0.23859999964770395
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 9,
+        "total_ms": 28.84100000028411,
+        "segment_ms": 0.16870000035851263,
+        "encode_ms": 28.337299999293464,
+        "search_ms": 0.3350000006321352
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 9,
+        "total_ms": 32.45520000018587,
+        "segment_ms": 0.20079999922018033,
+        "encode_ms": 32.01030000127503,
+        "search_ms": 0.2440999996906612
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 9,
+        "total_ms": 28.319400000327732,
+        "segment_ms": 0.17179999940708512,
+        "encode_ms": 27.883700000529643,
+        "search_ms": 0.26390000039100414
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 9,
+        "total_ms": 33.60479999992094,
+        "segment_ms": 0.20489999951678328,
+        "encode_ms": 33.15850000035425,
+        "search_ms": 0.24140000004990725
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 9,
+        "total_ms": 26.071199999933015,
+        "segment_ms": 0.11970000014116522,
+        "encode_ms": 25.713099999848055,
+        "search_ms": 0.23839999994379468
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 10,
+        "total_ms": 29.373400000622496,
+        "segment_ms": 0.18060000002151355,
+        "encode_ms": 28.934400000252936,
+        "search_ms": 0.2584000003480469
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 10,
+        "total_ms": 28.836099999352882,
+        "segment_ms": 0.16320000031555537,
+        "encode_ms": 28.417699999408796,
+        "search_ms": 0.25519999962853035
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 10,
+        "total_ms": 32.039800000347896,
+        "segment_ms": 0.2058000000033644,
+        "encode_ms": 31.586500000230444,
+        "search_ms": 0.24750000011408702
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 10,
+        "total_ms": 28.5621999992145,
+        "segment_ms": 0.16959999993559904,
+        "encode_ms": 28.140999999777705,
+        "search_ms": 0.25159999950119527
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 10,
+        "total_ms": 30.50959999927727,
+        "segment_ms": 0.19190000057278667,
+        "encode_ms": 30.074199999035045,
+        "search_ms": 0.2434999996694387
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 10,
+        "total_ms": 26.296199999706005,
+        "segment_ms": 0.11369999992894009,
+        "encode_ms": 25.942700000086916,
+        "search_ms": 0.23979999969014898
+      }
+    ],
+    "hybrid": [
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 1,
+        "total_ms": 29.951399999845307,
+        "segment_ms": 0.5184999990888173,
+        "encode_ms": 28.34179999990738,
+        "search_ms": 1.09110000084911
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 1,
+        "total_ms": 31.353900000794965,
+        "segment_ms": 0.597399999605841,
+        "encode_ms": 29.166800000894,
+        "search_ms": 1.5897000002951245
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 1,
+        "total_ms": 34.763099999508995,
+        "segment_ms": 0.6251000004340312,
+        "encode_ms": 32.894399999349844,
+        "search_ms": 1.2435999997251201
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 1,
+        "total_ms": 29.694899999412883,
+        "segment_ms": 0.5544999994526734,
+        "encode_ms": 28.04550000018935,
+        "search_ms": 1.0948999997708597
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 1,
+        "total_ms": 32.09789999982604,
+        "segment_ms": 0.5921000001762877,
+        "encode_ms": 30.34970000044268,
+        "search_ms": 1.156099999207072
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 1,
+        "total_ms": 30.048399999941466,
+        "segment_ms": 0.41979999969044,
+        "encode_ms": 28.684099999736645,
+        "search_ms": 0.9445000005143811
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 2,
+        "total_ms": 32.050799999524315,
+        "segment_ms": 0.5116999991514604,
+        "encode_ms": 30.395799999496376,
+        "search_ms": 1.1433000008764793
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 2,
+        "total_ms": 33.40680000019347,
+        "segment_ms": 0.5084000003989786,
+        "encode_ms": 31.673200000113866,
+        "search_ms": 1.2251999996806262
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 2,
+        "total_ms": 34.697699999924225,
+        "segment_ms": 0.6490999994639424,
+        "encode_ms": 32.76400000049762,
+        "search_ms": 1.2845999999626656
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 2,
+        "total_ms": 29.621599999700265,
+        "segment_ms": 0.5819999996674596,
+        "encode_ms": 27.932300000429677,
+        "search_ms": 1.1072999996031285
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 2,
+        "total_ms": 32.26209999957064,
+        "segment_ms": 0.5748000003222842,
+        "encode_ms": 30.542999999852327,
+        "search_ms": 1.1442999993960257
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 2,
+        "total_ms": 28.01999999974214,
+        "segment_ms": 0.4197999987809453,
+        "encode_ms": 26.688600000852603,
+        "search_ms": 0.9116000001085922
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 3,
+        "total_ms": 29.520499999307503,
+        "segment_ms": 0.4336000001785578,
+        "encode_ms": 27.94530000028317,
+        "search_ms": 1.141599998845777
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 3,
+        "total_ms": 29.989300000124786,
+        "segment_ms": 0.5339999988791533,
+        "encode_ms": 28.22180000021035,
+        "search_ms": 1.2335000010352815
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 3,
+        "total_ms": 33.78870000051393,
+        "segment_ms": 0.65080000058515,
+        "encode_ms": 31.60539999953471,
+        "search_ms": 1.5325000003940659
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 3,
+        "total_ms": 29.583400000774418,
+        "segment_ms": 0.5369999998947605,
+        "encode_ms": 27.95180000066466,
+        "search_ms": 1.0946000002149958
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 3,
+        "total_ms": 31.2088999999105,
+        "segment_ms": 0.5673000005117501,
+        "encode_ms": 29.482799998731934,
+        "search_ms": 1.1588000006668153
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 3,
+        "total_ms": 28.26320000076521,
+        "segment_ms": 0.3952999995817663,
+        "encode_ms": 26.936800000839867,
+        "search_ms": 0.9311000003435765
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 4,
+        "total_ms": 29.577399999652698,
+        "segment_ms": 0.49930000022868626,
+        "encode_ms": 27.983099999801198,
+        "search_ms": 1.0949999996228144
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 4,
+        "total_ms": 29.78770000026998,
+        "segment_ms": 0.5089999995107064,
+        "encode_ms": 28.08660000027885,
+        "search_ms": 1.1921000004804228
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 4,
+        "total_ms": 33.52069999982632,
+        "segment_ms": 0.6330000005618786,
+        "encode_ms": 31.692199999270088,
+        "search_ms": 1.1954999999943539
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 4,
+        "total_ms": 29.733900000792346,
+        "segment_ms": 0.5338000000847387,
+        "encode_ms": 28.151200001047982,
+        "search_ms": 1.0488999996596249
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 4,
+        "total_ms": 31.04689999963739,
+        "segment_ms": 0.5984999997963314,
+        "encode_ms": 29.300700000021607,
+        "search_ms": 1.1476999998194515
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 4,
+        "total_ms": 28.92089999932068,
+        "segment_ms": 0.40020000051299576,
+        "encode_ms": 27.46569999908388,
+        "search_ms": 1.0549999997238046
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 5,
+        "total_ms": 30.302200000733137,
+        "segment_ms": 0.5140000002938905,
+        "encode_ms": 28.689799999483512,
+        "search_ms": 1.0984000009557349
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 5,
+        "total_ms": 30.87760000016715,
+        "segment_ms": 0.6022999996275757,
+        "encode_ms": 29.06840000014199,
+        "search_ms": 1.2069000003975816
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 5,
+        "total_ms": 33.85419999995065,
+        "segment_ms": 0.6245000004128087,
+        "encode_ms": 32.02169999894977,
+        "search_ms": 1.208000000588072
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 5,
+        "total_ms": 29.269200000271667,
+        "segment_ms": 0.5307000001266715,
+        "encode_ms": 27.682199999617296,
+        "search_ms": 1.056300000527699
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 5,
+        "total_ms": 31.502200000431912,
+        "segment_ms": 0.5762000000686385,
+        "encode_ms": 29.778100000839913,
+        "search_ms": 1.1478999995233607
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 5,
+        "total_ms": 27.277999999569147,
+        "segment_ms": 0.3997000003437279,
+        "encode_ms": 25.954599998840422,
+        "search_ms": 0.9237000003849971
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 6,
+        "total_ms": 29.438300000037998,
+        "segment_ms": 0.5019000000174856,
+        "encode_ms": 27.862800000548305,
+        "search_ms": 1.0735999994722079
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 6,
+        "total_ms": 29.90920000047481,
+        "segment_ms": 0.505199999679462,
+        "encode_ms": 28.22660000038013,
+        "search_ms": 1.1774000004152185
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 6,
+        "total_ms": 34.52500000003056,
+        "segment_ms": 0.74150000091322,
+        "encode_ms": 32.155999999304186,
+        "search_ms": 1.6274999998131534
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 6,
+        "total_ms": 29.245499999888125,
+        "segment_ms": 0.5470999994940939,
+        "encode_ms": 27.63139999933628,
+        "search_ms": 1.0670000010577496
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 6,
+        "total_ms": 34.809300000233634,
+        "segment_ms": 0.6907999986651703,
+        "encode_ms": 32.539600001655344,
+        "search_ms": 1.5788999999131192
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 6,
+        "total_ms": 31.19109999988723,
+        "segment_ms": 0.39990000004763715,
+        "encode_ms": 29.864099999940663,
+        "search_ms": 0.9270999998989282
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 7,
+        "total_ms": 29.48830000059388,
+        "segment_ms": 0.5660999995598104,
+        "encode_ms": 27.837100000397186,
+        "search_ms": 1.085100000636885
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 7,
+        "total_ms": 30.99740000016027,
+        "segment_ms": 0.5103000003146008,
+        "encode_ms": 29.285300000083225,
+        "search_ms": 1.201799999762443
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 7,
+        "total_ms": 34.02830000050017,
+        "segment_ms": 0.6235999999262276,
+        "encode_ms": 32.178899999962596,
+        "search_ms": 1.2258000006113434
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 7,
+        "total_ms": 32.15900000031979,
+        "segment_ms": 0.6571999992956989,
+        "encode_ms": 30.404900000576163,
+        "search_ms": 1.0969000004479312
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 7,
+        "total_ms": 31.232600000294042,
+        "segment_ms": 0.5810999991808785,
+        "encode_ms": 29.471700000613055,
+        "search_ms": 1.1798000005001086
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 7,
+        "total_ms": 29.18020000015531,
+        "segment_ms": 0.43230000028415816,
+        "encode_ms": 27.77799999967101,
+        "search_ms": 0.9699000002001412
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 8,
+        "total_ms": 31.207899999571964,
+        "segment_ms": 0.533999999788648,
+        "encode_ms": 29.550900000685942,
+        "search_ms": 1.1229999990973738
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 8,
+        "total_ms": 41.677700000036566,
+        "segment_ms": 0.613300000622985,
+        "encode_ms": 39.8721999999907,
+        "search_ms": 1.1921999994228827
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 8,
+        "total_ms": 37.79450000001816,
+        "segment_ms": 0.6400000002031447,
+        "encode_ms": 35.97410000020318,
+        "search_ms": 1.1803999996118364
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 8,
+        "total_ms": 29.380800000581075,
+        "segment_ms": 0.5826000005981768,
+        "encode_ms": 27.721899999960442,
+        "search_ms": 1.0763000000224565
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 8,
+        "total_ms": 31.191799999760406,
+        "segment_ms": 0.5807999996250146,
+        "encode_ms": 29.096100000060687,
+        "search_ms": 1.5149000000747037
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 8,
+        "total_ms": 26.958499999636842,
+        "segment_ms": 0.4110999998374609,
+        "encode_ms": 25.621800000408257,
+        "search_ms": 0.9255999993911246
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 9,
+        "total_ms": 29.4514999995954,
+        "segment_ms": 0.43870000081369653,
+        "encode_ms": 27.89929999926244,
+        "search_ms": 1.113499999519263
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 9,
+        "total_ms": 29.670699999769568,
+        "segment_ms": 0.5098000001453329,
+        "encode_ms": 27.955200000178593,
+        "search_ms": 1.2056999994456419
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 9,
+        "total_ms": 36.15760000047885,
+        "segment_ms": 0.7455000004483736,
+        "encode_ms": 34.20099999948434,
+        "search_ms": 1.2111000005461392
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 9,
+        "total_ms": 28.920300000208954,
+        "segment_ms": 0.5596999999397667,
+        "encode_ms": 27.27709999999206,
+        "search_ms": 1.0835000002771267
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 9,
+        "total_ms": 32.158300000446616,
+        "segment_ms": 0.5743000001530163,
+        "encode_ms": 30.39859999989858,
+        "search_ms": 1.1854000003950205
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 9,
+        "total_ms": 27.05100000002858,
+        "segment_ms": 0.40669999998499407,
+        "encode_ms": 25.68749999954889,
+        "search_ms": 0.9568000004946953
+      },
+      {
+        "question": "Đào tạo từ xa lưu bản ghi buổi bảo vệ đồ án như thế nào?",
+        "repeat": 10,
+        "total_ms": 29.812200000378652,
+        "segment_ms": 0.5409999994299142,
+        "encode_ms": 28.15750000081607,
+        "search_ms": 1.113700000132667
+      },
+      {
+        "question": "Sinh viên trình độ năm thứ ba muốn chuyển trường thì cần xem điều nào?",
+        "repeat": 10,
+        "total_ms": 30.326500000228407,
+        "segment_ms": 0.5469000006996794,
+        "encode_ms": 28.583700000126555,
+        "search_ms": 1.1958999994021724
+      },
+      {
+        "question": "Khi nghỉ học để tham gia nghĩa vụ quân sự, kết quả đã tích lũy được bảo lưu không?",
+        "repeat": 10,
+        "total_ms": 33.408300000701274,
+        "segment_ms": 0.6256999995457591,
+        "encode_ms": 31.573700000990357,
+        "search_ms": 1.2089000001651584
+      },
+      {
+        "question": "Chương trình đào tạo thường xuyên văn bằng thứ hai có thời gian chuẩn bao lâu?",
+        "repeat": 10,
+        "total_ms": 29.360900000028778,
+        "segment_ms": 0.5565999999816995,
+        "encode_ms": 27.716000000509666,
+        "search_ms": 1.088299999537412
+      },
+      {
+        "question": "Đăng ký cùng lúc hai chương trình, học kỳ hè được tối đa bao nhiêu tín chỉ?",
+        "repeat": 10,
+        "total_ms": 33.60869999960414,
+        "segment_ms": 0.5766000003859517,
+        "encode_ms": 31.894599998850026,
+        "search_ms": 1.1375000003681635
+      },
+      {
+        "question": "Mấy giờ thủy triều lên ở Vũng Tàu ngày mai?",
+        "repeat": 10,
+        "total_ms": 26.996300000064366,
+        "segment_ms": 0.4028000003017951,
+        "encode_ms": 25.669699998616125,
+        "search_ms": 0.9238000011464464
+      }
+    ]
+  }
+}

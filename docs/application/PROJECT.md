@@ -90,12 +90,12 @@ Thư mục cũ `D:\Lab03_Group14` chỉ còn giữ venv và bản gốc của l�
 
 **Đang thực hiện:** Phase 3. Nhóm có CLI truy hồi cùng [demo Gradio](../../apps/README.md).
 
-**Chưa thực hiện:** chốt nhãn D2, kiểm tra demo với corpus hai phiên bản, đánh giá D2 (gồm so sánh theo mức trùng từ và phân tích lỗi), đo độ trễ và chuẩn bị nộp ([§7.2](#72-lịch-theo-planmd)).
+**Chưa thực hiện:** chốt nhãn D2, đánh giá D2 (gồm so sánh theo mức trùng từ và phân tích lỗi) và chuẩn bị nộp ([§7.2](#72-lịch-theo-planmd)).
 
 **Việc ưu tiên tiếp theo**
 
 1. Hoàn tất gán nhãn độc lập và đối chiếu nhãn D2 theo [§6.2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu) để chốt nhãn trước 02/12.
-2. Bàn giao [cấu hình đã chốt](../../experiments/external_dataset/results/D1-dev-tuning/handoff.md) cho Minh để kiểm demo hai phiên bản và đo độ trễ.
+2. Minh đối chiếu văn bản nguồn của các ví dụ E5 trên D1-test trong khi chờ chốt nhãn D2.
 3. Sau khi chốt nhãn, xuất [ba bảng xếp hạng D2](../../experiments/external_dataset/README.md#lệnh-chuẩn-bị-hcmus-và-đánh-giá-d2) với hai tham số đã chốt, chấm E2 và E3, rồi bổ sung ví dụ D2 cho E5.
 
 ---
@@ -543,7 +543,7 @@ Cách tạo [corpus D2 từ hai quy chế](../../data/d2/README.md#file) và quy
 
 Lệnh kiểm chứng gói D1-dev đã xác nhận SHA-256, thứ tự xếp hạng và chỉ số của ba phương pháp trên 224 câu. Lượt chọn cấu hình E1 và E3 đã dùng điểm của toàn bộ corpus trên D1-dev. [Lệnh chọn cấu hình và kết quả](../../experiments/external_dataset/README.md#chốt-cấu-hình-bằng-d1-dev)
 
-[Corpus HCMUS](../../data/d2/README.md#file) đã được xuất và đối chiếu với hai nguồn trên máy Huy. Kiểm tra demo trên corpus này và chốt nhãn chính thức theo §6.2 là các việc tiếp theo của Phase 3. Đánh giá D2 bắt đầu sau khi chốt nhãn.
+[Corpus HCMUS](../../data/d2/README.md#file) đã được xuất và đối chiếu với hai nguồn trên máy Huy. Minh đã kiểm demo trên corpus này và đo độ trễ CPU ngày 26/11. Đánh giá D2 bắt đầu sau khi chốt nhãn.
 
 | ID | Mục đích | Thiết lập | Đầu ra |
 |---|---|---|---|
@@ -592,7 +592,7 @@ Chỉ điền khi đã có file kết quả.
 | E1 | Đã chạy ba phương pháp 25/11 | Hybrid đạt MRR@10 0,810780. Chênh lệch Hybrid − BM25 là +0,018988 (95% CI [+0,008363, +0,029811]) và +2,11 điểm phần trăm Hit@1 (95% CI [+0,39, +3,82]). Đối chứng PhoBERT thô là phần khuyến nghị | [Kết quả D1-test](../../experiments/external_dataset/results/E1/d1-test.md) |
 | E2 | Có kết quả D1-test 25/11 | Ba nhóm Jaccard có 253 câu mỗi nhóm. Ở nhóm thấp, Hybrid tăng MRR@10 thêm 0,042031 so với BM25 (95% CI 0,018749 đến 0,065467). Còn phần D2 | [Bảng chỉ số và khoảng tin cậy](../../experiments/application/results/E2/d1-test.md) |
 | E3 | Có kết quả D1-test 25/11 | Ngưỡng đã chốt cho độ bao phủ 81,42% (618/759) và risk 23,95% (148/618). Risk tại độ bao phủ 100% là 27,54% (209/759). Còn đánh giá D2 | [Biểu đồ](../../experiments/external_dataset/results/E3/d1-test-risk-coverage.png) · [Dữ liệu đường cong](../../experiments/external_dataset/results/E3/d1-test.json) · [Chỉ số cảnh báo](../../experiments/external_dataset/results/E1/d1-test.md#cảnh-báo-của-hybrid) |
-| E4 | [ ] | — | `experiments/application/results/E4/` |
+| E4 | Hoàn tất 26/11 | Độ trễ truy hồi CPU của ba phương pháp, 60 mẫu mỗi phương pháp | [Bảng E4](../../experiments/application/results/E4/cpu-latency.md) |
 | E5 | Có phân tích D1-test 25/11 | Hybrid trượt Hit@1 ở 209/759 câu, 123 trong số đó có đoạn chuẩn hạng 2–3. Đã đối chiếu nội dung 20 câu và chọn ví dụ. Còn phần D2 và kiểm chéo | [Phân tích D1-test](../../experiments/application/results/E5/d1-test.md) |
 
 ---
