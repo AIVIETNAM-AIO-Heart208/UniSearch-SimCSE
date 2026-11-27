@@ -40,8 +40,12 @@ def test_export_corpus_stays_in_generated_directories(tmp_path, monkeypatch):
 
 
 @pytest.mark.parametrize("prepared", [False, True])
-def test_submission_verifies_members_and_rejects_modified_ones(tmp_path, prepared):
+def test_submission_verifies_members_and_rejects_modified_ones(tmp_path, prepared, monkeypatch):
+    from tools import package_submission
     from tools.package_submission import CORPUS, MANIFEST, TRANSCRIPT, verify
+
+    checked = []
+    monkeypatch.setattr(package_submission, "verify_video", lambda stream: checked.append(stream.read()))
 
     names = ["README.md", "Bao-cao.pdf", "source/README.md", "source/BASE_COMMIT.txt",
              "source/apps/app.py", "source/" + TRANSCRIPT, "source/" + CORPUS]
@@ -60,8 +64,42 @@ def test_submission_verifies_members_and_rejects_modified_ones(tmp_path, prepare
                 verify(archive, prepared=prepared)
         else:
             assert verify(archive, prepared=prepared) == len(names)
+            assert checked == ([] if prepared else [b"Demo.mp4"])
             with pytest.raises(ValueError, match="Missing|Unexpected video"):
                 verify(archive, prepared=not prepared)
+
+
+def test_submission_rejects_text_with_a_video_filename(tmp_path):
+    pytest.importorskip("pymediainfo")
+    from tools.package_submission import verify_video
+
+    recording = tmp_path / "Demo.mp4"
+    recording.write_bytes(b"plain text with an MP4 filename")
+    with recording.open("rb") as stream, pytest.raises(ValueError, match="MP4 video track"):
+        verify_video(stream)
+
+
+@pytest.mark.parametrize(("duration", "expected"), [(0, False), (1800000, True), (1800001, False)])
+def test_submission_checks_recording_duration(monkeypatch, duration, expected):
+    from io import BytesIO
+    from types import SimpleNamespace
+
+    media = pytest.importorskip("pymediainfo")
+    from tools.package_submission import verify_video
+
+    metadata = SimpleNamespace(general_tracks=[SimpleNamespace(format="MPEG-4", format_profile="Base Media",
+                                                                is_truncated=None, duration=duration)],
+                               video_tracks=[SimpleNamespace(width=1280, height=720)])
+    monkeypatch.setattr(media.MediaInfo, "parse", lambda stream: metadata)
+    if expected:
+        verify_video(BytesIO())
+        for profile in ("QuickTime", "3GPP Media Release 4"):
+            metadata.general_tracks[0].format_profile = profile
+            with pytest.raises(ValueError, match="MP4 video track"):
+                verify_video(BytesIO())
+    else:
+        with pytest.raises(ValueError, match="at most 30 minutes"):
+            verify_video(BytesIO())
 
 
 def test_export_provenance_uses_recorded_base_and_has_no_worktree(tmp_path, monkeypatch):

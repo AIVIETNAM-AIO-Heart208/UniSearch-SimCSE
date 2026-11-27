@@ -5,11 +5,14 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 import subprocess
 import time
+from io import BytesIO
 from pathlib import Path, PurePosixPath
 from tempfile import NamedTemporaryFile
+from typing import BinaryIO
 from zipfile import ZIP_DEFLATED, ZIP_STORED, ZipFile, ZipInfo
 
 
@@ -28,7 +31,7 @@ GUIDE = """Viết cho: {audience}
 1. Mở **Bao-cao.pdf** để đọc báo cáo IEEE. {media}
 2. Giải nén toàn bộ gói. Trong thư mục **source**, làm theo [hướng dẫn mở ứng dụng](source/apps/README.md#chạy-cục-bộ). Corpus cả hai quy chế đã có sẵn ở `data/processed/d2/corpus.jsonl`. Lần đầu cần cài môi trường và tải checkpoint theo phiên bản đã ghim.
 3. Xem [mã nguồn và kết quả thí nghiệm](source/README.md), [dữ liệu D1 theo phiên bản](source/experiments/external_dataset/README.md) và [bộ D2 công khai](source/data/d2/README.md#bộ-d2-công-khai). Thư mục source chứa phiên bản mã dùng để bàn giao. BASE_COMMIT.txt ghi commit nền, SHA256SUMS.txt nhận diện nội dung chính xác của từng tệp trong gói.
-4. Để đối chiếu toàn bộ tệp với bảng SHA-256, giải nén tại thư mục đang chứa ZIP và chạy `python source/tools/package_submission.py verify {verify_args}`.
+4. Để đối chiếu toàn bộ tệp với bảng SHA-256, giải nén tại thư mục đang chứa ZIP. {verification_setup}Chạy `python source/tools/package_submission.py verify {verify_args}`.
 
 Bản ChatGPT chép từ scan của QĐ 3087 đã được nhóm hiệu đính theo PDF của Trường. Bản chép cùng corpus đầy đủ được cung cấp riêng trong bài nộp.
 """
@@ -38,13 +41,37 @@ def digest(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def write_member(bundle: ZipFile, name: str, data: bytes, timestamp: tuple, compression: int = ZIP_DEFLATED) -> None:
+def write_member(bundle: ZipFile, name: str, source: BinaryIO, size: int, timestamp: tuple,
+                 compression: int = ZIP_DEFLATED) -> str:
     # The base commit time gives identical inputs a stable, meaningful archive date.
     entry = ZipInfo(name, date_time=timestamp)
     entry.create_system = 3
     entry.external_attr = 0o100644 << 16
     entry.compress_type = compression
-    bundle.writestr(entry, data)
+    entry.file_size = size
+    checksum = hashlib.sha256()
+    with bundle.open(entry, "w") as dest:
+        while block := source.read(1024 * 1024):
+            dest.write(block)
+            checksum.update(block)
+    return checksum.hexdigest()
+
+
+def verify_video(stream: BinaryIO) -> None:
+    """Check the recording's MP4 container, video track and assignment duration limit."""
+    try:
+        from pymediainfo import MediaInfo
+    except ImportError as exc:
+        raise ValueError("Install pymediainfo==7.0.1 to check the final MP4 (see docs/README.md)") from exc
+    media = MediaInfo.parse(stream)
+    container = next(iter(media.general_tracks), None)
+    if (not container or container.format != "MPEG-4" or container.is_truncated == "Yes"
+            or (container.format_profile or "").startswith(("QuickTime", "3GPP"))
+            or not any(t.width and t.height for t in media.video_tracks)):
+        raise ValueError("Demo.mp4 must contain an MP4 video track")
+    duration_ms = float(container.duration or 0)
+    if not math.isfinite(duration_ms) or not 0 < duration_ms <= 30 * 60 * 1000:
+        raise ValueError("Demo.mp4 must have a positive duration of at most 30 minutes")
 
 
 def source_paths() -> list[Path]:
@@ -83,8 +110,15 @@ def verify(archive: Path, *, prepared: bool = False) -> int:
         if set(expected) != set(names) - {MANIFEST}:
             raise ValueError("Manifest does not cover the complete submission")
         for name, checksum in expected.items():
-            if digest(bundle.read(name)) != checksum:
+            actual = hashlib.sha256()
+            with bundle.open(name) as member:
+                while block := member.read(1024 * 1024):
+                    actual.update(block)
+            if actual.hexdigest() != checksum:
                 raise ValueError(f"Checksum mismatch: {name}")
+        if not prepared:
+            with bundle.open("Demo.mp4") as recording:
+                verify_video(recording)
         return len(expected)
 
 
@@ -105,7 +139,7 @@ def build(video: Path | None = None, captions: Path | None = None) -> None:
             raise ValueError("Captions require a recorded video")
         archive = PREPARED
         guide = GUIDE.format(audience="Nhóm 14, chuẩn bị bài nộp Lab 03", media="Đây là hồ sơ chờ Minh quay video.",
-                             verify_args=f'--prepared "{archive.name}"')
+                             verify_args=f'--prepared "{archive.name}"', verification_setup="")
     else:
         if video.suffix.lower() != ".mp4" or not video.stat().st_size:
             raise ValueError("Expected a nonempty MP4 recording")
@@ -118,7 +152,8 @@ def build(video: Path | None = None, captions: Path | None = None) -> None:
             files["Demo.vi.vtt"] = captions
             media += " Trình phát hỗ trợ WebVTT có thể nạp phụ đề **Demo.vi.vtt**."
         guide = GUIDE.format(audience="giảng viên chấm Lab 03, Nhóm 14", media=media,
-                             verify_args=f'"{archive.name}"')
+                             verify_args=f'"{archive.name}"', verification_setup=(
+                                 "Cài bộ đọc thông tin video bằng `python -m pip install pymediainfo==7.0.1`. "))
     revision, epoch = subprocess.check_output(["git", "show", "-s", "--format=%H%n%ct", "HEAD"], cwd=ROOT).splitlines()
     timestamp = time.gmtime(int(epoch))[:6]
     DELIVERY.mkdir(parents=True, exist_ok=True)
@@ -128,15 +163,14 @@ def build(video: Path | None = None, captions: Path | None = None) -> None:
         hashes = {}
         with ZipFile(pending, "w", compression=ZIP_DEFLATED) as bundle:
             for name, path in sorted(files.items()):
-                data = path.read_bytes()
-                compression = ZIP_STORED if path.suffix in {".mp4", ".pdf", ".png"} else ZIP_DEFLATED
-                write_member(bundle, name, data, timestamp, compression)
-                hashes[name] = digest(data)
+                compression = ZIP_STORED if path.suffix.lower() in {".mp4", ".pdf", ".png"} else ZIP_DEFLATED
+                with path.open("rb") as source:
+                    hashes[name] = write_member(bundle, name, source, os.fstat(source.fileno()).st_size, timestamp, compression)
             for name, data in (("README.md", guide.encode("utf-8")), ("source/BASE_COMMIT.txt", revision + b"\n")):
-                write_member(bundle, name, data, timestamp)
-                hashes[name] = digest(data)
+                hashes[name] = write_member(bundle, name, BytesIO(data), len(data), timestamp)
             manifest = "".join(f"{h}  {n}\n" for n, h in sorted(hashes.items()))
-            write_member(bundle, MANIFEST, manifest.encode("utf-8"), timestamp)
+            data = manifest.encode("utf-8")
+            write_member(bundle, MANIFEST, BytesIO(data), len(data), timestamp)
         count = verify(pending, prepared=video is None)
         pending.replace(archive)
         print(f"{archive.name}: {count} file checksums verified")
