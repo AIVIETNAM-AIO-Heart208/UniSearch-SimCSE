@@ -75,7 +75,7 @@ def check_demo(index):
         client = Client(url, verbose=False)
         rows = []
         for question in QUERIES:
-            results, baseline, warning = client.predict(question, api_name="/search")
+            results, baseline, warning = client.predict(question, "Tra cứu chung", api_name="/search")
             for html in (results, baseline):
                 assert html.count('<section aria-label=') == 3
                 assert 'Khoản' in html and 'Áp dụng theo khóa tuyển sinh' in html

@@ -1,0 +1,46 @@
+{
+  "weight": 0.6,
+  "threshold": 0.6201629042625427,
+  "browser": "Chrome",
+  "viewport": [
+    1440,
+    960
+  ],
+  "results": [
+    {
+      "tab": "HCMUS",
+      "selection": "Tra cứu chung",
+      "question": "Điểm trung bình tích lũy được tính như thế nào và xếp loại ra sao?",
+      "reference": "Quy chế 2021 · Điều 15 · Khoản 2",
+      "text": "Điểm khớp với câu hỏi: 0,65. Trên thang từ −1 đến 1, điểm càng cao thì đoạn trích càng gần nghĩa với câu hỏi."
+    },
+    {
+      "tab": "HCMUS",
+      "selection": "K24",
+      "question": "Điều kiện xét công nhận tốt nghiệp là gì",
+      "reference": "Quy chế 2021 · Điều 17 · Khoản 3",
+      "text": "Bạn đã chọn K24. Khoản 3 Điều 17 của Quy chế 2021 liệt kê các điều kiện xét và công nhận tốt nghiệp."
+    },
+    {
+      "tab": "HCMUS",
+      "selection": "K26 trở đi",
+      "question": "Điều kiện xét công nhận tốt nghiệp là gì",
+      "reference": "Quy chế 2026 · Điều 19 · Khoản 1",
+      "text": "Bạn đã chọn K26 trở đi. Khoản 1 Điều 19 của Quy chế 2026 liệt kê các điều kiện xét và công nhận tốt nghiệp."
+    },
+    {
+      "tab": "ViRHE4QA (D1)",
+      "selection": "Chính quy",
+      "question": "Điều kiện xét công nhận tốt nghiệp là gì",
+      "reference": "UIT · Đào tạo đại học chính quy theo học chế tín chỉ · Điều 33",
+      "text": "Điểm khớp với câu hỏi: 0,79. Trên thang từ −1 đến 1, điểm càng cao thì đoạn trích càng gần nghĩa với câu hỏi."
+    },
+    {
+      "tab": "ViRHE4QA (D1)",
+      "selection": "Từ xa",
+      "question": "Điều kiện xét công nhận tốt nghiệp là gì",
+      "reference": "UIT · Đào tạo từ xa trình độ đại học · Điều 19",
+      "text": "Điểm khớp với câu hỏi: 0,74. Trên thang từ −1 đến 1, điểm càng cao thì đoạn trích càng gần nghĩa với câu hỏi."
+    }
+  ]
+}

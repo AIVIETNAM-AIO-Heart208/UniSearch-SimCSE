@@ -105,7 +105,7 @@ def compare(index: ReplayIndex, row: dict, config: dict, html_dir: Path) -> dict
     accepted = cosine >= config["threshold"]
     if ranked != expected or len(ranked) != 51 or cosine != control["cosine"] or accepted != control["accepted"]:
         raise ValueError(f"{row['qid']}: frozen retrieval or confidence mismatch")
-    body, _, warning = app.answer(index, question, config["weight"], config["threshold"])
+    body, _, warning = app.answer(index, question, config["weight"], config["threshold"], show_reasons=False)
     baseline = app.group_results(index, ranked)
     year = requested_edition(question)
     views = {"current": baseline, "requested": prefer_edition(baseline, year)}

@@ -53,7 +53,7 @@
 - [x] **Huy** — Vẽ đường cong risk–coverage của Hybrid trên D1-test và đánh dấu ngưỡng cảnh báo đã chốt. [Biểu đồ E3 trên D1-test](../experiments/external_dataset/results/E3/d1-test-risk-coverage.png)
 - [x] **Huy** — Chuẩn bị mã Khoản ổn định và bộ chấm ba bảng xếp hạng D2 cho E2 và E3. Kiểm tra bằng nhãn và xếp hạng giả. [Cách chấm D2](../experiments/application/README.md#chấm-d2-test)
 - [x] **Huy** — So sánh BM25, SimCSE-VN và Hybrid trên D2 đã chốt nhãn. Codex đã chạy ngày 26/11 bằng cấu hình D1-dev và xuất chỉ số E2 theo Điều, chủ đề, Khoản và mức trùng từ, cùng chỉ số cảnh báo E3. [Bảng E2 và E3](../experiments/application/results/D2/d2-test.md) · [Biểu đồ risk–coverage](../experiments/application/results/D2/risk-coverage.png)
-- [x] **Minh** — Áp dụng cấu hình cố định vào demo CPU. Các Điều cùng chủ đề gộp vào một trong ba kết quả, bản 2026 đứng trước. Demo có Khoản trích dẫn, tên văn bản, số hiệu, ngày ban hành, phạm vi áp dụng, cảnh báo và kết quả BM25 để đối chiếu. Đã lưu [kết quả E4 và mẫu đo](../experiments/application/results/E4/cpu-latency.md).
+- [x] **Minh** — Áp dụng cấu hình cố định vào demo CPU. Các Điều cùng chủ đề gộp vào một trong ba kết quả. Bản đo E4 dùng chế độ xem bản 2026 trước. Demo có Khoản trích dẫn, tên văn bản, số hiệu, ngày ban hành, phạm vi áp dụng, cảnh báo và kết quả BM25 để đối chiếu. Đã lưu [kết quả E4 và mẫu đo](../experiments/application/results/E4/cpu-latency.md).
 - [x] **Huy** — Đối chiếu 20 câu Hybrid trượt Hit@1 trên D1-test và chọn ví dụ cho E5. [Bảng phân loại và ví dụ](../experiments/application/results/E5/d1-test.md)
 - [x] **Huy** — Hoàn thành E5 trên D2-test. Đối chiếu xếp hạng và nguyên văn quy chế cho toàn bộ 3 câu ngoài phạm vi bị đánh dấu tin cậy và 5 ca trượt hạng 1 theo Điều. Nêu hướng cải thiện từ các ca đã đọc. [Bảng E5 D2-test](../experiments/application/results/E5/d2-test.md)
 - [x] **Huy tổng hợp, Minh đối chiếu** — Hoàn tất kiểm chéo E5 trên D1-test ngày 26/11. Minh đã kiểm chéo nội dung và Codex đã xác minh thứ hạng của 20 ca lỗi và 2 ca xếp đúng từ ba bảng xếp hạng gốc. [Kết quả kiểm chéo D1-test](../experiments/application/results/E5/d1-test.md#kiểm-chéo-thứ-hạng-và-nội-dung)
@@ -61,6 +61,12 @@
 ## Phase 4 – Hoàn thiện và nộp bài
 
 *Mục 4 · Huy phụ trách báo cáo, Minh quay video. Codex thực hiện các phép kiểm và đóng gói.*
+
+- [x] **Codex, theo yêu cầu của Huy** — Thêm [tab tra cứu ViRHE4QA](../apps/README.md#tra-cứu-virhe4qa) vào demo cục bộ. HCMUS là nguồn mặc định. Đã thêm bộ chọn khóa HCMUS và hệ UIT trước khi hỏi. Đã thêm [căn cứ văn bản cho toàn bộ D1](../data/README.md#nguồn-văn-bản-d1).
+- [x] **Codex** — Chọn khoản điều kiện tốt nghiệp theo khóa trong demo HCMUS và [so sánh trên bộ phát triển](../experiments/application/README.md#kiểm-tra-khoản-điều-kiện-tốt-nghiệp).
+- [x] **Codex** — Hiển thị [lý do chọn đoạn trích](../apps/README.md#trích-đoạn-trên-giao-diện) và kiểm hai tab trên Chrome.
+- [x] **Codex** — Hiện điểm xếp hạng trên cả hai nguồn và kiểm nhãn của khoản tốt nghiệp được ưu tiên theo khóa.
+- [x] **Codex** — Rà lại hai nguồn trên Chrome, kiểm các số liệu đã lưu, đường dẫn dữ liệu và điều kiện của video trong gói nộp. [Checklist và tình huống tái hiện ngày 27/11](reviews/workspace.md#kiểm-tra-ngày-27112026)
 
 - [x] **Huy** — Tổng hợp báo cáo theo mẫu IEEE và xuất PDF từ [mã nguồn báo cáo](report/README.md).
   - [x] Hoàn thành [Abstract](report/sections/abstract.tex) và đoạn cuối [Introduction](report/sections/introduction.tex) ngày 26/11 từ kết quả tái hiện, D1-test và D2-test.

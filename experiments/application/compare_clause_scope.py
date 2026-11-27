@@ -128,7 +128,7 @@ def compare_question(index: RetrievalIndex, scores: tuple, row: dict, config: di
                   raw_bm25=scores[0], raw_cosine=scores[1], variants={})
 
     # Also call the application's actual single-query entry point for exact baseline parity.
-    baseline_html, _, baseline_status = app.answer(index, row["question"], weight, threshold)
+    baseline_html, _, baseline_status = app.answer(index, row["question"], weight, threshold, show_reasons=False)
     for name in VARIANTS:
         ranking = reranked if name in ("K", "K+G") else ranked
         first = index.by_chunk[ranking[0][2]]

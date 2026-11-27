@@ -1,0 +1,73 @@
+{
+  "query": "Điều kiện xét công nhận tốt nghiệp là gì",
+  "weight": 0.6,
+  "threshold": 0.6201629042625427,
+  "before": {
+    "/search": [
+      "Quy chế 2026 · Điều 19 · Khoản 5",
+      "Quy chế 2026 · Điều 23 · Khoản 3",
+      "Quy chế 2026 · Điều 12"
+    ],
+    "/search_d1": [
+      "UIT · Đào tạo đại học chính quy theo học chế tín chỉ · Điều 33",
+      "UIT · Đào tạo từ xa trình độ đại học · Điều 19",
+      "UIT · Đào tạo đại học chính quy theo học chế tín chỉ · Điều 34 · Khoản 5"
+    ]
+  },
+  "after": [
+    {
+      "endpoint": "/search",
+      "selection": "K24",
+      "results": [
+        "Quy chế 2021 · Điều 17 · Khoản 6",
+        "Quy chế 2021 · Điều 22 · Khoản 4",
+        "Quy chế 2021 · Điều 10 · Khoản 1"
+      ]
+    },
+    {
+      "endpoint": "/search",
+      "selection": "K26 trở đi",
+      "results": [
+        "Quy chế 2026 · Điều 19 · Khoản 5",
+        "Quy chế 2026 · Điều 18 · Khoản 4",
+        "Quy chế 2026 · Điều 12"
+      ]
+    },
+    {
+      "endpoint": "/search",
+      "selection": "Tra cứu chung",
+      "results": [
+        "Quy chế 2026 · Điều 19 · Khoản 5",
+        "Quy chế 2026 · Điều 23 · Khoản 3",
+        "Quy chế 2026 · Điều 12"
+      ]
+    },
+    {
+      "endpoint": "/search_d1",
+      "selection": "Chính quy",
+      "results": [
+        "UIT · Đào tạo đại học chính quy theo học chế tín chỉ · Điều 33",
+        "UIT · Đào tạo đại học chính quy theo học chế tín chỉ · Điều 34 · Khoản 5",
+        "UIT · Ngoại ngữ hệ đại học chính quy · Điều 9 · Khoản 3"
+      ]
+    },
+    {
+      "endpoint": "/search_d1",
+      "selection": "Từ xa",
+      "results": [
+        "UIT · Đào tạo từ xa trình độ đại học · Điều 19",
+        "UIT · Đào tạo từ xa trình độ đại học · Điều 22 · Khoản 3",
+        "UIT · Đào tạo từ xa trình độ đại học · Điều 15"
+      ]
+    },
+    {
+      "endpoint": "/search_d1",
+      "selection": "Tra cứu chung",
+      "results": [
+        "UIT · Đào tạo đại học chính quy theo học chế tín chỉ · Điều 33",
+        "UIT · Đào tạo từ xa trình độ đại học · Điều 19",
+        "UIT · Đào tạo đại học chính quy theo học chế tín chỉ · Điều 34 · Khoản 5"
+      ]
+    }
+  ]
+}

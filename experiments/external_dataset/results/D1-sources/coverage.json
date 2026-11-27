@@ -1,0 +1,120 @@
+{
+  "vire_csv_sha256": "23fb969985150599d3ad0b5229d039b8541ed335fbc29dcfa0b0d733ccaa5682",
+  "r2gqa_zip_sha256": "b488a13aca768f264023be00ceb9b1882fd00a542d8f4fdb371c8dbdcf2a0da1",
+  "corpus_sha256": "6a1bc351060f33c60beb0bb7923b1a9ca67c0d0e8b1f765f75478ab23ff696fc",
+  "subset_rows": 1000,
+  "unique_indices": 983,
+  "distinct_passages": 297,
+  "distinct_normalized_passages": 294,
+  "cited_chunks": 955,
+  "document_titles": 21,
+  "passages_with_pdf_pages": 132,
+  "passages_with_workbook_only": 165,
+  "by_document": [
+    {
+      "document": "Cách đặt mã môn học",
+      "passages": 1,
+      "with_pdf_pages": 0
+    },
+    {
+      "document": "QUI ĐỊNH VỀ CÔNG TÁC GIÁO TRÌNH",
+      "passages": 19,
+      "with_pdf_pages": 0
+    },
+    {
+      "document": "QUY CHẾ Văn bằng, chứng chỉ của Trường Đại học Công nghệ Thông tin",
+      "passages": 32,
+      "with_pdf_pages": 31
+    },
+    {
+      "document": "QUY CHẾ ĐÀO TẠO THEO HỌC CHẾ TÍN CHỈ CHO HỆ ĐẠI HỌC CHÍNH QUY CỦA TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN",
+      "passages": 36,
+      "with_pdf_pages": 30
+    },
+    {
+      "document": "QUY CHẾ ĐÀO TẠO TỪ XA TRÌNH ĐỘ ĐẠI HỌC CỦA TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN",
+      "passages": 26,
+      "with_pdf_pages": 0
+    },
+    {
+      "document": "QUY TRÌNH BÁO NGHỈ DẠY, DẠY BÙ CỦA CÁN BỘ GIẢNG DẠY",
+      "passages": 2,
+      "with_pdf_pages": 1
+    },
+    {
+      "document": "QUY ĐỊNH DẠY VÀ HỌC THEO PHƯƠNG THỨC TRỰC TUYẾN VÀ PHƯƠNG THỨC KẾT HỢP CỦA TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN",
+      "passages": 16,
+      "with_pdf_pages": 0
+    },
+    {
+      "document": "QUY ĐỊNH TẠM THỜI VỀ ĐÀO TẠO LIÊN THÔNG TỪ TRÌNH ĐỘ ĐẠI HỌC LÊN TRÌNH ĐỘ THẠC SĨ HỆ CHÍNH QUY",
+      "passages": 13,
+      "with_pdf_pages": 13
+    },
+    {
+      "document": "QUY ĐỊNH Tổ chức thi các môn học hệ đại học chính quy của Trường Đại học Công nghệ Thông tin",
+      "passages": 28,
+      "with_pdf_pages": 20
+    },
+    {
+      "document": "QUY ĐỊNH Về tiêu chuẩn giảng viên giảng dạy môn học và trợ giảng môn học",
+      "passages": 12,
+      "with_pdf_pages": 7
+    },
+    {
+      "document": "QUY ĐỊNH Về việc mở ngành đào tạo",
+      "passages": 13,
+      "with_pdf_pages": 0
+    },
+    {
+      "document": "QUY ĐỊNH về việc tổ chức dạy – học ngoài giờ hành chính đối với các học phần trong chương trình đào tạo đại học chính quy của Trường Đại học Công nghệ Thông tin",
+      "passages": 5,
+      "with_pdf_pages": 2
+    },
+    {
+      "document": "QUY ĐỊNH ĐÀO TẠO CHƯƠNG TRÌNH CHẤT LƯỢNG CAO",
+      "passages": 17,
+      "with_pdf_pages": 6
+    },
+    {
+      "document": "QUY ĐỊNH ĐÀO TẠO CHƯƠNG TRÌNH TIÊN TIẾN",
+      "passages": 16,
+      "with_pdf_pages": 4
+    },
+    {
+      "document": "QUY ĐỊNH ĐÀO TẠO CHƯƠNG TRÌNH TÀI NĂNG",
+      "passages": 13,
+      "with_pdf_pages": 3
+    },
+    {
+      "document": "QUY ĐỊNH ĐÀO TẠO NGOẠI NGỮ ĐỐI VỚI HỆ ĐẠI HỌC CHÍNH QUY CỦA TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN",
+      "passages": 14,
+      "with_pdf_pages": 5
+    },
+    {
+      "document": "Thay đổi quy trình nộp khóa luận tốt nghiệp sau khi bảo vệ trước hội đồng",
+      "passages": 1,
+      "with_pdf_pages": 0
+    },
+    {
+      "document": "Thông báo Thời điểm và mức thu học phí gia hạn đối với sinh viên hệ đại học chính quy",
+      "passages": 1,
+      "with_pdf_pages": 0
+    },
+    {
+      "document": "Về Quy trình đánh giá, Cập nhật Chương trình đào tạo trình độ Đại học/Sau đại học của Trường Đại học Công nghệ Thông tin",
+      "passages": 12,
+      "with_pdf_pages": 8
+    },
+    {
+      "document": "Về khoá luận tốt nghiệp cho đào tạo bậc đại học hệ chính quy",
+      "passages": 16,
+      "with_pdf_pages": 0
+    },
+    {
+      "document": "Về việc ban hành Quy trình phân công cán bộ coi thi cho các đợt thi tập trung hệ đại học chính quy",
+      "passages": 4,
+      "with_pdf_pages": 2
+    }
+  ]
+}

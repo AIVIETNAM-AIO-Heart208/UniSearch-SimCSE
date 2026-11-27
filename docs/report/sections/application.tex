@@ -10,13 +10,36 @@ The interface instead presents source passages that the student can
 check against the regulation. We evaluated lexical retrieval with BM25.
 Student task completion and FAQ coverage remain unmeasured.
 
-The interface presents up to three topics in retrieval order, with the
-newer edition first within each topic. % apps/app.py (group_results); data/d2/article_map.tsv
+The local demo opens on HCMUS. When the ViRHE4QA corpus is available,
+a separate tab lets readers search that collection and inspect the
+matched passage in context. Each result names the UIT document and cites
+a row in the authors' workbook. For 132 of the 297 passages it also links to the matching UIT PDF page.
+% Coverage: experiments/external_dataset/results/D1-sources/coverage.json.
+Readers choose an admission cohort for HCMUS or a training mode for UIT before searching.
+HCMUS ranks topics in the cohort edition. For earlier covered cohorts it also
+shows the newer provision on the same topic for comparison. A general search covers both editions. % apps/app.py (group_results); data/d2/article_map.tsv
 Each entry identifies the article and numbered clause when available.
-The excerpt includes a link to the decision and its issue date. The
-student can open the earlier edition for comparison or check cohort
-applicability above the results. The newer regulation is indexed
+Both tabs show the retrieval method and article score beside the rank.
+For grouped HCMUS results, the card identifies the article that set its rank
+when another edition is shown first. A graduation result promoted by the
+cohort rule carries a selection label.
+% Rank labels and source checks: experiments/application/results/demo-selection/rank-scores.json.
+Readers can expand an explanation to see the cosine similarity between their
+question and the matched text. When the top UIT result matches only an article
+heading and opens automatically, the card identifies the heading as the scored
+text and opens its source passage for reading. A graduation clause opened directly
+explains how the selected cohort and the list of eligibility conditions led to it.
+% Browser evidence: experiments/application/results/demo-selection/result-reasons.json.
+The excerpt includes a link to the decision and its issue date. Students can check cohort applicability above the results. The newer regulation is indexed
 from a ChatGPT transcription of the scan that the team corrected.
+On three development phrasings of a graduation eligibility question, tested
+across two admission cohorts, the first card opened the applicable clause in
+six of six trials, up from zero. Responses to the original sixteen development
+questions were byte-identical across versions.
+% Development captures: experiments/application/results/graduation-excerpts/before.json and after.json.
+A subsequent interface revision preserved both HCMUS result lists and the
+status message for all 26 development submissions checked.
+% Paired response hashes and configuration: experiments/application/results/ui-review/workspace-2026-11-27.json.
 The BM25 tab displays topics with lexical evidence for the same question
 and asks for different keywords when all article scores are zero. A low cosine for the passage selected
 in the top-ranked article keeps the topics collapsed in the main tab

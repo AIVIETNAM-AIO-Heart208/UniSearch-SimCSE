@@ -1,6 +1,31 @@
 Viết cho: Huy và Minh, khi duyệt bản bàn giao Lab 03.
 
-# Checklist rà soát ngày 26/11/2026
+# Checklist rà soát workspace
+
+## Kiểm tra ngày 27/11/2026
+
+Phạm vi gồm bản làm việc trên nền `c6aa526`, cả thay đổi cục bộ cho ViRHE4QA. Trước khi sửa, 834 test đạt và bộ kiểm Chrome cũ đạt ở 1440 × 960 và 320 × 740. Các ca sau tái hiện được ngoài bộ kiểm đó.
+
+- [x] **Cao · Gói nộp chấp nhận tệp văn bản làm video.** Cả `build` và `verify` từng nhận văn bản đổi đuôi `.mp4`. Bộ kiểm nay đọc định dạng, luồng hình và thời lượng từ chính tệp trong ZIP. MP4 diễn tập dài 211,731 giây qua kiểm ở thư mục tạm. Ba tệp thử gồm văn bản, video có nhãn định dạng QuickTime và video có nhãn 3GPP đều bị từ chối dù đuôi là `.mp4`. Gói hợp lệ trước đó còn nguyên. Các mốc 0, 30 phút và vượt 30 phút được kiểm bằng dữ liệu mô phỏng. [Bộ đóng gói](../../tools/package_submission.py) · [Kiểm thử](../../tests/test_source_export.py)
+- [x] **Cao · Thông báo HCMUS biến mất sau khi dùng D1.** Tra UIT, quay về HCMUS, mở BM25 rồi gửi câu rỗng. Trước khi sửa, thẻ UIT còn trong trang khiến CSS ẩn hướng dẫn HCMUS. Trình duyệt nay hiện “Nhập câu hỏi để tra cứu.” ngay cả khi vẫn lưu kết quả UIT. [CSS bộ chọn](../../apps/selectors.css)
+- [x] **Vừa · Mất phản hồi khi tra UIT.** Trước khi sửa, gửi lỗi chỉ hiện “Error”. Đã thử sửa câu, giữ yêu cầu ở trạng thái chờ, ngắt kết nối và gửi lại bằng Enter. Giao diện báo bằng tiếng Việt, giữ câu hỏi và chỉ hiện kết quả tương ứng. [Xử lý trạng thái](../../apps/search.js)
+- [x] **Vừa · Khóa trước K21 vẫn được mời nhập câu hỏi.** Chọn **Trước K21** nay hiện ngay giới hạn và cách tham khảo bằng **Tra cứu chung**. Ô nhập cùng các câu gợi ý chỉ hiện lại sau khi chọn phạm vi tra được. [Hướng dẫn HCMUS](../../apps/README.md#tra-cứu-hcmus)
+- [x] **Vừa · Bàn phím và bố cục UIT.** Phím mũi tên từ HCMUS trước đây giữ nguyên tiêu điểm. Nay dùng được phím mũi tên và Home trên nhóm tab nguồn, thẻ UIT có tiêu đề để điều hướng. Nút gửi chiếm đủ chiều ngang ô hỏi ở 320 px và nhãn nằm trên một dòng ở 1440 px. [Phép thử Chrome](../../tools/check_search_ui.py)
+- [x] **Vừa · Tiêu đề lặp lại như nội dung quy định.** Với câu “Điều kiện xét công nhận tốt nghiệp là gì”, hệ chính quy trả Điều 33. Thẻ giải thích 0,79 là điểm của tiêu đề và mở luôn đoạn nguồn có các điều kiện khi thẻ đầu đủ điểm. Sinh viên dùng bàn phím để thu gọn, mở lại và đọc dòng trong bảng tác giả. [Cách đọc đoạn UIT](../../apps/README.md#tra-cứu-virhe4qa)
+- [x] **Vừa · Chỉ dùng BM25 có thể bỏ sót điểm âm.** Khi ba Điều điểm 0 đứng trước một Điều điểm âm, UIT từng báo không có từ khóa khớp. Nay loại các Điều điểm 0 trước khi lấy ba kết quả. Ở cả UIT và HCMUS, phép thử kiểm cảnh báo theo đoạn của Điều có tín hiệu đứng đầu. [Kiểm thử bằng bảng điểm đối chứng](../../tests/test_retrieval_app.py)
+- [x] **Vừa · Phiếu kiểm tốt nghiệp ghi cố định cấu hình.** Bộ thu phản hồi nay đọc trọng số và ngưỡng từ máy chủ. Đã kiểm chế độ trọng số 0, không đặt ngưỡng và từ chối bản đối chứng dùng cấu hình khác trước khi ghi tệp. [Bộ thu phản hồi](../../experiments/application/check_graduation_excerpts.py)
+
+**Phạm vi nghiệm thu.** Cấu hình CPU dùng trọng số 0,6 và ngưỡng 0,6201629042625427 đã chốt trên D1-dev. Cả 26 phản hồi HCMUS có cùng SHA-256 trước và sau khi sửa, gồm 16 câu phát triển, 6 lượt hỏi điều kiện tốt nghiệp và 4 lượt đối chứng. Sáu lượt hỏi điều kiện đều mở đúng khoản. Kết quả kiểm trải nghiệm đến từ Chrome tự động. [Phiếu đối chiếu từng lượt](../../experiments/application/results/ui-review/workspace-2026-11-27.json)
+
+**Dữ liệu và hồ sơ.** Đã dựng lại split từ CSV đã ghim, kiểm ba bảng D1-dev, tính lại chỉ số của ba phương pháp trên D1-test và các trường chấm D2-test. Sáu bảng xếp hạng test khớp SHA-256. Đã dựng PDF, so các hàng R1–R3 với kết quả lưu và tải lại bộ D2 công khai khi chưa đăng nhập. Video chính thức còn chờ Minh. [Kết quả D1](../../experiments/external_dataset/results/E1/d1-test.json) · [Kết quả D2](../../experiments/application/results/D2/summary.json) · [Dữ liệu bàn giao](../../data/d2/README.md#bộ-d2-công-khai)
+
+**Nguồn bên ngoài.** Cả hai PDF HCMUS và 11 PDF trên cổng UIT tải được, trùng SHA-256 trong danh mục. Hai bản lưu UIT về văn bằng và giảng viên trả HTTP 429 khi kiểm lại. Thẻ kết quả đã ghi rõ liên kết bản lưu và dòng thay thế trong bộ dữ liệu của tác giả. [Danh mục PDF](../../data/d1/documents.json) · [Bảng đối chiếu đủ 297 đoạn](../../data/d1/sources.tsv)
+
+**Kiểm lại trên máy Huy.** Python 3.11.9 chạy `python -m pytest tests -q` đạt 841 test, có 8 cảnh báo deprecation từ Gradio. Lệnh `python -X utf8 tools/check_search_ui.py --d1` đạt ở 1440 × 960 và 320 × 740. Riêng thẻ có bản lưu PDF được mở thêm ở 390 px với giao diện tối và 768 px với giao diện sáng. Gói mô phỏng ngoại tuyến qua cả ba chiều rộng 1440, 390 và 320 px. [Lệnh chạy Chrome](../../apps/README.md#chạy-cục-bộ) · [Lệnh kiểm mô phỏng](../../experiments/application/README.md#mô-phỏng-hai-cách-chọn-khóa)
+
+**Kiểm từ ZIP.** Bản giải nén có sẵn HCMUS. Chrome qua cả hai kích thước ở chế độ này bằng checkpoint cục bộ đã ghim. Trên bản giải nén sạch, 840 test đạt và một test bỏ qua vì không kèm mã nguồn SimCSE của tác giả. Cung cấp đúng `simcse/models.py` từ commit `235f89e` rồi chạy riêng, test còn lại đạt. Cả 170 tệp trong bảng SHA-256 của hồ sơ chờ video đều đã đối chiếu. [Hướng dẫn bàn giao](../README.md#báo-cáo-và-video)
+
+**Dọn workspace.** Đã xóa bản JSON phát lại trùng từng byte với kết quả tốt nghiệp đã lưu và cache Python/pytest dựng lại được. Bộ ảnh dùng để kiểm bản xem trước đã được thay bằng 32 ảnh của bản chạy chính. Các PDF nguồn, bảng xếp hạng, phiếu gán nhãn và bản video diễn tập tiếp tục phục vụ đối chiếu. [Kết quả tốt nghiệp được giữ](../../experiments/application/results/graduation-excerpts/after.json)
 
 ## Lỗi và cách xác nhận
 

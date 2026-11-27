@@ -1,0 +1,296 @@
+{
+  "weight": 0.6,
+  "threshold": 0.6201629042625427,
+  "pilot_sha256": "3ffd896f4fa645c84cbf1a85e3c016672cea4e1d34d5062a8c25d820b0525fd0",
+  "results": [
+    {
+      "qid": "pilot-01",
+      "question": "Em đang đọc quy chế năm 2021. Nếu cả môn dồn vào vài buổi thì một ngày thầy được xếp nhiều nhất mấy giờ cho riêng môn đó?",
+      "cohort": "K24",
+      "first": "Quy chế 2021 · Điều 6 · Khoản 6",
+      "open": true,
+      "gold": [
+        "hcmus-qcdt-2021:dieu-6:khoan-6"
+      ],
+      "correct_open": true,
+      "response_sha256": "91397d539508be550aa6f769bff08995f9fdd16ab9e631f974bcb82cebfa0318"
+    },
+    {
+      "qid": "pilot-02",
+      "question": "Em gửi đơn xin phúc tra bằng thư bảo đảm thì ghi mã bưu chính nào trên phong bì?",
+      "cohort": "Tra cứu chung",
+      "first": "Quy chế 2026 · Điều 18 · Khoản 4",
+      "open": false,
+      "gold": [],
+      "correct_open": null,
+      "response_sha256": "303ef88d8a192feb0a9e1d0224096773fe82a7da0b1d87e987a172f407a022c4"
+    },
+    {
+      "qid": "pilot-03",
+      "question": "Theo bản năm 2021, ai quyết định công khai đến mức nào ý kiến góp ý của tụi em về lớp học?",
+      "cohort": "K24",
+      "first": "Quy chế 2021 · Điều 8 · Khoản 3",
+      "open": false,
+      "gold": [
+        "hcmus-qcdt-2021:dieu-8:khoan-3:2"
+      ],
+      "correct_open": false,
+      "response_sha256": "acae7e6fbff62b3a37c50019bb79b98bc35b337acc143c1cd22e48a25adfbf78"
+    },
+    {
+      "qid": "pilot-04",
+      "question": "Em cần bản dịch bảng điểm sang tiếng Đức để nộp hồ sơ du học. Trường thu bao nhiêu đồng mỗi trang dịch?",
+      "cohort": "Tra cứu chung",
+      "first": "Quy chế 2026 · Điều 14 · Khoản 3",
+      "open": false,
+      "gold": [],
+      "correct_open": null,
+      "response_sha256": "76a46cdd2a005320531179560e5f965d0618d0cbdf7f9240f426be18343f5f9c"
+    },
+    {
+      "qid": "pilot-05",
+      "question": "Em xem lại quy chế 2021 để chuẩn bị nhận bằng. Giấy phát kèm có ghi kết quả riêng của từng môn em đã học không?",
+      "cohort": "K24",
+      "first": "Quy chế 2021 · Điều 18 · Khoản 4",
+      "open": true,
+      "gold": [
+        "hcmus-qcdt-2021:dieu-18:khoan-4"
+      ],
+      "correct_open": true,
+      "response_sha256": "9ed9552bdafc1eddf45458a37a376fd1ba0001183f0eb6d42af0185194ceb8ce"
+    },
+    {
+      "qid": "pilot-06",
+      "question": "Lúc đăng ký học kỳ 2 năm học 2025–2026 bên Toán – Tin, em đã học xong môn tiên quyết nhưng điểm chưa lên hệ thống. Khoa cho em đăng ký bù vào đợt nào?",
+      "cohort": "Tra cứu chung",
+      "first": "Quy chế 2026 · Điều 19 · Khoản 3",
+      "open": true,
+      "gold": [],
+      "correct_open": null,
+      "response_sha256": "605360d61e1d7a4bf2d20bc432189ad6e1942ce089e7dca3f8ce1c7afccdf30a"
+    },
+    {
+      "qid": "pilot-07",
+      "question": "Theo quy chế 2026, trường có quản lý cả thông tin việc làm của cựu sinh viên sau khi họ ra trường không?",
+      "cohort": "K26 trở đi",
+      "first": "Quy chế 2026 · Điều 9 · Khoản 2",
+      "open": false,
+      "gold": [
+        "hcmus-qcdt-2026:dieu-9:khoan-2"
+      ],
+      "correct_open": false,
+      "response_sha256": "3ad6e829097164b3e4ec01d714e3aa219115263732548908ec202d8a4a4f0e37"
+    },
+    {
+      "qid": "pilot-08",
+      "question": "Lớp em cần ở Khoa Toán – Tin đã kín chỗ khi đăng ký cho học kỳ 2 năm 2025–2026. Trong đợt đó Khoa có xem xét mở thêm lớp không?",
+      "cohort": "Tra cứu chung",
+      "first": "Quy chế 2026 · Điều 6 · Khoản 1",
+      "open": false,
+      "gold": [],
+      "correct_open": null,
+      "response_sha256": "8af72579cc089c53a5df73e4f8af9b0fe1c58ac611f2eb4ca0b5c978e9b1b91c"
+    },
+    {
+      "qid": "pilot-09",
+      "question": "Em đang học chương trình tích hợp và tính chuyển ra. Theo quy chế 2026, em có được cung cấp đầy đủ thông tin về điều kiện chuyển ra không?",
+      "cohort": "K26 trở đi",
+      "first": "Quy chế 2026 · Điều 24 · Khoản 2",
+      "open": true,
+      "gold": [
+        "hcmus-qcdt-2026:dieu-24:khoan-2"
+      ],
+      "correct_open": true,
+      "response_sha256": "ef7ba4f67afc57b34ddad312f474dfe44bd0c1c3d6ab78155277cc84388492ba"
+    },
+    {
+      "qid": "pilot-10",
+      "question": "Để rau húng trong tủ lạnh vài ngày thì em nên bọc lá như thế nào cho đỡ héo?",
+      "cohort": "Tra cứu chung",
+      "first": "Quy chế 2026 · Điều 14 · Khoản 5",
+      "open": false,
+      "gold": [],
+      "correct_open": null,
+      "response_sha256": "b9efc174bb51b936ad750455ebf4507f5e67940224f20789cddf32d86b2e5a43"
+    },
+    {
+      "qid": "pilot-11",
+      "question": "Em muốn tra quy định bảo quản bài thi. Trong quy chế 2026, phòng nào phụ trách văn bản về việc này?",
+      "cohort": "K26 trở đi",
+      "first": "Quy chế 2026 · Điều 10 · Khoản 4",
+      "open": true,
+      "gold": [
+        "hcmus-qcdt-2026:dieu-10:khoan-4"
+      ],
+      "correct_open": true,
+      "response_sha256": "7c8fa3d363194b28627f760cce4bcab8759ef1c2a1c4372e6942dbf8ace9a9c0"
+    },
+    {
+      "qid": "pilot-12",
+      "question": "Nếu theo chuyên ngành CNTT tổng thể của Khoa, em có được tự do ghép các môn bên phần mềm và an ninh mạng theo ý mình không?",
+      "cohort": "Tra cứu chung",
+      "first": "Quy chế 2026 · Điều 3 · Khoản 3",
+      "open": false,
+      "gold": [],
+      "correct_open": null,
+      "response_sha256": "ecbd2c89171cd6c0feb33d7fcebae6a4574f63fa4776d329fe01c4c2392c2933"
+    },
+    {
+      "qid": "pilot-13",
+      "question": "Quy chế 2026 có yêu cầu trường dùng góp ý của nơi tuyển dụng bọn em để cải tiến chương trình học không?",
+      "cohort": "K26 trở đi",
+      "first": "Quy chế 2026 · Điều 27 · Khoản 1",
+      "open": false,
+      "gold": [
+        "hcmus-qcdt-2026:dieu-26:khoan-3"
+      ],
+      "correct_open": false,
+      "response_sha256": "04b9d4932b111e29f806c92c16bfb44be98f954f24de558cb8b60f551ca71140"
+    },
+    {
+      "qid": "pilot-14",
+      "question": "Em chuẩn bị báo cáo seminar, cần đặt mượn micro không dây của trường. Em gọi số nội bộ nào?",
+      "cohort": "Tra cứu chung",
+      "first": "Quy chế 2026 · Điều 11 · Khoản 2",
+      "open": false,
+      "gold": [],
+      "correct_open": null,
+      "response_sha256": "a6d01dee6cd0f29ada579c976b1c586788b90824097b10db1e56490b77a3b344"
+    },
+    {
+      "qid": "pilot-15",
+      "question": "Em học một môn thực hành. Khi chốt điểm môn đó, điểm chuyên cần của em có được tính là một phần riêng không?",
+      "cohort": "Tra cứu chung",
+      "first": "Quy chế 2026 · Điều 10 · Khoản 3",
+      "open": true,
+      "gold": [
+        "hcmus-qcdt-2021:dieu-9:khoan-2",
+        "hcmus-qcdt-2026:dieu-10:khoan-3"
+      ],
+      "correct_open": true,
+      "response_sha256": "6a31d502d1eb7e020702f6f04ec351e55ff6c4b1df75790c9445569411040b73"
+    },
+    {
+      "qid": "pilot-16",
+      "question": "Em gửi bưu thiếp từ Việt Nam sang Nhật thì phải dán tem quốc tế mệnh giá bao nhiêu?",
+      "cohort": "Tra cứu chung",
+      "first": "Quy chế 2026 · Điều 2 · Khoản 6",
+      "open": false,
+      "gold": [],
+      "correct_open": null,
+      "response_sha256": "a09019f51f58db46cf74787623ef59572aee31865326fdd942dae0991a9b334f"
+    },
+    {
+      "qid": "conditions",
+      "question": "Điều kiện xét công nhận tốt nghiệp là gì",
+      "cohort": "K24",
+      "first": "Quy chế 2021 · Điều 17 · Khoản 3",
+      "open": true,
+      "gold": [
+        "hcmus-qcdt-2021:dieu-17:khoan-3"
+      ],
+      "correct_open": true,
+      "response_sha256": "fd16dd743a9d91f8a4edfea3c496206700b926efc3ac244126018b99e8bf91c1"
+    },
+    {
+      "qid": "conditions",
+      "question": "Điều kiện xét công nhận tốt nghiệp là gì",
+      "cohort": "K26 trở đi",
+      "first": "Quy chế 2026 · Điều 19 · Khoản 1",
+      "open": true,
+      "gold": [
+        "hcmus-qcdt-2026:dieu-19:khoan-1"
+      ],
+      "correct_open": true,
+      "response_sha256": "cd123d77274648ec16f66372567639a4301684303609beea6615af21782bd34c"
+    },
+    {
+      "qid": "requirements",
+      "question": "Em cần đáp ứng những điều kiện nào để được xét tốt nghiệp?",
+      "cohort": "K24",
+      "first": "Quy chế 2021 · Điều 17 · Khoản 3",
+      "open": true,
+      "gold": [
+        "hcmus-qcdt-2021:dieu-17:khoan-3"
+      ],
+      "correct_open": true,
+      "response_sha256": "55f2ac748a64bacc2cf100df9de3fc286be18071db6d89f17796e2557590d5be"
+    },
+    {
+      "qid": "requirements",
+      "question": "Em cần đáp ứng những điều kiện nào để được xét tốt nghiệp?",
+      "cohort": "K26 trở đi",
+      "first": "Quy chế 2026 · Điều 19 · Khoản 1",
+      "open": true,
+      "gold": [
+        "hcmus-qcdt-2026:dieu-19:khoan-1"
+      ],
+      "correct_open": true,
+      "response_sha256": "d9ad60073de955d699a7645db026e1a8d772a02901995f94f18830c2ae0748fe"
+    },
+    {
+      "qid": "graduate",
+      "question": "Muốn tốt nghiệp thì em cần đáp ứng những gì?",
+      "cohort": "K24",
+      "first": "Quy chế 2021 · Điều 17 · Khoản 3",
+      "open": true,
+      "gold": [
+        "hcmus-qcdt-2021:dieu-17:khoan-3"
+      ],
+      "correct_open": true,
+      "response_sha256": "26a8358efd2763b35b765c8bb803f8f1fb1e35bb7ec5f51d3869dabcf70628cb"
+    },
+    {
+      "qid": "graduate",
+      "question": "Muốn tốt nghiệp thì em cần đáp ứng những gì?",
+      "cohort": "K26 trở đi",
+      "first": "Quy chế 2026 · Điều 19 · Khoản 1",
+      "open": true,
+      "gold": [
+        "hcmus-qcdt-2026:dieu-19:khoan-1"
+      ],
+      "correct_open": true,
+      "response_sha256": "27a2dbb7835fd8cda20a8c250ba692887b716d0c3bde93be2f46bab254100b74"
+    },
+    {
+      "qid": "procedure",
+      "question": "Khi đủ điều kiện tốt nghiệp thì em nộp hồ sơ thế nào?",
+      "cohort": "K24",
+      "first": "Quy chế 2021 · Điều 18 · Khoản 1",
+      "open": true,
+      "gold": [],
+      "correct_open": null,
+      "response_sha256": "1012fc85eff31a1c098f62f4ee13084d7e3dbac684ea3d4c3a9a5d1cff6ec770"
+    },
+    {
+      "qid": "procedure",
+      "question": "Khi đủ điều kiện tốt nghiệp thì em nộp hồ sơ thế nào?",
+      "cohort": "K26 trở đi",
+      "first": "Quy chế 2026 · Điều 19 · Khoản 5",
+      "open": true,
+      "gold": [],
+      "correct_open": null,
+      "response_sha256": "6be5c64b81e1f2f11307f199650479187ae9cf7df8eaccb25e7fa27b34da6d25"
+    },
+    {
+      "qid": "authority",
+      "question": "Ai ký quyết định công nhận tốt nghiệp cho sinh viên đủ điều kiện?",
+      "cohort": "K24",
+      "first": "Quy chế 2021 · Điều 17 · Khoản 6",
+      "open": true,
+      "gold": [],
+      "correct_open": null,
+      "response_sha256": "ad8e61d4f7a2aeb8cce75582524f9cfacf5cdca90d599c3122d3a7026bd11b5d"
+    },
+    {
+      "qid": "authority",
+      "question": "Ai ký quyết định công nhận tốt nghiệp cho sinh viên đủ điều kiện?",
+      "cohort": "K26 trở đi",
+      "first": "Quy chế 2026 · Điều 19 · Khoản 2",
+      "open": true,
+      "gold": [],
+      "correct_open": null,
+      "response_sha256": "c16b93702e6d9be921ea5f3d68223dae5bfe1fde1f2cfdd9439ad833a96b23dc"
+    }
+  ]
+}

@@ -91,3 +91,17 @@ python -m experiments.application.cohort_study.run_walkthrough outputs/developme
 ```
 
 Chọn thư mục đích mới khi chạy lại. Thư mục chứa bảng TSV ghi kết quả từng lượt, nhật ký sự kiện, sáu ảnh PNG và một ZIP để đối chiếu.
+
+## Kiểm tra khoản điều kiện tốt nghiệp
+
+Hai tệp kết quả dưới đây ghi nhận giao diện ở thời điểm D-37. D-38 bổ sung phần giải thích cho từng đoạn. D-39 hiển thị thêm điểm hoặc căn cứ ưu tiên trên tiêu đề thẻ. Phép so toàn bộ phản hồi theo byte cũng ghi nhận thay đổi giao diện này.
+
+Câu hỏi chung về điều kiện tốt nghiệp được kiểm ở K24 (Điều 17 khoản 3, bản 2021) và K26 (Điều 19 khoản 1, bản 2026). Thành công yêu cầu đúng năm, Điều, Khoản ở thẻ đầu và thẻ đã mở. Câu hỏi về hồ sơ và người ký là đối chứng để phát hiện trường hợp bị chuyển nhầm sang danh sách điều kiện.
+
+Trên demo CPU với trọng số Hybrid 0,6 và ngưỡng 0,6201629042625427 đã chốt, ba cách hỏi điều kiện trên hai khóa tăng từ **0/6 lên 6/6** lượt mở đúng. Bốn lượt đối chứng (hai câu trên hai khóa) có phản hồi trùng từng byte. Cả 16 câu trong bộ phát triển mở cũng có phản hồi trùng từng byte, gồm HTML tra cứu, HTML từ khóa và thông báo. Tám câu có nhãn Khoản, tám câu ngoài phạm vi. Câu hỏi nêu bản 2021 được thử ở K24, câu nêu bản 2026 ở K26, các câu còn lại ở Tra cứu chung. Đây là phép kiểm thay đổi trên dữ liệu phát triển, không phải ước lượng chất lượng trên câu hỏi mới. [Bản trước](results/graduation-excerpts/before.json) · [Bản sau](results/graduation-excerpts/after.json)
+
+Mở [demo theo cấu hình đã đo](../../apps/README.md#chạy-cục-bộ), rồi chạy trong môi trường demo từ gốc repo. Mỗi lần chạy dùng một tệp đầu ra mới. Bộ kiểm đọc trọng số và ngưỡng do chính máy chủ khai báo. Khi truyền `--baseline`, cấu hình và bộ câu phát triển phải khớp trước khi so. Dùng `--url` nếu demo chạy ở địa chỉ khác. Kiểm Chrome với `tools/check_search_ui.py --d1` kiểm thêm nội dung danh sách điều kiện ở cả hai khóa.
+
+```powershell
+python -m experiments.application.check_graduation_excerpts --output outputs/development/graduation-replay.json --baseline experiments/application/results/graduation-excerpts/before.json
+```

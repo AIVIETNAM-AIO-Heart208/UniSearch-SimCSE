@@ -8,7 +8,8 @@
 > Trong [phép thử hiển thị ngoại tuyến](../../experiments/application/results/edition-display-pilot/comparison.md), khi thẻ đầu ưu tiên đúng phiên bản sinh viên yêu cầu, có thêm hai câu hiển thị ngay căn cứ đủ trả lời.
 > Đã chạy sáu lượt mô phỏng và sửa liên kết PDF cho nhiệm vụ tra cứu chung. [Kết quả hai mẫu chọn khóa](../../experiments/application/results/cohort-walkthrough/comparison.md) · [Gói mô phỏng](../../experiments/application/README.md#mô-phỏng-hai-cách-chọn-khóa)
 > Đã kiểm chéo và đưa ví dụ của [E5 D1-test](../../experiments/application/results/E5/d1-test.md) và [E5 D2-test](../../experiments/application/results/E5/d2-test.md) vào báo cáo. [Bộ D2 công khai dùng trong bài nộp](../../data/d2/README.md#bộ-d2-công-khai) đã tải được ẩn danh. Xem [trạng thái và việc tiếp theo](PROJECT.md#1-current-status).
-> Hồ sơ đã có PDF và mã nguồn. Minh quay video chính thức từ bộ tư liệu đã bàn giao. [Nội dung và cách mở](../README.md#báo-cáo-và-video)
+> Demo cục bộ có [chế độ tra cứu ViRHE4QA](../../apps/README.md#tra-cứu-virhe4qa). Sinh viên chọn khóa ở HCMUS hoặc hệ đào tạo ở UIT trước khi hỏi. Mọi kết quả D1 cho biết văn bản UIT và dòng nguồn. HCMUS là chế độ mặc định và mở danh sách điều kiện tốt nghiệp theo khóa tuyển sinh. Cả hai nguồn có [điểm xếp hạng trên thẻ và lời giải thích cho từng đoạn](../../apps/README.md#trích-đoạn-trên-giao-diện).
+> Lượt rà ngày 27/11 kiểm cả hai nguồn khi gửi lỗi, chuyển tab bằng bàn phím và mở đoạn chỉ khớp tiêu đề. Hồ sơ chờ video đã có PDF và mã nguồn. [Kết quả rà soát](../reviews/workspace.md#kiểm-tra-ngày-27112026) · [Hướng dẫn bàn giao bản ghi](../README.md#báo-cáo-và-video)
 
 ## Thành viên
 
@@ -21,10 +22,10 @@ Phân công chi tiết: [docs/PLAN.md](../PLAN.md).
 
 ## Bài toán
 
-Sinh viên hỏi bằng lời thường, còn quy chế viết bằng thuật ngữ. Ví dụ thật trong bộ dữ liệu công khai ViRHE4QA (theo nội dung là quy chế ĐH CNTT; câu index 9542): *"Việc làm KLTN có thể bị dừng giữa chừng không?"*. Câu trả lời nằm ở Điều 6 "Báo cáo tiến độ thực hiện KLTN", và Điều này dùng chữ "đình chỉ", không có cụm "dừng giữa chừng". Ctrl+F hoặc tìm kiếm từ khóa chỉ khớp đúng từ, nên dễ bỏ sót. Chatbot sinh câu trả lời thì có thể "bịa" và không chỉ ra căn cứ.
+Sinh viên hỏi bằng lời thường, còn quy chế viết bằng thuật ngữ. Ví dụ thật trong bộ dữ liệu công khai ViRHE4QA (Điều 6 trong văn bản về khóa luận tốt nghiệp hệ chính quy của UIT, câu index 9542): *"Việc làm KLTN có thể bị dừng giữa chừng không?"*. Câu trả lời nằm ở Điều 6 "Báo cáo tiến độ thực hiện KLTN", và Điều này dùng chữ "đình chỉ", không có cụm "dừng giữa chừng". Ctrl+F hoặc tìm kiếm từ khóa chỉ khớp đúng từ, nên dễ bỏ sót. Chatbot sinh câu trả lời thì có thể "bịa" và không chỉ ra căn cứ.
 
 **Mục tiêu:** trả về 3 Điều/Khoản liên quan nhất, kèm trích đoạn, tên văn bản, số hiệu, ngày ban hành và phạm vi áp dụng.
-- Corpus gồm hai phiên bản Quy chế đào tạo: QĐ 1175/2021 và QĐ 3087/2026. Điều 27 của quy chế 2026 ghi: quy chế áp dụng cho các khóa tuyển từ năm học 2026–2027; đối với các khóa tuyển sinh từ năm 2025 trở về trước, Trường lựa chọn áp dụng quy định mới có lợi hơn cho người học. Vì vậy ứng dụng giữ cả hai bản và ghi rõ phạm vi áp dụng; trong mỗi kết quả, bản 2026 hiển thị trước vì là bản mới nhất.
+- Corpus gồm hai phiên bản Quy chế đào tạo: QĐ 1175/2021 và QĐ 3087/2026. Điều 27 của quy chế 2026 ghi: quy chế áp dụng cho các khóa tuyển từ năm học 2026–2027; đối với các khóa tuyển sinh từ năm 2025 trở về trước, Trường lựa chọn áp dụng quy định mới có lợi hơn cho người học. Vì vậy ứng dụng giữ cả hai bản và ghi rõ phạm vi áp dụng; khóa đã chọn xác định phiên bản chính của kết quả.
 - Bản 2026 là bản ChatGPT chép từ bản scan và nhóm đã hiệu đính theo PDF chính thức. Sinh viên mở số hiệu dưới trích đoạn để đọc PDF của Trường. [Cách đọc kết quả](../../apps/README.md#trích-đoạn-trên-giao-diện) · [Nguồn dữ liệu](../../data/d2/README.md#file)
 - Khi độ tin cậy thấp, ứng dụng cảnh báo để người dùng tự đối chiếu.
 - Nhóm dùng BM25 làm mốc so sánh trên D1-test và D2. Trên 86 câu D2 có đáp án, MRR@10 theo Điều của Hybrid là 0,8750 và của BM25 là 0,8396. [Chỉ số và khoảng tin cậy D2](../../experiments/application/results/D2/d2-test.md)

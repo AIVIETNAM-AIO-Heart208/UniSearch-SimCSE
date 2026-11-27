@@ -1,0 +1,41 @@
+#source-tabs > [role="tabpanel"] { border: 0; padding: 1rem 0 0; background: transparent; }
+#source-tabs > .tab-wrapper [role="tab"] { color: var(--muted); }
+#source-tabs > .tab-wrapper [role="tab"][aria-selected="true"] { color: var(--accent); border-color: var(--accent); }
+#d1-question-row { align-items: flex-end; gap: .65rem; }
+#d1-question-row .form, #d1-question { border: 0; background: transparent; box-shadow: none; }
+#d1-question { padding: 0; }
+#d1-question textarea {
+    background: var(--paper); color: var(--ink); border: 1px solid var(--line);
+    min-height: 3.1rem; padding: .75rem .9rem; border-radius: .6rem;
+}
+#regulations #d1-question textarea:focus-visible {
+    outline: 3px solid var(--accent) !important; outline-offset: -3px;
+}
+#d1-submit {
+    background: #075e60; color: #fff; border: 1px solid #075e60;
+    min-height: 3.1rem; padding: .6rem 1rem; border-radius: .6rem; white-space: nowrap;
+}
+#d1-results .reading { margin-top: 1rem; }
+#d1-results .d1-text { white-space: pre-line; }
+#d1-results .d1-id { font-size: .87rem; margin-top: .35rem; }
+#d1-results .d1-id code { white-space: normal; overflow-wrap: anywhere; }
+#d1-results .d1-citation { margin-bottom: .5rem; }
+#regulations #d1-feedback { margin: 0; }
+#regulations #d1-feedback:not(:empty), #d1-results [role="status"] {
+    margin: .9rem 0 0; padding: .65rem .9rem; border-radius: .5rem;
+    background: var(--reading-tint); color: var(--ink);
+}
+#d1-results .reading > [role="status"] { margin-bottom: .7rem; }
+#regulations[data-d1-state="error"] #d1-feedback {
+    background: var(--notice-bg); color: var(--notice-ink);
+}
+#regulations:is([data-d1-state="draft"], [data-d1-state="loading"], [data-d1-state="error"]) #d1-results {
+    display: none;
+}
+@media (max-width: 440px) {
+    #d1-question-row { flex-direction: column; align-items: stretch; }
+    #d1-submit { width: 100%; min-width: 100% !important; flex-basis: auto !important; }
+    @supports (field-sizing: content) {
+        #d1-question textarea { field-sizing: content; height: auto !important; max-height: 6.3rem; overflow-y: auto !important; }
+    }
+}

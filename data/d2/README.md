@@ -15,7 +15,7 @@ D2 bù ba chỗ D1 (ViRHE4QA) không có:
 
 Thư mục có một tệp `HCMUS-D2-Group14-2026-11-26.zip`. Bốn tệp dữ liệu gồm câu hỏi và nhãn đã chốt (`queries_d2.jsonl`), bảng đối ứng Điều–chủ đề (`article_map.tsv`), metadata nguồn (`documents.yaml`) và chữ QĐ 1175 (`Quy_che_dao_tao_2021_QD1175.txt`). Chúng giữ nguyên byte từ [phiên bản dùng để đóng gói](https://github.com/AIVIETNAM-AIO-Heart208/UniSearch-SimCSE/tree/bf0ba9537d9762e50c67d1cc98ba3af401764183/data/d2).
 
-Ngày 26/11/2026, nhóm đã mở thư mục và tải ZIP khi chưa đăng nhập. SHA-256 của tệp tải về là `0681d80829eea1895912074999315b92e05d5796b407d5c5099dcffd6bb3b653`. Sau khi giải nén, chạy `sha256sum -c SHA256SUMS.txt` trong Git Bash từ thư mục chứa bảng mã để kiểm bốn tệp dữ liệu và hướng dẫn đọc.
+Ngày 26/11 và 27/11/2026, nhóm đã mở thư mục và tải ZIP khi chưa đăng nhập. SHA-256 của tệp tải về là `0681d80829eea1895912074999315b92e05d5796b407d5c5099dcffd6bb3b653`. Sau khi giải nén, chạy `sha256sum -c SHA256SUMS.txt` trong Git Bash từ thư mục chứa bảng mã để kiểm bốn tệp dữ liệu và hướng dẫn đọc.
 
 ## Corpus: 2 văn bản, 51 Điều
 
@@ -42,7 +42,7 @@ QĐ 91/QĐ-KHTN ngày 18/01/2023 sửa bảng xếp loại ở điểm b khoản
 - Bảng được dựng từ tiêu đề Điều; ba cặp khó (Điều 4, 5, 24 của bản 2021) đã đối chiếu thêm nội dung. Script dựng bảng (`build_article_map.py`, kiểm mỗi Điều xuất hiện đúng một lần) ở `data/raw/d2/verification/scripts/`.
 - T02, T09, T16 gộp hai Điều của **cùng một** phiên bản (một bản tách thành hai Điều nội dung mà bản kia gộp trong một Điều). Đã đối chiếu nội dung và giữ (D-18).
 - **Cách dùng** (PROJECT.md §5.3, §6.3):
-  - Khi hiển thị, các Điều cùng chủ đề gộp thành một kết quả; bản 2026 hiển thị trước, bản 2021 là phụ (D-18).
+  - Khi hiển thị, các Điều cùng chủ đề gộp thành một kết quả; khóa tuyển sinh quyết định bản hiển thị. [Quy tắc theo khóa](../../apps/README.md#tra-cứu-hcmus)
   - Khi đánh giá, D2 báo hai mức. **Theo Điều** là mức chặt, không gộp. **Theo chủ đề** khớp với giao diện nhưng dễ hơn: Điều của phiên bản kia hoặc Điều cùng chủ đề cũng được tính đúng. Luôn báo cả hai mức, không báo mức theo chủ đề một mình.
 
 ## File

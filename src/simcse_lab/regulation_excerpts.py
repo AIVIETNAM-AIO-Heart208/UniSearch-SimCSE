@@ -198,12 +198,14 @@ def _render(blocks: list[_Block]) -> str:
     return "".join(parts)
 
 
-def render_excerpt(chunk: dict, siblings: list[dict]) -> str:
+def render_excerpt(chunk: dict, siblings: list[dict], *, expand: bool = False) -> str:
     """Render the selected window, completing a paragraph, formula or table it touches."""
     text, start, end = _joined_window(chunk, siblings)
     blocks = [block for block in _blocks(text, chunk) if block.start < end and start < block.end]
     if not blocks:
         return ""
+    if expand:
+        return _render(blocks)
     cut = len(blocks)
     label = "Đọc tiếp trích đoạn"
     if any(block.kind == "formula" for block in blocks) and any(block.kind == "table" for block in blocks):

@@ -34,13 +34,19 @@ Kết quả lấy từ tài liệu bên ngoài **không phải** kết quả c�
 
 ## 1. Current Status
 
-**Nhóm 14** · **Deadline: 23:59 ngày 11/12/2026** · Cập nhật lần cuối: 2026-11-26 (Codex)
+**Nhóm 14** · **Deadline: 23:59 ngày 11/12/2026** · Cập nhật lần cuối: 2026-11-27 (Codex)
 
 **Repo GitHub:** <https://github.com/AIVIETNAM-AIO-Heart208/UniSearch-SimCSE>. Minh tạo ngày 23/11.
 
 **Giai đoạn hiện tại.** Nhóm đã hoàn tất tái hiện R1–R4, chọn cấu hình trên D1-dev và đánh giá trên D1-test, D2-test. Phase 4 đã có báo cáo PDF, hồ sơ mã nguồn và tư liệu để Minh quay video. Gói nộp cuối sẽ dùng bản ghi của Minh. [Danh sách việc và người phụ trách](../PLAN.md#phase-4--hoàn-thiện-và-nộp-bài)
 
 **Đã hoàn thành**
+
+- [x] Thêm [tab tra cứu ViRHE4QA](../../apps/README.md#tra-cứu-virhe4qa) cho demo cục bộ và ghi nguồn cho toàn bộ kết quả theo D-34, D-35.
+- [x] Đối chiếu cách mở khoản điều kiện tốt nghiệp theo khóa trên [bộ phát triển](../../experiments/application/README.md#kiểm-tra-khoản-điều-kiện-tốt-nghiệp).
+- [x] Giải thích kết quả ngay dưới đoạn trích ở cả HCMUS và UIT theo D-38.
+- [x] Hiện điểm của Điều quyết định thứ hạng và đánh dấu khoản ưu tiên theo khóa ở tiêu đề thẻ theo D-39.
+- [x] Rà luồng chuyển nguồn, thử lại sau lỗi, đọc tiêu đề UIT và kiểm video trong hồ sơ nộp. [Checklist ngày 27/11](../reviews/workspace.md#kiểm-tra-ngày-27112026)
 
 - [x] Chuẩn bị split D1 theo nhóm đoạn nguồn và lưu xếp hạng SimCSE-VN trên D1-dev. Xem cấu hình, điểm và file kết quả ở [§6.7](#67-bảng-theo-dõi-kết-quả).
 - [x] Kiểm thử khoảng tin cậy cho chênh lệch giữa hai phương pháp và phép đo cảnh báo bằng ví dụ tính tay. Giao diện dùng với xếp hạng ở [§5.4](#54-interface--định-dạng-dữ-liệu).
@@ -147,7 +153,7 @@ Truy hồi lai **BM25 + SimCSE-VN** trên corpus quy chế đào tạo của Tr�
 1. Corpus của ứng dụng gồm 2 văn bản trong [`data/d2/documents.yaml`](../../data/d2/documents.yaml): QĐ 1175/2021 (24 Điều) và QĐ 3087/2026 (27 Điều).
    - Tách Điều/Khoản và lưu metadata: văn bản, số hiệu, ngày ban hành, hiệu lực, phạm vi áp dụng.
    - Bản 2026 do ChatGPT chép từ scan, nhóm hiệu đính theo PDF chính thức. [Hồ sơ nguồn](../../data/d2/README.md#file)
-   - Khi đánh giá D1, dùng corpus 297 đoạn của D1; corpus này không có metadata văn bản.
+   - Khi đánh giá D1, dùng corpus 297 đoạn của D1. Demo đọc tên văn bản từ bảng nguồn sau khi xếp hạng.
 2. Ba phương pháp truy hồi chạy trên cùng pipeline: BM25, SimCSE-VN (dense) và Hybrid.
 3. Giao diện Gradio gồm:
    - ô nhập câu hỏi;
@@ -337,7 +343,7 @@ Kết quả của SimCSE-VN **không** phải kết quả của paper. Trong bá
 ```
 [Offline – build index]  (mỗi corpus một index riêng)
 Corpus HCMUS (ứng dụng, D2): data/raw/d2/* + data/d2/documents.yaml (metadata)
-Corpus D1 (chỉ để đánh giá D1): 297 đoạn trong ViRHE4QA_v2.csv, không có metadata văn bản
+Corpus D1: 297 đoạn trong ViRHE4QA_v2.csv cho truy hồi; bảng nguồn bổ sung tên văn bản khi hiển thị
   → ingest: tách Điều / Khoản → chunk ≤ 256 token → corpus.jsonl
   → preprocess: Unicode NFC → chuẩn hóa dấu thanh (khoá→khóa) → tách từ pyvi
   → BM25 index (token thường hóa)  +  SimCSE-VN embeddings (chuẩn hóa L2) → NumPy cosine
@@ -347,7 +353,7 @@ Câu hỏi → preprocess (cùng hàm) → điểm BM25 và cosine cho mọi chu
   → gộp chunk về Điều (MaxP: lấy max) → min-max normalize theo từng phương pháp
   → Hybrid: s = λ·BM25_norm + (1−λ)·Dense_norm   (λ chọn trên D1-dev)
   → xếp hạng Điều (D1 lưu top-20, D2 lưu đủ 51 Điều)
-  → corpus HCMUS: gộp các Điều cùng chủ đề theo data/d2/article_map.tsv thành một kết quả, bản 2026 đứng trước
+  → corpus HCMUS: gộp các Điều cùng chủ đề theo data/d2/article_map.tsv thành một kết quả theo khóa đã chọn
   → tối đa 3 chủ đề (kèm Điều/Khoản và trích đoạn theo phiên bản)
   → Confidence: cosine SimCSE của chunk tốt nhất trong Điều đứng đầu < θ  ⇒  cảnh báo "Độ tin cậy thấp"
   → UI: Điều/Khoản · trích đoạn · văn bản · số hiệu · ngày ban hành · phạm vi áp dụng · so sánh BM25
@@ -373,19 +379,23 @@ Min-max theo từng câu hỏi làm mất thang điểm tuyệt đối. Nếu m�
   - Các trường: `doc_id`, `title`, `so_hieu`, `ngay_ban_hanh`, `hieu_luc`, `trang_thai`, nguồn, `file`, `sha256`, `nguyen_van`.
   - Index **cả hai phiên bản** (2021 và 2026). Lý do: theo Điều 27 quy chế 2026, quy chế mới áp dụng cho khóa tuyển từ năm học 2026–2027; với khóa tuyển từ 2025 trở về trước, Trường lựa chọn áp dụng quy định mới có lợi hơn cho người học.
   - Chỉ index các Điều của quy chế, không index ba Điều của QĐ 3087 (file 2026 có kèm Quyết định ban hành; file PDF 2021 chỉ có phần quy chế).
-- **Corpus D1 (chỉ để đánh giá):** D1 chỉ có nội dung từng đoạn, không ghi Điều thuộc văn bản nào, số hiệu, ngày ban hành hay phiên bản. Repo ViRE @ `60ea715` cũng không có file ánh xạ đoạn về văn bản gốc (đã kiểm tra 23/11). Chunk của D1 chỉ giữ mã đoạn, số và tên Điều; không suy đoán các thông tin còn lại.
+- **Corpus D1:** Chỉ mục giữ mã và nguyên văn từng đoạn từ CSV ViRE. Demo tra mã đoạn trong [bảng nguồn](../../data/README.md#nguồn-văn-bản-d1) để hiện tên văn bản theo tác giả, dòng đối chiếu và trang PDF UIT khi đã xác minh. Khi đoạn khớp chỉ là tiêu đề, kết quả giải thích điểm của tiêu đề và mở đoạn nguồn nếu thẻ đầu được mở tự động.
 - **Index:** mỗi chunk giữ `doc_id` (D1: `virhe4qa`), `article_id`, `article`, `article_title`, `clause`, offset ký tự để trích đúng đoạn.
 - **Hiển thị (corpus HCMUS):**
   - Mỗi kết quả ghi năm quy chế, Điều, Khoản nếu có và tên Điều. Số hiệu dưới trích đoạn mở văn bản gốc. Ngày ban hành nằm cạnh liên kết. Đường dẫn sửa đổi đi cùng Điều liên quan.
-  - [Trích đoạn trên cả hai tab](../../apps/README.md#trích-đoạn-trên-giao-diện) dùng phần văn bản mà bộ truy hồi chọn. Khi ranh giới cắt qua đoạn văn, bảng hay công thức, giao diện lấy đủ phần đó theo vị trí ký tự trong cùng Khoản.
+  - [Trích đoạn trên cả hai tab](../../apps/README.md#trích-đoạn-trên-giao-diện) dùng phần văn bản mà bộ truy hồi chọn, với ngoại lệ tra trực tiếp danh sách điều kiện tốt nghiệp theo D-37. Khi ranh giới cắt qua đoạn văn, bảng hay công thức, giao diện lấy đủ phần đó theo vị trí ký tự trong cùng Khoản.
   - Mục **Áp dụng theo khóa tuyển sinh** ghi tên và hiệu lực mỗi văn bản một lần trong mỗi danh sách kết quả. Nguồn của bản ChatGPT chép từ scan và phần hiệu đính của nhóm nằm ở [hồ sơ dữ liệu](../../data/d2/README.md#file).
-  - Ứng dụng không tự xác định phiên bản nào áp dụng cho một khóa cụ thể: nó hiển thị kết quả của cả hai phiên bản, kèm phạm vi áp dụng ghi trong văn bản.
+  - Giao diện dùng khóa tuyển sinh đã chọn và hiển thị phạm vi áp dụng ghi trong văn bản.
   - Các Điều cùng chủ đề (theo `data/d2/article_map.tsv`, mỗi chủ đề có 1–3 Điều) hiển thị thành **một** kết quả, kèm các phiên bản có trong chủ đề đó.
-  - Trong mỗi kết quả, **bản 2026 hiển thị trước** vì là bản mới nhất (D-18); mọi chủ đề đều có Điều của bản 2026. Bản 2021 hiển thị phụ, ghi rõ áp dụng cho khóa tuyển từ năm học 2021–2022 đến 2025, trừ quy định mới có lợi hơn (Điều 27 bản 2026).
-- **Độ tin cậy thấp:** tab tra cứu thu gọn các chủ đề. Cảnh báo ngay trên tab ghi phương pháp, phiên bản và Điều/Khoản xếp đầu, kèm gợi ý đối chiếu văn bản hoặc liên hệ Phòng Đào tạo. Ngưỡng θ được chọn và đánh giá theo E3 ([§6.4](#64-thí-nghiệm-thiết-yếu)).
+  - Người dùng chọn khóa HCMUS hoặc hệ UIT trước khi tra. Hai tab lọc theo lựa chọn trước khi lấy ba kết quả. Với K21–K25, tra bản 2021 và cho đối chiếu bản 2026 cùng chủ đề theo Điều 27. [Các lựa chọn và giới hạn](../../apps/README.md).
+- **Độ tin cậy thấp:** với kết quả xếp hạng thông thường, tab tra cứu thu gọn các chủ đề. Khi mở trực tiếp danh sách theo D-37, thẻ đầu ghi căn cứ chọn khoản. Cảnh báo ngay trên tab ghi phương pháp, phiên bản và Điều/Khoản xếp đầu, kèm gợi ý đối chiếu văn bản hoặc liên hệ Phòng Đào tạo. Ngưỡng θ được chọn và đánh giá theo E3 ([§6.4](#64-thí-nghiệm-thiết-yếu)).
 - **Tab từ khóa:** chỉ chủ đề có ít nhất một Điều nhận điểm BM25 khác 0 mới được hiển thị, tối đa ba chủ đề, gồm cả bản đối chiếu trong cùng chủ đề. Khi không có tín hiệu, tab hướng dẫn đổi từ khóa. Quy tắc hiển thị này cũng áp dụng cho tab chính nếu chạy với λ = 1. Các bảng xếp hạng dùng để chấm D1/D2 vẫn bao gồm các Điều theo quy tắc của thí nghiệm.
 
 ### 5.4 Interface & định dạng dữ liệu
+
+Trong HTML kết quả, mỗi đoạn có mục **Vì sao có kết quả này?**. Kết quả tìm kiếm đọc cosine theo mã đoạn đang hiển thị. Khoản được mở trực tiếp theo D-37 giải thích căn cứ chọn khoản và ghi khóa khi sinh viên đã chọn. [Cách đọc trên giao diện](../../apps/README.md#trích-đoạn-trên-giao-diện)
+
+Tiêu đề thẻ hiển thị điểm từ bản xếp hạng của phương pháp đang dùng. Với HCMUS, Điều đầu tiên đủ điều kiện trong phạm vi tra quyết định vị trí chủ đề trước khi sắp bản hiển thị và thêm bản đối chiếu. Với UIT, điểm thuộc về đoạn nguồn trong danh sách đã lọc theo hệ. Khi quy tắc tốt nghiệp quyết định vị trí, thẻ hiển thị căn cứ ưu tiên theo D-39.
 
 Dùng định dạng dưới đây cho dữ liệu và kết quả truy hồi.
 
@@ -404,7 +414,7 @@ runs/<method>.jsonl  {qid, ranked: [[article_id, score, best_chunk_id], ...], to
                # Chọn best_chunk_id và top1_dense_cos theo quy tắc trích đoạn ở §5.2.
 ```
 
-CLI truy hồi nhận corpus, split và danh sách phương pháp. Endpoint Gradio `/search` nhận một câu hỏi, trả về HTML của tab tra cứu, HTML của tab BM25 và thông báo trạng thái. [Lệnh truy hồi](../../experiments/external_dataset/README.md) · [Giao diện](../../apps/README.md). Manifest E1 lưu đường dẫn và SHA-256 của câu hỏi để [E2](../../experiments/application/README.md#e2-trên-d1-test) và E3 đọc trực tiếp từng lượt chạy.
+CLI truy hồi nhận corpus, split và danh sách phương pháp. Endpoint Gradio `/search` nhận câu hỏi và khóa (hoặc Tra cứu chung), trả về HTML của tab tra cứu, HTML của tab BM25 và thông báo trạng thái. [Lệnh truy hồi](../../experiments/external_dataset/README.md) · [Giao diện](../../apps/README.md). Khi nạp D1, endpoint `/search_d1` nhận câu hỏi và hệ đào tạo (hoặc Tra cứu chung) và trả HTML chứa trích đoạn, ngữ cảnh và căn cứ văn bản của ViRHE4QA. Manifest E1 lưu đường dẫn và SHA-256 của câu hỏi để [E2](../../experiments/application/README.md#e2-trên-d1-test) và E3 đọc trực tiếp từng lượt chạy.
 
 Xem [cách xác định mã khi số Khoản lặp](../../data/d2/README.md#mã-điều-và-khoản). Bộ chấm hỗ trợ corpus cũ bằng cách tra Khoản từ offset trong nguồn đã kiểm SHA-256.
 
@@ -457,7 +467,7 @@ Các đường dẫn công khai và thư mục làm việc cục bộ của dự
 │   │   └── SimCSE/                   # code gốc @ 235f89e (gitignore; script tự tải nếu thiếu)
 │   ├── external_dataset/             # D1, cấu hình chốt trong results/D1-dev-tuning/summary.json
 │   └── application/                  # D2, so sánh theo mức trùng từ, cảnh báo, latency, lỗi (E2–E5) → results/
-├── apps/                             # app.py, search.css, search.js
+├── apps/                             # app.py, search.css, d1.css, search.js
 ├── tools/                            # kiểm Markdown, kiểm giao diện, đóng và kiểm gói nộp riêng
 ├── tests/                            # chunker, chuẩn hóa, metrics, infonce (✓ test_infonce.py, infonce_reference.py, test_worked_example.py, conftest.py)
 ├── docs/                             # PLAN.md, application/, report/, reviews/
@@ -478,10 +488,10 @@ Trong cả hai ZIP, `source/` chứa mã và corpus đã kiểm. Bảng SHA-256 
 
 | ID | Dataset | Vai trò | Thông tin | Truy cập / License |
 |---|---|---|---|---|
-| **D1** | ViRHE4QA, bản con trong ViRE: `data/ViRHE4QA_v2.csv` @ ViRE commit `60ea7155134eaa426ab1d0a82d2bbbf327d1b470` (sha256 `23fb9699…aa5682`) | **Dataset mới chính** (bắt buộc); đánh giá trên corpus riêng của D1 | [Confirmed, đã đọc file] 1.000 câu hỏi, 297 context khác nhau (287 bắt đầu bằng "Điều"). Mỗi câu hỏi có đúng 1 context gold. Cột: `split, index, context, question, extractive answer, abstractive answer, label`. Theo nội dung, đây là quy định của Trường ĐH CNTT – ĐHQG-HCM: 77/297 context nêu tên trường, không context nào nêu trường khác. Tóm tắt bài R2GQA không nêu tên trường, nên đây là suy ra từ nội dung (kiểm tra 23/11). Không có thông tin văn bản gốc, số hiệu hay phiên bản của từng Điều. Context dài: trung vị 173 từ, p90 495, tối đa 1.249 → cần chunk. Ý nghĩa cột `label` (0/1, 500/500) chưa rõ [Unverified] và không dùng | Tải trực tiếp từ GitHub. ViRE: code MIT, dataset bên thứ ba giữ license gốc. Bài gốc R2GQA ghi dữ liệu cung cấp "on reasonable request" → license [Unverified]. Chỉ dùng đánh giá học thuật, trích dẫn cả hai. **Nộp bằng link permalink** tới file ở commit trên (giảng viên cho phép nộp dataset bằng link) |
+| **D1** | ViRHE4QA, bản con trong ViRE: `data/ViRHE4QA_v2.csv` @ ViRE commit `60ea7155134eaa426ab1d0a82d2bbbf327d1b470` (sha256 `23fb9699…aa5682`) | **Dataset mới chính** (bắt buộc); đánh giá trên corpus riêng của D1 | [Confirmed, đã đọc file] 1.000 câu hỏi, 297 context khác nhau (287 bắt đầu bằng "Điều"). Mỗi câu hỏi có đúng 1 context gold. Cột: `split, index, context, question, extractive answer, abstractive answer, label`. Đã ghép mọi đoạn với cột `document` trong bộ tác giả. [Tên văn bản UIT, căn cứ và phạm vi xác minh](../../data/README.md#nguồn-văn-bản-d1). Context dài: trung vị 173 từ, p90 495, tối đa 1.249 → cần chunk. Ý nghĩa cột `label` (0/1, 500/500) chưa rõ [Unverified] và không dùng | Tải trực tiếp từ GitHub. ViRE: code MIT, dataset bên thứ ba giữ license gốc. Kho R2GQA của tác giả công bố bộ dữ liệu cho mục đích nghiên cứu. Chỉ dùng đánh giá học thuật, trích dẫn cả hai. **Nộp bằng link permalink** tới file ở commit trên (giảng viên cho phép nộp dataset bằng link) |
 | **D2** | Câu hỏi nhóm xây dựng trên quy chế đào tạo HCMUS, QĐ 1175/2021 và QĐ 3087/2026 ([`data/d2/`](../../data/d2/README.md), D-17) | Test trong bối cảnh thực tế (**chỉ test**) | [Bộ nhãn đã chốt và số câu](../../data/d2/README.md#câu-hỏi-và-nhãn-d2-đã-chốt). Corpus 51 Điều (24 + 27). QĐ 1175 trích nguyên văn từ PDF có chữ. ChatGPT chép QĐ 3087 từ scan và nhóm làm sạch | Trường đã công bố PDF của cả hai quyết định. QĐ 91/2023 sửa bảng xếp loại trong bản 2021, xem [metadata D2](../../data/d2/documents.yaml). Bộ đánh giá có `origin: team` và không chứa dữ liệu cá nhân. [Gói D2 công khai trên Drive](../../data/d2/README.md#bộ-d2-công-khai) ghi rõ các tệp được chia sẻ. Bản ChatGPT chép QĐ 3087 chỉ nộp trong `[Group14].zip` (D-18) |
 | R-STS | STS12–16, STS-B, SICK-R | Tái hiện R1–R3 | Theo script repo | `senteval.tar` (HF `princeton-nlp/datasets-for-simcse`) |
-| D1-full | ViRHE4QA đầy đủ (9.758 cặp QA, 294 điều) | Tùy chọn | [Confirmed theo arXiv:2409.02840] | Xin tác giả; dự án **không phụ thuộc** vào bộ này |
+| D1-full | ViRHE4QA đầy đủ (9.758 cặp QA, 294 điều) | Tùy chọn | [Confirmed theo arXiv:2409.02840] | [Bản tác giả công bố](https://github.com/DoPhamPhucTinh/R2GQA/tree/0653933b6f28b8a05bb822997aed734f7590670e) dùng để kiểm tên nguồn D1; bảng trích dẫn ngoại tuyến đi kèm demo |
 | Dự phòng | EduCoQA (`data/EduCoQA.csv` trong ViRE; 511 câu hỏi / 262 đoạn, tư vấn tuyển sinh HCMUT) | Chỉ dùng nếu D1 không dùng được | [Confirmed] | CC BY-NC 4.0; bản trên HF cần đăng nhập |
 
 Cách tạo [corpus D2 từ hai quy chế](../../data/d2/README.md#file) và quy trình [chốt nhãn D2](#62-tiền-xử-lý-gán-nhãn-và-chia-dữ-liệu) là hai bước chuẩn bị đầu vào cho đánh giá.
@@ -594,10 +604,19 @@ Chỉ làm khi MVP xong và còn thời gian.
 
 ### 6.7 Bảng theo dõi kết quả
 
-Chỉ điền khi đã có file kết quả.
+Sau D-37, số lượt mở đúng khoản điều kiện tốt nghiệp trong sáu ca phát triển tăng từ 0 lên 6. Cả 16 phản hồi trên bộ phát triển mở trùng bản trước. [Đầu vào, cấu hình và kết quả](../../experiments/application/README.md#kiểm-tra-khoản-điều-kiện-tốt-nghiệp)
+
+Đã kiểm lời giải thích D-38 trên Chrome ở cả hai nguồn. [Câu hỏi, lựa chọn, trích dẫn và nội dung đã mở](../../experiments/application/results/demo-selection/result-reasons.json)
+
+Ở D-39, điểm xếp hạng hiển thị trên Chrome khớp với bảng điểm của câu phát triển HCMUS `pilot-01` và UIT `9542`. Trên 22 lượt gửi trước và sau, sau khi bỏ các nhãn mới, toàn bộ nội dung trả về trùng nhau. [Cấu hình và kết quả kiểm tra](../../experiments/application/results/demo-selection/rank-scores.json)
+
+Trước D-37, đã so cùng câu hỏi xét tốt nghiệp trước và sau khi thêm hai bộ chọn với đúng cấu hình demo. [Các Điều đứng đầu theo lựa chọn](../../experiments/application/results/demo-selection/example.json)
+
+Độ phủ nguồn của tab D1 được kiểm riêng với corpus E1. [Kết quả theo từng văn bản](../../experiments/external_dataset/results/D1-sources/coverage.json)
 
 | Exp | Trạng thái | Kết quả chính | File |
 |---|---|---|---|
+| Rà giao diện hai nguồn | 27/11, bộ phát triển | 26/26 phản hồi HCMUS khớp từng byte trước và sau khi sửa giao diện. Sáu lượt hỏi điều kiện tốt nghiệp mở đúng Khoản | [Cấu hình và từng phản hồi](../../experiments/application/results/ui-review/workspace-2026-11-27.json) |
 | R1 | [x] 23/11 | TB 81,58 (README 81,58; paper 81,57). Từng task: 75,30 / 84,67 / 80,19 / 85,40 / 80,82 / 84,26 / 80,39 → khớp README 7/7 | `experiments/reproduction/results/R1/` |
 | R2 | [x] 23/11 | TB 76,25 = paper. Từng task: 68,40 / 82,41 / 74,38 / 80,91 / 78,56 / 76,85 / 72,23 → khớp 7/7 | `experiments/reproduction/results/R2/` |
 | R3 | [x] 23/11 | TB 56,70 = paper. Từng task: 39,70 / 59,37 / 49,67 / 66,03 / 66,19 / 53,88 / 62,06 → lệch ≤ 0,01 | `experiments/reproduction/results/R3/` |
@@ -700,9 +719,9 @@ Các mốc dưới đây là hạn kế hoạch. Nhóm đặt mục tiêu nộp 
 | D-13 | Dataset nộp bằng link: D1 = permalink ViRE @ `60ea715`; D2 = Google Drive public | Chốt (giảng viên cho phép); nội dung link D2 theo D-18 |
 | D-14 | Phân công theo `docs/PLAN.md`; PROJECT.md chỉ giữ lịch và phụ thuộc | Chốt (23/11) |
 | D-15 | Cấu trúc code theo repo `UniSearch-SimCSE` (package `simcse_lab`, thư mục `experiments/`) | Chốt (23/11) |
-| D-16 | Bỏ D2. Chỉ đánh giá trên D1; corpus của ứng dụng là 297 đoạn quy chế ĐH CNTT trong D1, không dùng quy chế trường khác. Ứng dụng hiển thị số và tên Điều, không hiển thị văn bản gốc hay phiên bản vì D1 không có thông tin này. Không đo cảnh báo với câu ngoài phạm vi | Bị thay bởi D-17 (23/11). Các phần vẫn còn hiệu lực: D1 không có metadata văn bản/phiên bản; D1 chia theo nhóm đoạn, nhóm câu 9542 ghim vào dev; cột `split` gốc của D1 bị rò rỉ |
-| D-17 | Khôi phục D2. Corpus của ứng dụng và của D2 là quy chế đào tạo HCMUS: QĐ 1175/QĐ-KHTN (2021, 24 Điều, nguyên văn) và QĐ 3087/QĐ-KHTN (29/9/2026, 27 Điều, bản ChatGPT chép từ scan, nhóm làm sạch). Giữ cả hai phiên bản vì Điều 27 quy chế 2026 ghi: với các khóa tuyển sinh từ năm 2025 trở về trước, Trường lựa chọn áp dụng quy định mới có lợi hơn cho người học. Không dùng bản trích lược trong Sổ tay. D1 giữ vai trò đánh giá trên corpus riêng. Toàn văn để ngoài Git cho tới khi rõ Q7 | Chốt (23/11, Huy); phần toàn văn, hiển thị và cách viết câu được cụ thể hóa ở D-18 |
-| D-18 | Chốt bốn điểm còn mở của D-17 và thứ tự hiển thị. (1) Duyệt `data/d2/article_map.tsv` sau khi đối chiếu nội dung; giữ T02/T09/T16. (2) Câu D2 viết kiểu gập sách, được dùng thuật ngữ thông dụng, không chép nguyên câu hay mệnh đề; bỏ quy tắc "không chép quá 3 từ liên tiếp". (3) Chữ QĐ 1175 (văn bản công khai) đưa vào Git ở `data/d2/`, giữ nguyên byte (`.gitattributes`) để sha256 khớp. (4) Bản chép QĐ 3087 không đăng công khai cho tới khi trường đăng bản chính thức hoặc Phòng Đào tạo đồng ý; nộp kèm trong `[Group14].zip`. (5) Trong mỗi kết quả, bản 2026 hiển thị trước, bản 2021 là phụ | Chốt (24/11; Huy chọn ưu tiên bản 2026 và giao Claude quyết bốn điểm còn lại) |
+| D-16 | Bỏ D2. Chỉ đánh giá trên D1; corpus của ứng dụng là 297 đoạn quy chế ĐH CNTT trong D1, không dùng quy chế trường khác. Ứng dụng hiển thị số và tên Điều, không hiển thị văn bản gốc hay phiên bản vì D1 không có thông tin này. Không đo cảnh báo với câu ngoài phạm vi | Bị thay bởi D-17 (23/11). Phần giới hạn nguồn bị thay bởi D-35. D1 chia theo nhóm đoạn, nhóm câu 9542 ghim vào dev; cột `split` gốc của D1 bị rò rỉ |
+| D-17 | Khôi phục D2. Corpus của ứng dụng và của D2 là quy chế đào tạo HCMUS: QĐ 1175/QĐ-KHTN (2021, 24 Điều, nguyên văn) và QĐ 3087/QĐ-KHTN (29/9/2026, 27 Điều, bản ChatGPT chép từ scan, nhóm làm sạch). Giữ cả hai phiên bản vì Điều 27 quy chế 2026 ghi: với các khóa tuyển sinh từ năm 2025 trở về trước, Trường lựa chọn áp dụng quy định mới có lợi hơn cho người học. Không dùng bản trích lược trong Sổ tay. D1 giữ vai trò đánh giá trên corpus riêng. Toàn văn để ngoài Git cho tới khi rõ Q7 | Chốt (23/11, Huy); phần toàn văn, hiển thị và cách viết câu được cụ thể hóa ở D-18. Giới hạn D1 ở phần đánh giá bị thay bởi D-34 |
+| D-18 | Chốt bốn điểm còn mở của D-17 và thứ tự hiển thị. (1) Duyệt `data/d2/article_map.tsv` sau khi đối chiếu nội dung; giữ T02/T09/T16. (2) Câu D2 viết kiểu gập sách, được dùng thuật ngữ thông dụng, không chép nguyên câu hay mệnh đề; bỏ quy tắc "không chép quá 3 từ liên tiếp". (3) Chữ QĐ 1175 (văn bản công khai) đưa vào Git ở `data/d2/`, giữ nguyên byte (`.gitattributes`) để sha256 khớp. (4) Bản chép QĐ 3087 không đăng công khai cho tới khi trường đăng bản chính thức hoặc Phòng Đào tạo đồng ý; nộp kèm trong `[Group14].zip`. (5) Trong mỗi kết quả, bản 2026 hiển thị trước, bản 2021 là phụ | Chốt (24/11; Huy chọn ưu tiên bản 2026 và giao Claude quyết bốn điểm còn lại). Thứ tự hiển thị theo khóa bị thay bởi D-36 |
 | D-19 | Dùng ngay định dạng ở [§5.4](#54-interface--định-dạng-dữ-liệu). Mỗi người viết Related Work theo phần phụ trách trong [PLAN.md](../PLAN.md#phase-1--nghiên-cứu-paper) | Áp dụng từ 24/11 |
 | D-20 | E0 dùng D1-dev. Bổ sung cho D-19: D2 lưu đủ thứ hạng theo Điều để tính đúng MRR@10 sau khi gộp chủ đề (§6.3). D1 lưu top-20 | Chốt 24/11 khi rà soát |
 | D-21 | Bổ sung D-06 và D-19: cố định cách chọn đoạn trích khi hai phương pháp chọn hai chunk khác nhau và cách xử lý đồng điểm ở [§5.2](#52-vai-trò-từng-thành-phần-proposed). Căn cứ Clause@1 và cảnh báo dùng cùng một đoạn | 24/11, trước khi có xếp hạng D1/D2 |
@@ -718,6 +737,13 @@ Các mốc dưới đây là hạn kế hoạch. Nhóm đặt mục tiêu nộp 
 | D-31 | Thử ưu tiên phiên bản sinh viên yêu cầu ở lớp hiển thị, dùng lại xếp hạng và cảnh báo của D-30. Thời điểm hỏi khóa được thử riêng ở D-32. [Bằng chứng ngoại tuyến](../../experiments/application/results/edition-display-pilot/comparison.md) | 26/11, thí nghiệm phát triển. Bản demo tiếp tục dùng D-18 |
 | D-32 | So thời điểm hỏi khóa bằng hai mẫu có chung dữ liệu và căn cứ cho K24, K26 và tra cứu chung. [Thiết kế và bộ thử](../../experiments/application/README.md#mô-phỏng-hai-cách-chọn-khóa) | 26/11, [đã chạy sáu lượt mô phỏng](../../experiments/application/results/cohort-walkthrough/comparison.md). Phần dự kiến quan sát sinh viên bị thay bởi D-33 |
 | D-33 | Kết thúc phép so chọn khóa ở kết quả Chrome ngoại tuyến và bỏ việc thu phản hồi sinh viên. Minh quay video chính thức từ slide và ảnh đã bàn giao. Codex kiểm và đóng gói khi có bản ghi | 26/11, theo quyết định của Huy. [Hồ sơ video](../README.md#báo-cáo-và-video) |
+| D-34 | HCMUS là nguồn mặc định của demo cục bộ. Khi có corpus ViRHE4QA, người dùng có thể tra cứu D1 trong tab riêng. Mỗi nguồn có chỉ mục riêng. [Cách mở và đọc đoạn nguồn](../../apps/README.md#tra-cứu-virhe4qa) | Chốt 27/11 theo yêu cầu của Huy, bổ sung D-17 về phạm vi demo |
+| D-35 | Mỗi đoạn D1 dẫn về tên văn bản và dòng trong bộ tác giả R2GQA. Chỉ thêm liên kết PDF UIT khi đối chiếu được nội dung và trang. Bảng nguồn chỉ dùng sau xếp hạng. [Căn cứ và cách kiểm](../../data/README.md#nguồn-văn-bản-d1) | Chốt 27/11 theo yêu cầu của Huy, bổ sung D-34 và thay giới hạn nguồn D1 ở D-16 |
+| D-36 | Chọn khóa HCMUS hoặc hệ UIT trước khi hỏi. Cho phép chọn Tra cứu chung. Tên văn bản của tác giả là căn cứ lọc theo hệ UIT. [Cách dùng](../../apps/README.md) | Chốt 27/11 theo yêu cầu của Huy |
+| D-37 | Với câu hỏi chung về điều kiện tốt nghiệp HCMUS, ưu tiên Điều chứa danh sách điều kiện xác định duy nhất trong từng văn bản và mở khoản đó trực tiếp. Các câu hỏi chuyên biệt và trường hợp thiếu căn cứ dùng cách tra thông thường. | 27/11, bổ sung D-36 theo yêu cầu của Huy |
+| D-38 | Cho mở lời giải thích trên từng đoạn của hai nguồn. Kết quả thông thường hiển thị cosine của đoạn, làm tròn hai chữ số. Kết quả trực tiếp theo D-37 nêu khoản và lý do chọn bản quy chế. | 27/11, bổ sung D-06 và D-37 theo yêu cầu của Huy |
+| D-39 | Hiện phương pháp và điểm xếp hạng thật bên cạnh số hạng ở HCMUS và UIT. Với khoản tốt nghiệp ưu tiên theo khóa, hiện **Chọn theo khóa**. Chế độ tra cứu chung ghi căn cứ chọn theo điều kiện tốt nghiệp. | 27/11, bổ sung D-38 theo yêu cầu của Huy |
+| D-40 | Với kết quả UIT chỉ khớp tiêu đề, ghi rõ đối tượng được chấm và mở đoạn nguồn nếu thẻ đầu tự mở. Ghi rõ hai liên kết bản lưu PDF và cách tìm lại dòng trong bảng tính của tác giả. | 27/11, Codex bổ sung cách đọc theo D-35 và D-38 sau [lượt rà soát](../reviews/workspace.md#kiểm-tra-ngày-27112026) |
 
 **Giới hạn dữ liệu.** Ý nghĩa của cột `label` trong D1 vẫn chưa được xác minh. Các phép chấm dùng đoạn nguồn chuẩn đi kèm từng câu hỏi. [Mô tả bộ dữ liệu](#61-datasets)
 

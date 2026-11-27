@@ -1,0 +1,100 @@
+{
+  "Cách đặt mã môn học": {
+    "short": "Hệ thống mã môn học"
+  },
+  "QUI ĐỊNH VỀ CÔNG TÁC GIÁO TRÌNH": {
+    "short": "Công tác giáo trình"
+  },
+  "QUY CHẾ Văn bằng, chứng chỉ của Trường Đại học Công nghệ Thông tin": {
+    "short": "Văn bằng và chứng chỉ",
+    "pdf_url": "https://web.archive.org/web/20250523051328id_/https://daa.uit.edu.vn/sites/daa/files/202309/172-qd-dhcntt_08-3-2023_quy_che_van_bang_chung_chi.pdf",
+    "pdf_sha256": "a26d95011f20c791ca0a6dc43e3072e4df3e94ad013cfa18bdf0624612fd7635"
+  },
+  "QUY CHẾ ĐÀO TẠO THEO HỌC CHẾ TÍN CHỈ CHO HỆ ĐẠI HỌC CHÍNH QUY CỦA TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN": {
+    "short": "Đào tạo đại học chính quy theo học chế tín chỉ",
+    "pdf_url": "https://portal.uit.edu.vn/media/ums.portal.document.file/30/file_id?unique=605bf7174aa9",
+    "pdf_sha256": "7cd30123f7178f408bc17cf28a9ce8d2dfb2a54ec2777853a1bf22e326b8aa7b",
+    "track": "Chính quy"
+  },
+  "QUY CHẾ ĐÀO TẠO TỪ XA TRÌNH ĐỘ ĐẠI HỌC CỦA TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN": {
+    "short": "Đào tạo từ xa trình độ đại học",
+    "track": "Từ xa"
+  },
+  "QUY TRÌNH BÁO NGHỈ DẠY, DẠY BÙ CỦA CÁN BỘ GIẢNG DẠY": {
+    "short": "Báo nghỉ dạy và dạy bù",
+    "pdf_url": "https://portal.uit.edu.vn/media/ums.portal.document/34/file_id?unique=8aaec4eb2806",
+    "pdf_sha256": "386b69fea355e2bccd957bf20a1cdd1215cb2b299b38d623aa0b3bf095521a9a"
+  },
+  "QUY ĐỊNH DẠY VÀ HỌC THEO PHƯƠNG THỨC TRỰC TUYẾN VÀ PHƯƠNG THỨC KẾT HỢP CỦA TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN": {
+    "short": "Dạy học trực tuyến và kết hợp"
+  },
+  "QUY ĐỊNH TẠM THỜI VỀ ĐÀO TẠO LIÊN THÔNG TỪ TRÌNH ĐỘ ĐẠI HỌC LÊN TRÌNH ĐỘ THẠC SĨ HỆ CHÍNH QUY": {
+    "short": "Liên thông từ đại học lên thạc sĩ",
+    "pdf_url": "https://portal.uit.edu.vn/media/ums.portal.document/48/file_id?unique=65bc9a0e8c40",
+    "pdf_sha256": "13a6971e204baf31e378b3ad41795fb589a77e575aa5f53ba5f8f87cbdba8e3e",
+    "track": "Chính quy"
+  },
+  "QUY ĐỊNH Tổ chức thi các môn học hệ đại học chính quy của Trường Đại học Công nghệ Thông tin": {
+    "short": "Tổ chức thi các môn học hệ chính quy",
+    "pdf_url": "https://portal.uit.edu.vn/media/ums.portal.document.file/52/file_id?unique=7f99a2830c8e",
+    "pdf_sha256": "833f73ed3820a547df4d78931d65880cac72909217df9bbcb41e17fd1425bd12",
+    "track": "Chính quy"
+  },
+  "QUY ĐỊNH Về tiêu chuẩn giảng viên giảng dạy môn học và trợ giảng môn học": {
+    "short": "Giảng viên và trợ giảng môn học",
+    "pdf_url": "https://web.archive.org/web/20250612151124id_/https://daa.uit.edu.vn/sites/daa/files/202309/475-qd-dhcntt_20-8-2018_qui_dinh_ve_tieu_chuan_giang_vien_giang_day_mon_hoc_va_tro_giang_mon_hoc.pdf",
+    "pdf_sha256": "0146d14ac2538ff794f4546daeed28b45880ee54dad437a9de039588baef2d63"
+  },
+  "QUY ĐỊNH Về việc mở ngành đào tạo": {
+    "short": "Mở ngành đào tạo"
+  },
+  "QUY ĐỊNH về việc tổ chức dạy – học ngoài giờ hành chính đối với các học phần trong chương trình đào tạo đại học chính quy của Trường Đại học Công nghệ Thông tin": {
+    "short": "Dạy và học ngoài giờ hành chính",
+    "pdf_url": "https://portal.uit.edu.vn/media/ums.portal.document/47/file_id?unique=2d965d037b9f",
+    "pdf_sha256": "8bf5f18515e6cb87c421440ca8d58e443f3da1c06252d6b5c3f237815e3e432a",
+    "track": "Chính quy"
+  },
+  "QUY ĐỊNH ĐÀO TẠO CHƯƠNG TRÌNH CHẤT LƯỢNG CAO": {
+    "short": "Chương trình chất lượng cao",
+    "pdf_url": "https://portal.uit.edu.vn/media/ums.portal.document/38/file_id?unique=cb966d8e1ae1",
+    "pdf_sha256": "f87697c125ea565479fa173101f484c9315074879e17f57d69973eb4c72cf297"
+  },
+  "QUY ĐỊNH ĐÀO TẠO CHƯƠNG TRÌNH TIÊN TIẾN": {
+    "short": "Chương trình tiên tiến",
+    "pdf_url": "https://portal.uit.edu.vn/media/ums.portal.document.file/66/file_id?unique=acc99af7b386",
+    "pdf_sha256": "c38b2d63924912586ea74be811197c06be4d911fdc01223b0704bf2c60b7d5ba"
+  },
+  "QUY ĐỊNH ĐÀO TẠO CHƯƠNG TRÌNH TÀI NĂNG": {
+    "short": "Chương trình tài năng",
+    "pdf_url": "https://portal.uit.edu.vn/media/ums.portal.document.file/36/file_id?unique=73d5365c78c3",
+    "pdf_sha256": "99c8f94d763d66ba390c34ebf9b88247eebdee1f73651be2151843a5111eefc4"
+  },
+  "QUY ĐỊNH ĐÀO TẠO NGOẠI NGỮ ĐỐI VỚI HỆ ĐẠI HỌC CHÍNH QUY CỦA TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN": {
+    "short": "Ngoại ngữ hệ đại học chính quy",
+    "pdf_url": "https://portal.uit.edu.vn/media/ums.portal.document.file/2799/file_id?unique=c17c14451a79",
+    "pdf_sha256": "356f12e982e85b676fc9f0077ebf472eed3e652ad09bee2ce8caa13a2de7d12a",
+    "track": "Chính quy"
+  },
+  "Thay đổi quy trình nộp khóa luận tốt nghiệp sau khi bảo vệ trước hội đồng": {
+    "short": "Nộp báo cáo khóa luận sau bảo vệ"
+  },
+  "Thông báo Thời điểm và mức thu học phí gia hạn đối với sinh viên hệ đại học chính quy": {
+    "short": "Học phí gia hạn hệ chính quy",
+    "track": "Chính quy"
+  },
+  "Về Quy trình đánh giá, Cập nhật Chương trình đào tạo trình độ Đại học/Sau đại học của Trường Đại học Công nghệ Thông tin": {
+    "short": "Đánh giá, cập nhật chương trình đào tạo",
+    "pdf_url": "https://portal.uit.edu.vn/media/ums.portal.document/36/file_id?unique=fb3f52545aaf",
+    "pdf_sha256": "b88295dbfdede1e5c12be2550e29fdc77c671dd13e448be5e1d363322677ce8f"
+  },
+  "Về khoá luận tốt nghiệp cho đào tạo bậc đại học hệ chính quy": {
+    "short": "Khóa luận tốt nghiệp hệ chính quy",
+    "track": "Chính quy"
+  },
+  "Về việc ban hành Quy trình phân công cán bộ coi thi cho các đợt thi tập trung hệ đại học chính quy": {
+    "short": "Phân công cán bộ coi thi",
+    "pdf_url": "https://portal.uit.edu.vn/media/ums.portal.document.file/63/file_id?unique=ad680aa10478",
+    "pdf_sha256": "7c1e1750c9efdb1081fde283209540022b1ce9185c4008632854dda54c877228",
+    "track": "Chính quy"
+  }
+}

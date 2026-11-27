@@ -1,0 +1,23 @@
+#regulations:not(:has(#hcmus-cohort input:checked)) :is(#question-row, #sample-questions, #search-results),
+#regulations:not(:has(#uit-track input:checked)) :is(#d1-question-row, #d1-results) {
+    display: none;
+}
+#hcmus-cohort, #uit-track { margin-bottom: .8rem; }
+#cohort-unavailable { display: none; }
+#regulations:has(#hcmus-cohort input[value="Trước K21"]:checked) #cohort-unavailable {
+    display: block; padding: .65rem .9rem; border-radius: .5rem;
+    background: var(--notice-bg); color: var(--notice-ink);
+}
+#regulations:has(#hcmus-cohort input[value="Trước K21"]:checked)
+    :is(#question-row, #sample-questions, #search-results, #search-feedback, #search-status) { display: none; }
+/* A card retained by the UIT tab must not suppress HCMUS input validation. */
+#regulations[data-search-state="ready"]:has(#keyword-tab-button[aria-selected="true"]):not(:has(#search-results .topic))
+    #search-status:has(p:not(:empty)) { display: block; }
+
+#regulations .rank-badge {
+    display: inline-block; margin: 0 .55rem .2rem 0; padding: .08rem .45rem;
+    color: var(--ink); background: var(--reading-tint); border-radius: .35rem;
+    font-size: .82rem; font-weight: 650; font-variant-numeric: tabular-nums;
+}
+#regulations .rank-badge + .reference { display: inline-block; }
+#regulations .rank-origin { display: block; color: var(--muted); font-size: .82rem; }

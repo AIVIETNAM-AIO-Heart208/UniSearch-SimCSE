@@ -2,12 +2,12 @@
 
 Đồ án nghiên cứu **SimCSE** và xây dựng trợ lý tra cứu quy chế học vụ tiếng Việt theo **Option 1 – Practical Application**. Nhóm đã so sánh BM25, SimCSE-VN và truy hồi lai trên [D1-test](experiments/external_dataset/results/E1/d1-test.md) và [D2-test quy chế HCMUS](experiments/application/results/D2/d2-test.md). Tiến độ và phân công được theo dõi trong [checklist đồ án](docs/PLAN.md).
 
-**Bài nộp Nhóm 14.** Hồ sơ đã có PDF, mã nguồn và corpus. Minh quay video chính thức từ bộ slide và ảnh thao tác đã bàn giao. [Tư liệu quay và các lệnh kiểm, đóng gói](docs/README.md#báo-cáo-và-video)
+**Bài nộp Nhóm 14.** Hồ sơ chờ video đã có PDF, mã nguồn và corpus HCMUS. Minh phụ trách bản ghi chính thức. [Cách đóng gói và kiểm video](docs/README.md#báo-cáo-và-video) · [Checklist rà soát ứng dụng và hồ sơ](docs/reviews/workspace.md#kiểm-tra-ngày-27112026)
 
 ## Bản đồ repo
 
 ```text
-apps/                       Giao diện tra cứu quy chế đào tạo HCMUS
+apps/                       Demo chọn khóa HCMUS (mặc định) hoặc chọn hệ đào tạo UIT (D1)
 src/simcse_lab/             Package Python dùng chung
     model/                  Mã hóa câu, pooling và logic huấn luyện SimCSE
     retrieval/              Chia đoạn theo Điều/Khoản, lập chỉ mục và xếp hạng
@@ -24,9 +24,9 @@ pyproject.toml              Cấu hình package Python
 
 ## Chạy từ bản clone
 
-- **Kiểm tra mã và tài liệu.** Tạo môi trường như bên dưới, sau đó chạy `python -X utf8 tools/check_docs.py` và `.\.venv\Scripts\python.exe -m pytest tests -q -rs`. Để chạy cả kiểm thử truy hồi và endpoint Gradio cục bộ trên Windows, dùng Python 3.11 và cài `.[test,retrieval,evaluation,demo]` vào cùng môi trường.
-- **D1.** [Hướng dẫn D1](experiments/external_dataset/README.md) có lệnh lấy CSV và checkpoint theo phiên bản, kiểm ba bảng xếp hạng dev và chạy E1 trên test. Dùng đầu ra E1 để [chấm theo mức trùng từ](experiments/application/README.md#e2-trên-d1-test) và [vẽ đường cong cảnh báo](experiments/external_dataset/README.md#biểu-đồ-riskcoverage-d1-test).
-- **Demo và D2.** Tải [bộ D2 công khai dùng trong bài nộp](data/d2/README.md#bộ-d2-công-khai). Để chạy demo hoặc chấm D2-test, chuẩn bị [nguồn quy chế](data/d2/README.md#file) và [corpus HCMUS](experiments/external_dataset/README.md#lệnh-chuẩn-bị-hcmus-và-đánh-giá-d2), rồi [mở giao diện Gradio](apps/README.md) hoặc [chạy bộ chấm](experiments/application/README.md#chấm-d2-test). Corpus đầy đủ cần bản chép quy chế 2026 trong gói bàn giao. Bản clone công khai cho phép kiểm riêng quy chế 2021 bằng `--only-2021`.
+- **Kiểm tra mã và tài liệu.** Tạo môi trường như bên dưới, sau đó chạy `python -X utf8 tools/check_docs.py` và `.\.venv\Scripts\python.exe -m pytest tests -q -rs`. Để kiểm cả truy hồi, endpoint Gradio và định dạng video trên Windows, dùng Python 3.11 với cấu hình [môi trường demo](apps/README.md#chạy-cục-bộ) và các nhóm phụ thuộc `test,retrieval,evaluation,demo,submission`. [Cách cài riêng bộ đọc MP4](docs/README.md#báo-cáo-và-video)
+- **D1.** [Hướng dẫn D1](experiments/external_dataset/README.md) có lệnh lấy CSV và checkpoint theo phiên bản, kiểm ba bảng xếp hạng dev và chạy E1 trên test. Dùng đầu ra E1 để [chấm theo mức trùng từ](experiments/application/README.md#e2-trên-d1-test) và [vẽ đường cong cảnh báo](experiments/external_dataset/README.md#biểu-đồ-riskcoverage-d1-test). Để chọn hệ đào tạo, nhập câu hỏi và xem văn bản UIT và mở trang PDF đã đối chiếu, dùng [tab ViRHE4QA trong demo](apps/README.md#tra-cứu-virhe4qa).
+- **Demo và D2.** Tải [bộ D2 công khai dùng trong bài nộp](data/d2/README.md#bộ-d2-công-khai). Để chạy demo hoặc chấm D2-test, chuẩn bị [nguồn quy chế](data/d2/README.md#file) và [corpus HCMUS](experiments/external_dataset/README.md#lệnh-chuẩn-bị-hcmus-và-đánh-giá-d2), rồi [mở giao diện Gradio](apps/README.md) hoặc [chạy bộ chấm](experiments/application/README.md#chấm-d2-test). Trong demo, chọn khóa rồi hỏi về điều kiện tốt nghiệp để mở đúng danh sách trong quy chế tương ứng. Điểm xếp hạng nằm cạnh số hạng. Mở **Vì sao có kết quả này?** để xem điểm của đoạn trích hoặc căn cứ chọn khoản tốt nghiệp theo khóa. Corpus đầy đủ cần bản chép quy chế 2026 trong gói bàn giao. Bản clone công khai cho phép kiểm riêng quy chế 2021 bằng `--only-2021`.
 - **Báo cáo.** Chạy `powershell -ExecutionPolicy Bypass -File docs\report\build.ps1`. PDF nằm ở `docs/report/build/main.pdf`. [Yêu cầu LaTeX](docs/report/README.md) · [Checklist rà soát](docs/reviews/workspace.md).
 
 [Phép thử trên 16 câu phát triển HCMUS](experiments/application/results/clause-scope-pilot/comparison.md) ghi Khoản được chọn, cảnh báo và đoạn sinh viên thấy ngay cho bản hiện tại và ba bản thử.

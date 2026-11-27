@@ -352,8 +352,10 @@ including special tokens. Longer clauses are split at whitespace with up to
 Every chunk keeps its document, article number and title, clause and character
 offsets, so the interface can quote the indexed text exactly. For our
 university's regulations, each document also records its decision number,
-issue date and scope of application, which the interface displays. ViRHE4QA
-records no such metadata. The 2026 regulation was available to us only as a
+issue date and scope of application, which the interface displays. For
+ViRHE4QA, we recover the document title by matching passage text to the
+authors' workbook. The title alone does not establish the applicable edition.
+The 2026 HCMUS regulation was available to us only as a
 scanned PDF. Its indexed text is a transcription of the scan made with ChatGPT,
 which we first cleaned in two passes and compared with the scan's OCR layer.
 We then checked discrepancies against images of the signed regulation and
@@ -392,12 +394,17 @@ every chunk in the article and quote the chunk with the largest weighted sum.
 Values below the article-level minimum may be negative. A method with zero
 range contributes zero. At either endpoint we use the corresponding single
 method. Ties are broken by ascending article or chunk identifier.
-For the university's regulations we group articles by topic and show the
-2026 edition first within each group. Two editions can cover the same topic
-and still prescribe different rules.
+For HCMUS we group articles by topic within the selected cohort edition.
+A general search shows the newer edition first. Two editions can cover the same topic
+and still prescribe different rules. For general graduation eligibility queries,
+the HCMUS interface checks each edition for a unique numbered clause that
+introduces the eligibility list. If found, it promotes that article and
+opens the cited list directly. Other questions use the usual ranking.
 
 \textbf{Low-confidence warning.} Let $c^\star$ be the best chunk of the
-top-ranked article before topic grouping. If $\mathrm{sim}(q,c^\star)<\theta$, the results are still
+top-ranked article before topic grouping in the original evaluation.
+For ordinary ranked searches within a cohort or training mode, the demo uses the cosine
+of the first excerpt within that selection. If $\mathrm{sim}(q,c^\star)<\theta$, the results are still
 shown but are labelled as low confidence, and the student is advised to contact
 the academic affairs office. Per-query min--max normalisation discards
 absolute score levels, and the two methods may rank different articles first.

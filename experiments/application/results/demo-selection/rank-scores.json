@@ -1,0 +1,132 @@
+{
+  "weight": 0.6,
+  "threshold": 0.6201629042625427,
+  "browser": "Chrome",
+  "checked_viewports": [
+    [
+      1440,
+      960
+    ],
+    [
+      320,
+      740
+    ]
+  ],
+  "live_views": [
+    {
+      "tab": "HCMUS",
+      "scope": "Tra cứu chung",
+      "question": "Em đang đọc quy chế năm 2021. Nếu cả môn dồn vào vài buổi thì một ngày thầy được xếp nhiều nhất mấy giờ cho riêng môn đó?",
+      "search_view": "main",
+      "rank_labels": [
+        "Điểm Hybrid 0,977",
+        "Điểm Hybrid 0,847",
+        "Điểm Hybrid 0,780"
+      ],
+      "first_reference": "Quy chế 2026 · Điều 6 · Khoản 3",
+      "first_explanation": "Điểm khớp với câu hỏi: 0,56. Trên thang từ −1 đến 1, điểm càng cao thì đoạn trích càng gần nghĩa với câu hỏi.",
+      "rank_origin": "Xếp theo Điều 6 của Quy chế 2021"
+    },
+    {
+      "tab": "HCMUS",
+      "scope": "Tra cứu chung",
+      "question": "Em đang đọc quy chế năm 2021. Nếu cả môn dồn vào vài buổi thì một ngày thầy được xếp nhiều nhất mấy giờ cho riêng môn đó?",
+      "search_view": "BM25",
+      "rank_labels": [
+        "Điểm BM25 17,212",
+        "Điểm BM25 16,605",
+        "Điểm BM25 15,404"
+      ],
+      "first_reference": "Quy chế 2026 · Điều 3 · Khoản 3",
+      "first_explanation": "Điểm khớp với câu hỏi: 0,61. Trên thang từ −1 đến 1, điểm càng cao thì đoạn trích càng gần nghĩa với câu hỏi. Trong chế độ từ khóa, thứ tự kết quả dựa trên điểm BM25.",
+      "rank_origin": "Xếp theo Điều 2 của Quy chế 2021"
+    },
+    {
+      "tab": "HCMUS",
+      "scope": "K24",
+      "question": "Điều kiện xét công nhận tốt nghiệp là gì",
+      "search_view": "main",
+      "rank_labels": [
+        "Chọn theo khóa",
+        "Điểm Hybrid 0,693",
+        "Điểm Hybrid 0,640"
+      ],
+      "first_reference": "Quy chế 2021 · Điều 17 · Khoản 3",
+      "first_explanation": "Bạn đã chọn K24. Khoản 3 Điều 17 của Quy chế 2021 liệt kê các điều kiện xét và công nhận tốt nghiệp."
+    },
+    {
+      "tab": "HCMUS",
+      "scope": "K26 trở đi",
+      "question": "Điều kiện xét công nhận tốt nghiệp là gì",
+      "search_view": "main",
+      "rank_labels": [
+        "Chọn theo khóa",
+        "Điểm Hybrid 0,631",
+        "Điểm Hybrid 0,627"
+      ],
+      "first_reference": "Quy chế 2026 · Điều 19 · Khoản 1",
+      "first_explanation": "Bạn đã chọn K26 trở đi. Khoản 1 Điều 19 của Quy chế 2026 liệt kê các điều kiện xét và công nhận tốt nghiệp."
+    },
+    {
+      "tab": "ViRHE4QA (D1)",
+      "scope": "Chính quy",
+      "question": "Điều kiện xét công nhận tốt nghiệp là gì",
+      "search_view": "main",
+      "rank_labels": [
+        "Điểm Hybrid 1,000",
+        "Điểm Hybrid 0,801",
+        "Điểm Hybrid 0,763"
+      ],
+      "first_reference": "UIT · Đào tạo đại học chính quy theo học chế tín chỉ · Điều 33",
+      "first_explanation": "Điểm khớp với câu hỏi: 0,79. Trên thang từ −1 đến 1, điểm càng cao thì đoạn trích càng gần nghĩa với câu hỏi."
+    },
+    {
+      "tab": "ViRHE4QA (D1)",
+      "scope": "Từ xa",
+      "question": "Điều kiện xét công nhận tốt nghiệp là gì",
+      "search_view": "main",
+      "rank_labels": [
+        "Điểm Hybrid 0,999",
+        "Điểm Hybrid 0,522",
+        "Điểm Hybrid 0,501"
+      ],
+      "first_reference": "UIT · Đào tạo từ xa trình độ đại học · Điều 19",
+      "first_explanation": "Điểm khớp với câu hỏi: 0,74. Trên thang từ −1 đến 1, điểm càng cao thì đoạn trích càng gần nghĩa với câu hỏi."
+    },
+    {
+      "tab": "ViRHE4QA (D1)",
+      "scope": "Tra cứu chung",
+      "question": "Việc làm KLTN có thể bị dừng giữa chừng không?",
+      "search_view": "main",
+      "rank_labels": [
+        "Điểm Hybrid 0,997",
+        "Điểm Hybrid 0,973",
+        "Điểm Hybrid 0,848"
+      ],
+      "first_reference": "UIT · Khóa luận tốt nghiệp hệ chính quy · Điều 6",
+      "first_explanation": "Điểm khớp với câu hỏi: 0,59. Trên thang từ −1 đến 1, điểm càng cao thì đoạn trích càng gần nghĩa với câu hỏi."
+    }
+  ],
+  "uit_bm25_replay": {
+    "weight": 1.0,
+    "source": "experiments/external_dataset/results/D1-dev-retrieval-check/runs/bm25.jsonl",
+    "qid": "9542",
+    "query": "Việc làm KLTN có thể bị dừng giữa chừng không?",
+    "badges": [
+      "Điểm BM25 10,115",
+      "Điểm BM25 10,062",
+      "Điểm BM25 9,720"
+    ],
+    "excerpt_score": "Điểm khớp với câu hỏi: 0,40."
+  },
+  "regression_check": {
+    "hcmus_open_pilot": 16,
+    "graduation_scopes_per_corpus": 3,
+    "compared_responses": 22,
+    "excluded_html_classes": [
+      "rank-badge",
+      "rank-origin"
+    ],
+    "same_query_scope_and_response_digests_sha256": "a37ff99f01b52718310b588bf418f3948fc722e2be00604f70b568b31341e40c"
+  }
+}

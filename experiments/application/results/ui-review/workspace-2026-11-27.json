@@ -1,0 +1,228 @@
+{
+  "date": "2026-11-27",
+  "scope": "Paired live HCMUS responses from the working tree immediately before and after the workspace review. Development queries only.",
+  "base_commit": "c6aa5269c8dcdb3e33a73a9a625c00bb2821bbe1",
+  "configuration": {
+    "weight": 0.6,
+    "threshold": 0.6201629042625427,
+    "pilot_sha256": "3ffd896f4fa645c84cbf1a85e3c016672cea4e1d34d5062a8c25d820b0525fd0",
+    "hcmus_corpus_sha256": "c0597378bbc9699dbdc6ee073857b796a9e118ff70e59523e5d2a41f09b9e1e1",
+    "device": "CPU",
+    "threads": 4,
+    "python": "3.11.9",
+    "torch": "2.5.1",
+    "transformers": "4.46.3",
+    "gradio": "5.49.1"
+  },
+  "method": "SHA-256 of main HTML, BM25 HTML and notice concatenated as UTF-8 for each query and selection.",
+  "cases": [
+    {
+      "qid": "pilot-01",
+      "cohort": "K24",
+      "first": "Quy chế 2021 · Điều 6 · Khoản 6",
+      "before_sha256": "d5a3de8205450607951d4ddff9e670a5e93a051d92da76f4b4334641cc42c230",
+      "after_sha256": "d5a3de8205450607951d4ddff9e670a5e93a051d92da76f4b4334641cc42c230",
+      "correct_open": true
+    },
+    {
+      "qid": "pilot-02",
+      "cohort": "Tra cứu chung",
+      "first": "Quy chế 2026 · Điều 18 · Khoản 4",
+      "before_sha256": "4f9aa7311de1d415d6c50e346b046f0c9e2b778423d6aac1047fa7e17be7832b",
+      "after_sha256": "4f9aa7311de1d415d6c50e346b046f0c9e2b778423d6aac1047fa7e17be7832b",
+      "correct_open": null
+    },
+    {
+      "qid": "pilot-03",
+      "cohort": "K24",
+      "first": "Quy chế 2021 · Điều 8 · Khoản 3",
+      "before_sha256": "c728c225f8b488092012670cb6db9c5cc7d65d53e1c9bf99d23f95e6079961d6",
+      "after_sha256": "c728c225f8b488092012670cb6db9c5cc7d65d53e1c9bf99d23f95e6079961d6",
+      "correct_open": false
+    },
+    {
+      "qid": "pilot-04",
+      "cohort": "Tra cứu chung",
+      "first": "Quy chế 2026 · Điều 14 · Khoản 3",
+      "before_sha256": "cf831d672f4895a9468dffe1fb5c880237f5981406e5ed23225b0afa752c565e",
+      "after_sha256": "cf831d672f4895a9468dffe1fb5c880237f5981406e5ed23225b0afa752c565e",
+      "correct_open": null
+    },
+    {
+      "qid": "pilot-05",
+      "cohort": "K24",
+      "first": "Quy chế 2021 · Điều 18 · Khoản 4",
+      "before_sha256": "f7c24803eea30f72c76869c233759f8413679de904dae032deb5722f72afe9be",
+      "after_sha256": "f7c24803eea30f72c76869c233759f8413679de904dae032deb5722f72afe9be",
+      "correct_open": true
+    },
+    {
+      "qid": "pilot-06",
+      "cohort": "Tra cứu chung",
+      "first": "Quy chế 2026 · Điều 19 · Khoản 3",
+      "before_sha256": "4bd611a87d7d10f5d483aef6ff14bbf974b6dc5acc6e18bd7dfb9c7405df98a2",
+      "after_sha256": "4bd611a87d7d10f5d483aef6ff14bbf974b6dc5acc6e18bd7dfb9c7405df98a2",
+      "correct_open": null
+    },
+    {
+      "qid": "pilot-07",
+      "cohort": "K26 trở đi",
+      "first": "Quy chế 2026 · Điều 9 · Khoản 2",
+      "before_sha256": "61570b14760d1ecd9d5bb47d258c8e5793c70a30d7b1cc26bdd99855aa202ea4",
+      "after_sha256": "61570b14760d1ecd9d5bb47d258c8e5793c70a30d7b1cc26bdd99855aa202ea4",
+      "correct_open": false
+    },
+    {
+      "qid": "pilot-08",
+      "cohort": "Tra cứu chung",
+      "first": "Quy chế 2026 · Điều 6 · Khoản 1",
+      "before_sha256": "34376aedf4e2dba6153188566e7217763f3b6033e098ebf10a4b94e3f8968195",
+      "after_sha256": "34376aedf4e2dba6153188566e7217763f3b6033e098ebf10a4b94e3f8968195",
+      "correct_open": null
+    },
+    {
+      "qid": "pilot-09",
+      "cohort": "K26 trở đi",
+      "first": "Quy chế 2026 · Điều 24 · Khoản 2",
+      "before_sha256": "2dc1f1cba80d0b1167d111e4de7a385eb5400af3aa30e685837111ae20f99ec9",
+      "after_sha256": "2dc1f1cba80d0b1167d111e4de7a385eb5400af3aa30e685837111ae20f99ec9",
+      "correct_open": true
+    },
+    {
+      "qid": "pilot-10",
+      "cohort": "Tra cứu chung",
+      "first": "Quy chế 2026 · Điều 14 · Khoản 5",
+      "before_sha256": "386efe6146665bfd485a45bbecb1e90532a7c822bc8d3650e38334fda4b93937",
+      "after_sha256": "386efe6146665bfd485a45bbecb1e90532a7c822bc8d3650e38334fda4b93937",
+      "correct_open": null
+    },
+    {
+      "qid": "pilot-11",
+      "cohort": "K26 trở đi",
+      "first": "Quy chế 2026 · Điều 10 · Khoản 4",
+      "before_sha256": "21b79a423e8abd6307d282503e1a1b4c66cc2d4c8756519732b50fc61fe9933c",
+      "after_sha256": "21b79a423e8abd6307d282503e1a1b4c66cc2d4c8756519732b50fc61fe9933c",
+      "correct_open": true
+    },
+    {
+      "qid": "pilot-12",
+      "cohort": "Tra cứu chung",
+      "first": "Quy chế 2026 · Điều 3 · Khoản 3",
+      "before_sha256": "a1cffa40a01d2f82c108323af139bfd6bf4cdddb9538866c63952834c9cd60d4",
+      "after_sha256": "a1cffa40a01d2f82c108323af139bfd6bf4cdddb9538866c63952834c9cd60d4",
+      "correct_open": null
+    },
+    {
+      "qid": "pilot-13",
+      "cohort": "K26 trở đi",
+      "first": "Quy chế 2026 · Điều 27 · Khoản 1",
+      "before_sha256": "0cebe24b6ab8e3c3ba362c355fcd1a259fd070e14562c597616724e859ff2ac5",
+      "after_sha256": "0cebe24b6ab8e3c3ba362c355fcd1a259fd070e14562c597616724e859ff2ac5",
+      "correct_open": false
+    },
+    {
+      "qid": "pilot-14",
+      "cohort": "Tra cứu chung",
+      "first": "Quy chế 2026 · Điều 11 · Khoản 2",
+      "before_sha256": "80da9d8d2836d60cae463af1665756e4418d7858c51e9a4cd762949c43e72aa1",
+      "after_sha256": "80da9d8d2836d60cae463af1665756e4418d7858c51e9a4cd762949c43e72aa1",
+      "correct_open": null
+    },
+    {
+      "qid": "pilot-15",
+      "cohort": "Tra cứu chung",
+      "first": "Quy chế 2026 · Điều 10 · Khoản 3",
+      "before_sha256": "1cc0ce4c8b9240e2cd015da701191d7b499049e2cccb9e2acd11ed22f3f69e29",
+      "after_sha256": "1cc0ce4c8b9240e2cd015da701191d7b499049e2cccb9e2acd11ed22f3f69e29",
+      "correct_open": true
+    },
+    {
+      "qid": "pilot-16",
+      "cohort": "Tra cứu chung",
+      "first": "Quy chế 2026 · Điều 2 · Khoản 6",
+      "before_sha256": "bef5624e00acfd4932c1be1aac99aec92b7d82335f540f6ce5941054e74092a3",
+      "after_sha256": "bef5624e00acfd4932c1be1aac99aec92b7d82335f540f6ce5941054e74092a3",
+      "correct_open": null
+    },
+    {
+      "qid": "conditions",
+      "cohort": "K24",
+      "first": "Quy chế 2021 · Điều 17 · Khoản 3",
+      "before_sha256": "4eb7aafe61a2f40946326546f31703322529c25ee2d85bd16ef99141b2b5554c",
+      "after_sha256": "4eb7aafe61a2f40946326546f31703322529c25ee2d85bd16ef99141b2b5554c",
+      "correct_open": true
+    },
+    {
+      "qid": "conditions",
+      "cohort": "K26 trở đi",
+      "first": "Quy chế 2026 · Điều 19 · Khoản 1",
+      "before_sha256": "57d222be89dfd91f7a6e5ba46cf34d2becdc4b3965b89c2a35bad09d46bd34a1",
+      "after_sha256": "57d222be89dfd91f7a6e5ba46cf34d2becdc4b3965b89c2a35bad09d46bd34a1",
+      "correct_open": true
+    },
+    {
+      "qid": "requirements",
+      "cohort": "K24",
+      "first": "Quy chế 2021 · Điều 17 · Khoản 3",
+      "before_sha256": "b4877a5e21e2da3a23ec2b5526a4d51d3b949559a3cf8ece1a4e0d1167baa924",
+      "after_sha256": "b4877a5e21e2da3a23ec2b5526a4d51d3b949559a3cf8ece1a4e0d1167baa924",
+      "correct_open": true
+    },
+    {
+      "qid": "requirements",
+      "cohort": "K26 trở đi",
+      "first": "Quy chế 2026 · Điều 19 · Khoản 1",
+      "before_sha256": "28443c4faf456986480e48213c8e52443dd250b06dd30ada562045921e2f507a",
+      "after_sha256": "28443c4faf456986480e48213c8e52443dd250b06dd30ada562045921e2f507a",
+      "correct_open": true
+    },
+    {
+      "qid": "graduate",
+      "cohort": "K24",
+      "first": "Quy chế 2021 · Điều 17 · Khoản 3",
+      "before_sha256": "60a11053646035749bbcc29fa716ab1db316482d54e1dad27be965f56f07f63d",
+      "after_sha256": "60a11053646035749bbcc29fa716ab1db316482d54e1dad27be965f56f07f63d",
+      "correct_open": true
+    },
+    {
+      "qid": "graduate",
+      "cohort": "K26 trở đi",
+      "first": "Quy chế 2026 · Điều 19 · Khoản 1",
+      "before_sha256": "60cc40c50ef08d9267c71294dbe1300739a4380450c885951798157170504ec6",
+      "after_sha256": "60cc40c50ef08d9267c71294dbe1300739a4380450c885951798157170504ec6",
+      "correct_open": true
+    },
+    {
+      "qid": "procedure",
+      "cohort": "K24",
+      "first": "Quy chế 2021 · Điều 18 · Khoản 1",
+      "before_sha256": "c1970afbe7e68a813796a17b5a43e6e2054bd840a6f7f8ce09f7191c7927777b",
+      "after_sha256": "c1970afbe7e68a813796a17b5a43e6e2054bd840a6f7f8ce09f7191c7927777b",
+      "correct_open": null
+    },
+    {
+      "qid": "procedure",
+      "cohort": "K26 trở đi",
+      "first": "Quy chế 2026 · Điều 19 · Khoản 5",
+      "before_sha256": "2eac37c90c2e52e826a0997705c2bcdea2c96230345e5de9314b658b16a3af42",
+      "after_sha256": "2eac37c90c2e52e826a0997705c2bcdea2c96230345e5de9314b658b16a3af42",
+      "correct_open": null
+    },
+    {
+      "qid": "authority",
+      "cohort": "K24",
+      "first": "Quy chế 2021 · Điều 17 · Khoản 6",
+      "before_sha256": "556e7a5272ae7ce4cccc0425cdd17375cd5774388bea002d598a0ed3d9182ff9",
+      "after_sha256": "556e7a5272ae7ce4cccc0425cdd17375cd5774388bea002d598a0ed3d9182ff9",
+      "correct_open": null
+    },
+    {
+      "qid": "authority",
+      "cohort": "K26 trở đi",
+      "first": "Quy chế 2026 · Điều 19 · Khoản 2",
+      "before_sha256": "3c98c1ebc961c5dd9e0257caaf59cb5925713230fed4946cf3424192456c1a28",
+      "after_sha256": "3c98c1ebc961c5dd9e0257caaf59cb5925713230fed4946cf3424192456c1a28",
+      "correct_open": null
+    }
+  ]
+}

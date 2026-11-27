@@ -103,19 +103,14 @@ BM25 with a SimCSE-style Vietnamese encoder, ranks whole articles, shows the
 best-matching passage with its document, decision number and scope of
 application, and flags low-confidence results instead of generating an answer
 (Sections~\ref{sec:method-pipeline} and~\ref{sec:app});
-% Checked 23/11 on ViRHE4QA_v2.csv @ ViRE 60ea715: 77 of the 297 distinct
-% contexts name the university (ĐHCNTT / Trường ĐH CNTT); no other university
-% is named (data/raw/virhe4qa/checks/outputs_2026-11-23.txt). The R2GQA abstract
-% does not name the source university, so the attribution below rests on the
-% article text.
+% Document attribution: data/d1/sources.tsv and data/d1/documents.json.
 % D1-test query count and split: experiments/external_dataset/results/E1/d1-test.json.
 \item evaluates retrieval on two test sets. D1-test contains 759 held-out
 questions from the public ViRHE4QA
 subset~\cite{do2024r2gqaretrieverreadergeneratorquestionanswering,nguyen-quan-2026-works},
-with the development/test split grouped by source passage. Judging by their
-wording, its articles are regulations of the
-University of Information Technology (UIT), VNU-HCM, the only university that
-they name.
+with the development/test split grouped by source passage. The passages
+come from academic documents of the University of Information Technology
+(UIT), VNU-HCM.
 % D2-test query counts and frozen settings: experiments/application/results/D2/summary.json.
 D2-test contains 106 manually labelled student-style questions for retrieval
 from both editions of our university's regulations, including 20 outside
